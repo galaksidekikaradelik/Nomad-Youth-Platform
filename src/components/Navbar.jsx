@@ -1,18 +1,38 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { useLanguage } from '../../hooks/useLanguage'
+import logo from '../../assets/images/logo.png'
 
-const links = [
-  { to: '/',              label: 'Ana Səhifə' },
-  { to: '/opportunities', label: 'İmkanlar' },
-  { to: '/events',        label: 'Tədbirlər' },
-  { to: '/trainings',     label: 'Təlimlər' },
-  { to: '/about',         label: 'Haqqımızda' },
-  { to: '/contact',       label: 'Əlaqə' },
-]
+const MoonIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
+  </svg>
+)
+
+const SunIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </svg>
+)
 
 export default function Navbar() {
+  const { lang, toggleLang, t } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+
+  // ✅ localStorage-dan birbaşa ilkin dəyər oxu
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark'
+  })
+
+  const links = [
+    { to: '/',              label: t('nav_home') },
+    { to: '/opportunities', label: t('nav_opportunities') },
+    { to: '/services',      label: t('nav_services') },
+    { to: '/about',         label: t('nav_about') },
+    { to: '/contact',       label: t('nav_contact') },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -20,16 +40,25 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // close mobile menu on route change
+  // ✅ Tema dəyişəndə DOM-u yenilə (setState yoxdur, xəta olmaz)
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
+  }, [darkMode])
+
+  const toggleDarkMode = () => {
+    const next = !darkMode
+    setDarkMode(next)
+    localStorage.setItem('theme', next ? 'dark' : 'light')
+  }
+
   const handleLinkClick = () => setMenuOpen(false)
 
   return (
     <>
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <div className="container navbar__inner">
-          <Link to="/" className="navbar__logo" onClick={handleLinkClick}>
-            <span className="navbar__logo-dot" />
-            Nomad Youth
+          <Link to="/" className="navbar__logo">
+            <img src={logo} alt="Nomad Youth" style={{ height: '160px', width: 'auto' }} />
           </Link>
 
           <ul className="navbar__links">
@@ -38,9 +67,7 @@ export default function Navbar() {
                 <NavLink
                   to={l.to}
                   end={l.to === '/'}
-                  className={({ isActive }) =>
-                    'navbar__link' + (isActive ? ' active' : '')
-                  }
+                  className={({ isActive }) => 'navbar__link' + (isActive ? ' active' : '')}
                 >
                   {l.label}
                 </NavLink>
@@ -48,9 +75,21 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <Link to="/opportunities" className="navbar__cta" style={{ display: 'none' }}>
-            İmkan Tap
-          </Link>
+          <div className="navbar__actions">
+            <button className="navbar__lang-btn" onClick={toggleLang} aria-label="Dil seçimi">
+              {lang.toUpperCase()}
+            </button>
+
+            <button
+              className="navbar__theme-btn"
+              onClick={toggleDarkMode}
+              aria-label="Tema dəyiş"
+            >
+              {darkMode ? <SunIcon /> : <MoonIcon />}
+            </button>
+
+            <Link to="/opportunities" className="navbar__cta">{t('nav_cta')}</Link>
+          </div>
 
           <button
             className={`navbar__hamburger${menuOpen ? ' open' : ''}`}
@@ -68,16 +107,24 @@ export default function Navbar() {
             key={l.to}
             to={l.to}
             end={l.to === '/'}
-            className={({ isActive }) =>
-              'navbar__link' + (isActive ? ' active' : '')
-            }
+            className={({ isActive }) => 'navbar__link' + (isActive ? ' active' : '')}
             onClick={handleLinkClick}
           >
             {l.label}
           </NavLink>
         ))}
+
+        <div className="navbar__mobile-actions">
+          <button className="navbar__lang-btn" onClick={toggleLang} aria-label="Dil seçimi">
+            {lang.toUpperCase()}
+          </button>
+          <button className="navbar__theme-btn" onClick={toggleDarkMode} aria-label="Tema dəyiş">
+            {darkMode ? <SunIcon /> : <MoonIcon />}
+          </button>
+        </div>
+
         <Link to="/opportunities" className="navbar__cta" onClick={handleLinkClick}>
-          İmkan Tap
+          {t('nav_cta')}
         </Link>
       </div>
     </>

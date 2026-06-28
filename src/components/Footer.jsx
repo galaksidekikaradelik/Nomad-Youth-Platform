@@ -2,39 +2,28 @@ import { Link } from 'react-router-dom'
 
 const nav = {
   Platform: [
+    { label: 'Ana Səhifə',  to: '/' },
     { label: 'İmkanlar',    to: '/opportunities' },
-    { label: 'Tədbirlər',   to: '/events' },
-    { label: 'Təlimlər',    to: '/trainings' },
     { label: 'Haqqımızda',  to: '/about' },
+    { label: 'Əlaqə',       to: '/contact' },
   ],
   Kateqoriya: [
     { label: 'Könüllülük',  to: '/opportunities' },
     { label: 'Təcrübə',     to: '/opportunities' },
     { label: 'Qrantlar',    to: '/opportunities' },
-    { label: 'Tədbirlər',   to: '/events' },
-  ],
-  Əlaqə: [
-    { label: 'Bizimlə əlaqə', to: '/contact' },
-    { label: 'Instagram',     to: '#' },
-    { label: 'LinkedIn',      to: '#' },
-    { label: 'Facebook',      to: '#' },
+    { label: 'Tədbirlər',   to: '/opportunities' },
   ],
 }
 
 const socials = [
   { label: 'Instagram', icon: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
     </svg>
   )},
   { label: 'LinkedIn', icon: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
-    </svg>
-  )},
-  { label: 'Facebook', icon: (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
     </svg>
   )},
 ]
@@ -46,12 +35,9 @@ export default function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <div className="footer__logo">
-              <span className="footer__logo-dot" />
               Nomad Youth
             </div>
-            <p>
-              Gənclərin könüllülük, təcrübə, təlim və inkişaf imkanlarını bir platformada kəşf etməsi üçün yaradılmış resurs mərkəzi.
-            </p>
+            <p>Gənclərin könüllülük, təcrübə, qrant və inkişaf imkanlarını bir platformada kəşf etməsi üçün yaradılmış resurs mərkəzi.</p>
           </div>
 
           {Object.entries(nav).map(([title, items]) => (
@@ -66,6 +52,10 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+        </div>
+
+        <div className="footer__disclaimer">
+          ⚖️ Nomad Youth heç bir məsuliyyət daşımır. Biz sadəcə sizinlə layihələr arasında körpü rolunu oynayırıq. <em>Avropada görüşək. 🌍</em>
         </div>
 
         <div className="footer__bottom">

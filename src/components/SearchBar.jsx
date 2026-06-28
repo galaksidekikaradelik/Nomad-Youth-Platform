@@ -1,57 +1,47 @@
 import { useState } from 'react'
+import { useLanguage } from '../../hooks/useLanguage'
 
 const SearchIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
 )
 
-export default function SearchBar({ onSearch, placeholder = 'İmkan axtar...', categories = [] }) {
-  const [query, setQuery]       = useState('')
+export default function SearchBar({ onSearch }) {
+  const { t } = useLanguage()
+  const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
 
-  const handleSearch = () => {
-    if (onSearch) onSearch({ query, category })
-  }
-
-  const handleKey = (e) => {
-    if (e.key === 'Enter') handleSearch()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    onSearch?.({ query, category })
   }
 
   return (
-    <div className="search-bar">
-      <span className="search-bar__icon">
-        <SearchIcon />
-      </span>
-
+    <form className="search-bar" onSubmit={handleSubmit}>
+      <span className="search-bar__icon"><SearchIcon /></span>
       <input
-        className="search-bar__input"
         type="text"
-        placeholder={placeholder}
+        className="search-bar__input"
+        placeholder={t('search_placeholder')}
         value={query}
-        onChange={e => setQuery(e.target.value)}
-        onKeyDown={handleKey}
+        onChange={(e) => setQuery(e.target.value)}
       />
-
-      {categories.length > 0 && (
-        <>
-          <div className="search-bar__divider" />
-          <select
-            className="search-bar__select"
-            value={category}
-            onChange={e => setCategory(e.target.value)}
-          >
-            <option value="">Bütün kateqoriyalar</option>
-            {categories.map(c => (
-              <option key={c.id} value={c.id}>{c.label}</option>
-            ))}
-          </select>
-        </>
-      )}
-
-      <button className="search-bar__btn" onClick={handleSearch}>
-        Axtar
-      </button>
-    </div>
+      <span className="search-bar__divider" />
+      <select
+        className="search-bar__select"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+      >
+        <option value="">{t('search_all_categories')}</option>
+        <option value="grant">Qrant</option>
+        <option value="internship">Təcrübə</option>
+        <option value="volunteering">Könüllülük</option>
+        <option value="training">Təlim</option>
+        <option value="event">Tədbir</option>
+      </select>
+      <button type="submit" className="search-bar__btn">{t('search_btn')}</button>
+    </form>
   )
 }

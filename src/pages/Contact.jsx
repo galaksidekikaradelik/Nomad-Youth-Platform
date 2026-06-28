@@ -19,7 +19,7 @@ const PinIcon = () => (
 )
 
 const infoCards = [
-  { icon: <MailIcon />,  label: 'E-poçt',   value: 'info@nomadyouth.az' },
+  { icon: <MailIcon />,  label: 'E-poçt',   value: 'nomadyouthplatform@gmail.com' },
   { icon: <PhoneIcon />, label: 'Telefon',  value: '+994 12 000 00 00' },
   { icon: <PinIcon />,   label: 'Ünvan',    value: 'Bakı, Azərbaycan' },
 ]
