@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLanguage } from '../../hooks/useLanguage'
+import { useLanguage } from '../hooks/useLanguage'
 
 const HeartIcon = ({ active }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

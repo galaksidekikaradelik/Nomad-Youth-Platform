@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { useLanguage } from '../../hooks/useLanguage'
-import logo from '../../assets/images/logo.png'
+import { useLanguage } from '../hooks/useLanguage'
+import logo from '../assets/images/logo.png'
 
 const MoonIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

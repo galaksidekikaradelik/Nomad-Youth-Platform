@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import SearchBar from '../components/SearchBar/SearchBar'
+import SearchBar from '../components/SearchBar'
 import { trainings, trainingCategories } from '../data/trainings'
 
 const formatFilters = [

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import SearchBar from '../components/SearchBar/SearchBar'
-import EventCard from '../components/EventCard/EventCard'
+import SearchBar from '../components/SearchBar'
+import EventCard from '../components/EventCard'
 import { events } from '../data/events'
 
 const typeFilters = [

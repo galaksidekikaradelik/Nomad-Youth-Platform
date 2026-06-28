@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import SearchBar from '../components/SearchBar/SearchBar'
-import OpportunityCard from '../components/OpportunityCard/OpportunityCard'
-import EventCard from '../components/EventCard/EventCard'
+import SearchBar from '../components/SearchBar'
+import OpportunityCard from '../components/OpportunityCard'
+import EventCard from '../components/EventCard'
 import { opportunities } from '../data/opportunities'
 import { events } from '../data/events'
 

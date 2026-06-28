@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useLanguage } from '../../hooks/useLanguage'
+import { useLanguage } from '../hooks/useLanguage'
 
 export default function Hero() {
   const navigate = useNavigate()

@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import Hero from '../components/Hero/Hero'
-import SearchBar from '../components/SearchBar/SearchBar'
-import OpportunityCard from '../components/OpportunityCard/OpportunityCard'
+import Hero from '../components/Hero'
+import SearchBar from '../components/SearchBar'
+import OpportunityCard from '../components/OpportunityCard'
 import { opportunities } from '../data/opportunities'
 import { useLanguage } from '../hooks/useLanguage'
 
