@@ -1,93 +1,16 @@
-export const opportunities = [
-  {
-    id: 1,
-    title: "Gənc Lider Proqramı",
-    organization: "IDEA Azerbaijan",
-    orgLogo: "🏛️",
-    category: "könüllülük",
-    type: "Könüllülük",
-    description: "Azərbaycanda ictimai inkişafı dəstəkləyən gənc liderlər üçün 6 aylıq intensiv liderlik proqramı.",
-    tags: ["Liderlik", "İctimai", "Azərbaycan"],
-    location: "Bakı",
-    deadline: "2025-02-15",
-    featured: true,
-    paid: false,
-  },
-  {
-    id: 2,
-    title: "Texnologiya Startapları üçün Mentor Proqramı",
-    organization: "BSTP",
-    orgLogo: "💡",
-    category: "təcrübə",
-    type: "Təcrübə",
-    description: "Bakı Science and Technology Park-ın texnologiya startaplarında 3 aylıq ödənişli təcrübə proqramı.",
-    tags: ["Tech", "Startap", "Mentorluq"],
-    location: "Bakı",
-    deadline: "2025-03-01",
-    featured: true,
-    paid: true,
-  },
-  {
-    id: 3,
-    title: "UN Könüllü Proqramı",
-    organization: "UNDP Azerbaijan",
-    orgLogo: "🌍",
-    category: "könüllülük",
-    type: "Könüllülük",
-    description: "Birləşmiş Millətlər Təşkilatının Azərbaycan ofisində könüllü kimi çalışmaq imkanı.",
-    tags: ["BMT", "Beynəlxalq", "İnkişaf"],
-    location: "Bakı",
-    deadline: "2025-02-28",
-    featured: false,
-    paid: false,
-  },
-  {
-    id: 4,
-    title: "Avropa Gənclik Mükafatı",
-    organization: "Avropa Şurası",
-    orgLogo: "🇪🇺",
-    category: "qrant",
-    type: "Qrant",
-    description: "Gənclərin sosial innovasiya layihələrini maliyyələşdirən Avropa Şurasının illik mükafatı.",
-    tags: ["Avropa", "Sosial", "İnnovasiya"],
-    location: "Remote",
-    deadline: "2025-04-10",
-    featured: true,
-    paid: true,
-  },
-  {
-    id: 5,
-    title: "Media və Jurnalistika Təcrübəsi",
-    organization: "AzərTV",
-    orgLogo: "📺",
-    category: "təcrübə",
-    type: "Təcrübə",
-    description: "Azərbaycan televiziyasının aparıcı kanalında redaksiya işi, reportaj hazırlama və efir təcrübəsi.",
-    tags: ["Media", "Jurnalistika", "TV"],
-    location: "Bakı",
-    deadline: "2025-03-15",
-    featured: false,
-    paid: true,
-  },
-  {
-    id: 6,
-    title: "Ekoloji Könüllü Kampaniyası",
-    organization: "IDEA Ekoloji",
-    orgLogo: "🌿",
-    category: "könüllülük",
-    type: "Könüllülük",
-    description: "Azərbaycanın ekoloji təmizliyinə töhfə vermək üçün həftəsonu könüllü fəaliyyətlər.",
-    tags: ["Ekologiya", "Ətraf mühit", "Könüllü"],
-    location: "Bakı & Rayonlar",
-    deadline: "2025-05-01",
-    featured: false,
-    paid: false,
-  },
-]
+// src/data/opportunities.js
+//
+// Bu fayl Excel-dən çevrilmiş JSON-u oxuyub React komponentləri üçün hazırlayır.
+// Yeni elan əlavə etmək üçün:
+//   1. Excel faylına (src/data/opportunities.xlsx) sətir əlavə et
+//   2. Terminalda işə sal: node scripts/convertExcel.js
+//   3. Sayt avtomatik yenilənəcək
 
-export const categories = [
-  { id: "hamisi", label: "Hamısı", icon: "✦", count: opportunities.length },
-  { id: "könüllülük", label: "Könüllülük", icon: "🤝", count: opportunities.filter(o => o.category === "könüllülük").length },
-  { id: "təcrübə", label: "Təcrübə", icon: "💼", count: opportunities.filter(o => o.category === "təcrübə").length },
-  { id: "qrant", label: "Qrant", icon: "🏆", count: opportunities.filter(o => o.category === "qrant").length },
-]
+import rawData from './opportunities.json'
+
+export const opportunities = rawData.map(op => ({
+  ...op,
+  // featured/paid kimi sahələr Excel-də yoxdur, default dəyər veririk
+  featured: false,
+  paid: false,
+}))

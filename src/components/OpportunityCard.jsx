@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLanguage } from '../hooks/useLanguage'
+import { useLanguage } from '..//hooks/useLanguage'
 
 const HeartIcon = ({ active }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -20,6 +20,7 @@ const ArrowIcon = () => (
 )
 
 function getDaysLeft(deadline) {
+  if (!deadline) return null
   const diff = new Date(deadline) - new Date()
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
   return days > 0 ? days : 0
@@ -27,21 +28,25 @@ function getDaysLeft(deadline) {
 
 export default function OpportunityCard({ opportunity }) {
   const { t, lang } = useLanguage()
-  const { title, tags, deadline, publishedAt, paid } = opportunity
+  const { type, location, deadline, applyLink, publishedAt } = opportunity
   const [liked, setLiked] = useState(false)
   const [saved, setSaved] = useState(false)
 
-  const locale = lang === 'en' ? 'en-GB' : 'az-AZ'
-  const formattedDeadline = new Date(deadline).toLocaleDateString(locale, {
-    day: '2-digit', month: '2-digit', year: 'numeric'
-  })
+  const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
+
+  const formattedDeadline = deadline
+    ? new Date(deadline).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
+    : null
+
   const daysLeft = getDaysLeft(deadline)
   const daysSincePublished = publishedAt ? getDaysLeft(publishedAt) : null
+
+  const typeLabel = type === 'Online' ? t('type_online') : type === 'Offline' ? t('type_offline') : type
 
   return (
     <div className="opportunity-card">
       <div className="opportunity-card__top">
-        <h3 className="opportunity-card__title">{title}</h3>
+        <h3 className="opportunity-card__title">{location}</h3>
         <div className="opportunity-card__icons">
           <button
             className={`opportunity-card__icon-btn${liked ? ' is-active opportunity-card__icon-btn--heart' : ''}`}
@@ -65,10 +70,7 @@ export default function OpportunityCard({ opportunity }) {
       <div className="opportunity-card__topic">
         <span className="opportunity-card__topic-label">{t('card_topic')}</span>
         <div className="opportunity-card__tags">
-          {tags.map(tag => (
-            <span key={tag} className="opportunity-card__tag">{tag}</span>
-          ))}
-          <span className="opportunity-card__tag">{paid ? t('card_paid') : t('card_free')}</span>
+          {typeLabel && <span className="opportunity-card__tag">{typeLabel}</span>}
         </div>
       </div>
 
@@ -76,18 +78,36 @@ export default function OpportunityCard({ opportunity }) {
 
       <div className="opportunity-card__footer">
         <div className="opportunity-card__dates">
-          <div className="opportunity-card__date-row">
-            {t('card_deadline')} {formattedDeadline} <span className="opportunity-card__days-left">({daysLeft} {t('card_days_left')})</span>
-          </div>
+          {formattedDeadline && (
+            <div className="opportunity-card__date-row">
+              {t('card_deadline')} {formattedDeadline}
+              {daysLeft !== null && (
+                <span className="opportunity-card__days-left"> ({daysLeft} {t('card_days_left')})</span>
+              )}
+            </div>
+          )}
           {daysSincePublished !== null && (
             <div className="opportunity-card__date-row opportunity-card__date-row--muted">
               {t('card_published')} {daysSincePublished} {t('card_days_left')}
             </div>
           )}
         </div>
-        <button className="opportunity-card__apply-btn">
-          {t('card_apply')} <ArrowIcon />
-        </button>
+
+        {applyLink ? (
+          <a
+            href={applyLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opportunity-card__apply-btn"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {t('card_apply')} <ArrowIcon />
+          </a>
+        ) : (
+          <span className="opportunity-card__apply-btn opportunity-card__apply-btn--disabled">
+            {t('card_apply')} <ArrowIcon />
+          </span>
+        )}
       </div>
     </div>
   )

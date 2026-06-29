@@ -12,11 +12,10 @@ function getInitialLang() {
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState(getInitialLang)
 
-  const toggleLang = () => {
-    const currentIndex = LANG_ORDER.indexOf(lang)
-    const next = LANG_ORDER[(currentIndex + 1) % LANG_ORDER.length]
-    setLang(next)
-    localStorage.setItem('lang', next)
+  const setLanguage = (code) => {
+    if (!LANG_ORDER.includes(code)) return
+    setLang(code)
+    localStorage.setItem('lang', code)
   }
 
   const t = (key) => {
@@ -24,7 +23,7 @@ export function LanguageProvider({ children }) {
   }
 
   return (
-    <LanguageContext.Provider value={{ lang, toggleLang, t }}>
+    <LanguageContext.Provider value={{ lang, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   )

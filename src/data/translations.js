@@ -45,6 +45,8 @@ export const translations = {
     card_days_left: 'gün qalıb',
     card_published: 'Açıqlanma tarixi:',
     card_apply: 'Müraciət et',
+    type_online: 'Onlayn',
+    type_offline: 'Oflayn',
   },
   en: {
     // Navbar
@@ -92,6 +94,8 @@ export const translations = {
     card_days_left: 'days left',
     card_published: 'Published:',
     card_apply: 'Apply',
+    type_online: 'Online',
+    type_offline: 'Offline',
   },
   ru: {
     // Navbar
@@ -139,5 +143,7 @@ export const translations = {
     card_days_left: 'дней осталось',
     card_published: 'Опубликовано:',
     card_apply: 'Подать заявку',
+    type_online: 'Онлайн',
+    type_offline: 'Офлайн',
   },
 }

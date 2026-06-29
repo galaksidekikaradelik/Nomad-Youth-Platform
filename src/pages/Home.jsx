@@ -1,10 +1,13 @@
-import { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { useMemo } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Hero from '../components/Hero'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
 import { opportunities } from '../data/opportunities'
 import { useLanguage } from '../hooks/useLanguage'
+import aboutImg from '../assets/images/about.png'
+import servicesImg from '../assets/images/services.png'
+import partnerImg from '../assets/images/partnership.png'
 
 const ArrowIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -14,25 +17,21 @@ const ArrowIcon = () => (
 
 export default function Home() {
   const { t } = useLanguage()
-  const [filters, setFilters] = useState({ query: '', category: '' })
+  const navigate = useNavigate()
 
-  const filtered = useMemo(() => {
-    return opportunities.filter(op => {
-      const matchesQuery = filters.query.trim() === '' ||
-        op.title.toLowerCase().includes(filters.query.toLowerCase()) ||
-        op.organization?.toLowerCase().includes(filters.query.toLowerCase()) ||
-        op.tags?.some(tag => tag.toLowerCase().includes(filters.query.toLowerCase()))
+  const preview = useMemo(() => opportunities.slice(0, 6), [])
 
-      const matchesCategory = filters.category === '' || op.type === filters.category
-
-      return matchesQuery && matchesCategory
-    })
-  }, [filters])
+  const handleSearch = ({ query, category }) => {
+    const params = new URLSearchParams()
+    if (query) params.set('query', query)
+    if (category) params.set('category', category)
+    navigate(`/opportunities${params.toString() ? '?' + params.toString() : ''}`)
+  }
 
   return (
     <>
       <div className="container" style={{ paddingTop: 'var(--space-2xl)' }}>
-        <SearchBar onSearch={setFilters} />
+        <SearchBar onSearch={handleSearch} />
       </div>
 
       {/* ── Bütün Elanlar birbaşa görünür ── */}
@@ -51,19 +50,11 @@ export default function Home() {
             </Link>
           </div>
 
-          {filtered.length > 0 ? (
-            <div className="grid-3">
-              {filtered.map(op => (
-                <OpportunityCard key={op.id} opportunity={op} />
-              ))}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <div className="empty-state__icon">🔍</div>
-              <div className="empty-state__title">{t('opportunities_empty_title')}</div>
-              <p className="empty-state__desc">{t('opportunities_empty_desc')}</p>
-            </div>
-          )}
+          <div className="grid-3">
+            {preview.map(op => (
+              <OpportunityCard key={op.id} opportunity={op} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -73,12 +64,15 @@ export default function Home() {
         <div className="container">
           <div className="grid-3 info-cards-grid">
             <Link to="/about" className="info-card">
+              <img src={aboutImg} alt="Haqqımızda" className="info-card__image" />
               <span className="info-card__label">{t('info_about')}</span>
             </Link>
             <Link to="/services" className="info-card">
+              <img src={servicesImg} alt="Xidmətlər" className="info-card__image" />
               <span className="info-card__label">{t('info_services')}</span>
             </Link>
             <Link to="/services#terefdas" className="info-card">
+              <img src={partnerImg} alt="Tərəfdaşlıq" className="info-card__image" />
               <span className="info-card__label">{t('info_partnership')}</span>
             </Link>
           </div>

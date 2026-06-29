@@ -1,7 +1,13 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import logo from '../assets/images/logo.png'
+
+const LANGUAGES = [
+  { code: 'az', label: 'Azərbaycan' },
+  { code: 'en', label: 'English' },
+  { code: 'ru', label: 'Русский' },
+]
 
 const MoonIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -16,15 +22,22 @@ const SunIcon = () => (
   </svg>
 )
 
+function getInitialDarkMode() {
+  const saved = localStorage.getItem('theme')
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    return true
+  }
+  return false
+}
+
 export default function Navbar() {
-  const { lang, toggleLang, t } = useLanguage()
+  const { lang, setLanguage, t } = useLanguage()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-
-  // ✅ localStorage-dan birbaşa ilkin dəyər oxu
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('theme') === 'dark'
-  })
+  const [darkMode, setDarkMode] = useState(getInitialDarkMode)
+  const [langMenuOpen, setLangMenuOpen] = useState(false)
+  const langMenuRef = useRef(null)
 
   const links = [
     { to: '/',              label: t('nav_home') },
@@ -40,18 +53,29 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // ✅ Tema dəyişəndə DOM-u yenilə (setState yoxdur, xəta olmaz)
-  useLayoutEffect(() => {
-    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
-  }, [darkMode])
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (langMenuRef.current && !langMenuRef.current.contains(e.target)) {
+        setLangMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onClickOutside)
+    return () => document.removeEventListener('mousedown', onClickOutside)
+  }, [])
 
   const toggleDarkMode = () => {
     const next = !darkMode
     setDarkMode(next)
+    document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light')
     localStorage.setItem('theme', next ? 'dark' : 'light')
   }
 
   const handleLinkClick = () => setMenuOpen(false)
+
+  const selectLang = (code) => {
+    setLanguage(code)
+    setLangMenuOpen(false)
+  }
 
   return (
     <>
@@ -76,9 +100,29 @@ export default function Navbar() {
           </ul>
 
           <div className="navbar__actions">
-            <button className="navbar__lang-btn" onClick={toggleLang} aria-label="Dil seçimi">
-              {lang.toUpperCase()}
-            </button>
+            <div className="navbar__lang-wrap" ref={langMenuRef}>
+              <button
+                className="navbar__lang-btn"
+                onClick={() => setLangMenuOpen(o => !o)}
+                aria-label="Dil seçimi"
+              >
+                {lang.toUpperCase()}
+              </button>
+
+              {langMenuOpen && (
+                <div className="navbar__lang-dropdown">
+                  {LANGUAGES.map(l => (
+                    <button
+                      key={l.code}
+                      className={`navbar__lang-option${l.code === lang ? ' active' : ''}`}
+                      onClick={() => selectLang(l.code)}
+                    >
+                      {l.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <button
               className="navbar__theme-btn"
@@ -115,9 +159,15 @@ export default function Navbar() {
         ))}
 
         <div className="navbar__mobile-actions">
-          <button className="navbar__lang-btn" onClick={toggleLang} aria-label="Dil seçimi">
-            {lang.toUpperCase()}
-          </button>
+          {LANGUAGES.map(l => (
+            <button
+              key={l.code}
+              className={`navbar__lang-btn${l.code === lang ? ' active' : ''}`}
+              onClick={() => selectLang(l.code)}
+            >
+              {l.code.toUpperCase()}
+            </button>
+          ))}
           <button className="navbar__theme-btn" onClick={toggleDarkMode} aria-label="Tema dəyiş">
             {darkMode ? <SunIcon /> : <MoonIcon />}
           </button>
