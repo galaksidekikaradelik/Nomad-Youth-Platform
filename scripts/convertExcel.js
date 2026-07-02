@@ -1,31 +1,21 @@
-// scripts/convertExcel.js
 // İstifadə: node scripts/convertExcel.js
-//
-// src/data/opportunities.xlsx faylını oxuyub
-// src/data/opportunities.json faylına çevirir.
 
-import XLSX from 'xlsx'
+import Papa from 'papaparse'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const INPUT_PATH = path.join(__dirname, '../src/data/opportunities.xlsx')
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTh8SnV1dE4f9q77ekbT4j8xlDSYLQx1BRKDOywGjmUhSVAHK-1NUnJN7JYJ4sn3w/pub?output=csv'
+
 const OUTPUT_PATH = path.join(__dirname, '../src/data/opportunities.json')
 
 function excelDateToISO(value) {
-  // Excel-dən tarix "31.05.2026" kimi string, ya da Excel serial nömrə (45794 kimi) gələ bilər
+  // Google Sheets CSV-dən tarix "31.05.2026" kimi string gəlir
   if (!value) return null
 
-  if (typeof value === 'number') {
-    // Excel serial tarix
-    const date = XLSX.SSF.parse_date_code(value)
-    return new Date(date.y, date.m - 1, date.d).toISOString().split('T')[0]
-  }
-
   if (typeof value === 'string') {
-    // "dd.mm.yyyy" formatını gözləyirik
     const parts = value.trim().split('.')
     if (parts.length === 3) {
       const [day, month, year] = parts
@@ -36,17 +26,22 @@ function excelDateToISO(value) {
   return null
 }
 
-function run() {
-  if (!fs.existsSync(INPUT_PATH)) {
-    console.error(`❌ Fayl tapılmadı: ${INPUT_PATH}`)
-    console.error('Excel faylını "src/data/opportunities.xlsx" kimi yerləştir.')
-    process.exit(1)
+async function fetchCSV(url) {
+  const res = await fetch(url)
+  if (!res.ok) {
+    throw new Error(`CSV yüklənmədi: ${res.status} ${res.statusText}`)
   }
+  return res.text()
+}
 
-  const workbook = XLSX.readFile(INPUT_PATH)
-  const sheetName = workbook.SheetNames[0]
-  const sheet = workbook.Sheets[sheetName]
-  const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' })
+async function run() {
+  console.log('⏳ Google Sheets-dən data çəkilir...')
+  const csvText = await fetchCSV(SHEET_CSV_URL)
+
+  const { data: rows } = Papa.parse(csvText, {
+    header: true,
+    skipEmptyLines: true,
+  })
 
   const opportunities = rows.map((row, index) => {
     const title = row['Layihənin keçid linki']?.toString().trim()
@@ -72,4 +67,7 @@ function run() {
   console.log(`✅ ${opportunities.length} elan çevrildi → ${OUTPUT_PATH}`)
 }
 
-run()
+run().catch(err => {
+  console.error('❌ Xəta:', err.message)
+  process.exit(1)
+})

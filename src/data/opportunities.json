@@ -1,19 +1,6 @@
 [
   {
     "id": 1,
-    "title": "Youth@Work Conference: Value and Recognition of Youth Work for Employability and Entrepreneurship",
-    "deadline": "2026-06-30",
-    "type": "Offline",
-    "location": "Gürcüstan",
-    "applyLink": "http://trainings.salto-youth.net/14923",
-    "publishedAt": "2026-07-16",
-    "tags": [
-      "Offline",
-      "Gürcüstan"
-    ]
-  },
-  {
-    "id": 2,
     "title": "Transforming Challenges into Shared Happiness",
     "deadline": "2026-07-02",
     "type": "Online",
@@ -26,7 +13,7 @@
     ]
   },
   {
-    "id": 3,
+    "id": 2,
     "title": "Pathways to Accessible Youth Work - Online Conference",
     "deadline": "2026-07-05",
     "type": "Online",
@@ -39,7 +26,7 @@
     ]
   },
   {
-    "id": 4,
+    "id": 3,
     "title": "PlayLab: Building Communities Through Experience",
     "deadline": "2026-07-05",
     "type": "Offline",
@@ -52,7 +39,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": 4,
     "title": "Organizational development for preparedness: Fostering resilience in youth NGOs",
     "deadline": "2026-07-05",
     "type": "Offline",
@@ -65,7 +52,7 @@
     ]
   },
   {
-    "id": 6,
+    "id": 5,
     "title": "Online FREE International Virtual Exchange – Value Proposition Development, Market Research and Customer Analysis",
     "deadline": "2026-07-06",
     "type": "Online",
@@ -78,7 +65,7 @@
     ]
   },
   {
-    "id": 7,
+    "id": 6,
     "title": "Debunker Summer School of Media Literacy | NECE Lab",
     "deadline": "2026-07-08",
     "type": "Offline",
@@ -91,7 +78,7 @@
     ]
   },
   {
-    "id": 8,
+    "id": 7,
     "title": "FINAL CONFERENCE \"Participation Needs Nonviolent Debate for Conflict Transformation\"",
     "deadline": "2026-07-13",
     "type": "Offline",
@@ -104,7 +91,7 @@
     ]
   },
   {
-    "id": 9,
+    "id": 8,
     "title": "Mindful Impact: Strengthening Youth Work From Within",
     "deadline": "2026-07-17",
     "type": "Offline",
@@ -117,7 +104,7 @@
     ]
   },
   {
-    "id": 10,
+    "id": 9,
     "title": "VIRTUALLYEDU – Virtual Exchanges and Education on Digital Skill",
     "deadline": "2026-07-19",
     "type": "Online",
@@ -130,7 +117,7 @@
     ]
   },
   {
-    "id": 11,
+    "id": 10,
     "title": "Digital Tools for Autism Inclusion: Supporting Youth Workers, NGOs and Caregivers Through Coordinated Care",
     "deadline": "2026-07-22",
     "type": "Online",
@@ -143,7 +130,7 @@
     ]
   },
   {
-    "id": 12,
+    "id": 11,
     "title": "Virtual Partnership Building Activity (PBA) for Erasmus+ KA152 & KA153 Projects Vol. 4",
     "deadline": "2026-07-27",
     "type": "Online",
@@ -156,7 +143,7 @@
     ]
   },
   {
-    "id": 13,
+    "id": 12,
     "title": "STEAM in Youth Work: Creative projects for young people",
     "deadline": "2026-07-27",
     "type": "Online",
@@ -169,7 +156,7 @@
     ]
   },
   {
-    "id": 14,
+    "id": 13,
     "title": "Sapounofouska Playful Learning Fest",
     "deadline": "2026-07-28",
     "type": "Offline",
@@ -182,7 +169,7 @@
     ]
   },
   {
-    "id": 15,
+    "id": 14,
     "title": "Inclusive Evolution: The Next Generation 2026",
     "deadline": "2026-07-30",
     "type": "Offline",
@@ -195,7 +182,7 @@
     ]
   },
   {
-    "id": 16,
+    "id": 15,
     "title": "Robotics in Youth Work: From Playful Missions to Real Skills",
     "deadline": "2026-07-31",
     "type": "Online",
@@ -208,7 +195,7 @@
     ]
   },
   {
-    "id": 17,
+    "id": 16,
     "title": "Ask Better, Teach Better: Question‑driven AI & advocacy in youth work",
     "deadline": "2026-07-31",
     "type": "Online",
@@ -221,7 +208,7 @@
     ]
   },
   {
-    "id": 18,
+    "id": 17,
     "title": "TOSCA Volunteering – Training and Support for Organisations in the European Solidarity Corps",
     "deadline": "2026-08-03",
     "type": "Offline",
@@ -234,7 +221,7 @@
     ]
   },
   {
-    "id": 19,
+    "id": 18,
     "title": "Volunteering Teams as a Tool to support Inclusion",
     "deadline": "2026-08-09",
     "type": "Offline",
@@ -247,7 +234,7 @@
     ]
   },
   {
-    "id": 20,
+    "id": 19,
     "title": "PBA Youth X Culture",
     "deadline": "2026-08-15",
     "type": "Offline",
@@ -260,7 +247,7 @@
     ]
   },
   {
-    "id": 21,
+    "id": 20,
     "title": "Working with Queer Youth",
     "deadline": "2026-08-30",
     "type": "Offline",
@@ -273,7 +260,7 @@
     ]
   },
   {
-    "id": 22,
+    "id": 21,
     "title": "Outdoor Paths: Designing Experiential Activities for Young People",
     "deadline": "2026-07-31",
     "type": "Online",
@@ -286,7 +273,7 @@
     ]
   },
   {
-    "id": 23,
+    "id": 22,
     "title": "Play to Learn: Creating Educational Games for Youth Work",
     "deadline": "2026-07-31",
     "type": "Online",
@@ -299,7 +286,7 @@
     ]
   },
   {
-    "id": 24,
+    "id": 23,
     "title": "Engaging Communities Through Sustainable Sport Communication",
     "deadline": "2026-09-01",
     "type": "Online",
@@ -312,7 +299,7 @@
     ]
   },
   {
-    "id": 25,
+    "id": 24,
     "title": "Mentoring under construction - Focus Mentoring training based on the Mentoring framework",
     "deadline": "2026-09-06",
     "type": "Offline",
@@ -325,7 +312,7 @@
     ]
   },
   {
-    "id": 26,
+    "id": 25,
     "title": "Why municipal youth participation?",
     "deadline": "2026-09-06",
     "type": "Offline",

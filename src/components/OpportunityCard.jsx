@@ -143,12 +143,12 @@ export default function OpportunityCard({ opportunity }) {
         <div className="opportunity-card__dates">
           {formattedDeadline && (
             <div className="opportunity-card__date-row">
-              {t('card_deadline')} {formattedDeadline}
+              {t('card_deadline')} {formattedDeadline}{' ('}
               {daysLeft !== null && (
                 <span className={`opportunity-card__days-left${isUrgent ? ' opportunity-card__days-left--urgent' : ''}`}>
                   {isUrgent && <WarningIcon />} {daysLeft} {t('card_days_left')}
                 </span>
-              )}
+              )}{' )'}
             </div>
           )}
           {formattedPublished && (

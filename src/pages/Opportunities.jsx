@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useLanguage } from '../hooks/useLanguage'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
 import EventCard from '../components/EventCard'
@@ -7,23 +8,33 @@ import { opportunities } from '../data/opportunities'
 import { events } from '../data/events'
 
 const SCOPES = [
-  { id: 'hamisi',     label: 'Hamısı' },
-  { id: 'beynelxalq', label: '🌍 Beynəlxalq' },
-  { id: 'yerli',      label: '🇦🇿 Yerli' },
+  { id: 'hamisi',     labelKey: 'scope_all' },
+  { id: 'beynelxalq', labelKey: 'scope_international' },
+  { id: 'yerli',      labelKey: 'scope_local' },
 ]
 
-const CATEGORIES = ['Hamısı', 'Könüllülük', 'Erasmus+', 'ESC', 'Təcrübə', 'Təlim', 'Qrant', 'Konfrans']
+// id-lər data-dakı `type` dəyərləri ilə eyni olmalıdır (filtrasiya üçün)
+const CATEGORIES = [
+  { id: '',            labelKey: 'category_all' },
+  { id: 'Könüllülük',  labelKey: null },
+  { id: 'Erasmus+',    labelKey: null },
+  { id: 'ESC',         labelKey: null },
+  { id: 'Təcrübə',     labelKey: null },
+  { id: 'Təlim',       labelKey: null },
+  { id: 'Qrant',       labelKey: null },
+  { id: 'Konfrans',    labelKey: null },
+]
 
 const FORMATS = [
-  { id: 'Hamısı', label: 'Hamısı' },
-  { id: 'Online', label: '💻 Onlayn' },
-  { id: 'Onsite', label: '📍 Əyani' },
+  { id: 'Hamısı', labelKey: 'format_all' },
+  { id: 'Online', labelKey: 'format_online' },
+  { id: 'Onsite', labelKey: 'format_onsite' },
 ]
 
 const SORT_OPTIONS = [
-  { id: 'deadline',  label: 'Deadline (yaxın)' },
-  { id: 'newest',    label: 'Əlavə olunma tarixi (yeni)' },
-  { id: 'country',   label: 'Ölkəyə görə (A-Z)' },
+  { id: 'deadline', labelKey: 'sort_deadline' },
+  { id: 'newest',   labelKey: 'sort_newest' },
+  { id: 'country',  labelKey: 'sort_country' },
 ]
 
 const enriched = opportunities.map((op, i) => ({
@@ -37,24 +48,27 @@ const FilterChip = ({ label, active, onClick }) => (
 )
 
 export default function Opportunities() {
+  const { t } = useLanguage()
   const [searchParams] = useSearchParams()
   const initialScope   = searchParams.get('scope') || 'hamisi'
 
   const [search,   setSearch]   = useState('')
-  const [category, setCategory] = useState('Hamısı')
+  const [category, setCategory] = useState('')
   const [scope,    setScope]    = useState(initialScope)
   const [format,   setFormat]   = useState('Hamısı')
   const [sort,     setSort]     = useState('deadline')
   const [tab,      setTab]      = useState('opportunities')
 
   const filtered = useMemo(() => enriched.filter(op => {
-    const matchCat    = category === 'Hamısı' || op.type === category
+    const matchCat    = category === '' || op.type === category
     const matchScope  = scope === 'hamisi' || op.scope === scope
     const matchFormat = format === 'Hamısı' || op.format === format
-    const matchSearch = !search ||
-      op.title.toLowerCase().includes(search.toLowerCase()) ||
-      op.organization.toLowerCase().includes(search.toLowerCase()) ||
-      op.tags.some(t => t.toLowerCase().includes(search.toLowerCase()))
+    const q = search.toLocaleLowerCase('az')
+  const matchSearch = !search ||
+    op.title.toLocaleLowerCase('az').includes(q) ||
+    op.location?.toLocaleLowerCase('az').includes(q) ||
+    op.organization?.toLocaleLowerCase('az').includes(q) ||
+    op.tags.some(tag => tag.toLocaleLowerCase('az').includes(q))
     return matchCat && matchScope && matchFormat && matchSearch
   }), [search, category, scope, format])
 
@@ -75,20 +89,18 @@ export default function Opportunities() {
       <div className="container">
 
         <div className="page-header">
-          <div className="page-header__eyebrow">Kəşf Et</div>
-          <h1 className="page-header__title">İmkanlar</h1>
-          <p className="page-header__desc">
-            Maraqlarına uyğun imkanları filterlə və özünə ən uyğun layihəni tap.
-          </p>
+          <div className="page-header__eyebrow">{t('opp_eyebrow')}</div>
+          <h1 className="page-header__title">{t('opp_title')}</h1>
+          <p className="page-header__desc">{t('opp_desc')}</p>
         </div>
 
         {/* Tab switcher */}
         <div className="tab-switcher">
           <button className={`tab-btn${tab === 'opportunities' ? ' active' : ''}`} onClick={() => setTab('opportunities')}>
-            📋 İmkanlar
+            {t('opp_tab_opportunities')}
           </button>
           <button className={`tab-btn${tab === 'events' ? ' active' : ''}`} onClick={() => setTab('events')}>
-            📅 Yaxınlaşan Tədbirlər
+            {t('opp_tab_events')}
           </button>
         </div>
 
@@ -96,42 +108,45 @@ export default function Opportunities() {
           <>
             <div style={{ marginBottom: 'var(--space-xl)' }}>
               <SearchBar
-                placeholder="İmkan, təşkilat və ya açar söz axtar..."
-                onSearch={({ query }) => setSearch(query)}
+                placeholder={t('opp_search_placeholder')}
+                query={search}
+                category={category}
+                onQueryChange={setSearch}
+                onCategoryChange={setCategory}
               />
             </div>
 
             {/* Filters */}
             <div className="filter-group">
               <div className="filter-group__row">
-                <span className="filter-group__label">Layihənin növü</span>
+                <span className="filter-group__label">{t('filter_scope_label')}</span>
                 <div className="filter-group__chips">
                   {SCOPES.map(s => (
-                    <FilterChip key={s.id} label={s.label} active={scope === s.id} onClick={() => setScope(s.id)} />
+                    <FilterChip key={s.id} label={t(s.labelKey)} active={scope === s.id} onClick={() => setScope(s.id)} />
                   ))}
                 </div>
               </div>
 
               <div className="filter-group__row">
-                <span className="filter-group__label">Kateqoriya</span>
+                <span className="filter-group__label">{t('filter_category_label')}</span>
                 <div className="filter-group__chips">
                   {CATEGORIES.map(c => (
-                    <FilterChip key={c} label={c} active={category === c} onClick={() => setCategory(c)} />
+                    <FilterChip key={c.id} label={c.labelKey ? t(c.labelKey) : c.id} active={category === c.id} onClick={() => setCategory(c.id)} />
                   ))}
                 </div>
               </div>
 
               <div className="filter-group__row">
-                <span className="filter-group__label">Format</span>
+                <span className="filter-group__label">{t('filter_format_label')}</span>
                 <div className="filter-group__chips">
                   {FORMATS.map(f => (
-                    <FilterChip key={f.id} label={f.label} active={format === f.id} onClick={() => setFormat(f.id)} />
+                    <FilterChip key={f.id} label={t(f.labelKey)} active={format === f.id} onClick={() => setFormat(f.id)} />
                   ))}
                 </div>
               </div>
 
               <div className="filter-group__row">
-                <span className="filter-group__label">Sırala</span>
+                <span className="filter-group__label">{t('filter_sort_label')}</span>
                 <select
                   className="search-bar__select"
                   value={sort}
@@ -139,14 +154,14 @@ export default function Opportunities() {
                   style={{ border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-full)', padding: '8px 16px' }}
                 >
                   {SORT_OPTIONS.map(o => (
-                    <option key={o.id} value={o.id}>{o.label}</option>
+                    <option key={o.id} value={o.id}>{t(o.labelKey)}</option>
                   ))}
                 </select>
               </div>
             </div>
 
             <div style={{ marginBottom: 'var(--space-lg)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-              Sənin üçün <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{sorted.length}</span> imkan tapıldı
+              {t('opp_results_prefix')} <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{sorted.length}</span> {t('opp_results_suffix')}
             </div>
 
             {sorted.length > 0 ? (
@@ -156,8 +171,8 @@ export default function Opportunities() {
             ) : (
               <div className="empty-state">
                 <div className="empty-state__icon">🔍</div>
-                <div className="empty-state__title">Nəticə tapılmadı</div>
-                <p className="empty-state__desc">Filtri dəyişdirərək yenidən cəhd edin.</p>
+                <div className="empty-state__title">{t('opp_empty_title')}</div>
+                <p className="empty-state__desc">{t('opp_empty_desc')}</p>
               </div>
             )}
           </>
@@ -166,7 +181,7 @@ export default function Opportunities() {
         {tab === 'events' && (
           <>
             <div style={{ marginBottom: 'var(--space-lg)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-              <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{events.length}</span> yaxınlaşan tədbir
+              <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{events.length}</span> {t('events_upcoming_suffix')}
             </div>
             <div className="grid-3">
               {events.map(ev => <EventCard key={ev.id} event={ev} />)}

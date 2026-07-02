@@ -1,43 +1,45 @@
 import { Link } from 'react-router-dom'
-
-const howItWorks = [
-  { num: '1', icon: '🔍', title: 'Kəşf et', desc: 'Maraqlarına uyğun könüllülük, Erasmus+, təcrübə, qrant və digər inkişaf imkanlarını tap.' },
-  { num: '2', icon: '📝', title: 'Müraciət et', desc: 'Şərtlərlə tanış ol və səni maraqlandıran layihələrə birbaşa müraciət et.' },
-  { num: '3', icon: '🚀', title: 'İnkişaf et', desc: 'Yeni təcrübə qazan, beynəlxalq əlaqələr qur və karyera yolunda özünü inkişaf etdir.' },
-]
+import { useLanguage } from '../hooks/useLanguage'
 
 const team = [
-  { name: 'Əli Hüseynov',   role: 'Qurucu & CEO',        emoji: '👨‍💼' },
-  { name: 'Nigar Əliyeva',  role: 'Məhsul Direktoru',    emoji: '👩‍💻' },
-  { name: 'Rauf Məmmədov',  role: 'Kommunikasiya',       emoji: '👨‍🎨' },
-  { name: 'Leyla Qasımova', role: 'Tərəfdaşlıq Mənəceri', emoji: '👩‍🤝‍👩' },
-]
-
-const stats = [
-  { num: '50+', label: 'Aktiv İmkan' },
-  { num: '10+', label: 'Xidmət' },
-  { num: '7/24', label: 'Əlçatan Platforma' },
-  { num: '9',  label: 'Kateqoriya' },
+  { name: 'Raul Israfilov',   roleKey: 'about_role_ceo',         emoji: '👨‍💼' },
+  { name: 'Gümüş Hüseynova',  roleKey: 'about_role_dev',     emoji: '👩‍💻' },
+  { name: 'Şəbnəm Osmanova',  roleKey: 'about_role_dev',       emoji: '👩‍💻' },
+  { name: 'Əminə Qocayeva', roleKey: 'about_role_partnership', emoji: '👨‍🎨' },
+  { name: 'Nəzrin Xankişiyeva', roleKey: 'about_role_partnership', emoji: '👨‍🎨' }
 ]
 
 export default function About() {
+  const { t } = useLanguage()
+
+  const howItWorks = [
+    { num: '1', icon: '🔍', titleKey: 'about_step1_title', descKey: 'about_step1_desc' },
+    { num: '2', icon: '📝', titleKey: 'about_step2_title', descKey: 'about_step2_desc' },
+    { num: '3', icon: '🚀', titleKey: 'about_step3_title', descKey: 'about_step3_desc' },
+  ]
+
+  const stats = [
+    { num: '50+',  labelKey: 'about_stat_opportunities' },
+    { num: '10+',  labelKey: 'about_stat_services' },
+    { num: '7/24', labelKey: 'about_stat_available' },
+    { num: '9',    labelKey: 'about_stat_category' },
+  ]
+
   return (
     <div className="section">
       <div className="container">
 
         {/* Header */}
         <div className="page-header">
-          <div className="page-header__eyebrow">Haqqımızda</div>
-          <h1 className="page-header__title">Gənclərin Platforması</h1>
-          <p className="page-header__desc">
-            Nomad Youth — Azərbaycan gənclərinin şəxsi və peşəkar inkişafını dəstəkləmək üçün yaradılmış rəqəmsal platformadır.
-          </p>
+          <div className="page-header__eyebrow">{t('about_eyebrow')}</div>
+          <h1 className="page-header__title">{t('about_title')}</h1>
+          <p className="page-header__desc">{t('about_desc')}</p>
         </div>
 
         {/* Stats */}
         <div className="grid-4" style={{ marginBottom: 'var(--space-3xl)' }}>
           {stats.map(s => (
-            <div key={s.label} style={{
+            <div key={s.labelKey} style={{
               background: 'var(--color-surface)',
               border: '1px solid var(--color-border)',
               borderRadius: 'var(--radius-lg)',
@@ -48,7 +50,7 @@ export default function About() {
                 {s.num}
               </div>
               <div style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', marginTop: 'var(--space-xs)' }}>
-                {s.label}
+                {t(s.labelKey)}
               </div>
             </div>
           ))}
@@ -57,15 +59,15 @@ export default function About() {
         {/* Nomad necə işləyir? */}
         <div style={{ marginBottom: 'var(--space-3xl)' }}>
           <div className="section-heading">
-            <div className="section-heading__eyebrow">Necə İşləyir</div>
-            <h2 className="section-heading__title">Nomad necə işləyir?</h2>
+            <div className="section-heading__eyebrow">{t('about_how_eyebrow')}</div>
+            <h2 className="section-heading__title">{t('about_how_title')}</h2>
           </div>
           <div className="about-values">
             {howItWorks.map(step => (
               <div key={step.num} className="value-card">
                 <div className="value-card__icon">{step.icon}</div>
-                <div className="value-card__title">{step.num}. {step.title}</div>
-                <p className="value-card__desc">{step.desc}</p>
+                <div className="value-card__title">{step.num}. {t(step.titleKey)}</div>
+                <p className="value-card__desc">{t(step.descKey)}</p>
               </div>
             ))}
           </div>
@@ -74,8 +76,8 @@ export default function About() {
         {/* Team */}
         <div style={{ marginBottom: 'var(--space-3xl)' }}>
           <div className="section-heading">
-            <div className="section-heading__eyebrow">Komanda</div>
-            <h2 className="section-heading__title">Komandamız</h2>
+            <div className="section-heading__eyebrow">{t('about_team_eyebrow')}</div>
+            <h2 className="section-heading__title">{t('about_team_title')}</h2>
           </div>
           <div className="grid-4">
             {team.map(m => (
@@ -92,7 +94,7 @@ export default function About() {
               >
                 <div style={{ fontSize: '3rem', marginBottom: 'var(--space-md)' }}>{m.emoji}</div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, marginBottom: 4 }}>{m.name}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{m.role}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{t(m.roleKey)}</div>
               </div>
             ))}
           </div>
@@ -101,12 +103,12 @@ export default function About() {
         {/* CTA / Partnership */}
         <div className="cta-banner">
           <div className="cta-banner__content">
-            <h2 className="cta-banner__title">Bizimlə Tərəfdaş Ol</h2>
-            <p className="cta-banner__desc">Yeni imkanlarınızı Nomad Youth platformasında paylaşmaq üçün bizimlə əlaqə saxlayın.</p>
+            <h2 className="cta-banner__title">{t('about_cta_title')}</h2>
+            <p className="cta-banner__desc">{t('about_cta_desc')}</p>
           </div>
           <div className="cta-banner__actions">
-            <Link to="/contact" className="btn-primary">Əlaqə Saxla</Link>
-            <Link to="/opportunities" className="btn-outline">İmkanlara Bax</Link>
+            <Link to="/contact" className="btn-primary">{t('about_cta_contact')}</Link>
+            <Link to="/opportunities" className="btn-outline">{t('about_cta_opportunities')}</Link>
           </div>
         </div>
 

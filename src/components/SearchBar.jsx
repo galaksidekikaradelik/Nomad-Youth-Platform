@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useLanguage } from '../hooks/useLanguage'
 
 const SearchIcon = () => (
@@ -8,40 +7,34 @@ const SearchIcon = () => (
   </svg>
 )
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({ placeholder, query, category, onQueryChange, onCategoryChange }) {
   const { t } = useLanguage()
-  const [query, setQuery] = useState('')
-  const [category, setCategory] = useState('')
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onSearch?.({ query, category })
-  }
 
   return (
-    <form className="search-bar" onSubmit={handleSubmit}>
+    <div className="search-bar">
       <span className="search-bar__icon"><SearchIcon /></span>
       <input
         type="text"
         className="search-bar__input"
-        placeholder={t('search_placeholder')}
+        placeholder={placeholder || t('search_placeholder')}
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => onQueryChange(e.target.value)}
       />
       <span className="search-bar__divider" />
       <select
         className="search-bar__select"
         value={category}
-        onChange={(e) => setCategory(e.target.value)}
+        onChange={(e) => onCategoryChange(e.target.value)}
       >
         <option value="">{t('search_all_categories')}</option>
-        <option value="grant">Qrant</option>
-        <option value="internship">Təcrübə</option>
-        <option value="volunteering">Könüllülük</option>
-        <option value="training">Təlim</option>
-        <option value="event">Tədbir</option>
+        <option value="Könüllülük">Könüllülük</option>
+        <option value="Erasmus+">Erasmus+</option>
+        <option value="ESC">ESC</option>
+        <option value="Təcrübə">Təcrübə</option>
+        <option value="Təlim">Təlim</option>
+        <option value="Qrant">Qrant</option>
+        <option value="Konfrans">Konfrans</option>
       </select>
-      <button type="submit" className="search-bar__btn">{t('search_btn')}</button>
-    </form>
+    </div>
   )
 }

@@ -6,9 +6,9 @@ export default function Hero() {
   const { t } = useLanguage()
 
   const stats = [
-    { num: '500+', label: t('hero_stat_opportunities') },
-    { num: '120+', label: t('hero_stat_partners') },
-    { num: '8K+',  label: t('hero_stat_youth') },
+    { num: '50+', label: t('hero_stat_opportunities') },
+    { num: '10+', label: t('hero_stat_services') },
+    { num: '9',  label: t('hero_stat_category') },
   ]
 
   return (

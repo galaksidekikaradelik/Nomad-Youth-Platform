@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLanguage } from '../hooks/useLanguage'
 
 const MailIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -18,15 +19,22 @@ const PinIcon = () => (
   </svg>
 )
 
-const infoCards = [
-  { icon: <MailIcon />,  label: 'E-poçt',   value: 'nomadyouthplatform@gmail.com' },
-  { icon: <PhoneIcon />, label: 'Telefon',  value: '+994 12 000 00 00' },
-  { icon: <PinIcon />,   label: 'Ünvan',    value: 'Bakı, Azərbaycan' },
-]
-
 export default function Contact() {
+  const { t } = useLanguage()
   const [form, setForm]       = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+
+  const infoCards = [
+    { icon: <MailIcon />,  label: t('contact_email_label'),   value: 'nomadyouthplatform@gmail.com' },
+    { icon: <PhoneIcon />, label: t('contact_phone_label'),   value: '+994 12 000 00 00' },
+    { icon: <PinIcon />,   label: t('contact_address_label'), value: t('contact_address_value') },
+  ]
+
+  const hours = [
+    { day: t('contact_hours_weekdays'), time: '09:00 – 18:00' },
+    { day: t('contact_hours_saturday'), time: '10:00 – 14:00' },
+    { day: t('contact_hours_sunday'),   time: t('contact_hours_off') },
+  ]
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
@@ -40,11 +48,9 @@ export default function Contact() {
       <div className="container">
 
         <div className="page-header">
-          <div className="page-header__eyebrow">Əlaqə</div>
-          <h1 className="page-header__title">Bizimlə Əlaqə Saxla</h1>
-          <p className="page-header__desc">
-            Layihənizi paylaşmaq, tərəfdaşlıq etmək və ya hər hansı sualınızı bizimlə bölüşmək üçün əlaqə saxlayın.
-          </p>
+          <div className="page-header__eyebrow">{t('contact_eyebrow')}</div>
+          <h1 className="page-header__title">{t('contact_title')}</h1>
+          <p className="page-header__desc">{t('contact_desc')}</p>
         </div>
 
         <div className="contact-grid">
@@ -69,16 +75,12 @@ export default function Contact() {
               marginTop: 'var(--space-sm)',
             }}>
               <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, marginBottom: 'var(--space-sm)' }}>
-                İş saatları
+                {t('contact_hours_title')}
               </div>
-              {[
-                { day: 'Bazar ertəsi — Cümə', time: '09:00 – 18:00' },
-                { day: 'Şənbə',               time: '10:00 – 14:00' },
-                { day: 'Bazar',               time: 'İstirahət' },
-              ].map(r => (
+              {hours.map(r => (
                 <div key={r.day} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', padding: '6px 0', borderBottom: '1px solid var(--color-border)' }}>
                   <span style={{ color: 'var(--color-text-muted)' }}>{r.day}</span>
-                  <span style={{ fontWeight: 500, color: r.time === 'İstirahət' ? 'var(--color-text-faint)' : 'var(--color-text)' }}>{r.time}</span>
+                  <span style={{ fontWeight: 500, color: r.time === t('contact_hours_off') ? 'var(--color-text-faint)' : 'var(--color-text)' }}>{r.time}</span>
                 </div>
               ))}
             </div>
@@ -96,44 +98,44 @@ export default function Contact() {
             }}>
               <div style={{ fontSize: '3rem' }}>✅</div>
               <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700 }}>
-                Mesajın çatdı!
+                {t('contact_success_title')}
               </div>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>
-                Ən qısa zamanda sənə cavab verəcəyik. Təşəkkür edirik!
+                {t('contact_success_desc')}
               </p>
               <button className="btn-primary" onClick={() => { setSubmitted(false); setForm({ name: '', email: '', subject: '', message: '' }) }}>
-                Yeni Mesaj
+                {t('contact_success_btn')}
               </button>
             </div>
           ) : (
             <div className="contact-form">
               <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.1rem', marginBottom: 'var(--space-sm)' }}>
-                Mesaj Göndər
+                {t('contact_form_title')}
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
                 <div className="form-group">
-                  <label className="form-label">Adın *</label>
-                  <input className="form-input" name="name" placeholder="Adın Soyadın" value={form.name} onChange={handleChange} />
+                  <label className="form-label">{t('contact_form_name')}</label>
+                  <input className="form-input" name="name" placeholder={t('contact_form_name_placeholder')} value={form.name} onChange={handleChange} />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">E-poçt *</label>
+                  <label className="form-label">{t('contact_form_email')}</label>
                   <input className="form-input" name="email" type="email" placeholder="email@example.com" value={form.email} onChange={handleChange} />
                 </div>
               </div>
 
               <div className="form-group">
-                <label className="form-label">Mövzu</label>
-                <input className="form-input" name="subject" placeholder="Nə barədə yazırsın?" value={form.subject} onChange={handleChange} />
+                <label className="form-label">{t('contact_form_subject')}</label>
+                <input className="form-input" name="subject" placeholder={t('contact_form_subject_placeholder')} value={form.subject} onChange={handleChange} />
               </div>
 
               <div className="form-group">
-                <label className="form-label">Mesaj *</label>
-                <textarea className="form-textarea" name="message" placeholder="Mesajını bura yaz..." value={form.message} onChange={handleChange} />
+                <label className="form-label">{t('contact_form_message')}</label>
+                <textarea className="form-textarea" name="message" placeholder={t('contact_form_message_placeholder')} value={form.message} onChange={handleChange} />
               </div>
 
               <button className="btn-primary" onClick={handleSubmit} style={{ marginTop: 'var(--space-sm)' }}>
-                Göndər
+                {t('contact_form_submit')}
               </button>
             </div>
           )}

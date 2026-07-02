@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
-import logo from '../assets/images/logo.png'
+import logoLight from '../assets/images/logo-light.png'
+import logoDark from '../assets/images/logo-dark.png'
 
 const LANGUAGES = [
   { code: 'az', label: 'Azərbaycan' },
@@ -83,7 +84,7 @@ export default function Navbar() {
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <div className="container navbar__inner">
           <Link to="/" className="navbar__logo">
-            <img src={logo} alt="Nomad Youth" style={{ height: '160px', width: 'auto' }} />
+            <img src={darkMode ? logoDark : logoLight} alt="Nomad Youth" style={{ height: '160px', width: 'auto' }} />
           </Link>
 
           <ul className="navbar__links">
