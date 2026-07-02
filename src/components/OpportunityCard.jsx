@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLanguage } from '..//hooks/useLanguage'
+import AuthPromptModal from './AuthPromptModal'
 
 const HeartIcon = ({ active }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -19,6 +20,12 @@ const ArrowIcon = () => (
   </svg>
 )
 
+const WarningIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+  </svg>
+)
+
 function getDaysLeft(deadline) {
   if (!deadline) return null
   const diff = new Date(deadline) - new Date()
@@ -26,11 +33,56 @@ function getDaysLeft(deadline) {
   return days > 0 ? days : 0
 }
 
+const COUNTRY_CODES = {
+  'Gürcüstan': 'ge',
+  'İtaliya': 'it',
+  'Macarıstan': 'hu',
+  'Polşa': 'pl',
+  'İspaniya': 'es',
+  'Çexiya': 'cz',
+  'İsveç': 'se',
+  'Livan': 'lb',
+  'Yunanistan': 'gr',
+  'Finlandiya': 'fi',
+  'Belçika': 'be',
+  'Xorvatiya': 'hr',
+  'Azərbaycan': 'az',
+  'Türkiyə': 'tr',
+  'Almaniya': 'de',
+  'Fransa': 'fr',
+  'Portuqaliya': 'pt',
+  'Rumıniya': 'ro',
+  'Bolqarıstan': 'bg',
+  'Estoniya': 'ee',
+  'Latviya': 'lv',
+  'Litva': 'lt',
+  'Sloveniya': 'si',
+  'Slovakiya': 'sk',
+  'Niderland': 'nl',
+  'Avstriya': 'at',
+  'Malta': 'mt',
+  'Kipr': 'cy',
+  'Serbiya': 'rs',
+  'Şimali Makedoniya': 'mk',
+  'Albaniya': 'al',
+  'Çernoqoriya': 'me',
+  'Bosniya və Herseqovina': 'ba',
+  'Ukrayna': 'ua',
+  'Moldova': 'md',
+}
+
+function FlagIcon({ location }) {
+  const code = COUNTRY_CODES[location]
+  if (!code) return <span className="opportunity-card__flag-fallback">🌍</span>
+  return <span className={`fi fi-${code} opportunity-card__flag`} title={location} />
+}
+
+const URGENT_THRESHOLD_DAYS = 3
+
 export default function OpportunityCard({ opportunity }) {
   const { t, lang } = useLanguage()
-  const { type, location, deadline, applyLink, publishedAt } = opportunity
-  const [liked, setLiked] = useState(false)
-  const [saved, setSaved] = useState(false)
+  const { title, format, location, deadline, applyLink, publishedAt } = opportunity
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false)
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
@@ -39,28 +91,32 @@ export default function OpportunityCard({ opportunity }) {
     : null
 
   const daysLeft = getDaysLeft(deadline)
-  const daysSincePublished = publishedAt ? getDaysLeft(publishedAt) : null
+  const isUrgent = daysLeft !== null && daysLeft <= URGENT_THRESHOLD_DAYS
+  const formattedPublished = publishedAt
+    ? new Date(publishedAt).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
+    : null
 
-  const typeLabel = type === 'Online' ? t('type_online') : type === 'Offline' ? t('type_offline') : type
+  const typeLabel = format === 'Online' ? t('type_online') : format === 'Onsite' ? t('type_offline') : format
+  const typeModifier = format === 'Online' ? 'online' : format === 'Onsite' ? 'offline' : null
 
   return (
     <div className="opportunity-card">
       <div className="opportunity-card__top">
-        <h3 className="opportunity-card__title">{location}</h3>
+        <h3 className="opportunity-card__title">{title}</h3>
         <div className="opportunity-card__icons">
           <button
-            className={`opportunity-card__icon-btn${liked ? ' is-active opportunity-card__icon-btn--heart' : ''}`}
-            onClick={(e) => { e.stopPropagation(); setLiked(!liked) }}
+            className="opportunity-card__icon-btn"
+            onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
             aria-label="Bəyən"
           >
-            <HeartIcon active={liked} />
+            <HeartIcon active={false} />
           </button>
           <button
-            className={`opportunity-card__icon-btn${saved ? ' is-active opportunity-card__icon-btn--bookmark' : ''}`}
-            onClick={(e) => { e.stopPropagation(); setSaved(!saved) }}
+            className="opportunity-card__icon-btn"
+            onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
             aria-label="Yadda saxla"
           >
-            <BookmarkIcon active={saved} />
+            <BookmarkIcon active={false} />
           </button>
         </div>
       </div>
@@ -70,7 +126,14 @@ export default function OpportunityCard({ opportunity }) {
       <div className="opportunity-card__topic">
         <span className="opportunity-card__topic-label">{t('card_topic')}</span>
         <div className="opportunity-card__tags">
-          {typeLabel && <span className="opportunity-card__tag">{typeLabel}</span>}
+          <span className="opportunity-card__tag opportunity-card__tag--flag">
+            <FlagIcon location={location} /> {location}
+          </span>
+          {typeLabel && (
+            <span className={`opportunity-card__tag opportunity-card__tag--type${typeModifier ? ` opportunity-card__tag--${typeModifier}` : ''}`}>
+              {typeLabel}
+            </span>
+          )}
         </div>
       </div>
 
@@ -82,13 +145,15 @@ export default function OpportunityCard({ opportunity }) {
             <div className="opportunity-card__date-row">
               {t('card_deadline')} {formattedDeadline}
               {daysLeft !== null && (
-                <span className="opportunity-card__days-left"> ({daysLeft} {t('card_days_left')})</span>
+                <span className={`opportunity-card__days-left${isUrgent ? ' opportunity-card__days-left--urgent' : ''}`}>
+                  {isUrgent && <WarningIcon />} {daysLeft} {t('card_days_left')}
+                </span>
               )}
             </div>
           )}
-          {daysSincePublished !== null && (
+          {formattedPublished && (
             <div className="opportunity-card__date-row opportunity-card__date-row--muted">
-              {t('card_published')} {daysSincePublished} {t('card_days_left')}
+              {t('card_published')} {formattedPublished}
             </div>
           )}
         </div>
@@ -109,6 +174,8 @@ export default function OpportunityCard({ opportunity }) {
           </span>
         )}
       </div>
+
+      <AuthPromptModal open={showAuthPrompt} onClose={() => setShowAuthPrompt(false)} />
     </div>
   )
 }

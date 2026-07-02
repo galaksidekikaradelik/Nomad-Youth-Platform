@@ -4,12 +4,13 @@ export const translations = {
     nav_home: 'Əsas Səhifə',
     nav_opportunities: 'İmkanlar',
     nav_services: 'Xidmətlər',
+    nav_faq: 'FAQ',
     nav_about: 'Haqqımızda',
     nav_contact: 'Əlaqə',
     nav_cta: 'Hesab Yarat',
 
     // Home / Search
-    search_placeholder: 'Axtar...',
+    search_placeholder: 'Layihə, ölkə və ya təşkilat axtar...',
     search_all_categories: 'Bütün kateqoriyalar',
     search_btn: 'Axtar',
 
@@ -25,7 +26,7 @@ export const translations = {
     hero_title_line1: 'Gələcəyini',
     hero_title_em: 'İndi',
     hero_title_line2: 'Qur',
-    hero_desc: 'Könüllülük, təcrübə, qrant, təlim və tədbirləri bir yerdə kəşf et. Maraqlarına uyğun imkanları tap, müraciət et, inkişaf et.',
+    hero_desc: 'Könüllülük, Erasmus+, təcrübə, qrant və digər inkişaf imkanlarını bir platformada kəşf et.',
     hero_btn_international: 'Beynəlxalq Layihələr',
     hero_btn_local: 'Yerli Layihələr',
     hero_stat_opportunities: 'Aktiv İmkan',
@@ -53,12 +54,13 @@ export const translations = {
     nav_home: 'Home',
     nav_opportunities: 'Opportunities',
     nav_services: 'Services',
+    nav_faq: 'FAQ',
     nav_about: 'About Us',
     nav_contact: 'Contact',
     nav_cta: 'Create Account',
 
     // Home / Search
-    search_placeholder: 'Search...',
+    search_placeholder: 'Search for a project, country, or organization...',
     search_all_categories: 'All categories',
     search_btn: 'Search',
 
@@ -74,7 +76,7 @@ export const translations = {
     hero_title_line1: 'Build Your',
     hero_title_em: 'Future',
     hero_title_line2: 'Now',
-    hero_desc: 'Discover volunteering, internships, grants, training, and events all in one place. Find opportunities that match your interests, apply, and grow.',
+    hero_desc: 'Discover volunteering, Erasmus+, internships, grants, and other personal and professional development opportunities in one platform.',
     hero_btn_international: 'International Projects',
     hero_btn_local: 'Local Projects',
     hero_stat_opportunities: 'Active Opportunities',
@@ -102,12 +104,13 @@ export const translations = {
     nav_home: 'Главная',
     nav_opportunities: 'Возможности',
     nav_services: 'Услуги',
+    nav_faq: 'FAQ',
     nav_about: 'О нас',
     nav_contact: 'Контакты',
     nav_cta: 'Создать аккаунт',
 
     // Home / Search
-    search_placeholder: 'Поиск...',
+    search_placeholder: 'Поиск проекта, страны или организации...',
     search_all_categories: 'Все категории',
     search_btn: 'Поиск',
 
@@ -123,7 +126,7 @@ export const translations = {
     hero_title_line1: 'Строй своё',
     hero_title_em: 'Будущее',
     hero_title_line2: 'Сегодня',
-    hero_desc: 'Открой для себя волонтёрство, стажировки, гранты, тренинги и события — всё в одном месте. Найди подходящие возможности, подай заявку и развивайся.',
+    hero_desc: 'Откройте для себя волонтёрские программы, Erasmus+, стажировки, гранты и другие возможности для личного и профессионального развития на одной платформе.',
     hero_btn_international: 'Международные проекты',
     hero_btn_local: 'Местные проекты',
     hero_stat_opportunities: 'Активных возможностей',

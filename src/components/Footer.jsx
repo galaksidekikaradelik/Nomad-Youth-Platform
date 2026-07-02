@@ -55,11 +55,11 @@ export default function Footer() {
         </div>
 
         <div className="footer__disclaimer">
-          ⚖️ Nomad Youth heç bir məsuliyyət daşımır. Biz sadəcə sizinlə layihələr arasında körpü rolunu oynayırıq. <em>Avropada görüşək. 🌍</em>
+          Nomad Youth imkanları təqdim edən rəqəmsal platformadır. Müraciət və seçim prosesləri müvafiq təşkilatlar tərəfindən həyata keçirilir. <em>Avropada görüşək.</em>
         </div>
 
         <div className="footer__bottom">
-          <p>© 2025 Nomad Youth. Bütün hüquqlar qorunur.</p>
+          <p>© 2026 Nomad Youth. Bütün hüquqlar qorunur.</p>
           <div className="footer__socials">
             {socials.map(s => (
               <a key={s.label} href="#" className="footer__social-link" aria-label={s.label}>

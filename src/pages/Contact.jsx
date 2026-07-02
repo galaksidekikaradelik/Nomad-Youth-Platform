@@ -43,7 +43,7 @@ export default function Contact() {
           <div className="page-header__eyebrow">Əlaqə</div>
           <h1 className="page-header__title">Bizimlə Əlaqə Saxla</h1>
           <p className="page-header__desc">
-            Sualın var? Tərəfdaşlıq təklifi var? Yaxud sadəcə salam demək istəyirsən — yazın, cavab verərik.
+            Layihənizi paylaşmaq, tərəfdaşlıq etmək və ya hər hansı sualınızı bizimlə bölüşmək üçün əlaqə saxlayın.
           </p>
         </div>
 

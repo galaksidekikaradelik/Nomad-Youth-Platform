@@ -1,12 +1,9 @@
 import { Link } from 'react-router-dom'
 
-const values = [
-  { icon: '🎯', title: 'Məqsədli İnkişaf', desc: 'Hər gənc öz maraqlarına və hədəflərinə uyğun imkanı tapa bilsin deyə platforma qurduq.' },
-  { icon: '🤝', title: 'Birlik', desc: 'Gənclər, təşkilatlar və mentorları bir araya gətirərək güclü bir ekosistem yaradırıq.' },
-  { icon: '🌍', title: 'Açıqlıq', desc: 'Bütün imkanlar hamı üçün əlçatan olsun — fərq etməz harada yaşayırsan.' },
-  { icon: '⚡', title: 'İnnovasiya', desc: 'Daim inkişaf edən platforma ilə gənclər texnologiya və yaradıcılıq sahəsində irəliləyir.' },
-  { icon: '📈', title: 'Böyümə', desc: 'Hər bir təcrübə, hər bir könüllülük fəaliyyəti sənin peşəkar inkişafına töhfə verir.' },
-  { icon: '💡', title: 'İlham', desc: 'Uğurlu gənclərin hekayələri ilə özünü ilhamlandır, yeni zirvələrə doğru uç.' },
+const howItWorks = [
+  { num: '1', icon: '🔍', title: 'Kəşf et', desc: 'Maraqlarına uyğun könüllülük, Erasmus+, təcrübə, qrant və digər inkişaf imkanlarını tap.' },
+  { num: '2', icon: '📝', title: 'Müraciət et', desc: 'Şərtlərlə tanış ol və səni maraqlandıran layihələrə birbaşa müraciət et.' },
+  { num: '3', icon: '🚀', title: 'İnkişaf et', desc: 'Yeni təcrübə qazan, beynəlxalq əlaqələr qur və karyera yolunda özünü inkişaf etdir.' },
 ]
 
 const team = [
@@ -17,10 +14,10 @@ const team = [
 ]
 
 const stats = [
-  { num: '500+', label: 'Aktiv İmkan' },
-  { num: '120+', label: 'Tərəfdaş Təşkilat' },
-  { num: '8K+',  label: 'Qeydiyyatlı Gənc' },
-  { num: '3+',   label: 'İl Təcrübə' },
+  { num: '50+', label: 'Aktiv İmkan' },
+  { num: '10+', label: 'Xidmət' },
+  { num: '7/24', label: 'Əlçatan Platforma' },
+  { num: '9',  label: 'Kateqoriya' },
 ]
 
 export default function About() {
@@ -35,29 +32,6 @@ export default function About() {
           <p className="page-header__desc">
             Nomad Youth — Azərbaycan gənclərinin şəxsi və peşəkar inkişafını dəstəkləmək üçün yaradılmış rəqəmsal platformadır.
           </p>
-        </div>
-
-        {/* Mission */}
-        <div style={{
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
-          borderRadius: 'var(--radius-xl)',
-          padding: 'var(--space-2xl)',
-          marginBottom: 'var(--space-2xl)',
-          position: 'relative',
-          overflow: 'hidden',
-        }}>
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'radial-gradient(ellipse at 20% 50%, var(--color-primary-glow) 0%, transparent 60%)',
-            pointerEvents: 'none',
-          }} />
-          <div style={{ position: 'relative', zIndex: 1, maxWidth: 640 }}>
-            <div className="section-heading__eyebrow" style={{ marginBottom: 'var(--space-md)' }}>Misiyamız</div>
-            <p style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.35rem)', lineHeight: 1.75, color: 'var(--color-text-muted)' }}>
-              Azərbaycanda hər gəncin öz potensialını reallaşdıra bilməsi üçün lazım olan imkanları bir platformada toplamaq, onları doğru fürsətlərlə buluşdurmaq və inkişaflarını dəstəkləmək bizim əsas məqsədimizdir.
-            </p>
-          </div>
         </div>
 
         {/* Stats */}
@@ -80,18 +54,18 @@ export default function About() {
           ))}
         </div>
 
-        {/* Values */}
+        {/* Nomad necə işləyir? */}
         <div style={{ marginBottom: 'var(--space-3xl)' }}>
           <div className="section-heading">
-            <div className="section-heading__eyebrow">Dəyərlərimiz</div>
-            <h2 className="section-heading__title">Nəyə İnanırıq</h2>
+            <div className="section-heading__eyebrow">Necə İşləyir</div>
+            <h2 className="section-heading__title">Nomad necə işləyir?</h2>
           </div>
           <div className="about-values">
-            {values.map(v => (
-              <div key={v.title} className="value-card">
-                <div className="value-card__icon">{v.icon}</div>
-                <div className="value-card__title">{v.title}</div>
-                <p className="value-card__desc">{v.desc}</p>
+            {howItWorks.map(step => (
+              <div key={step.num} className="value-card">
+                <div className="value-card__icon">{step.icon}</div>
+                <div className="value-card__title">{step.num}. {step.title}</div>
+                <p className="value-card__desc">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -101,7 +75,7 @@ export default function About() {
         <div style={{ marginBottom: 'var(--space-3xl)' }}>
           <div className="section-heading">
             <div className="section-heading__eyebrow">Komanda</div>
-            <h2 className="section-heading__title">Arxasındakı İnsanlar</h2>
+            <h2 className="section-heading__title">Komandamız</h2>
           </div>
           <div className="grid-4">
             {team.map(m => (
@@ -124,11 +98,11 @@ export default function About() {
           </div>
         </div>
 
-        {/* CTA */}
+        {/* CTA / Partnership */}
         <div className="cta-banner">
           <div className="cta-banner__content">
             <h2 className="cta-banner__title">Bizimlə Tərəfdaş Ol</h2>
-            <p className="cta-banner__desc">Təşkilatın varsa, birlikdə gəncləri daha çox imkanla tanış edək.</p>
+            <p className="cta-banner__desc">Yeni imkanlarınızı Nomad Youth platformasında paylaşmaq üçün bizimlə əlaqə saxlayın.</p>
           </div>
           <div className="cta-banner__actions">
             <Link to="/contact" className="btn-primary">Əlaqə Saxla</Link>

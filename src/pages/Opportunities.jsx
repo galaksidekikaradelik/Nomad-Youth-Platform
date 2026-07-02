@@ -6,8 +6,25 @@ import EventCard from '../components/EventCard'
 import { opportunities } from '../data/opportunities'
 import { events } from '../data/events'
 
-const CATEGORIES = ['Hamısı', 'Könüllülük', 'Təcrübə', 'Qrant']
-const FORMATS    = ['Hamısı', 'Online', 'Onsite']
+const SCOPES = [
+  { id: 'hamisi',     label: 'Hamısı' },
+  { id: 'beynelxalq', label: '🌍 Beynəlxalq' },
+  { id: 'yerli',      label: '🇦🇿 Yerli' },
+]
+
+const CATEGORIES = ['Hamısı', 'Könüllülük', 'Erasmus+', 'ESC', 'Təcrübə', 'Təlim', 'Qrant', 'Konfrans']
+
+const FORMATS = [
+  { id: 'Hamısı', label: 'Hamısı' },
+  { id: 'Online', label: '💻 Onlayn' },
+  { id: 'Onsite', label: '📍 Əyani' },
+]
+
+const SORT_OPTIONS = [
+  { id: 'deadline',  label: 'Deadline (yaxın)' },
+  { id: 'newest',    label: 'Əlavə olunma tarixi (yeni)' },
+  { id: 'country',   label: 'Ölkəyə görə (A-Z)' },
+]
 
 const enriched = opportunities.map((op, i) => ({
   ...op,
@@ -27,6 +44,7 @@ export default function Opportunities() {
   const [category, setCategory] = useState('Hamısı')
   const [scope,    setScope]    = useState(initialScope)
   const [format,   setFormat]   = useState('Hamısı')
+  const [sort,     setSort]     = useState('deadline')
   const [tab,      setTab]      = useState('opportunities')
 
   const filtered = useMemo(() => enriched.filter(op => {
@@ -40,15 +58,27 @@ export default function Opportunities() {
     return matchCat && matchScope && matchFormat && matchSearch
   }), [search, category, scope, format])
 
+  const sorted = useMemo(() => {
+    const arr = [...filtered]
+    if (sort === 'deadline') {
+      arr.sort((a, b) => new Date(a.deadline || 0) - new Date(b.deadline || 0))
+    } else if (sort === 'newest') {
+      arr.sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0))
+    } else if (sort === 'country') {
+      arr.sort((a, b) => a.location.localeCompare(b.location, 'az'))
+    }
+    return arr
+  }, [filtered, sort])
+
   return (
     <div className="section">
       <div className="container">
 
         <div className="page-header">
           <div className="page-header__eyebrow">Kəşf Et</div>
-          <h1 className="page-header__title">İmkanlar & Tədbirlər</h1>
+          <h1 className="page-header__title">İmkanlar</h1>
           <p className="page-header__desc">
-            Könüllülük, təcrübə, qrant — istədiyin filtrlə tap.
+            Maraqlarına uyğun imkanları filterlə və özünə ən uyğun layihəni tap.
           </p>
         </div>
 
@@ -74,13 +104,9 @@ export default function Opportunities() {
             {/* Filters */}
             <div className="filter-group">
               <div className="filter-group__row">
-                <span className="filter-group__label">Əhatə</span>
+                <span className="filter-group__label">Layihənin növü</span>
                 <div className="filter-group__chips">
-                  {[
-                    { id: 'hamisi',     label: 'Hamısı' },
-                    { id: 'beynelxalq', label: 'Beynəlxalq' },
-                    { id: 'yerli',      label: 'Yerli' },
-                  ].map(s => (
+                  {SCOPES.map(s => (
                     <FilterChip key={s.id} label={s.label} active={scope === s.id} onClick={() => setScope(s.id)} />
                   ))}
                 </div>
@@ -99,19 +125,33 @@ export default function Opportunities() {
                 <span className="filter-group__label">Format</span>
                 <div className="filter-group__chips">
                   {FORMATS.map(f => (
-                    <FilterChip key={f} label={f} active={format === f} onClick={() => setFormat(f)} />
+                    <FilterChip key={f.id} label={f.label} active={format === f.id} onClick={() => setFormat(f.id)} />
                   ))}
                 </div>
+              </div>
+
+              <div className="filter-group__row">
+                <span className="filter-group__label">Sırala</span>
+                <select
+                  className="search-bar__select"
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                  style={{ border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-full)', padding: '8px 16px' }}
+                >
+                  {SORT_OPTIONS.map(o => (
+                    <option key={o.id} value={o.id}>{o.label}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div style={{ marginBottom: 'var(--space-lg)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-              <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{filtered.length}</span> imkan tapıldı
+              Sənin üçün <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{sorted.length}</span> imkan tapıldı
             </div>
 
-            {filtered.length > 0 ? (
+            {sorted.length > 0 ? (
               <div className="grid-3">
-                {filtered.map(op => <OpportunityCard key={op.id} opportunity={op} />)}
+                {sorted.map(op => <OpportunityCard key={op.id} opportunity={op} />)}
               </div>
             ) : (
               <div className="empty-state">
