@@ -12,9 +12,7 @@ const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTh8SnV1d
 const OUTPUT_PATH = path.join(__dirname, '../src/data/opportunities.json')
 
 function excelDateToISO(value) {
-  // Google Sheets CSV-dən tarix "31.05.2026" kimi string gəlir
   if (!value) return null
-
   if (typeof value === 'string') {
     const parts = value.trim().split('.')
     if (parts.length === 3) {
@@ -22,8 +20,17 @@ function excelDateToISO(value) {
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     }
   }
-
   return null
+}
+
+// "Climate, Leadership" -> ["Climate", "Leadership"]
+function parseCategories(value) {
+  if (!value) return []
+  return value
+    .toString()
+    .split(',')
+    .map(c => c.trim())
+    .filter(Boolean)
 }
 
 async function fetchCSV(url) {
@@ -46,7 +53,8 @@ async function run() {
   const opportunities = rows.map((row, index) => {
     const title = row['Layihənin keçid linki']?.toString().trim()
     const deadline = excelDateToISO(row['Deadline'])
-    const type = row['Növü']?.toString().trim()
+    const format = row['Növü']?.toString().trim()          // Online / Offline
+    const category = parseCategories(row['Kateqoriya'])     // ["Climate", "Leadership"]
     const country = row['Ölkə']?.toString().trim()
     const applyLink = row['Apply linki']?.toString().trim()
     const publishedAt = excelDateToISO(row['Açıqlanma tarixi'])
@@ -55,13 +63,14 @@ async function run() {
       id: index + 1,
       title,
       deadline,
-      type,
+      format,
+      category,
       location: country,
       applyLink,
       publishedAt,
-      tags: [type, country].filter(Boolean),
+      tags: [format, country, ...category].filter(Boolean),
     }
-  }).filter(op => op.title) // boş sətirləri at
+  }).filter(op => op.title)
 
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(opportunities, null, 2), 'utf-8')
   console.log(`✅ ${opportunities.length} elan çevrildi → ${OUTPUT_PATH}`)

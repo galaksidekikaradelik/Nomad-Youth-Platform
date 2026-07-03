@@ -47,7 +47,7 @@ export const translations = {
     card_published: 'Açıqlanma tarixi:',
     card_apply: 'Müraciət et',
     type_online: 'Onlayn',
-    type_offline: 'Oflayn',
+    type_offline: 'Əyani',
 
     // Opportunities page
     opp_eyebrow: 'Kəşf Et',

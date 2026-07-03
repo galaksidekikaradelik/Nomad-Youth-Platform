@@ -3,325 +3,485 @@
     "id": 1,
     "title": "Transforming Challenges into Shared Happiness",
     "deadline": "2026-07-02",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Climate",
+      "Leadership"
+    ],
     "location": "İtaliya",
     "applyLink": "http://trainings.salto-youth.net/14992",
     "publishedAt": "2026-07-03",
     "tags": [
       "Online",
-      "İtaliya"
+      "İtaliya",
+      "Climate",
+      "Leadership"
     ]
   },
   {
     "id": 2,
     "title": "Pathways to Accessible Youth Work - Online Conference",
     "deadline": "2026-07-05",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Digital",
+      "Education"
+    ],
     "location": "Macarıstan",
     "applyLink": "http://trainings.salto-youth.net/14978",
     "publishedAt": "2026-07-06",
     "tags": [
       "Online",
-      "Macarıstan"
+      "Macarıstan",
+      "Digital",
+      "Education"
     ]
   },
   {
     "id": 3,
     "title": "PlayLab: Building Communities Through Experience",
     "deadline": "2026-07-05",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Youth",
+      "Entrepreneurship",
+      "Innovation"
+    ],
     "location": "Polşa",
     "applyLink": "http://trainings.salto-youth.net/14950",
     "publishedAt": "2026-07-15",
     "tags": [
       "Offline",
-      "Polşa"
+      "Polşa",
+      "Youth",
+      "Entrepreneurship",
+      "Innovation"
     ]
   },
   {
     "id": 4,
     "title": "Organizational development for preparedness: Fostering resilience in youth NGOs",
     "deadline": "2026-07-05",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Environment",
+      "Sustainability"
+    ],
     "location": "İspaniya",
     "applyLink": "http://trainings.salto-youth.net/15015",
     "publishedAt": "2026-07-30",
     "tags": [
       "Offline",
-      "İspaniya"
+      "İspaniya",
+      "Environment",
+      "Sustainability"
     ]
   },
   {
     "id": 5,
     "title": "Online FREE International Virtual Exchange – Value Proposition Development, Market Research and Customer Analysis",
     "deadline": "2026-07-06",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Human Rights",
+      "Social Inclusion"
+    ],
     "location": "İtaliya",
     "applyLink": "http://trainings.salto-youth.net/15007",
     "publishedAt": "2026-07-07",
     "tags": [
       "Online",
-      "İtaliya"
+      "İtaliya",
+      "Human Rights",
+      "Social Inclusion"
     ]
   },
   {
     "id": 6,
     "title": "Debunker Summer School of Media Literacy | NECE Lab",
     "deadline": "2026-07-08",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Culture",
+      "Volunteering"
+    ],
     "location": "Çexiya",
     "applyLink": "http://trainings.salto-youth.net/15030",
     "publishedAt": "2026-07-14",
     "tags": [
       "Offline",
-      "Çexiya"
+      "Çexiya",
+      "Culture",
+      "Volunteering"
     ]
   },
   {
     "id": 7,
     "title": "FINAL CONFERENCE \"Participation Needs Nonviolent Debate for Conflict Transformation\"",
     "deadline": "2026-07-13",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Business",
+      "Startups"
+    ],
     "location": "İsveç",
     "applyLink": "http://trainings.salto-youth.net/14995",
     "publishedAt": "2026-07-16",
     "tags": [
       "Offline",
-      "İsveç"
+      "İsveç",
+      "Business",
+      "Startups"
     ]
   },
   {
     "id": 8,
     "title": "Mindful Impact: Strengthening Youth Work From Within",
     "deadline": "2026-07-17",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "AI",
+      "Technology",
+      "Digital"
+    ],
     "location": "Gürcüstan",
     "applyLink": "http://trainings.salto-youth.net/14990",
     "publishedAt": "2026-07-27",
     "tags": [
       "Offline",
-      "Gürcüstan"
+      "Gürcüstan",
+      "AI",
+      "Technology",
+      "Digital"
     ]
   },
   {
     "id": 9,
     "title": "VIRTUALLYEDU – Virtual Exchanges and Education on Digital Skill",
     "deadline": "2026-07-19",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Erasmus+",
+      "Mobility"
+    ],
     "location": "İsveç",
     "applyLink": "http://trainings.salto-youth.net/14989",
     "publishedAt": "2026-07-20",
     "tags": [
       "Online",
-      "İsveç"
+      "İsveç",
+      "Erasmus+",
+      "Mobility"
     ]
   },
   {
     "id": 10,
     "title": "Digital Tools for Autism Inclusion: Supporting Youth Workers, NGOs and Caregivers Through Coordinated Care",
     "deadline": "2026-07-22",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Health",
+      "Well-being"
+    ],
     "location": "Livan",
     "applyLink": "http://trainings.salto-youth.net/14997",
     "publishedAt": "2026-07-18",
     "tags": [
       "Online",
-      "Livan"
+      "Livan",
+      "Health",
+      "Well-being"
     ]
   },
   {
     "id": 11,
     "title": "Virtual Partnership Building Activity (PBA) for Erasmus+ KA152 & KA153 Projects Vol. 4",
     "deadline": "2026-07-27",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Climate",
+      "Leadership"
+    ],
     "location": "Gürcüstan",
     "applyLink": "http://trainings.salto-youth.net/15029",
     "publishedAt": "2026-07-29",
     "tags": [
       "Online",
-      "Gürcüstan"
+      "Gürcüstan",
+      "Climate",
+      "Leadership"
     ]
   },
   {
     "id": 12,
     "title": "STEAM in Youth Work: Creative projects for young people",
     "deadline": "2026-07-27",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Digital",
+      "Education"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15026",
     "publishedAt": "2026-08-10",
     "tags": [
       "Online",
-      "Yunanistan"
+      "Yunanistan",
+      "Digital",
+      "Education"
     ]
   },
   {
     "id": 13,
     "title": "Sapounofouska Playful Learning Fest",
     "deadline": "2026-07-28",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Youth",
+      "Entrepreneurship",
+      "Innovation"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/14945",
     "publishedAt": "2026-08-11",
     "tags": [
       "Offline",
-      "Yunanistan"
+      "Yunanistan",
+      "Youth",
+      "Entrepreneurship",
+      "Innovation"
     ]
   },
   {
     "id": 14,
     "title": "Inclusive Evolution: The Next Generation 2026",
     "deadline": "2026-07-30",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Environment",
+      "Sustainability"
+    ],
     "location": "Macarıstan",
     "applyLink": "http://trainings.salto-youth.net/14838",
     "publishedAt": "2026-08-05",
     "tags": [
       "Offline",
-      "Macarıstan"
+      "Macarıstan",
+      "Environment",
+      "Sustainability"
     ]
   },
   {
     "id": 15,
     "title": "Robotics in Youth Work: From Playful Missions to Real Skills",
     "deadline": "2026-07-31",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Human Rights",
+      "Social Inclusion"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15031",
     "publishedAt": "2026-08-08",
     "tags": [
       "Online",
-      "Yunanistan"
+      "Yunanistan",
+      "Human Rights",
+      "Social Inclusion"
     ]
   },
   {
     "id": 16,
     "title": "Ask Better, Teach Better: Question‑driven AI & advocacy in youth work",
     "deadline": "2026-07-31",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Culture",
+      "Volunteering"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15018",
     "publishedAt": "2026-08-05",
     "tags": [
       "Online",
-      "Yunanistan"
+      "Yunanistan",
+      "Culture",
+      "Volunteering"
     ]
   },
   {
     "id": 17,
     "title": "TOSCA Volunteering – Training and Support for Organisations in the European Solidarity Corps",
     "deadline": "2026-08-03",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Business",
+      "Startups"
+    ],
     "location": "Çexiya",
     "applyLink": "http://trainings.salto-youth.net/15021",
     "publishedAt": "2026-08-19",
     "tags": [
       "Offline",
-      "Çexiya"
+      "Çexiya",
+      "Business",
+      "Startups"
     ]
   },
   {
     "id": 18,
     "title": "Volunteering Teams as a Tool to support Inclusion",
     "deadline": "2026-08-09",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "AI",
+      "Technology",
+      "Digital"
+    ],
     "location": "Finlandiya",
     "applyLink": "http://trainings.salto-youth.net/14954",
     "publishedAt": "2026-08-26",
     "tags": [
       "Offline",
-      "Finlandiya"
+      "Finlandiya",
+      "AI",
+      "Technology",
+      "Digital"
     ]
   },
   {
     "id": 19,
     "title": "PBA Youth X Culture",
     "deadline": "2026-08-15",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Erasmus+",
+      "Mobility"
+    ],
     "location": "Belçika",
     "applyLink": "http://trainings.salto-youth.net/14904",
     "publishedAt": "2026-09-09",
     "tags": [
       "Offline",
-      "Belçika"
+      "Belçika",
+      "Erasmus+",
+      "Mobility"
     ]
   },
   {
     "id": 20,
     "title": "Working with Queer Youth",
     "deadline": "2026-08-30",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Health",
+      "Well-being"
+    ],
     "location": "İsveç",
     "applyLink": "http://trainings.salto-youth.net/14859",
     "publishedAt": "2026-09-14",
     "tags": [
       "Offline",
-      "İsveç"
+      "İsveç",
+      "Health",
+      "Well-being"
     ]
   },
   {
     "id": 21,
     "title": "Outdoor Paths: Designing Experiential Activities for Young People",
     "deadline": "2026-07-31",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Climate",
+      "Leadership"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15032",
     "publishedAt": "2026-09-02",
     "tags": [
       "Online",
-      "Yunanistan"
+      "Yunanistan",
+      "Climate",
+      "Leadership"
     ]
   },
   {
     "id": 22,
     "title": "Play to Learn: Creating Educational Games for Youth Work",
     "deadline": "2026-07-31",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Digital",
+      "Education"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15033",
     "publishedAt": "2026-09-02",
     "tags": [
       "Online",
-      "Yunanistan"
+      "Yunanistan",
+      "Digital",
+      "Education"
     ]
   },
   {
     "id": 23,
     "title": "Engaging Communities Through Sustainable Sport Communication",
     "deadline": "2026-09-01",
-    "type": "Online",
+    "format": "Online",
+    "category": [
+      "Youth",
+      "Entrepreneurship",
+      "Innovation"
+    ],
     "location": "Xorvatiya",
     "applyLink": "http://trainings.salto-youth.net/14998",
     "publishedAt": "2026-09-15",
     "tags": [
       "Online",
-      "Xorvatiya"
+      "Xorvatiya",
+      "Youth",
+      "Entrepreneurship",
+      "Innovation"
     ]
   },
   {
     "id": 24,
     "title": "Mentoring under construction - Focus Mentoring training based on the Mentoring framework",
     "deadline": "2026-09-06",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Environment",
+      "Sustainability"
+    ],
     "location": "Polşa",
     "applyLink": "http://trainings.salto-youth.net/14983",
     "publishedAt": "2026-09-21",
     "tags": [
       "Offline",
-      "Polşa"
+      "Polşa",
+      "Environment",
+      "Sustainability"
     ]
   },
   {
     "id": 25,
     "title": "Why municipal youth participation?",
     "deadline": "2026-09-06",
-    "type": "Offline",
+    "format": "Offline",
+    "category": [
+      "Human Rights",
+      "Social Inclusion"
+    ],
     "location": "Macarıstan",
     "applyLink": "http://trainings.salto-youth.net/14905",
     "publishedAt": "2026-09-18",
     "tags": [
       "Offline",
-      "Macarıstan"
+      "Macarıstan",
+      "Human Rights",
+      "Social Inclusion"
     ]
   }
 ]

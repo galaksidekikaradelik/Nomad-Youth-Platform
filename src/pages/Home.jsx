@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Hero from '../components/Hero'
 import SearchBar from '../components/SearchBar'
@@ -19,9 +19,12 @@ export default function Home() {
   const { t } = useLanguage()
   const navigate = useNavigate()
 
+  const [query, setQuery] = useState('')
+  const [category, setCategory] = useState('')
+
   const preview = useMemo(() => opportunities.slice(0, 6), [])
 
-  const handleSearch = ({ query, category }) => {
+  const handleSearchSubmit = ({ query, category }) => {
     const params = new URLSearchParams()
     if (query) params.set('query', query)
     if (category) params.set('category', category)
@@ -31,7 +34,14 @@ export default function Home() {
   return (
     <>
       <div className="container" style={{ paddingTop: 'var(--space-2xl)' }}>
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar
+          query={query}
+          category={category}
+          onQueryChange={setQuery}
+          onCategoryChange={setCategory}
+          onSubmit={handleSearchSubmit}
+          showButton
+        />
       </div>
 
       {/* ── Bütün Elanlar birbaşa görünür ── */}

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
+import { translateCategory } from '../data/categoryTranslation'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
 import EventCard from '../components/EventCard'
@@ -13,22 +14,36 @@ const SCOPES = [
   { id: 'yerli',      labelKey: 'scope_local' },
 ]
 
-// id-lər data-dakı `type` dəyərləri ilə eyni olmalıdır (filtrasiya üçün)
+// id-lər Sheets-dəki "Kateqoriya" sütununun dəyərləri ilə eyni olmalıdır (bir layihə bir neçəsinə aid ola bilər)
 const CATEGORIES = [
-  { id: '',            labelKey: 'category_all' },
-  { id: 'Könüllülük',  labelKey: null },
-  { id: 'Erasmus+',    labelKey: null },
-  { id: 'ESC',         labelKey: null },
-  { id: 'Təcrübə',     labelKey: null },
-  { id: 'Təlim',       labelKey: null },
-  { id: 'Qrant',       labelKey: null },
-  { id: 'Konfrans',    labelKey: null },
+  { id: '',                  labelKey: 'category_all' },
+  { id: 'Climate',           labelKey: null },
+  { id: 'Leadership',        labelKey: null },
+  { id: 'Digital',           labelKey: null },
+  { id: 'Education',         labelKey: null },
+  { id: 'Youth',             labelKey: null },
+  { id: 'Entrepreneurship',  labelKey: null },
+  { id: 'Innovation',        labelKey: null },
+  { id: 'Environment',       labelKey: null },
+  { id: 'Sustainability',    labelKey: null },
+  { id: 'Human Rights',      labelKey: null },
+  { id: 'Social Inclusion',  labelKey: null },
+  { id: 'Culture',           labelKey: null },
+  { id: 'Volunteering',      labelKey: null },
+  { id: 'Business',          labelKey: null },
+  { id: 'Startups',          labelKey: null },
+  { id: 'AI',                labelKey: null },
+  { id: 'Technology',        labelKey: null },
+  { id: 'Erasmus+',          labelKey: null },
+  { id: 'Mobility',          labelKey: null },
+  { id: 'Health',            labelKey: null },
+  { id: 'Well-being',        labelKey: null },
 ]
 
 const FORMATS = [
-  { id: 'Hamısı', labelKey: 'format_all' },
-  { id: 'Online', labelKey: 'format_online' },
-  { id: 'Onsite', labelKey: 'format_onsite' },
+  { id: 'Hamısı',  labelKey: 'format_all' },
+  { id: 'Online',  labelKey: 'format_online' },
+  { id: 'Offline', labelKey: 'format_onsite' },
 ]
 
 const SORT_OPTIONS = [
@@ -37,10 +52,10 @@ const SORT_OPTIONS = [
   { id: 'country',  labelKey: 'sort_country' },
 ]
 
-const enriched = opportunities.map((op, i) => ({
+// scope real location-a görə təyin olunur: Azərbaycan → yerli, qalanı → beynəlxalq
+const enriched = opportunities.map(op => ({
   ...op,
-  scope:  ['beynelxalq', 'beynelxalq', 'beynelxalq', 'beynelxalq', 'yerli', 'yerli'][i] || 'yerli',
-  format: ['Onsite', 'Onsite', 'Online', 'Online', 'Onsite', 'Onsite'][i] || 'Onsite',
+  scope: op.location === 'Azərbaycan' ? 'yerli' : 'beynelxalq',
 }))
 
 const FilterChip = ({ label, active, onClick }) => (
@@ -48,27 +63,29 @@ const FilterChip = ({ label, active, onClick }) => (
 )
 
 export default function Opportunities() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
   const [searchParams] = useSearchParams()
-  const initialScope   = searchParams.get('scope') || 'hamisi'
+  const initialScope    = searchParams.get('scope') || 'hamisi'
+  const initialQuery    = searchParams.get('query') || ''
+  const initialCategory = searchParams.get('category') || ''
 
-  const [search,   setSearch]   = useState('')
-  const [category, setCategory] = useState('')
+  const [search,   setSearch]   = useState(initialQuery)
+  const [category, setCategory] = useState(initialCategory)
   const [scope,    setScope]    = useState(initialScope)
   const [format,   setFormat]   = useState('Hamısı')
   const [sort,     setSort]     = useState('deadline')
   const [tab,      setTab]      = useState('opportunities')
 
   const filtered = useMemo(() => enriched.filter(op => {
-    const matchCat    = category === '' || op.type === category
+    const matchCat    = category === '' || (Array.isArray(op.category) && op.category.includes(category))
     const matchScope  = scope === 'hamisi' || op.scope === scope
     const matchFormat = format === 'Hamısı' || op.format === format
     const q = search.toLocaleLowerCase('az')
-  const matchSearch = !search ||
-    op.title.toLocaleLowerCase('az').includes(q) ||
-    op.location?.toLocaleLowerCase('az').includes(q) ||
-    op.organization?.toLocaleLowerCase('az').includes(q) ||
-    op.tags.some(tag => tag.toLocaleLowerCase('az').includes(q))
+    const matchSearch = !search ||
+      op.title.toLocaleLowerCase('az').includes(q) ||
+      op.location?.toLocaleLowerCase('az').includes(q) ||
+      op.organization?.toLocaleLowerCase('az').includes(q) ||
+      op.tags.some(tag => tag.toLocaleLowerCase('az').includes(q))
     return matchCat && matchScope && matchFormat && matchSearch
   }), [search, category, scope, format])
 
@@ -131,7 +148,7 @@ export default function Opportunities() {
                 <span className="filter-group__label">{t('filter_category_label')}</span>
                 <div className="filter-group__chips">
                   {CATEGORIES.map(c => (
-                    <FilterChip key={c.id} label={c.labelKey ? t(c.labelKey) : c.id} active={category === c.id} onClick={() => setCategory(c.id)} />
+                    <FilterChip key={c.id} label={c.labelKey ? t(c.labelKey) : translateCategory(c.id, lang)} active={category === c.id} onClick={() => setCategory(c.id)} />
                   ))}
                 </div>
               </div>

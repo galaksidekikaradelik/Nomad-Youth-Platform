@@ -2166,3 +2166,18 @@ ul, ol   { list-style: none; }
   max-height: 600px;
   padding: 0 var(--space-lg) var(--space-lg);
 }
+
+.opportunity-card__categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px 0;
+}
+
+.opportunity-card__category-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full, 999px);
+  white-space: nowrap;
+}

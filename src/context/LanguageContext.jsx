@@ -1,6 +1,10 @@
 import { useState } from 'react'
 import { LanguageContext } from './languageContextValue'
-import { translations } from '../data/translations'
+import az from '../translation/az.json'
+import en from '../translation/en.json'
+import ru from '../translation/ru.json'
+
+const translations = { az, en, ru }
 
 const LANG_ORDER = ['az', 'en', 'ru']
 
