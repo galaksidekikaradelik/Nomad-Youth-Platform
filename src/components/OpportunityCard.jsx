@@ -130,22 +130,28 @@ export default function OpportunityCard({ opportunity }) {
   return (
     <div className="opportunity-card">
       <div className="opportunity-card__top">
-        <h3 className="opportunity-card__title">{title}</h3>
-        <div className="opportunity-card__icons">
-          <button
-            className="opportunity-card__icon-btn"
-            onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
-            aria-label="Bəyən"
-          >
-            <HeartIcon active={false} />
-          </button>
-          <button
-            className="opportunity-card__icon-btn"
-            onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
-            aria-label="Yadda saxla"
-          >
-            <BookmarkIcon active={false} />
-          </button>
+        <span className="opportunity-card__tag opportunity-card__tag--flag opportunity-card__tag--flag-top">
+            <FlagIcon location={location} /> 
+          </span>
+        <h3 className="opportunity-card__title" data-tooltip={title}>{title}</h3>
+        <div className="opportunity-card__top-right">
+          <div className="opportunity-card__icons">
+            <button
+              className="opportunity-card__icon-btn"
+              onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
+              aria-label="Bəyən"
+            >
+              <HeartIcon active={false} />
+            </button>
+            <button
+              className="opportunity-card__icon-btn"
+              onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
+              aria-label="Yadda saxla"
+            >
+              <BookmarkIcon active={false} />
+            </button>
+          </div>
+          
         </div>
       </div>
 
@@ -154,9 +160,6 @@ export default function OpportunityCard({ opportunity }) {
       <div className="opportunity-card__topic">
         <span className="opportunity-card__topic-label">{t('card_topic')}</span>
         <div className="opportunity-card__tags">
-          <span className="opportunity-card__tag opportunity-card__tag--flag">
-            <FlagIcon location={location} /> {location}
-          </span>
           {typeLabel && (
             <span className={`opportunity-card__tag opportunity-card__tag--type${typeModifier ? ` opportunity-card__tag--${typeModifier}` : ''}`}>
               {typeLabel}

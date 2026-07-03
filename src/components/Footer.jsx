@@ -62,7 +62,7 @@ export default function Footer() {
           <p>© 2026 Nomad Youth. Bütün hüquqlar qorunur.</p>
           <div className="footer__socials">
             {socials.map(s => (
-              <a key={s.label} href="#" className="footer__social-link" aria-label={s.label}>
+              <a key={s.label} href="https://www.instagram.com/nomad.youth?igsh=MTdrM3BndHQybmxvdQ==" className="footer__social-link" aria-label={s.label}>
                 {s.icon}
               </a>
             ))}

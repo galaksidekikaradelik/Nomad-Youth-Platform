@@ -5,7 +5,7 @@ import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
 import { opportunities } from '../data/opportunities'
 import { useLanguage } from '../hooks/useLanguage'
-import aboutImg from '../assets/images/about.png'
+import aboutImg from '../assets/images/aboutUs.png'
 import servicesImg from '../assets/images/services.png'
 import partnerImg from '../assets/images/partnership.png'
 
