@@ -111,15 +111,6 @@ export default function Opportunities() {
           <p className="page-header__desc">{t('opp_desc')}</p>
         </div>
 
-        {/* Tab switcher */}
-        <div className="tab-switcher">
-          <button className={`tab-btn${tab === 'opportunities' ? ' active' : ''}`} onClick={() => setTab('opportunities')}>
-            {t('opp_tab_opportunities')}
-          </button>
-          <button className={`tab-btn${tab === 'events' ? ' active' : ''}`} onClick={() => setTab('events')}>
-            {t('opp_tab_events')}
-          </button>
-        </div>
 
         {tab === 'opportunities' && (
           <>
