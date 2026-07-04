@@ -11,7 +11,7 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: border-color var(--transition-fast);
-  width: 760px; /*?*/
+  width: 92rem; 
 }
 
 .faq-item:hover {
