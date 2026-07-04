@@ -6,16 +6,26 @@
     "format": "Online",
     "category": [
       "Rifah",
-      "seminar"
+      "Seminar"
+    ],
+    "categoryGroups": [
+      "Rifah",
+      "Seminar"
     ],
     "location": "İtaliya",
     "applyLink": "http://trainings.salto-youth.net/14992",
     "publishedAt": "2026-07-03",
+    "description": "7 iyul 2026-cı il tarixində Erasmus+ layihəsi çərçivəsində emosional rifah və pozitiv psixologiya mövzusunda onlayn seminar keçiriləcək. Tədbirdə iştirakçılara pulsuz resurslar təqdim olunacaq və Avropa miqyaslı əməkdaşlıq şəbəkəsi qurulacaq.",
+    "descriptionTranslations": {
+      "az": "7 iyul 2026-cı il tarixində Erasmus+ layihəsi çərçivəsində emosional rifah və pozitiv psixologiya mövzusunda onlayn seminar keçiriləcək. Tədbirdə iştirakçılara pulsuz resurslar təqdim olunacaq və Avropa miqyaslı əməkdaşlıq şəbəkəsi qurulacaq.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "İtaliya",
       "Rifah",
-      "seminar"
+      "Seminar"
     ]
   },
   {
@@ -25,16 +35,26 @@
     "format": "Online",
     "category": [
       "Gənclər",
-      "konfrans"
+      "Konfrans"
+    ],
+    "categoryGroups": [
+      "Gənclər",
+      "Konfrans"
     ],
     "location": "Macarıstan",
     "applyLink": "http://trainings.salto-youth.net/14978",
     "publishedAt": "2026-07-06",
+    "description": "16 iyul 2026-cı il tarixində xüsusi qayğıya ehtiyacı olan gənclər üçün inklüziv gənclərlə iş mövzusunda onlayn konfrans keçiriləcək. Tədbirdə bu sahədə əlçatanlığı təmin etmək üçün praktiki alətlər və yeni metodoloji nəşr təqdim olunacaq",
+    "descriptionTranslations": {
+      "az": "16 iyul 2026-cı il tarixində xüsusi qayğıya ehtiyacı olan gənclər üçün inklüziv gənclərlə iş mövzusunda onlayn konfrans keçiriləcək. Tədbirdə bu sahədə əlçatanlığı təmin etmək üçün praktiki alətlər və yeni metodoloji nəşr təqdim olunacaq",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Macarıstan",
       "Gənclər",
-      "konfrans"
+      "Konfrans"
     ]
   },
   {
@@ -44,16 +64,26 @@
     "format": "Offline",
     "category": [
       "Təhsil",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Təhsil",
+      "Kurs"
     ],
     "location": "Polşa",
     "applyLink": "http://trainings.salto-youth.net/14950",
     "publishedAt": "2026-07-15",
+    "description": "Polşada keçiriləcək təlimdə gənclərlə iş üçün oyunlar vasitəsilə icma quruculuğu və təcrübi öyrənmə metodları öyrədiləcək.",
+    "descriptionTranslations": {
+      "az": "Polşada keçiriləcək təlimdə gənclərlə iş üçün oyunlar vasitəsilə icma quruculuğu və təcrübi öyrənmə metodları öyrədiləcək.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Polşa",
       "Təhsil",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -63,16 +93,26 @@
     "format": "Offline",
     "category": [
       "Təşkilatçılıq",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Liderlik",
+      "Kurs"
     ],
     "location": "İspaniya",
     "applyLink": "http://trainings.salto-youth.net/15015",
     "publishedAt": "2026-07-30",
+    "description": "İspaniyada keçiriləcək təlimdə gənclər təşkilatlarının daxili strukturunu gücləndirmək, böhranlara qarşı davamlılığını və gələcək çağırışlara hazırlığını artırmaq yolları öyrədiləcək.",
+    "descriptionTranslations": {
+      "az": "İspaniyada keçiriləcək təlimdə gənclər təşkilatlarının daxili strukturunu gücləndirmək, böhranlara qarşı davamlılığını və gələcək çağırışlara hazırlığını artırmaq yolları öyrədiləcək.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "İspaniya",
       "Təşkilatçılıq",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -82,16 +122,26 @@
     "format": "Online",
     "category": [
       "Sahibkarlıq",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Sahibkarlıq",
+      "Kurs"
     ],
     "location": "İtaliya",
     "applyLink": "http://trainings.salto-youth.net/15007",
     "publishedAt": "2026-07-07",
+    "description": "Erasmus+ layihəsi çərçivəsində keçirilən onlayn təlimdə miqrant və qaçqın qadınların sahibkarlıq bacarıqlarını inkişaf etdirmək üçün bazar araşdırması və müştəri təhlili alətləri öyrədiləcək.",
+    "descriptionTranslations": {
+      "az": "Erasmus+ layihəsi çərçivəsində keçirilən onlayn təlimdə miqrant və qaçqın qadınların sahibkarlıq bacarıqlarını inkişaf etdirmək üçün bazar araşdırması və müştəri təhlili alətləri öyrədiləcək.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "İtaliya",
       "Sahibkarlıq",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -101,16 +151,26 @@
     "format": "Offline",
     "category": [
       "Media",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Media",
+      "Kurs"
     ],
     "location": "Çexiya",
     "applyLink": "http://trainings.salto-youth.net/15030",
     "publishedAt": "2026-07-14",
+    "description": "Çexiyada keçiriləcək yay məktəbində gənclərə dezinformasiya ilə mübarizə, media savadlılığı və tənqidi təfəkkürün inkişaf etdirilməsi üzrə praktiki alətlər öyrədiləcək.",
+    "descriptionTranslations": {
+      "az": "Çexiyada keçiriləcək yay məktəbində gənclərə dezinformasiya ilə mübarizə, media savadlılığı və tənqidi təfəkkürün inkişaf etdirilməsi üzrə praktiki alətlər öyrədiləcək.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Çexiya",
       "Media",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -120,16 +180,26 @@
     "format": "Offline",
     "category": [
       "Sülh",
-      "konfrans"
+      "Konfrans"
+    ],
+    "categoryGroups": [
+      "Sülh",
+      "Konfrans"
     ],
     "location": "İsveç",
     "applyLink": "http://trainings.salto-youth.net/14995",
     "publishedAt": "2026-07-16",
+    "description": "Erasmus+ layihəsinin yekun onlayn konfransında gənclərlə işdə münaqişələrin sülh yolu ilə həlli, qütbləşməyə qarşı mübarizə və qeyri-zorakı debat metodologiyası təqdim olunacaq.",
+    "descriptionTranslations": {
+      "az": "Erasmus+ layihəsinin yekun onlayn konfransında gənclərlə işdə münaqişələrin sülh yolu ilə həlli, qütbləşməyə qarşı mübarizə və qeyri-zorakı debat metodologiyası təqdim olunacaq.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "İsveç",
       "Sülh",
-      "konfrans"
+      "Konfrans"
     ]
   },
   {
@@ -139,16 +209,26 @@
     "format": "Offline",
     "category": [
       "Psixologiya",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Rifah",
+      "Kurs"
     ],
     "location": "Gürcüstan",
     "applyLink": "http://trainings.salto-youth.net/14990",
     "publishedAt": "2026-07-27",
+    "description": "Gürcüstanda keçiriləcək təlimdə gənclərlə işin keyfiyyətini artırmaq üçün empatiyalı ünsiyyət, stressin idarə olunması və böhranların həlli üzrə praktiki metodlar öyrədiləcək.",
+    "descriptionTranslations": {
+      "az": "Gürcüstanda keçiriləcək təlimdə gənclərlə işin keyfiyyətini artırmaq üçün empatiyalı ünsiyyət, stressin idarə olunması və böhranların həlli üzrə praktiki metodlar öyrədiləcək.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Gürcüstan",
       "Psixologiya",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -160,9 +240,19 @@
       "Rəqəmsallaşma",
       "E-təhsil"
     ],
+    "categoryGroups": [
+      "Texnologiya",
+      "Təhsil"
+    ],
     "location": "İsveç",
     "applyLink": "http://trainings.salto-youth.net/14989",
     "publishedAt": "2026-07-20",
+    "description": "İsveç tərəfindən onlayn təşkil edilən proqramda rəqəmsal savadlılıq, kibertəhlükəsizlik və onlayn təhlükəsizlik mövzusunda beynəlxalq virtual seminarlar və mədəniyyətlərarası mübadilə keçiriləcək.",
+    "descriptionTranslations": {
+      "az": "İsveç tərəfindən onlayn təşkil edilən proqramda rəqəmsal savadlılıq, kibertəhlükəsizlik və onlayn təhlükəsizlik mövzusunda beynəlxalq virtual seminarlar və mədəniyyətlərarası mübadilə keçiriləcək.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "İsveç",
@@ -179,9 +269,19 @@
       "Autizm",
       "Vebinar"
     ],
+    "categoryGroups": [
+      "Rifah",
+      "Vebinar"
+    ],
     "location": "Livan",
     "applyLink": "http://trainings.salto-youth.net/14997",
     "publishedAt": "2026-07-18",
+    "description": "Onlayn vebinarda gənclərlə işdə autizmli fərdlərin inklüzivliyi, qayğı göstərənlər arasında koordinasiya və bu sahədə rəqəmsal alətlərin etik istifadəsi öyrədiləcək.",
+    "descriptionTranslations": {
+      "az": "Onlayn vebinarda gənclərlə işdə autizmli fərdlərin inklüzivliyi, qayğı göstərənlər arasında koordinasiya və bu sahədə rəqəmsal alətlərin etik istifadəsi öyrədiləcək.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Livan",
@@ -196,16 +296,26 @@
     "format": "Online",
     "category": [
       "Tərəfdaşlıq",
-      "fəaliyyət"
+      "Fəaliyyət"
+    ],
+    "categoryGroups": [
+      "Tərəfdaşlıq",
+      "Fəaliyyət"
     ],
     "location": "Gürcüstan",
     "applyLink": "http://trainings.salto-youth.net/15029",
     "publishedAt": "2026-07-29",
+    "description": "IISR oktyabr ayının \"Erasmus+\" layihələrinə hazırlaşmaq məqsədilə 1-2 avqust tarixlərində gənclər təşkilatları üçün virtual tərəfdaşlıq tədbiri keçirəcək. \"Zoom\" üzərindən baş tutacaq bu görüş iştirakçıların beynəlxalq əlaqələr qurmasına və birgə layihələr hazırlamasına şərait yaradacaq.",
+    "descriptionTranslations": {
+      "az": "IISR oktyabr ayının \"Erasmus+\" layihələrinə hazırlaşmaq məqsədilə 1-2 avqust tarixlərində gənclər təşkilatları üçün virtual tərəfdaşlıq tədbiri keçirəcək. \"Zoom\" üzərindən baş tutacaq bu görüş iştirakçıların beynəlxalq əlaqələr qurmasına və birgə layihələr hazırlamasına şərait yaradacaq.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Gürcüstan",
       "Tərəfdaşlıq",
-      "fəaliyyət"
+      "Fəaliyyət"
     ]
   },
   {
@@ -214,16 +324,25 @@
     "deadline": "2026-07-27",
     "format": "Online",
     "category": [
-      "Təhil",
+      "Təhsil",
       "E-təhsil"
+    ],
+    "categoryGroups": [
+      "Təhsil"
     ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15026",
     "publishedAt": "2026-08-10",
+    "description": "Bu onlayn vörkşop gənclərlə işləyənlərə qeyri-formal təhsildə STEAM metodunu tətbiq etməyi öyrədəcək. İştirakçılar sadə materiallarla tənqidi təfəkkürü və yaradıcılığı inkişaf etdirən konkret fəaliyyət planları hazırlayacaqlar.",
+    "descriptionTranslations": {
+      "az": "Bu onlayn vörkşop gənclərlə işləyənlərə qeyri-formal təhsildə STEAM metodunu tətbiq etməyi öyrədəcək. İştirakçılar sadə materiallarla tənqidi təfəkkürü və yaradıcılığı inkişaf etdirən konkret fəaliyyət planları hazırlayacaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Yunanistan",
-      "Təhil",
+      "Təhsil",
       "E-təhsil"
     ]
   },
@@ -234,16 +353,26 @@
     "format": "Offline",
     "category": [
       "Təhsil",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Təhsil",
+      "Kurs"
     ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/14945",
     "publishedAt": "2026-08-11",
+    "description": "Afinada keçiriləcək bu üçgünlük açıq hava təlimi gənclər və pedaqoqlar üçün teatr, musiqi və STEAM metodlarını birləşdirir. İştirakçılar qeyri-formal təhsil metodologiyalarını təcrübədən keçirərək onları öz fəaliyyətlərində tətbiq etməyi öyrənəcəklər.",
+    "descriptionTranslations": {
+      "az": "Afinada keçiriləcək bu üçgünlük açıq hava təlimi gənclər və pedaqoqlar üçün teatr, musiqi və STEAM metodlarını birləşdirir. İştirakçılar qeyri-formal təhsil metodologiyalarını təcrübədən keçirərək onları öz fəaliyyətlərində tətbiq etməyi öyrənəcəklər.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Yunanistan",
       "Təhsil",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -253,16 +382,26 @@
     "format": "Offline",
     "category": [
       "Tərəfdaşlıq",
-      "fəaliyyət"
+      "Fəaliyyət"
+    ],
+    "categoryGroups": [
+      "Tərəfdaşlıq",
+      "Fəaliyyət"
     ],
     "location": "Macarıstan",
     "applyLink": "http://trainings.salto-youth.net/14838",
     "publishedAt": "2026-08-05",
+    "description": "Budapeştdə keçiriləcək bu beynəlxalq tədbir Avropanın QHT və ictimai qurumlarını innovativ tərəfdaşlıqlar qurmaq üçün bir araya gətirir. İştirakçılar davamlı inkişaf və sosial inklüzivlik naminə şəbəkələşərək gələcək birgə layihələrin təməlini qoyacaqlar.",
+    "descriptionTranslations": {
+      "az": "Budapeştdə keçiriləcək bu beynəlxalq tədbir Avropanın QHT və ictimai qurumlarını innovativ tərəfdaşlıqlar qurmaq üçün bir araya gətirir. İştirakçılar davamlı inkişaf və sosial inklüzivlik naminə şəbəkələşərək gələcək birgə layihələrin təməlini qoyacaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Macarıstan",
       "Tərəfdaşlıq",
-      "fəaliyyət"
+      "Fəaliyyət"
     ]
   },
   {
@@ -274,9 +413,19 @@
       "Texnologiya",
       "E-təhsil"
     ],
+    "categoryGroups": [
+      "Texnologiya",
+      "Təhsil"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15031",
     "publishedAt": "2026-08-08",
+    "description": "Gənclər sahəsində çalışanlar üçün nəzərdə tutulan bu onlayn vörkşop robototexnikanın qeyri-formal təhsildə bir alət kimi istifadəsini öyrədəcək. İştirakçılar məhdud avadanlıqla belə gənclərdə komanda işi və problem həll etmə bacarıqlarını inkişaf etdirən tapşırıqlar hazırlamağı mənimsəyəcəklər.",
+    "descriptionTranslations": {
+      "az": "Gənclər sahəsində çalışanlar üçün nəzərdə tutulan bu onlayn vörkşop robototexnikanın qeyri-formal təhsildə bir alət kimi istifadəsini öyrədəcək. İştirakçılar məhdud avadanlıqla belə gənclərdə komanda işi və problem həll etmə bacarıqlarını inkişaf etdirən tapşırıqlar hazırlamağı mənimsəyəcəklər.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Yunanistan",
@@ -291,16 +440,26 @@
     "format": "Online",
     "category": [
       "Rəqəmsallaşma",
-      "seminar"
+      "Seminar"
+    ],
+    "categoryGroups": [
+      "Texnologiya",
+      "Seminar"
     ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15018",
     "publishedAt": "2026-08-05",
+    "description": "Bu onlayn seminar gənclərlə işləyənlərə süni intellektdən səmərəli istifadə üçün düzgün sualvermə texnikalarını öyrədəcək. İştirakçılar vizual təhlil alətləri vasitəsilə real problemləri konkret icma layihələrinə çevirmək bacarıqlarına yiyələnəcəklər.",
+    "descriptionTranslations": {
+      "az": "Bu onlayn seminar gənclərlə işləyənlərə süni intellektdən səmərəli istifadə üçün düzgün sualvermə texnikalarını öyrədəcək. İştirakçılar vizual təhlil alətləri vasitəsilə real problemləri konkret icma layihələrinə çevirmək bacarıqlarına yiyələnəcəklər.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Yunanistan",
       "Rəqəmsallaşma",
-      "seminar"
+      "Seminar"
     ]
   },
   {
@@ -310,16 +469,26 @@
     "format": "Offline",
     "category": [
       "Tərəfdaşlıq",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Tərəfdaşlıq",
+      "Kurs"
     ],
     "location": "Çexiya",
     "applyLink": "http://trainings.salto-youth.net/15021",
     "publishedAt": "2026-08-19",
+    "description": "Praqada keçiriləcək bu təlim kursu Avropa Həmrəylik Korpusu (ESC) könüllülük layihələrində iştirak edən təşkilatların potensialını artırmağı hədəfləyir. İştirakçılar proqramın keyfiyyət meyarlarını, rəsmi qaydalarını öyrənəcək və güclü əməkdaşlıq şəbəkəsi quracaqlar.",
+    "descriptionTranslations": {
+      "az": "Praqada keçiriləcək bu təlim kursu Avropa Həmrəylik Korpusu (ESC) könüllülük layihələrində iştirak edən təşkilatların potensialını artırmağı hədəfləyir. İştirakçılar proqramın keyfiyyət meyarlarını, rəsmi qaydalarını öyrənəcək və güclü əməkdaşlıq şəbəkəsi quracaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Çexiya",
       "Tərəfdaşlıq",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -329,16 +498,26 @@
     "format": "Offline",
     "category": [
       "İnteqrasiya",
-      "fəaliyyət"
+      "Fəaliyyət"
+    ],
+    "categoryGroups": [
+      "Tərəfdaşlıq",
+      "Fəaliyyət"
     ],
     "location": "Finlandiya",
     "applyLink": "http://trainings.salto-youth.net/14954",
     "publishedAt": "2026-08-26",
+    "description": "Finlandiyada keçiriləcək bu tədbir Avropa Həmrəylik Korpusunun könüllü komandaları vasitəsilə inklüzivliyi dəstəkləmək istəyən təşkilatları birləşdirir. İştirakçılar az imkanlı gənclərin layihələrə cəlb olunması üçün beynəlxalq əlaqələr quracaq və uğurlu təcrübələri öyrənəcəklər.",
+    "descriptionTranslations": {
+      "az": "Finlandiyada keçiriləcək bu tədbir Avropa Həmrəylik Korpusunun könüllü komandaları vasitəsilə inklüzivliyi dəstəkləmək istəyən təşkilatları birləşdirir. İştirakçılar az imkanlı gənclərin layihələrə cəlb olunması üçün beynəlxalq əlaqələr quracaq və uğurlu təcrübələri öyrənəcəklər.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Finlandiya",
       "İnteqrasiya",
-      "fəaliyyət"
+      "Fəaliyyət"
     ]
   },
   {
@@ -348,16 +527,26 @@
     "format": "Offline",
     "category": [
       "Mədəniyyət",
-      "fəaliyyət"
+      "Fəaliyyət"
+    ],
+    "categoryGroups": [
+      "Mədəniyyət",
+      "Fəaliyyət"
     ],
     "location": "Belçika",
     "applyLink": "http://trainings.salto-youth.net/14904",
     "publishedAt": "2026-09-09",
+    "description": "Belçikada keçiriləcək bu şəbəkələşmə tədbiri gənclər təşkilatları ilə mədəniyyət qurumlarını beynəlxalq tərəfdaşlıqlar qurmaq üçün bir araya gətirir. İştirakçılar \"Erasmus+\" və ESC proqramları çərçivəsində yaradıcı və inklüziv layihələr hazırlamaq üçün əməkdaşlıq imkanlarını araşdıracaqlar.",
+    "descriptionTranslations": {
+      "az": "Belçikada keçiriləcək bu şəbəkələşmə tədbiri gənclər təşkilatları ilə mədəniyyət qurumlarını beynəlxalq tərəfdaşlıqlar qurmaq üçün bir araya gətirir. İştirakçılar \"Erasmus+\" və ESC proqramları çərçivəsində yaradıcı və inklüziv layihələr hazırlamaq üçün əməkdaşlıq imkanlarını araşdıracaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Belçika",
       "Mədəniyyət",
-      "fəaliyyət"
+      "Fəaliyyət"
     ]
   },
   {
@@ -367,16 +556,26 @@
     "format": "Offline",
     "category": [
       "Hüquq",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Hüquq",
+      "Kurs"
     ],
     "location": "İsveç",
     "applyLink": "http://trainings.salto-youth.net/14859",
     "publishedAt": "2026-09-14",
+    "description": "İsveçdə keçiriləcək bu təlim kursu LGBTQAI+ sahəsindəki gənclər işçilərini təcrübə mübadiləsi üçün bir araya gətirir. İştirakçılar mövcud siyasi və sosial çətinliklərə qarşı icma fəaliyyətlərini gücləndirməyin yollarını öyrənəcəklər.",
+    "descriptionTranslations": {
+      "az": "İsveçdə keçiriləcək bu təlim kursu LGBTQAI+ sahəsindəki gənclər işçilərini təcrübə mübadiləsi üçün bir araya gətirir. İştirakçılar mövcud siyasi və sosial çətinliklərə qarşı icma fəaliyyətlərini gücləndirməyin yollarını öyrənəcəklər.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "İsveç",
       "Hüquq",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -388,9 +587,18 @@
       "Təhsil",
       "E-təhsil"
     ],
+    "categoryGroups": [
+      "Təhsil"
+    ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15032",
     "publishedAt": "2026-09-02",
+    "description": "Gənc işçilər üçün nəzərdə tutulan bu onlayn vörkşop açıq hava təlimlərinin effektiv dizaynını öyrədir. İştirakçılar real qrup ehtiyaclarına uyğun təhlükəsiz və inklüziv oyunlar və fəaliyyət planları hazırlayacaqlar.",
+    "descriptionTranslations": {
+      "az": "Gənc işçilər üçün nəzərdə tutulan bu onlayn vörkşop açıq hava təlimlərinin effektiv dizaynını öyrədir. İştirakçılar real qrup ehtiyaclarına uyğun təhlükəsiz və inklüziv oyunlar və fəaliyyət planları hazırlayacaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Yunanistan",
@@ -405,16 +613,26 @@
     "format": "Online",
     "category": [
       "Yaradıcılıq",
-      "seminar"
+      "Seminar"
+    ],
+    "categoryGroups": [
+      "Mədəniyyət",
+      "Seminar"
     ],
     "location": "Yunanistan",
     "applyLink": "http://trainings.salto-youth.net/15033",
     "publishedAt": "2026-09-02",
+    "description": "Bu onlayn vörkşop gənclərlə işləyənlərə sadə və təbii materiallarla öyrədici oyunlar hazırlamağı öyrədir. İştirakçılar real problemləri oyun ssenarilərinə çevirmək bacarığı qazanacaqlar.",
+    "descriptionTranslations": {
+      "az": "Bu onlayn vörkşop gənclərlə işləyənlərə sadə və təbii materiallarla öyrədici oyunlar hazırlamağı öyrədir. İştirakçılar real problemləri oyun ssenarilərinə çevirmək bacarığı qazanacaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Yunanistan",
       "Yaradıcılıq",
-      "seminar"
+      "Seminar"
     ]
   },
   {
@@ -424,16 +642,26 @@
     "format": "Online",
     "category": [
       "Ekologiya",
-      "vebinar"
+      "Vebinar"
+    ],
+    "categoryGroups": [
+      "Ekologiya",
+      "Vebinar"
     ],
     "location": "Xorvatiya",
     "applyLink": "http://trainings.salto-youth.net/14998",
     "publishedAt": "2026-09-15",
+    "description": "Bu vebinar gənclərlə işləyənlərə idman vasitəsilə ekoloji davamlılığı təşviq etmək üçün effektiv kommunikasiya və layihə idarəetmə strategiyalarını öyrədir. İştirakçılar \"GreenSport 2030\" layihəsi çərçivəsində rəqəmsal və inklüziv metodları mənimsəyəcəklər.",
+    "descriptionTranslations": {
+      "az": "Bu vebinar gənclərlə işləyənlərə idman vasitəsilə ekoloji davamlılığı təşviq etmək üçün effektiv kommunikasiya və layihə idarəetmə strategiyalarını öyrədir. İştirakçılar \"GreenSport 2030\" layihəsi çərçivəsində rəqəmsal və inklüziv metodları mənimsəyəcəklər.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Online",
       "Xorvatiya",
       "Ekologiya",
-      "vebinar"
+      "Vebinar"
     ]
   },
   {
@@ -443,16 +671,26 @@
     "format": "Offline",
     "category": [
       "Mentorluq",
-      "kurs"
+      "Kurs"
+    ],
+    "categoryGroups": [
+      "Liderlik",
+      "Kurs"
     ],
     "location": "Polşa",
     "applyLink": "http://trainings.salto-youth.net/14983",
     "publishedAt": "2026-09-21",
+    "description": "Polşada keçiriləcək bu təlim kursu ESC proqramı çərçivəsində təşkilatların mentorluq sistemini gücləndirməyi hədəfləyir. İştirakçılar xüsusi mentorluq çərçivəsini öyrənərək könüllülərə dəstək keyfiyyətini artırmaq üçün fərdi planlar hazırlayacaqlar.",
+    "descriptionTranslations": {
+      "az": "Polşada keçiriləcək bu təlim kursu ESC proqramı çərçivəsində təşkilatların mentorluq sistemini gücləndirməyi hədəfləyir. İştirakçılar xüsusi mentorluq çərçivəsini öyrənərək könüllülərə dəstək keyfiyyətini artırmaq üçün fərdi planlar hazırlayacaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Polşa",
       "Mentorluq",
-      "kurs"
+      "Kurs"
     ]
   },
   {
@@ -462,16 +700,26 @@
     "format": "Offline",
     "category": [
       "İdarəetmə",
-      "seminar"
+      "Seminar"
+    ],
+    "categoryGroups": [
+      "Liderlik",
+      "Seminar"
     ],
     "location": "Macarıstan",
     "applyLink": "http://trainings.salto-youth.net/14905",
     "publishedAt": "2026-09-18",
+    "description": "Macarıstanda keçiriləcək bu seminar yerli bələdiyyələrdə gənclərin qərarvermə proseslərində iştirakını gücləndirməyi hədəfləyir. İştirakçılar yeni Avropa Xartiyasının müddəalarını və gənclər siyasəti alətlərini öyrənərək təcrübə mübadiləsi aparacaqlar.",
+    "descriptionTranslations": {
+      "az": "Macarıstanda keçiriləcək bu seminar yerli bələdiyyələrdə gənclərin qərarvermə proseslərində iştirakını gücləndirməyi hədəfləyir. İştirakçılar yeni Avropa Xartiyasının müddəalarını və gənclər siyasəti alətlərini öyrənərək təcrübə mübadiləsi aparacaqlar.",
+      "en": "",
+      "ru": ""
+    },
     "tags": [
       "Offline",
       "Macarıstan",
       "İdarəetmə",
-      "seminar"
+      "Seminar"
     ]
   }
 ]

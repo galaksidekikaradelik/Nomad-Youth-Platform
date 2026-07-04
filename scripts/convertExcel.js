@@ -4,6 +4,7 @@ import Papa from 'papaparse'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { mapCategoriesToCanonical } from '../src/utils/categoryMapping.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -54,10 +55,12 @@ async function run() {
     const title = row['Layihənin keçid linki']?.toString().trim()
     const deadline = excelDateToISO(row['Deadline'])
     const format = row['Növü']?.toString().trim()          // Online / Offline
-    const category = parseCategories(row['Kateqoriya'])     // ["Climate", "Leadership"]
+    const category = parseCategories(row['Kateqoriya'])     // ["Autizm", "kurs"] — spesifik ad, görünüş üçün
+    const categoryGroups = mapCategoriesToCanonical(category) // ["Rifah", "kurs"] — yalnız filtr üçün
     const country = row['Ölkə']?.toString().trim()
     const applyLink = row['Apply linki']?.toString().trim()
     const publishedAt = excelDateToISO(row['Açıqlanma tarixi'])
+    const description = row['Sum']?.toString().trim() || ''
 
     return {
       id: index + 1,
@@ -65,9 +68,16 @@ async function run() {
       deadline,
       format,
       category,
+      categoryGroups,
       location: country,
       applyLink,
       publishedAt,
+      description,
+      descriptionTranslations: {
+        az: description,
+        en: '',
+        ru: '',
+      },
       tags: [format, country, ...category].filter(Boolean),
     }
   }).filter(op => op.title)

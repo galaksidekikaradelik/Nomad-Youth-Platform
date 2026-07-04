@@ -2237,3 +2237,157 @@ ul, ol   { list-style: none; }
 .opportunity-card__tag--flag-top {
   margin: 0;
 }
+
+/* ============================================
+   Modal overlay + mərkəzləşmə
+   (AuthPromptModal və OpportunityDetailModal üçün ortaq)
+   ============================================ */
+
+.auth-modal-overlay,
+.detail-modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  padding: 16px;
+}
+
+.auth-modal,
+.detail-modal {
+  background: var(--card-bg, #fff);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.detail-modal {
+  max-width: 640px;
+}
+
+.auth-modal__close,
+.detail-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  color: var(--text-muted, #6b7280);
+}
+
+/* ============================================
+   Detail Modal xüsusi stilləri
+   ============================================ */
+
+.detail-modal__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 24px;
+}
+
+.detail-modal__location {
+  font-size: 13px;
+  color: var(--text-muted, #6b7280);
+  font-weight: 500;
+}
+
+.detail-modal__title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.detail-modal__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.detail-modal__divider {
+  height: 1px;
+  background: var(--border-color, #e5e7eb);
+  margin: 20px 0;
+}
+
+.detail-modal__section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: var(--text-muted, #6b7280);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.detail-modal__description {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.detail-modal__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.detail-modal__meta-row--muted {
+  color: var(--text-muted, #6b7280);
+}
+
+.detail-modal__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.detail-modal__icons {
+  display: flex;
+  gap: 8px;
+}
+
+/* ============================================
+   Kartda "Ətraflı bax" düyməsi
+   ============================================ */
+
+.opportunity-card__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.opportunity-card__detail-btn {
+  background: var(--accent-400);
+  border: 1px solid var(--accent-400);
+  color: var(--brand-900);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  gap: var(--space-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.opportunity-card__detail-btn:hover {
+  background: var(--accent-100);
+  border-color: var(--accent-100);
+  transform: translateY(-2px);
+}

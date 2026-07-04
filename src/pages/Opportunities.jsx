@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { translateCategory } from '../data/categoryTranslation'
+import { CANONICAL_CATEGORIES } from '../utils/categoryMapping'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
 import EventCard from '../components/EventCard'
@@ -14,30 +15,10 @@ const SCOPES = [
   { id: 'yerli',      labelKey: 'scope_local' },
 ]
 
-// id-lər Sheets-dəki "Kateqoriya" sütununun dəyərləri ilə eyni olmalıdır (bir layihə bir neçəsinə aid ola bilər)
+// id-lər categoryMapping.js-dəki 12 əsas (canonical) kateqoriya ilə eyni olmalıdır
 const CATEGORIES = [
-  { id: '',                  labelKey: 'category_all' },
-  { id: 'Climate',           labelKey: null },
-  { id: 'Leadership',        labelKey: null },
-  { id: 'Digital',           labelKey: null },
-  { id: 'Education',         labelKey: null },
-  { id: 'Youth',             labelKey: null },
-  { id: 'Entrepreneurship',  labelKey: null },
-  { id: 'Innovation',        labelKey: null },
-  { id: 'Environment',       labelKey: null },
-  { id: 'Sustainability',    labelKey: null },
-  { id: 'Human Rights',      labelKey: null },
-  { id: 'Social Inclusion',  labelKey: null },
-  { id: 'Culture',           labelKey: null },
-  { id: 'Volunteering',      labelKey: null },
-  { id: 'Business',          labelKey: null },
-  { id: 'Startups',          labelKey: null },
-  { id: 'AI',                labelKey: null },
-  { id: 'Technology',        labelKey: null },
-  { id: 'Erasmus+',          labelKey: null },
-  { id: 'Mobility',          labelKey: null },
-  { id: 'Health',            labelKey: null },
-  { id: 'Well-being',        labelKey: null },
+  { id: '', labelKey: 'category_all' },
+  ...CANONICAL_CATEGORIES.map(id => ({ id, labelKey: null })),
 ]
 
 const FORMATS = [
@@ -74,10 +55,10 @@ export default function Opportunities() {
   const [scope,    setScope]    = useState(initialScope)
   const [format,   setFormat]   = useState('Hamısı')
   const [sort,     setSort]     = useState('deadline')
-  const [tab,      setTab]      = useState('opportunities')
+  const [tab]      = useState('opportunities')
 
   const filtered = useMemo(() => enriched.filter(op => {
-    const matchCat    = category === '' || (Array.isArray(op.category) && op.category.includes(category))
+    const matchCat    = category === '' || (Array.isArray(op.categoryGroups) && op.categoryGroups.includes(category))
     const matchScope  = scope === 'hamisi' || op.scope === scope
     const matchFormat = format === 'Hamısı' || op.format === format
     const q = search.toLocaleLowerCase('az')
