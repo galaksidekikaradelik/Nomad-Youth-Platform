@@ -974,15 +974,16 @@ ul, ol   { list-style: none; }
 
 .info-cards-grid {
   gap: var(--space-lg);
+  align-items: stretch;
 }
 
 .info-card {
   background: var(--neutral-100);
   border-radius: var(--radius-lg);
-  aspect-ratio: 3/4;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  height: 100%;
   transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
@@ -993,8 +994,9 @@ ul, ol   { list-style: none; }
 
 .info-card__image {
   width: 100%;
-  flex: 1;
+  flex-shrink: 0;
   object-fit: cover;
+  object-position: center 80%;
   display: block;
 }
 
@@ -1006,8 +1008,13 @@ ul, ol   { list-style: none; }
   border-top: 1px solid var(--color-border);
   padding: var(--space-md) var(--space-lg);
   background: var(--color-surface);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  letter-spacing: 0.01em;
 }
-
 /* ─── 9. SEARCH BAR ─────────────────────────────────────────── */
 .search-bar {
   background: var(--color-surface);
