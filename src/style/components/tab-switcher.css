@@ -1,0 +1,29 @@
+.tab-switcher {
+  display: flex;
+  gap: var(--space-sm);
+  background: var(--neutral-100);
+  border-radius: var(--radius-lg);
+  padding: 5px;
+  margin-bottom: var(--space-xl);
+  width: fit-content;
+}
+
+.tab-btn {
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  transition: all var(--transition-fast);
+  font-family: var(--font-body);
+}
+
+.tab-btn:hover { color: var(--brand-900); }
+
+.tab-btn.active {
+  background: var(--neutral-0);
+  color: var(--brand-900);
+  box-shadow: var(--shadow-card);
+}

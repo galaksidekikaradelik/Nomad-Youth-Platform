@@ -4,14 +4,14 @@
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
-  background: var(--bg);
+  background: var(--color-bg);
 }
 
 .auth-card {
   width: 100%;
   max-width: 470px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 18px;
   padding: 40px;
   box-shadow: 0 12px 40px rgba(0,0,0,.08);
@@ -22,12 +22,12 @@
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .auth-subtitle {
   text-align: center;
-  color: var(--text-light);
+  color: var(--text-secondary);
   margin-bottom: 35px;
 }
 
@@ -44,10 +44,10 @@
 .auth-input{
   width:100%;
   padding:14px 16px;
-  border:1px solid var(--border);
+  border:1px solid var(--color-border);
   border-radius:12px;
   background:transparent;
-  color:var(--text);
+  color:var(--color-text);
   font-size:16px;
   transition:.3s;
   box-sizing:border-box;
@@ -55,7 +55,37 @@
 
 .auth-input:focus{
   outline:none;
-  border-color: var(--accent-400, #6C63FF);
+  border-color: var(--brand-700);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.auth-button{
+  width:100%;
+  margin-top:10px;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:700;
+  background: var(--brand-900);
+  color: var(--accent-400);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.auth-button:hover{
+  background: var(--brand-800);
+  transform:translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .auth-button {
+  background: var(--accent-400);
+  color: var(--brand-900);
+}
+
+[data-theme="dark"] .auth-button:hover {
+  background: var(--accent-300);
 }
 
 .auth-footer{
@@ -64,7 +94,7 @@
 }
 
 .auth-link{
-  color: var(--brand-700, #6C63FF);
+  color: var(--brand-700);
   font-weight:600;
   text-decoration:none;
 }
@@ -94,7 +124,7 @@
 .auth-error {
   margin: 4px 0 0;
   font-size: 12.5px;
-  color: var(--status-error, #c0392b);
+  color: var(--status-error);
 }
 
 .auth-google-btn {
@@ -121,7 +151,7 @@
   display: flex;
   align-items: center;
   text-align: center;
-  color: var(--text-light, #888);
+  color: var(--text-secondary);
   font-size: 13px;
   margin: 18px 0;
 }
@@ -130,7 +160,7 @@
 .auth-divider::after {
   content: "";
   flex: 1;
-  border-bottom: 1px solid var(--border, #ddd);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .auth-divider span {
@@ -138,13 +168,13 @@
 }
 
 .auth-banner {
-  background: var(--color-primary-light, #eef6f2);
-  border: 1px solid var(--border, #cfe6da);
+  background: var(--color-primary-light);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 12px 14px;
   font-size: 14px;
   margin-bottom: 20px;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .auth-interest-grid {
@@ -159,7 +189,7 @@
   align-items: center;
   gap: 6px;
   padding: 7px 12px;
-  border: 1px solid var(--border, #ddd);
+  border: 1px solid var(--color-border);
   border-radius: 999px;
   font-size: 13px;
   cursor: pointer;
@@ -167,12 +197,12 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .auth-interest-chip:has(input:checked) {
-  border-color: var(--brand-700, #46516E);
-  background: var(--color-primary-light, rgba(70, 81, 110, 0.08));
+  border-color: var(--brand-700);
+  background: var(--color-primary-light);
 }
 
 .auth-checkbox-group {
@@ -189,40 +219,10 @@
   font-size: 13.5px;
   cursor: pointer;
   line-height: 1.4;
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .auth-checkbox-row input {
   margin-top: 3px;
   flex-shrink: 0;
-}
-
-/* ===== "Create Account" / "Hesab yarat" düyməsini navbar__cta ilə eyniləşdirmək ===== */
-.auth-button{
-  width:100%;
-  margin-top:10px;
-  padding:15px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  font-size:16px;
-  font-weight:700;
-  background: var(--brand-900);
-  color: var(--accent-400);
-  transition: background .3s, transform .3s, box-shadow .3s;
-}
-
-.auth-button:hover{
-  background: var(--brand-800);
-  transform:translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-[data-theme="dark"] .auth-button {
-  background: var(--accent-400);
-  color: var(--brand-900);
-}
-
-[data-theme="dark"] .auth-button:hover {
-  background: var(--accent-300);
 }

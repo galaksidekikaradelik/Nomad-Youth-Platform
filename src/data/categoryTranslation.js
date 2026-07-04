@@ -16,7 +16,7 @@ export const categoryTranslations = {
   'Sülh':  { az: 'Sülh',  en: 'Peace',  ru: 'Мир' },
   'Gənclər':           { az: 'Gənclər',          en: 'Youth',           ru: 'Молодёжь' },
 
-  // Spesifik alt-kateqoriyalar (badge-də göstərilir, filtr üçün yuxarıdakı 12-yə map olunur)
+  // alt-kateqoriyalar 
   'Psixologiya':       { az: 'Psixologiya',       en: 'Psychology',        ru: 'Психология' },
   'Autizm':            { az: 'Autizm',            en: 'Autism',            ru: 'Аутизм' },
   'Sağlamlıq':         { az: 'Sağlamlıq',         en: 'Health',            ru: 'Здоровье' },
@@ -29,7 +29,7 @@ export const categoryTranslations = {
   'E-təhsil':          { az: 'E-təhsil',          en: 'E-learning',        ru: 'Электронное обучение' },
 }
 
-// category: İngiliscə original dəyər (data-dan), lang: 'az' | 'en' | 'ru'
+
 export function translateCategory(category, lang) {
   return categoryTranslations[category]?.[lang] || category
 }

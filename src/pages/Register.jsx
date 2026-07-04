@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import "../styles/auth.css";
+import { useAuth } from "../hooks/useAuth";
+import "../style/pages/auth.css";
 
 const INTEREST_OPTIONS = [
   "Erasmus+ mübadilələri",

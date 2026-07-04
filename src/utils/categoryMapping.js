@@ -1,5 +1,3 @@
-// Excel/Sheets-dən gələn xam kateqoriya adını əsas (canonical) kateqoriyaya map edir.
-// Filter dropdown, badge rəngi və tərcümə HAMISI bu əsas kateqoriyaya görə işləyir.
 
 export const CANONICAL_CATEGORIES = [
   'Təhsil',
@@ -16,7 +14,6 @@ export const CANONICAL_CATEGORIES = [
   'Gənclər',
 ]
 
-// Xam ad -> əsas kateqoriya
 const CATEGORY_MAP = {
   'Təhsil': 'Təhsil',
   'E-təhsil': 'Təhsil',
@@ -52,19 +49,13 @@ const CATEGORY_MAP = {
   'İnteqrasiya': 'Tərəfdaşlıq',
 }
 
-/**
- * Xam kateqoriya adını əsas kateqoriyaya çevirir.
- * Xəritədə tapılmasa, adı olduğu kimi qaytarır (fallback).
- */
+
 export function getCanonicalCategory(rawCategory) {
   if (!rawCategory) return rawCategory
   return CATEGORY_MAP[rawCategory.trim()] || rawCategory.trim()
 }
 
-/**
- * Kateqoriya massivini əsas kateqoriyalara çevirir və təkrarları silir.
- * Məs: ["Psixologiya", "kurs"] -> ["Rifah", "kurs"]
- */
+
 export function mapCategoriesToCanonical(categories) {
   if (!Array.isArray(categories)) return []
   const mapped = categories.map(getCanonicalCategory)

@@ -29,14 +29,12 @@ export default function About() {
     <div className="section">
       <div className="container">
 
-        {/* Header */}
         <div className="page-header">
           <div className="page-header__eyebrow">{t('about_eyebrow')}</div>
           <h1 className="page-header__title">{t('about_title')}</h1>
           <p className="page-header__desc">{t('about_desc')}</p>
         </div>
 
-        {/* Stats */}
         <div className="grid-4" style={{ marginBottom: 'var(--space-3xl)' }}>
           {stats.map(s => (
             <div key={s.labelKey} style={{
@@ -56,7 +54,6 @@ export default function About() {
           ))}
         </div>
 
-        {/* Nomad necə işləyir? */}
         <div style={{ marginBottom: 'var(--space-3xl)' }}>
           <div className="section-heading">
             <div className="section-heading__eyebrow">{t('about_how_eyebrow')}</div>
@@ -73,7 +70,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Team */}
         <div style={{ marginBottom: 'var(--space-3xl)' }}>
           <div className="section-heading">
             <div className="section-heading__eyebrow">{t('about_team_eyebrow')}</div>
@@ -100,7 +96,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* CTA / Partnership */}
         <div className="cta-banner">
           <div className="cta-banner__content">
             <h2 className="cta-banner__title">{t('about_cta_title')}</h2>

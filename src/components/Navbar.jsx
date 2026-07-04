@@ -3,7 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import logoLight from '../assets/images/logo-light.png'
 import logoDark from '../assets/images/logo-dark.png'
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 
 const LANGUAGES = [
   { code: 'az', label: 'Azərbaycan' },

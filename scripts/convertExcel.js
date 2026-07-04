@@ -24,7 +24,6 @@ function excelDateToISO(value) {
   return null
 }
 
-// "Climate, Leadership" -> ["Climate", "Leadership"]
 function parseCategories(value) {
   if (!value) return []
   return value
@@ -54,9 +53,9 @@ async function run() {
   const opportunities = rows.map((row, index) => {
     const title = row['Layihənin keçid linki']?.toString().trim()
     const deadline = excelDateToISO(row['Deadline'])
-    const format = row['Növü']?.toString().trim()          // Online / Offline
-    const category = parseCategories(row['Kateqoriya'])     // ["Autizm", "kurs"] — spesifik ad, görünüş üçün
-    const categoryGroups = mapCategoriesToCanonical(category) // ["Rifah", "kurs"] — yalnız filtr üçün
+    const format = row['Növü']?.toString().trim()          
+    const category = parseCategories(row['Kateqoriya'])     
+    const categoryGroups = mapCategoriesToCanonical(category) 
     const country = row['Ölkə']?.toString().trim()
     const applyLink = row['Apply linki']?.toString().trim()
     const publishedAt = excelDateToISO(row['Açıqlanma tarixi'])

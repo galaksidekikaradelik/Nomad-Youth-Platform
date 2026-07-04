@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../styles/auth.css";
+import "../style/pages/auth.css";
 
 export default function Login() {
   return (

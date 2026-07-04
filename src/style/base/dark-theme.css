@@ -1,0 +1,76 @@
+/* Dark-theme component overrides — import this AFTER all components, since it must win the cascade */
+
+[data-theme="dark"] .navbar {
+  background: rgba(17, 22, 36, 0.85);
+}
+
+[data-theme="dark"] .hero {
+  background: var(--neutral-0);
+}
+
+[data-theme="dark"] .hero__orb--1,
+[data-theme="dark"] .hero__orb--2,
+[data-theme="dark"] .hero__orb--3 {
+  opacity: 0.12;
+}
+
+[data-theme="dark"] .section-heading__title,
+[data-theme="dark"] .page-header__title,
+[data-theme="dark"] .opportunity-card__title,
+[data-theme="dark"] .event-card__title,
+[data-theme="dark"] .event-card__date-day,
+[data-theme="dark"] .category-card__name,
+[data-theme="dark"] .value-card__title,
+[data-theme="dark"] .hero__title,
+[data-theme="dark"] .hero__stat-num,
+[data-theme="dark"] .contact-info-card__value,
+[data-theme="dark"] .footer__disclaimer strong,
+[data-theme="dark"] .disclaimer-banner strong {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .btn-outline {
+  color: var(--text-primary);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .btn-outline:hover {
+  background: var(--text-primary);
+}
+
+[data-theme="dark"] .opportunity-card__apply-btn,
+[data-theme="dark"] .navbar__cta,
+[data-theme="dark"] .search-bar__btn {
+  background: var(--accent-400);
+  color: var(--brand-900);
+}
+
+[data-theme="dark"] .opportunity-card__apply-btn:hover,
+[data-theme="dark"] .navbar__cta:hover,
+[data-theme="dark"] .search-bar__btn:hover {
+  background: var(--accent-300);
+}
+
+[data-theme="dark"] .search-bar__input,
+[data-theme="dark"] .search-bar__select,
+[data-theme="dark"] .search-bar__select option {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .opportunity-card__tag {
+  background: var(--neutral-200);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .navbar__link.active,
+[data-theme="dark"] .navbar__link:hover {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .info-card {
+  background: var(--neutral-100);
+}
+
+[data-theme="dark"] .info-card__label {
+  color: var(--text-primary);
+}

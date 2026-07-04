@@ -55,7 +55,6 @@ export default function Contact() {
 
         <div className="contact-grid">
 
-          {/* Info */}
           <div className="contact-info">
             {infoCards.map(c => (
               <div key={c.label} className="contact-info-card">
@@ -86,7 +85,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Form */}
           {submitted ? (
             <div style={{
               background: 'var(--color-surface)',

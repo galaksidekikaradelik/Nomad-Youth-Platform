@@ -8,9 +8,6 @@ const SearchIcon = () => (
   </svg>
 )
 
-// query/category/onQueryChange/onCategoryChange -> real-time filtrasiya üçün (məs. Opportunities səhifəsi)
-// onSubmit -> Enter/düymə basılanda əlavə əməliyyat üçün (məs. Home səhifəsində /opportunities-ə yönləndirmək)
-// showButton -> "Axtar" düyməsini göstərmək istəyirsənsə true ver
 export default function SearchBar({
   placeholder,
   query,
