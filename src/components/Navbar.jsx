@@ -155,19 +155,9 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <>
-              <Link to="/login" className="navbar__cta">
-                Login
-              </Link>
-
-              <Link
-                to="/register"
-                className="navbar__cta"
-                style={{ marginLeft: "10px" }}
-              >
-                Register
-              </Link>
-            </>
+            <Link to="/register" className="navbar__cta">
+              Hesab yarat
+            </Link>
           )}
           </div>
 
@@ -226,15 +216,9 @@ export default function Navbar() {
             </button>
           </>
         ) : (
-          <>
-            <Link to="/login" className="navbar__cta" onClick={handleLinkClick}>
-              Login
-            </Link>
-
-            <Link to="/register" className="navbar__cta" onClick={handleLinkClick}>
-              Register
-            </Link>
-          </>
+          <Link to="/register" className="navbar__cta" onClick={handleLinkClick}>
+            Hesab yarat
+          </Link>
         )}
       </div>
     </>

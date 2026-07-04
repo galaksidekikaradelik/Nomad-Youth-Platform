@@ -2054,10 +2054,6 @@ ul, ol   { list-style: none; }
 }
 
 
-/* ============================================================
-   AUTH PROMPT MODAL
-   index.css-in sonuna əlavə et
-   ============================================================ */
 
 .auth-modal-overlay {
   position: fixed;
