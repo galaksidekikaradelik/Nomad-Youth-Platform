@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import logoLight from '../assets/images/logo-light.png'
 import logoDark from '../assets/images/logo-dark.png'
+import { useAuth } from "../context/AuthContext";
 
 const LANGUAGES = [
   { code: 'az', label: 'Azərbaycan' },
@@ -34,6 +35,7 @@ function getInitialDarkMode() {
 
 export default function Navbar() {
   const { lang, setLanguage, t } = useLanguage()
+  const { user, logout } = useAuth();
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(getInitialDarkMode)
@@ -134,7 +136,39 @@ export default function Navbar() {
               {darkMode ? <SunIcon /> : <MoonIcon />}
             </button>
 
-            <Link to="/opportunities" className="navbar__cta">{t('nav_cta')}</Link>
+            {user ? (
+          <>
+          <Link to="/profile" className="navbar__cta">
+                Profile
+              </Link>
+
+              <button
+                className="navbar__cta"
+                onClick={logout}
+                style={{
+                  marginLeft: "10px",
+                  cursor: "pointer",
+                  border: "none"
+                }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="navbar__cta">
+                Login
+              </Link>
+
+              <Link
+                to="/register"
+                className="navbar__cta"
+                style={{ marginLeft: "10px" }}
+              >
+                Register
+              </Link>
+            </>
+          )}
           </div>
 
           <button
@@ -175,9 +209,33 @@ export default function Navbar() {
           </button>
         </div>
 
-        <Link to="/opportunities" className="navbar__cta" onClick={handleLinkClick}>
-          {t('nav_cta')}
-        </Link>
+        {user ? (
+          <>
+            <Link to="/profile" className="navbar__cta" onClick={handleLinkClick}>
+              Profile
+            </Link>
+
+            <button
+              className="navbar__cta"
+              onClick={() => {
+                logout();
+                handleLinkClick();
+              }}
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="navbar__cta" onClick={handleLinkClick}>
+              Login
+            </Link>
+
+            <Link to="/register" className="navbar__cta" onClick={handleLinkClick}>
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </>
   )

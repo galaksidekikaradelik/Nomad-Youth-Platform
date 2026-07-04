@@ -1,16 +1,19 @@
-import { BrowserRouter } from 'react-router-dom'
-import { LanguageProvider } from './context/LanguageContext'
-import AppRoutes from './routes/AppRoutes'
-import 'flag-icons/css/flag-icons.min.css'
+import { BrowserRouter } from "react-router-dom";
+import { LanguageProvider } from "./context/LanguageContext";
+import { AuthProvider } from "./context/AuthContext";
+import AppRoutes from "./routes/AppRoutes";
+import "flag-icons/css/flag-icons.min.css";
 
 function App() {
   return (
     <LanguageProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AuthProvider>
     </LanguageProvider>
-  )
+  );
 }
 
-export default App
+export default App;
