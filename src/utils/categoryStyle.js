@@ -1,4 +1,3 @@
-// Kateqoriya adına görə sabit rəng seçir (hər kateqoriya həmişə eyni rəngdə olur)
 const CATEGORY_PALETTE = [
   { bg: '#EFF6FF', text: '#1D4ED8', border: '#BFDBFE' }, // blue
   { bg: '#F0FDF4', text: '#15803D', border: '#BBF7D0' }, // green

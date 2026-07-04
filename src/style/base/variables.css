@@ -1,0 +1,116 @@
+:root {
+  /* Primary Brand */
+  --brand-900: #202940;
+  --brand-800: #2F3A57;
+  --brand-700: #46516E;
+  --brand-600: #5E6986;
+
+  /* Accent Brand */
+  --accent-400: #FFC300;
+  --accent-300: #FFD233;
+  --accent-200: #FFE066;
+  --accent-100: #FFF0A3;
+
+  /* Neutrals */
+  --neutral-0:   #FFFFFF;
+  --neutral-50:  #F8FAFC;
+  --neutral-100: #EEF2F6;
+  --neutral-200: #D8DEE8;
+
+  /* Text */
+  --text-primary:   #202940;
+  --text-secondary: #4B556B;
+  --text-muted:     #7B8798;
+
+  /* Status */
+  --status-info:    #3B82F6;
+  --status-success: #10B981;
+  --status-warning: #F97316;
+  --status-error:   #EF4444;
+
+  /* ── Semantic aliases (used throughout) ── */
+  --color-bg:           var(--neutral-50);
+  --color-surface:      var(--neutral-0);
+  --color-surface-2:    var(--neutral-100);
+  --color-border:       var(--neutral-200);
+  --color-border-hover: #B0BACF;
+
+  --color-primary:       var(--brand-900);
+  --color-primary-mid:   var(--brand-700);
+  --color-primary-light: #E8ECF4;
+
+  --color-accent:       var(--accent-400);
+  --color-accent-light: var(--accent-100);
+  --color-accent-glow:  rgba(255, 195, 0, 0.18);
+
+  --color-text:       var(--text-primary);
+  --color-text-muted: var(--text-secondary);
+  --color-text-faint: var(--text-muted);
+
+  /* Typography */
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body:    'Plus Jakarta Sans', sans-serif;
+
+  /* Spacing */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+
+  /* Border radius */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* Shadows — light theme */
+  --shadow-sm:   0 1px 2px rgba(32,41,64,0.06);
+  --shadow-card: 0 1px 3px rgba(32,41,64,0.08), 0 4px 16px rgba(32,41,64,0.07);
+  --shadow-md:   0 2px 8px rgba(32,41,64,0.10), 0 8px 32px rgba(32,41,64,0.08);
+  --shadow-glow: 0 0 32px rgba(255, 195, 0, 0.22);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Layout */
+  --container-max: 1600px;
+  --container-pad: clamp(16px, 2.5vw, 28px);
+
+  /* Navbar height */
+  --navbar-h: 68px;
+}
+
+[data-theme="dark"] {
+  --neutral-0:   #1A2236;
+  --neutral-50:  #151B2C;
+  --neutral-100: #232C44;
+  --neutral-200: #353F5C;
+
+  --text-primary:   #F1F4F9;
+  --text-secondary: #B8C0D4;
+  --text-muted:     #7E89A3;
+
+  --color-bg:           #111624;
+  --color-surface:      var(--neutral-0);
+  --color-surface-2:    var(--neutral-100);
+  --color-border:       var(--neutral-200);
+  --color-border-hover: #4A5575;
+
+  --color-primary:       #F1F4F9;
+  --color-primary-mid:   #B8C0D4;
+  --color-primary-light: #232C44;
+
+  --color-text:       var(--text-primary);
+  --color-text-muted: var(--text-secondary);
+  --color-text-faint: var(--text-muted);
+
+  --shadow-sm:   0 1px 2px rgba(0,0,0,0.3);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-md:   0 2px 8px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+}

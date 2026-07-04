@@ -20,7 +20,6 @@ export default function AppRoutes() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/services" element={<Services />} />
 
-        {/* Yeni route-lar */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>

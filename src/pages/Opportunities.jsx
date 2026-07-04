@@ -5,9 +5,8 @@ import { translateCategory } from '../data/categoryTranslation'
 import { CANONICAL_CATEGORIES } from '../utils/categoryMapping'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
-import EventCard from '../components/EventCard'
 import { opportunities } from '../data/opportunities'
-import { events } from '../data/events'
+
 
 const SCOPES = [
   { id: 'hamisi',     labelKey: 'scope_all' },
@@ -15,7 +14,6 @@ const SCOPES = [
   { id: 'yerli',      labelKey: 'scope_local' },
 ]
 
-// id-lər categoryMapping.js-dəki 12 əsas (canonical) kateqoriya ilə eyni olmalıdır
 const CATEGORIES = [
   { id: '', labelKey: 'category_all' },
   ...CANONICAL_CATEGORIES.map(id => ({ id, labelKey: null })),
@@ -33,7 +31,6 @@ const SORT_OPTIONS = [
   { id: 'country',  labelKey: 'sort_country' },
 ]
 
-// scope real location-a görə təyin olunur: Azərbaycan → yerli, qalanı → beynəlxalq
 const enriched = opportunities.map(op => ({
   ...op,
   scope: op.location === 'Azərbaycan' ? 'yerli' : 'beynelxalq',
@@ -167,16 +164,7 @@ export default function Opportunities() {
           </>
         )}
 
-        {tab === 'events' && (
-          <>
-            <div style={{ marginBottom: 'var(--space-lg)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-              <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{events.length}</span> {t('events_upcoming_suffix')}
-            </div>
-            <div className="grid-3">
-              {events.map(ev => <EventCard key={ev.id} event={ev} />)}
-            </div>
-          </>
-        )}
+        
 
       </div>
     </div>

@@ -44,7 +44,6 @@ export default function Home() {
         />
       </div>
 
-      {/* ── Bütün Elanlar birbaşa görünür ── */}
       <section className="section" id="opportunities">
         <div className="container">
           <div className="section-heading" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-md)' }}>

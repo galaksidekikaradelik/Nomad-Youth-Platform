@@ -1,0 +1,23 @@
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.section {
+  padding: var(--space-3xl) 0;
+}
+
+/* ─── 4. SCROLLBAR ──────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--neutral-100); }
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-200);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-border-hover); }
+
+::selection {
+  background: var(--accent-200);
+  color: var(--brand-900);
+}
