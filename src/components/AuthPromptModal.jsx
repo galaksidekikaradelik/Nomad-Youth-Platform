@@ -1,7 +1,9 @@
+import { createPortal } from 'react-dom'
+
 export default function AuthPromptModal({ open, onClose }) {
   if (!open) return null
 
-  return (
+  return createPortal(
     <div className="auth-modal-overlay" onClick={onClose}>
       <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
         <button className="auth-modal__close" onClick={onClose} aria-label="Bağla">×</button>
@@ -22,6 +24,7 @@ export default function AuthPromptModal({ open, onClose }) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

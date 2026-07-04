@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useLanguage } from '..//hooks/useLanguage'
 import { translateCategory } from '../data/categoryTranslation'
+import { getCategoryStyle } from '../utils/categoryStyle'
 import AuthPromptModal from './AuthPromptModal'
+import OpportunityDetailModal from './OpportunityDetailModal'
 
 const HeartIcon = ({ active }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -80,35 +82,11 @@ function FlagIcon({ location }) {
 
 const URGENT_THRESHOLD_DAYS = 3
 
-// Kateqoriya adına görə sabit rəng seçir (hər kateqoriya həmişə eyni rəngdə olur)
-const CATEGORY_PALETTE = [
-  { bg: '#EFF6FF', text: '#1D4ED8', border: '#BFDBFE' }, // blue
-  { bg: '#F0FDF4', text: '#15803D', border: '#BBF7D0' }, // green
-  { bg: '#FEF3C7', text: '#B45309', border: '#FDE68A' }, // amber
-  { bg: '#FDF2F8', text: '#BE185D', border: '#FBCFE8' }, // pink
-  { bg: '#F5F3FF', text: '#6D28D9', border: '#DDD6FE' }, // violet
-  { bg: '#ECFEFF', text: '#0E7490', border: '#A5F3FC' }, // cyan
-  { bg: '#FFF7ED', text: '#C2410C', border: '#FED7AA' }, // orange
-  { bg: '#FEF2F2', text: '#B91C1C', border: '#FECACA' }, // red
-]
-
-function getCategoryStyle(category) {
-  let hash = 0
-  for (let i = 0; i < category.length; i++) {
-    hash = category.charCodeAt(i) + ((hash << 5) - hash)
-  }
-  const palette = CATEGORY_PALETTE[Math.abs(hash) % CATEGORY_PALETTE.length]
-  return {
-    background: palette.bg,
-    color: palette.text,
-    border: `1px solid ${palette.border}`,
-  }
-}
-
 export default function OpportunityCard({ opportunity }) {
   const { t, lang } = useLanguage()
   const { title, format, category, location, deadline, applyLink, publishedAt } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
+  const [showDetail, setShowDetail] = useState(false)
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
@@ -198,22 +176,39 @@ export default function OpportunityCard({ opportunity }) {
           )}
         </div>
 
-        {applyLink ? (
-          <a
-            href={applyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="opportunity-card__apply-btn"
-            onClick={(e) => e.stopPropagation()}
+        <div className="opportunity-card__footer-actions">
+          <button
+            type="button"
+            className="opportunity-card__detail-btn"
+            onClick={(e) => { e.stopPropagation(); setShowDetail(true) }}
           >
-            {t('card_apply')} <ArrowIcon />
-          </a>
-        ) : (
-          <span className="opportunity-card__apply-btn opportunity-card__apply-btn--disabled">
-            {t('card_apply')} <ArrowIcon />
-          </span>
-        )}
+            {t('card_view_details') || 'Ətraflı bax'}
+          </button>
+
+          {applyLink ? (
+            <a
+              href={applyLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opportunity-card__apply-btn"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {t('card_apply')} <ArrowIcon />
+            </a>
+          ) : (
+            <span className="opportunity-card__apply-btn opportunity-card__apply-btn--disabled">
+              {t('card_apply')} <ArrowIcon />
+            </span>
+          )}
+        </div>
       </div>
+
+      <OpportunityDetailModal
+        opportunity={opportunity}
+        open={showDetail}
+        onClose={() => setShowDetail(false)}
+        onRequireAuth={() => { setShowDetail(false); setShowAuthPrompt(true) }}
+      />
 
       <AuthPromptModal open={showAuthPrompt} onClose={() => setShowAuthPrompt(false)} />
     </div>
