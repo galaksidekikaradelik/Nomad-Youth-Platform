@@ -82,9 +82,19 @@ function FlagIcon({ location }) {
 
 const URGENT_THRESHOLD_DAYS = 3
 
+// "Növ" sahəsi (Seminar/Kurs/Konfrans/Vebinar/Fəaliyyət) üçün tərcümə açarları.
+// Opportunities.jsx-dəki TYPES sabitiylə eyni açarlardan istifadə edir.
+const TYPE_LABEL_KEYS = {
+  'Seminar':   'type_seminar',
+  'Kurs':      'type_course',
+  'Konfrans':  'type_conference',
+  'Vebinar':   'type_webinar',
+  'Fəaliyyət': 'type_activity',
+}
+
 export default function OpportunityCard({ opportunity }) {
   const { t, lang } = useLanguage()
-  const { title, format, category, location, deadline, applyLink, publishedAt } = opportunity
+  const { title, format, category, type, location, deadline, applyLink, publishedAt } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [showDetail, setShowDetail] = useState(false)
 
@@ -100,8 +110,11 @@ export default function OpportunityCard({ opportunity }) {
     ? new Date(publishedAt).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
     : null
 
-  const typeLabel = format === 'Online' ? t('type_online') : format === 'Offline' ? t('type_offline') : format
-  const typeModifier = format === 'Online' ? 'online' : format === 'Offline' ? 'offline' : null
+  const formatLabel = format === 'Online' ? t('type_online') : format === 'Offline' ? t('type_offline') : format
+  const formatModifier = format === 'Online' ? 'online' : format === 'Offline' ? 'offline' : null
+
+  const typeLabelKey = type ? TYPE_LABEL_KEYS[type] : null
+  const typeLabel = typeLabelKey ? t(typeLabelKey) : type
 
   const categories = Array.isArray(category) ? category : (category ? [category] : [])
 
@@ -138,8 +151,16 @@ export default function OpportunityCard({ opportunity }) {
       <div className="opportunity-card__topic">
         <span className="opportunity-card__topic-label">{t('card_topic')}</span>
         <div className="opportunity-card__tags">
+          {formatLabel && (
+            <span className={`opportunity-card__tag opportunity-card__tag--type${formatModifier ? ` opportunity-card__tag--${formatModifier}` : ''}`}>
+              {formatLabel}
+            </span>
+          )}
           {typeLabel && (
-            <span className={`opportunity-card__tag opportunity-card__tag--type${typeModifier ? ` opportunity-card__tag--${typeModifier}` : ''}`}>
+            <span
+              className="opportunity-card__tag opportunity-card__category-badge"
+              style={getCategoryStyle(type)}
+            >
               {typeLabel}
             </span>
           )}

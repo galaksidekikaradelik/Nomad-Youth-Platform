@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useLanguage } from "../hooks/useLanguage";
 import "../style/pages/auth.css";
 
 const INTEREST_OPTIONS = [
@@ -35,6 +36,7 @@ const EMPTY_FORM = {
 };
 
 export default function Register() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [isGoogleSignup, setIsGoogleSignup] = useState(false);
   const [errors, setErrors] = useState({});
@@ -77,22 +79,21 @@ export default function Register() {
     const newErrors = {};
 
     if (!isGoogleSignup) {
-      if (!formData.firstName.trim()) newErrors.firstName = "Ad daxil edin";
-      if (!formData.lastName.trim()) newErrors.lastName = "Soyad daxil edin";
-      if (!formData.email.trim()) newErrors.email = "E-mail daxil edin";
+      if (!formData.firstName.trim()) newErrors.firstName = t("auth_error_first_name");
+      if (!formData.lastName.trim()) newErrors.lastName = t("auth_error_last_name");
+      if (!formData.email.trim()) newErrors.email = t("auth_error_email");
       if (!formData.password || formData.password.length < 6)
-        newErrors.password = "Şifrə ən azı 6 simvol olmalıdır";
+        newErrors.password = t("auth_error_password");
       if (formData.password !== formData.confirmPassword)
-        newErrors.confirmPassword = "Şifrələr uyğun gəlmir";
+        newErrors.confirmPassword = t("auth_error_confirm_password");
     }
 
-    if (!formData.phone.trim()) newErrors.phone = "Əlaqə nömrəsi daxil edin";
-    if (!formData.birthDate) newErrors.birthDate = "Doğum tarixi daxil edin";
-    if (!formData.university.trim()) newErrors.university = "Universitet daxil edin";
-    if (!formData.educationLevel) newErrors.educationLevel = "Təhsil səviyyəsini seçin";
-    if (!formData.major.trim()) newErrors.major = "İxtisas daxil edin";
-    if (!formData.acceptTerms)
-      newErrors.acceptTerms = "Davam etmək üçün şərtləri qəbul etməlisiniz";
+    if (!formData.phone.trim()) newErrors.phone = t("auth_error_phone");
+    if (!formData.birthDate) newErrors.birthDate = t("auth_error_birth_date");
+    if (!formData.university.trim()) newErrors.university = t("auth_error_university");
+    if (!formData.educationLevel) newErrors.educationLevel = t("auth_error_education_level");
+    if (!formData.major.trim()) newErrors.major = t("auth_error_major");
+    if (!formData.acceptTerms) newErrors.acceptTerms = t("auth_error_terms");
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -110,25 +111,24 @@ export default function Register() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <h1 className="auth-title">Create Account</h1>
-        <p className="auth-subtitle">Join the Nomad Youth Platform today.</p>
+        <h1 className="auth-title">{t("auth_register_title")}</h1>
+        <p className="auth-subtitle">{t("auth_register_subtitle")}</p>
 
         {!isGoogleSignup && (
           <>
             <button type="button" className="auth-google-btn" onClick={handleGoogleSignup}>
               <GoogleIcon />
-              Google ilə qeydiyyatdan keç
+              {t("auth_google_signup")}
             </button>
             <div className="auth-divider">
-              <span>və ya</span>
+              <span>{t("auth_or")}</span>
             </div>
           </>
         )}
 
         {isGoogleSignup && (
           <div className="auth-banner">
-            Google hesabınla giriş etdin ({formData.email}). Qalan bir neçə sualı
-            cavablandır və profilini tamamla.
+            {t("auth_google_banner")} ({formData.email}). {t("auth_google_banner_cont")}
           </div>
         )}
 
@@ -137,67 +137,67 @@ export default function Register() {
             <>
               <div className="auth-row">
                 <div className="auth-group">
-                  <label>Ad</label>
+                  <label>{t("auth_first_name")}</label>
                   <input
                     className="auth-input"
                     type="text"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    placeholder="Adınız"
+                    placeholder={t("auth_first_name_placeholder")}
                   />
                   {errors.firstName && <p className="auth-error">{errors.firstName}</p>}
                 </div>
 
                 <div className="auth-group">
-                  <label>Soyad</label>
+                  <label>{t("auth_last_name")}</label>
                   <input
                     className="auth-input"
                     type="text"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    placeholder="Soyadınız"
+                    placeholder={t("auth_last_name_placeholder")}
                   />
                   {errors.lastName && <p className="auth-error">{errors.lastName}</p>}
                 </div>
               </div>
 
               <div className="auth-group">
-                <label>Email</label>
+                <label>{t("auth_email")}</label>
                 <input
                   className="auth-input"
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Enter your email"
+                  placeholder={t("auth_email_placeholder")}
                 />
                 {errors.email && <p className="auth-error">{errors.email}</p>}
               </div>
 
               <div className="auth-group">
-                <label>Password</label>
+                <label>{t("auth_password")}</label>
                 <input
                   className="auth-input"
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="Create a password"
+                  placeholder={t("auth_password_create_placeholder")}
                 />
                 {errors.password && <p className="auth-error">{errors.password}</p>}
               </div>
 
               <div className="auth-group">
-                <label>Confirm Password</label>
+                <label>{t("auth_confirm_password")}</label>
                 <input
                   className="auth-input"
                   type="password"
                   name="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  placeholder="Confirm your password"
+                  placeholder={t("auth_confirm_password_placeholder")}
                 />
                 {errors.confirmPassword && (
                   <p className="auth-error">{errors.confirmPassword}</p>
@@ -208,7 +208,7 @@ export default function Register() {
 
           <div className="auth-row">
             <div className="auth-group">
-              <label>Əlaqə nömrəsi</label>
+              <label>{t("auth_phone")}</label>
               <input
                 className="auth-input"
                 type="tel"
@@ -221,7 +221,7 @@ export default function Register() {
             </div>
 
             <div className="auth-group">
-              <label>Doğum tarixi</label>
+              <label>{t("auth_birth_date")}</label>
               <input
                 className="auth-input"
                 type="date"
@@ -234,28 +234,28 @@ export default function Register() {
           </div>
 
           <div className="auth-group">
-            <label>Universitet</label>
+            <label>{t("auth_university")}</label>
             <input
               className="auth-input"
               type="text"
               name="university"
               value={formData.university}
               onChange={handleChange}
-              placeholder="Universitetinin adı"
+              placeholder={t("auth_university_placeholder")}
             />
             {errors.university && <p className="auth-error">{errors.university}</p>}
           </div>
 
           <div className="auth-row">
             <div className="auth-group">
-              <label>Təhsil səviyyəsi</label>
+              <label>{t("auth_education_level")}</label>
               <select
                 className="auth-input"
                 name="educationLevel"
                 value={formData.educationLevel}
                 onChange={handleChange}
               >
-                <option value="">Seç...</option>
+                <option value="">{t("auth_select_placeholder")}</option>
                 {EDUCATION_LEVELS.map((level) => (
                   <option key={level} value={level}>
                     {level}
@@ -266,21 +266,21 @@ export default function Register() {
             </div>
 
             <div className="auth-group">
-              <label>İxtisas</label>
+              <label>{t("auth_major")}</label>
               <input
                 className="auth-input"
                 type="text"
                 name="major"
                 value={formData.major}
                 onChange={handleChange}
-                placeholder="Məs. Kompüter Elmləri"
+                placeholder={t("auth_major_placeholder")}
               />
               {errors.major && <p className="auth-error">{errors.major}</p>}
             </div>
           </div>
 
           <div className="auth-group">
-            <label>Maraq sahələri</label>
+            <label>{t("auth_interests")}</label>
             <div className="auth-interest-grid">
               {INTEREST_OPTIONS.map((interest) => (
                 <label key={interest} className="auth-interest-chip">
@@ -303,7 +303,7 @@ export default function Register() {
                 checked={formData.acceptTerms}
                 onChange={handleChange}
               />
-              <span>Məxfilik Siyasəti və İstifadə Şərtləri ilə tanış oldum və qəbul edirəm.</span>
+              <span>{t("auth_terms_label")}</span>
             </label>
             {errors.acceptTerms && <p className="auth-error">{errors.acceptTerms}</p>}
 
@@ -314,21 +314,19 @@ export default function Register() {
                 checked={formData.acceptMarketing}
                 onChange={handleChange}
               />
-              <span>
-                Erasmus+, könüllülük, təcrübə və yeni imkanlar haqqında e-mail almaq istəyirəm.
-              </span>
+              <span>{t("auth_marketing_label")}</span>
             </label>
           </div>
 
           <button type="submit" className="auth-button">
-            {isGoogleSignup ? "Profili tamamla" : "Create Account"}
+            {isGoogleSignup ? t("auth_complete_profile") : t("auth_create_account")}
           </button>
         </form>
 
         <div className="auth-footer">
-          Already have an account?{" "}
+          {t("auth_already_have_account")}{" "}
           <Link to="/login" className="auth-link">
-            Sign In
+            {t("auth_sign_in")}
           </Link>
         </div>
       </div>

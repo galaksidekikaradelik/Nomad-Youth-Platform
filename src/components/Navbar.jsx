@@ -108,7 +108,7 @@ export default function Navbar() {
               <button
                 className="navbar__lang-btn"
                 onClick={() => setLangMenuOpen(o => !o)}
-                aria-label="Dil seçimi"
+                aria-label={t('nav_lang_select_aria')}
               >
                 {lang.toUpperCase()}
               </button>
@@ -131,7 +131,7 @@ export default function Navbar() {
             <button
               className="navbar__theme-btn"
               onClick={toggleDarkMode}
-              aria-label="Tema dəyiş"
+              aria-label={t('nav_theme_toggle_aria')}
             >
               {darkMode ? <SunIcon /> : <MoonIcon />}
             </button>
@@ -139,7 +139,7 @@ export default function Navbar() {
             {user ? (
           <>
           <Link to="/profile" className="navbar__cta">
-                Profile
+                {t('nav_profile')}
               </Link>
 
               <button
@@ -151,12 +151,12 @@ export default function Navbar() {
                   border: "none"
                 }}
               >
-                Logout
+                {t('nav_logout')}
               </button>
             </>
           ) : (
             <Link to="/register" className="navbar__cta">
-              Hesab yarat
+              {t('nav_create_account')}
             </Link>
           )}
           </div>
@@ -164,7 +164,7 @@ export default function Navbar() {
           <button
             className={`navbar__hamburger${menuOpen ? ' open' : ''}`}
             onClick={() => setMenuOpen(o => !o)}
-            aria-label="Menyu"
+            aria-label={t('nav_menu_aria')}
           >
             <span /><span /><span />
           </button>
@@ -194,7 +194,7 @@ export default function Navbar() {
               {l.code.toUpperCase()}
             </button>
           ))}
-          <button className="navbar__theme-btn" onClick={toggleDarkMode} aria-label="Tema dəyiş">
+          <button className="navbar__theme-btn" onClick={toggleDarkMode} aria-label={t('nav_theme_toggle_aria')}>
             {darkMode ? <SunIcon /> : <MoonIcon />}
           </button>
         </div>
@@ -202,7 +202,7 @@ export default function Navbar() {
         {user ? (
           <>
             <Link to="/profile" className="navbar__cta" onClick={handleLinkClick}>
-              Profile
+              {t('nav_profile')}
             </Link>
 
             <button
@@ -212,12 +212,12 @@ export default function Navbar() {
                 handleLinkClick();
               }}
             >
-              Logout
+              {t('nav_logout')}
             </button>
           </>
         ) : (
           <Link to="/register" className="navbar__cta" onClick={handleLinkClick}>
-            Hesab yarat
+            {t('nav_create_account')}
           </Link>
         )}
       </div>

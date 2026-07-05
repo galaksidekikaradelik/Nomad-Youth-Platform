@@ -1,48 +1,51 @@
 import { Link } from "react-router-dom";
+import { useLanguage } from "../hooks/useLanguage";
 import "../style/pages/auth.css";
 
 export default function Login() {
+  const { t } = useLanguage();
+
   return (
     <div className="auth-page">
       <div className="auth-card">
 
-        <h1 className="auth-title">Welcome Back</h1>
+        <h1 className="auth-title">{t("auth_login_title")}</h1>
 
         <p className="auth-subtitle">
-          Sign in to continue your journey.
+          {t("auth_login_subtitle")}
         </p>
 
         <form>
 
           <div className="auth-group">
-            <label>Email</label>
+            <label>{t("auth_email")}</label>
             <input
               className="auth-input"
               type="email"
-              placeholder="Enter your email"
+              placeholder={t("auth_email_placeholder")}
             />
           </div>
 
           <div className="auth-group">
-            <label>Password</label>
+            <label>{t("auth_password")}</label>
             <input
               className="auth-input"
               type="password"
-              placeholder="Enter your password"
+              placeholder={t("auth_password_placeholder")}
             />
           </div>
 
           <button className="auth-button">
-            Sign In
+            {t("auth_sign_in")}
           </button>
 
         </form>
 
         <div className="auth-footer">
-          Don't have an account?
+          {t("auth_no_account")}
           {" "}
           <Link className="auth-link" to="/register">
-            Create one
+            {t("auth_create_one")}
           </Link>
         </div>
 

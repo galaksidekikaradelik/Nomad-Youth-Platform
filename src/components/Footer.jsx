@@ -1,27 +1,13 @@
 import { Link } from 'react-router-dom'
-
-const nav = {
-  Platform: [
-    { label: 'Ana Səhifə',  to: '/' },
-    { label: 'İmkanlar',    to: '/opportunities' },
-    { label: 'Haqqımızda',  to: '/about' },
-    { label: 'Əlaqə',       to: '/contact' },
-  ],
-  Kateqoriya: [
-    { label: 'Könüllülük',  to: '/opportunities' },
-    { label: 'Təcrübə',     to: '/opportunities' },
-    { label: 'Qrantlar',    to: '/opportunities' },
-    { label: 'Tədbirlər',   to: '/opportunities' },
-  ],
-}
+import { useLanguage } from '../hooks/useLanguage' 
 
 const socials = [
-  { label: 'Instagram', icon: (
+  { label: 'Instagram', href: 'https://www.instagram.com/nomad.youth?igsh=MTdrM3BndHQybmxvdQ==', icon: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
     </svg>
   )},
-  { label: 'LinkedIn', icon: (
+  { label: 'LinkedIn', href: '#', icon: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
     </svg>
@@ -29,6 +15,23 @@ const socials = [
 ]
 
 export default function Footer() {
+  const { t } = useLanguage()
+
+  const nav = {
+    [t('footer_col_platform')]: [
+      { label: t('nav_home'), to: '/' },
+      { label: t('nav_opportunities'), to: '/opportunities' },
+      { label: t('nav_about'), to: '/about' },
+      { label: t('nav_contact'), to: '/contact' },
+    ],
+    [t('footer_col_category')]: [
+      { label: t('footer_cat_volunteering'), to: '/opportunities' },
+      { label: t('footer_cat_internship'), to: '/opportunities' },
+      { label: t('footer_cat_grants'), to: '/opportunities' },
+      { label: t('footer_cat_events'), to: '/opportunities' },
+    ],
+  }
+
   return (
     <footer className="footer">
       <div className="container">
@@ -37,7 +40,7 @@ export default function Footer() {
             <div className="footer__logo">
               Nomad Youth
             </div>
-            <p>Gənclərin könüllülük, təcrübə, qrant və inkişaf imkanlarını bir platformada kəşf etməsi üçün yaradılmış resurs mərkəzi.</p>
+            <p>{t('footer_brand_desc')}</p>
           </div>
 
           {Object.entries(nav).map(([title, items]) => (
@@ -55,14 +58,14 @@ export default function Footer() {
         </div>
 
         <div className="footer__disclaimer">
-          Nomad Youth imkanları təqdim edən rəqəmsal platformadır. Müraciət və seçim prosesləri müvafiq təşkilatlar tərəfindən həyata keçirilir. <em>Avropada görüşək.</em>
+          {t('footer_disclaimer')} <em>{t('footer_disclaimer_em')}</em>
         </div>
 
         <div className="footer__bottom">
-          <p>© 2026 Nomad Youth. Bütün hüquqlar qorunur.</p>
+          <p>© {new Date().getFullYear()} Nomad Youth. {t('footer_rights')}</p>
           <div className="footer__socials">
             {socials.map(s => (
-              <a key={s.label} href="https://www.instagram.com/nomad.youth?igsh=MTdrM3BndHQybmxvdQ==" className="footer__social-link" aria-label={s.label}>
+              <a key={s.label} href={s.href} className="footer__social-link" aria-label={s.label} target="_blank" rel="noopener noreferrer">
                 {s.icon}
               </a>
             ))}

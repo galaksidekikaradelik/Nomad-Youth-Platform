@@ -19,6 +19,15 @@ const CATEGORIES = [
   ...CANONICAL_CATEGORIES.map(id => ({ id, labelKey: null })),
 ]
 
+const TYPES = [
+  { id: '',          labelKey: 'type_all' },
+  { id: 'Seminar',   labelKey: 'type_seminar' },
+  { id: 'Kurs',      labelKey: 'type_course' },
+  { id: 'Konfrans',  labelKey: 'type_conference' },
+  { id: 'Vebinar',   labelKey: 'type_webinar' },
+  { id: 'Fəaliyyət', labelKey: 'type_activity' },
+]
+
 const FORMATS = [
   { id: 'Hamısı',  labelKey: 'format_all' },
   { id: 'Online',  labelKey: 'format_online' },
@@ -47,15 +56,39 @@ export default function Opportunities() {
   const initialQuery    = searchParams.get('query') || ''
   const initialCategory = searchParams.get('category') || ''
 
-  const [search,   setSearch]   = useState(initialQuery)
-  const [category, setCategory] = useState(initialCategory)
-  const [scope,    setScope]    = useState(initialScope)
-  const [format,   setFormat]   = useState('Hamısı')
-  const [sort,     setSort]     = useState('deadline')
-  const [tab]      = useState('opportunities')
+  const [search,     setSearch]     = useState(initialQuery)
+  // Çoxlu kateqoriya seçimi üçün array. Boş array = "Hamısı" (filter yoxdur).
+  const [categories, setCategories] = useState(initialCategory ? [initialCategory] : [])
+  const [types,      setTypes]      = useState([])
+  const [scope,      setScope]      = useState(initialScope)
+  const [format,     setFormat]     = useState('Hamısı')
+  const [sort,       setSort]       = useState('deadline')
+  const [tab]        = useState('opportunities')
+
+  const toggleCategory = (id) => {
+    if (id === '') {
+      setCategories([])
+      return
+    }
+    setCategories(prev =>
+      prev.includes(id) ? prev.filter(c => c !== id) : [...prev, id]
+    )
+  }
+
+  const toggleType = (id) => {
+    if (id === '') {
+      setTypes([])
+      return
+    }
+    setTypes(prev =>
+      prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]
+    )
+  }
 
   const filtered = useMemo(() => enriched.filter(op => {
-    const matchCat    = category === '' || (Array.isArray(op.categoryGroups) && op.categoryGroups.includes(category))
+    const matchCat    = categories.length === 0 ||
+      (Array.isArray(op.categoryGroups) && categories.some(cat => op.categoryGroups.includes(cat)))
+    const matchType   = types.length === 0 || types.includes(op.type)
     const matchScope  = scope === 'hamisi' || op.scope === scope
     const matchFormat = format === 'Hamısı' || op.format === format
     const q = search.toLocaleLowerCase('az')
@@ -64,8 +97,8 @@ export default function Opportunities() {
       op.location?.toLocaleLowerCase('az').includes(q) ||
       op.organization?.toLocaleLowerCase('az').includes(q) ||
       op.tags.some(tag => tag.toLocaleLowerCase('az').includes(q))
-    return matchCat && matchScope && matchFormat && matchSearch
-  }), [search, category, scope, format])
+    return matchCat && matchType && matchScope && matchFormat && matchSearch
+  }), [search, categories, types, scope, format])
 
   const sorted = useMemo(() => {
     const arr = [...filtered]
@@ -96,9 +129,9 @@ export default function Opportunities() {
               <SearchBar
                 placeholder={t('opp_search_placeholder')}
                 query={search}
-                category={category}
+                category={categories[0] || ''}
                 onQueryChange={setSearch}
-                onCategoryChange={setCategory}
+                onCategoryChange={(id) => setCategories(id ? [id] : [])}
               />
             </div>
 
@@ -117,7 +150,26 @@ export default function Opportunities() {
                 <span className="filter-group__label">{t('filter_category_label')}</span>
                 <div className="filter-group__chips">
                   {CATEGORIES.map(c => (
-                    <FilterChip key={c.id} label={c.labelKey ? t(c.labelKey) : translateCategory(c.id, lang)} active={category === c.id} onClick={() => setCategory(c.id)} />
+                    <FilterChip
+                      key={c.id}
+                      label={c.labelKey ? t(c.labelKey) : translateCategory(c.id, lang)}
+                      active={c.id === '' ? categories.length === 0 : categories.includes(c.id)}
+                      onClick={() => toggleCategory(c.id)}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="filter-group__row">
+                <span className="filter-group__label">{t('filter_type_label')}</span>
+                <div className="filter-group__chips">
+                  {TYPES.map(ty => (
+                    <FilterChip
+                      key={ty.id}
+                      label={t(ty.labelKey)}
+                      active={ty.id === '' ? types.length === 0 : types.includes(ty.id)}
+                      onClick={() => toggleType(ty.id)}
+                    />
                   ))}
                 </div>
               </div>

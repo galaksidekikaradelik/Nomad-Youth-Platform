@@ -53,31 +53,35 @@ async function run() {
   const opportunities = rows.map((row, index) => {
     const title = row['Layihənin keçid linki']?.toString().trim()
     const deadline = excelDateToISO(row['Deadline'])
-    const format = row['Növü']?.toString().trim()          
-    const category = parseCategories(row['Kateqoriya'])     
-    const categoryGroups = mapCategoriesToCanonical(category) 
+    const type = row['Növ']?.toString().trim()               // Seminar / Kurs / Konfrans / Vebinar / Fəaliyyət
+    const format = row['Növü']?.toString().trim()             // Online / Offline
+    const category = parseCategories(row['Kateqoriya'])       // yalnız mövzu (Rifah, Gənclər, Təhsil...)
+    const categoryGroups = mapCategoriesToCanonical(category)
     const country = row['Ölkə']?.toString().trim()
     const applyLink = row['Apply linki']?.toString().trim()
     const publishedAt = excelDateToISO(row['Açıqlanma tarixi'])
-    const description = row['Sum']?.toString().trim() || ''
+    const descriptionAz = row['Sum_az']?.toString().trim() || ''
+    const descriptionEn = row['Sum_en']?.toString().trim() || ''
+    const descriptionRu = row['Sum_rus']?.toString().trim() || ''
 
     return {
       id: index + 1,
       title,
       deadline,
+      type,
       format,
       category,
       categoryGroups,
       location: country,
       applyLink,
       publishedAt,
-      description,
+      description: descriptionAz,
       descriptionTranslations: {
-        az: description,
-        en: '',
-        ru: '',
+        az: descriptionAz,
+        en: descriptionEn,
+        ru: descriptionRu,
       },
-      tags: [format, country, ...category].filter(Boolean),
+      tags: [format, country, type, ...category].filter(Boolean),
     }
   }).filter(op => op.title)
 

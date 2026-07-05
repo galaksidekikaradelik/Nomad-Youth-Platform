@@ -25,7 +25,7 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
   const { t, lang } = useLanguage()
   if (!open || !opportunity) return null
 
-  const { title, format, category, location, deadline, applyLink, description, publishedAt } = opportunity
+  const { title, format, category, location, deadline, applyLink, description, descriptionTranslations, publishedAt } = opportunity
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
   const formattedDeadline = deadline
@@ -37,6 +37,12 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
 
   const typeLabel = format === 'Online' ? t('type_online') : format === 'Offline' ? t('type_offline') : format
   const categories = Array.isArray(category) ? category : (category ? [category] : [])
+
+  // Seçilmiş dildə tərcümə varsa onu göstər; yoxdursa AZ-a düş və bunu istifadəçiyə bildir.
+  const translatedDescription = descriptionTranslations?.[lang]
+  const fallbackDescription = descriptionTranslations?.az || description
+  const showingFallback = !translatedDescription && lang !== 'az'
+  const descriptionToShow = translatedDescription || fallbackDescription
 
   return createPortal(
     <div className="detail-modal-overlay" onClick={onClose}>
@@ -67,10 +73,15 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
 
         <div className="detail-modal__divider" />
 
-        {description && (
+        {descriptionToShow && (
           <div className="detail-modal__section">
             <h4 className="detail-modal__section-title">{t('card_description') || 'Açıqlama'}</h4>
-            <p className="detail-modal__description">{description}</p>
+            {showingFallback && (
+              <p className="detail-modal__translation-note">
+                {t('card_description_untranslated')}
+              </p>
+            )}
+            <p className="detail-modal__description">{descriptionToShow}</p>
           </div>
         )}
 
