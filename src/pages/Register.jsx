@@ -4,18 +4,6 @@ import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import "../style/pages/auth.css";
 
-const INTEREST_OPTIONS = [
-  "Erasmus+ mübadilələri",
-  "Könüllülük",
-  "Təcrübə (internship)",
-  "Səyahət",
-  "Dil öyrənmə",
-  "Startap və sahibkarlıq",
-  "İncəsənət və mədəniyyət",
-  "İdman",
-  "Texnologiya",
-  "Liderlik təlimləri",
-];
 
 const EDUCATION_LEVELS = ["Orta məktəb", "Bakalavr", "Magistr", "Doktorantura", "Digər"];
 
@@ -49,18 +37,6 @@ export default function Register() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
-  };
-
-  const toggleInterest = (interest) => {
-    setFormData((prev) => {
-      const has = prev.interests.includes(interest);
-      return {
-        ...prev,
-        interests: has
-          ? prev.interests.filter((i) => i !== interest)
-          : [...prev.interests, interest],
-      };
-    });
   };
 
   // Frontend-only demo. Real Google OAuth backend/Supabase qoşulanda
@@ -279,21 +255,6 @@ export default function Register() {
             </div>
           </div>
 
-          <div className="auth-group">
-            <label>{t("auth_interests")}</label>
-            <div className="auth-interest-grid">
-              {INTEREST_OPTIONS.map((interest) => (
-                <label key={interest} className="auth-interest-chip">
-                  <input
-                    type="checkbox"
-                    checked={formData.interests.includes(interest)}
-                    onChange={() => toggleInterest(interest)}
-                  />
-                  <span>{interest}</span>
-                </label>
-              ))}
-            </div>
-          </div>
 
           <div className="auth-checkbox-group">
             <label className="auth-checkbox-row">
