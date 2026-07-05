@@ -194,5 +194,10 @@
   "auth_error_university": "Universitet daxil edin",
   "auth_error_education_level": "Təhsil səviyyəsini seçin",
   "auth_error_major": "İxtisas daxil edin",
-  "auth_error_terms": "Davam etmək üçün şərtləri qəbul etməlisiniz"
+  "auth_error_terms": "Davam etmək üçün şərtləri qəbul etməlisiniz",
+  "status_preparing": "Hazırlanır",
+  "status_applied": "Müraciət edilib",
+  "status_accepted": "Qəbul edilib",
+  "status_rejected": "Rədd edilib",
+  "status_select": "Status seç"
 }

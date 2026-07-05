@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLanguage } from '..//hooks/useLanguage'
+import { useAuth } from '../hooks/useAuth'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
 import AuthPromptModal from './AuthPromptModal'
@@ -92,11 +93,177 @@ const TYPE_LABEL_KEYS = {
   'Fəaliyyət': 'type_activity',
 }
 
+// Müraciət statusu üçün tərcümə açarları və modifier className-lər.
+// İstifadəçi kartdan özü seçir; hələ backend yoxdur — user-ə görə localStorage-da saxlanır.
+// Mümkün dəyərlər: 'preparing' | 'applied' | 'accepted' | 'rejected'
+const STATUS_CONFIG = {
+  preparing: { labelKey: 'status_preparing', modifier: 'preparing' },
+  applied:   { labelKey: 'status_applied',   modifier: 'applied' },
+  accepted:  { labelKey: 'status_accepted',  modifier: 'accepted' },
+  rejected:  { labelKey: 'status_rejected',  modifier: 'rejected' },
+}
+
+// Like/Save da status kimi user-ə görə localStorage-da saxlanır (backend hazır olana qədər).
+function getLikeStorageKey(user) {
+  const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
+  return `nomad_opportunity_likes_${uid}`
+}
+
+function getSaveStorageKey(user) {
+  const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
+  return `nomad_opportunity_saves_${uid}`
+}
+
+function readStoredSet(storageKey) {
+  try {
+    return JSON.parse(localStorage.getItem(storageKey) || '{}')
+  } catch {
+    return {}
+  }
+}
+
+// Statuslar hələ backend-də saxlanmır — user-ə görə localStorage-da saxlanır.
+// user.id yoxdursa email-ə, o da yoxdursa username-ə keçir ki, kod sınmasın.
+function getStatusStorageKey(user) {
+  const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
+  return `nomad_opportunity_status_${uid}`
+}
+
+function readStoredStatuses(user) {
+  try {
+    return JSON.parse(localStorage.getItem(getStatusStorageKey(user)) || '{}')
+  } catch {
+    return {}
+  }
+}
+
+function StatusSelector({ opportunity, t }) {
+  const { user } = useAuth()
+  const [open, setOpen] = useState(false)
+  const wrapperRef = useRef(null)
+  // opportunity.id yoxdursa title-a fallback edir (unikal olmasa da işə yarayır)
+  const oppKey = opportunity.id || opportunity.title
+
+  // Effect əvəzinə lazy init + render zamanı sinxronlaşdırma (React-in rəsmi
+  // tövsiyəsi: "adjusting state when a prop changes"). Bu, useEffect daxilində
+  // mount zamanı setState çağırışının yaratdığı əlavə render dövrəsini aradan qaldırır.
+  const [trackedUser, setTrackedUser] = useState(user)
+  const [status, setStatus] = useState(() =>
+    user ? (readStoredStatuses(user)[oppKey] || null) : null
+  )
+
+  if (user !== trackedUser) {
+    setTrackedUser(user)
+    setStatus(user ? (readStoredStatuses(user)[oppKey] || null) : null)
+  }
+
+  useEffect(() => {
+    if (!open) return
+    function handleClickOutside(e) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [open])
+
+  if (!user) return null
+
+  function selectStatus(newStatus) {
+    const key = getStatusStorageKey(user)
+    const stored = readStoredStatuses(user)
+    stored[oppKey] = newStatus
+    localStorage.setItem(key, JSON.stringify(stored))
+    setStatus(newStatus)
+    setOpen(false)
+  }
+
+  const config = status ? STATUS_CONFIG[status] : null
+
+  return (
+    <div
+      className="opportunity-card__status-selector"
+      ref={wrapperRef}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className={`opportunity-card__status-badge${config ? ` opportunity-card__status-badge--${config.modifier}` : ' opportunity-card__status-badge--empty'}`}
+        onClick={() => setOpen(o => !o)}
+      >
+        <span className="opportunity-card__status-dot" />
+        {config ? t(config.labelKey) : (t('status_select') || 'Status seç')}
+      </button>
+
+      {open && (
+        <div className="opportunity-card__status-dropdown">
+          {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
+            <button
+              key={key}
+              type="button"
+              className={`opportunity-card__status-option opportunity-card__status-option--${cfg.modifier}`}
+              onClick={() => selectStatus(key)}
+            >
+              <span className="opportunity-card__status-dot" />
+              {t(cfg.labelKey)}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function OpportunityCard({ opportunity }) {
   const { t, lang } = useLanguage()
+  const { user } = useAuth()
   const { title, format, category, type, location, deadline, applyLink, publishedAt } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [showDetail, setShowDetail] = useState(false)
+
+  // opportunity.id yoxdursa title-a fallback edir (status selector-dakı ilə eyni məntiq)
+  const oppKey = opportunity.id || opportunity.title
+
+  const [liked, setLiked] = useState(() =>
+    user ? !!readStoredSet(getLikeStorageKey(user))[oppKey] : false
+  )
+  const [saved, setSaved] = useState(() =>
+    user ? !!readStoredSet(getSaveStorageKey(user))[oppKey] : false
+  )
+
+  // Effect əvəzinə lazy init + render zamanı sinxronlaşdırma — user login/logout
+  // olanda (məs. kart mount olaraq qalıb, amma auth vəziyyəti dəyişib) yenidən oxuyur.
+  const [trackedAuthUser, setTrackedAuthUser] = useState(user)
+  if (user !== trackedAuthUser) {
+    setTrackedAuthUser(user)
+    setLiked(user ? !!readStoredSet(getLikeStorageKey(user))[oppKey] : false)
+    setSaved(user ? !!readStoredSet(getSaveStorageKey(user))[oppKey] : false)
+  }
+
+  function toggleLike(e) {
+    e.stopPropagation()
+    if (!user) { setShowAuthPrompt(true); return }
+    const key = getLikeStorageKey(user)
+    const likes = readStoredSet(key)
+    const next = !liked
+    if (next) likes[oppKey] = true
+    else delete likes[oppKey]
+    localStorage.setItem(key, JSON.stringify(likes))
+    setLiked(next)
+  }
+
+  function toggleSave(e) {
+    e.stopPropagation()
+    if (!user) { setShowAuthPrompt(true); return }
+    const key = getSaveStorageKey(user)
+    const saves = readStoredSet(key)
+    const next = !saved
+    if (next) saves[oppKey] = true
+    else delete saves[oppKey]
+    localStorage.setItem(key, JSON.stringify(saves))
+    setSaved(next)
+  }
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
@@ -121,35 +288,31 @@ export default function OpportunityCard({ opportunity }) {
   return (
     <div className="opportunity-card">
       <div className="opportunity-card__top">
-        <span className="opportunity-card__tag opportunity-card__tag--flag opportunity-card__tag--flag-top">
-            <FlagIcon location={location} /> 
+        <div className="opportunity-card__top-row">
+          <span className="opportunity-card__tag opportunity-card__tag--flag opportunity-card__tag--flag-top">
+            <FlagIcon location={location} />
           </span>
-        <h3 className="opportunity-card__title" data-tooltip={title}>{title}</h3>
-        <div className="opportunity-card__top-right">
           <div className="opportunity-card__icons">
             <button
-              className="opportunity-card__icon-btn"
-              onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
+              className={`opportunity-card__icon-btn opportunity-card__icon-btn--heart${liked ? ' is-active' : ''}`}
+              onClick={toggleLike}
               aria-label="Bəyən"
             >
-              <HeartIcon active={false} />
+              <HeartIcon active={liked} />
             </button>
             <button
-              className="opportunity-card__icon-btn"
-              onClick={(e) => { e.stopPropagation(); setShowAuthPrompt(true) }}
+              className={`opportunity-card__icon-btn opportunity-card__icon-btn--bookmark${saved ? ' is-active' : ''}`}
+              onClick={toggleSave}
               aria-label="Yadda saxla"
             >
-              <BookmarkIcon active={false} />
+              <BookmarkIcon active={saved} />
             </button>
           </div>
-          
         </div>
+        <h3 className="opportunity-card__title" data-tooltip={title}>{title}</h3>
       </div>
 
-      <div className="opportunity-card__divider" />
-
       <div className="opportunity-card__topic">
-        <span className="opportunity-card__topic-label">{t('card_topic')}</span>
         <div className="opportunity-card__tags">
           {formatLabel && (
             <span className={`opportunity-card__tag opportunity-card__tag--type${formatModifier ? ` opportunity-card__tag--${formatModifier}` : ''}`}>
@@ -179,22 +342,26 @@ export default function OpportunityCard({ opportunity }) {
       <div className="opportunity-card__divider" />
 
       <div className="opportunity-card__footer">
-        <div className="opportunity-card__dates">
-          {formattedDeadline && (
-            <div className="opportunity-card__date-row">
-              {t('card_deadline')} {formattedDeadline}{' '}
-              {daysLeft !== null && (
-                <span className={`opportunity-card__days-left${isUrgent ? ' opportunity-card__days-left--urgent' : ''}`}>
-                  {isUrgent && <WarningIcon />} {daysLeft} {t('card_days_left')}
-                </span>
-              )}
-            </div>
-          )}
-          {formattedPublished && (
-            <div className="opportunity-card__date-row opportunity-card__date-row--muted">
-              {t('card_published')} {formattedPublished}
-            </div>
-          )}
+        <div className="opportunity-card__footer-top">
+          <div className="opportunity-card__dates">
+            {formattedDeadline && (
+              <div className="opportunity-card__date-row">
+                {t('card_deadline')} {formattedDeadline}{' '}
+                {daysLeft !== null && (
+                  <span className={`opportunity-card__days-left${isUrgent ? ' opportunity-card__days-left--urgent' : ''}`}>
+                    {isUrgent && <WarningIcon />} {daysLeft} {t('card_days_left')}
+                  </span>
+                )}
+              </div>
+            )}
+            {formattedPublished && (
+              <div className="opportunity-card__date-row opportunity-card__date-row--muted">
+                {t('card_published')} {formattedPublished}
+              </div>
+            )}
+          </div>
+
+          <StatusSelector opportunity={opportunity} t={t} />
         </div>
 
         <div className="opportunity-card__footer-actions">

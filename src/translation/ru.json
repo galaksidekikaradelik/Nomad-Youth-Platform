@@ -194,5 +194,10 @@
   "auth_error_university": "Введите университет",
   "auth_error_education_level": "Выберите уровень образования",
   "auth_error_major": "Введите специальность",
-  "auth_error_terms": "Для продолжения необходимо принять условия"
+  "auth_error_terms": "Для продолжения необходимо принять условия",
+  "status_preparing": "Готовится",
+  "status_applied": "Подано",
+  "status_accepted": "Принято",
+  "status_rejected": "Отклонено",
+  "status_select": "Выбрать статус"
 }

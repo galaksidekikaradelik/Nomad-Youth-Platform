@@ -194,5 +194,10 @@
   "auth_error_university": "Enter your university",
   "auth_error_education_level": "Select your education level",
   "auth_error_major": "Enter your major",
-  "auth_error_terms": "You must accept the terms to continue"
+  "auth_error_terms": "You must accept the terms to continue",
+  "status_preparing": "Preparing",
+  "status_applied": "Applied",
+  "status_accepted": "Accepted",
+  "status_rejected": "Rejected",
+  "status_select": "Select status"
   }
