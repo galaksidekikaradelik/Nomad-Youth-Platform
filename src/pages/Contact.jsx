@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useLanguage } from '../hooks/useLanguage'
+import { buildWhatsAppLink } from '../config/whatsapp'
 
 const MailIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -19,10 +20,19 @@ const PinIcon = () => (
   </svg>
 )
 
+
+const REQUEST_TYPES = [
+  { id: 'general',     labelKey: 'contact_request_general',     viaWhatsApp: false },
+  { id: 'partnership', labelKey: 'contact_request_partnership', viaWhatsApp: true },
+  { id: 'project',     labelKey: 'contact_request_project',     viaWhatsApp: true },
+]
+
 export default function Contact() {
   const { t } = useLanguage()
-  const [form, setForm]       = useState({ name: '', email: '', subject: '', message: '' })
+  const [form, setForm]           = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [requestType, setRequestType] = useState('general')
+  const formRef = useRef(null)
 
   const infoCards = [
     { icon: <MailIcon />,  label: t('contact_email_label'),   value: 'nomadyouthplatform@gmail.com' },
@@ -38,7 +48,29 @@ export default function Contact() {
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
+  const selectedType = REQUEST_TYPES.find(rt => rt.id === requestType)
+
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const handleCardClick = (typeId) => {
+    setRequestType(typeId)
+    scrollToForm()
+  }
+
   const handleSubmit = () => {
+    if (selectedType.viaWhatsApp) {
+      const greeting = t('contact_whatsapp_greeting').replace('{type}', t(selectedType.labelKey))
+      const lines = [greeting]
+      if (form.name)    lines.push(`${t('contact_whatsapp_name_label')} ${form.name}`)
+      if (form.subject) lines.push(`${t('contact_whatsapp_subject_label')} ${form.subject}`)
+      if (form.message) lines.push(`${t('contact_whatsapp_message_label')} ${form.message}`)
+      const link = buildWhatsAppLink(lines.join('\n'))
+      window.open(link, '_blank', 'noopener,noreferrer')
+      return
+    }
+
     if (!form.name || !form.email || !form.message) return
     setSubmitted(true)
   }
@@ -53,7 +85,28 @@ export default function Contact() {
           <p className="page-header__desc">{t('contact_desc')}</p>
         </div>
 
-        <div className="contact-grid">
+        <div className="grid-2" style={{ marginBottom: 'var(--space-2xl)' }}>
+          <button
+            className={`category-card${requestType === 'general' ? ' active' : ''}`}
+            onClick={() => handleCardClick('general')}
+            style={{ width: '100%', textAlign: 'left' }}
+          >
+            <div className="category-card__name">{t('contact_card_general_title')}</div>
+            <div className="category-card__count">{t('contact_card_general_desc')}</div>
+          </button>
+
+          <button
+            className={`category-card${requestType !== 'general' ? ' active' : ''}`}
+            onClick={() => handleCardClick('partnership')}
+            style={{ width: '100%', textAlign: 'left' }}
+          >
+
+            <div className="category-card__name">{t('contact_card_partnership_title')}</div>
+            <div className="category-card__count">{t('contact_card_partnership_desc')}</div>
+          </button>
+        </div>
+
+        <div className="contact-grid" ref={formRef}>
 
           <div className="contact-info">
             {infoCards.map(c => (
@@ -111,6 +164,26 @@ export default function Contact() {
                 {t('contact_form_title')}
               </div>
 
+              <div className="form-group">
+                <label className="form-label">{t('contact_form_request_type_label')}</label>
+                <select
+                  className="search-bar__select"
+                  value={requestType}
+                  onChange={(e) => setRequestType(e.target.value)}
+                  style={{
+                    border: '1.5px solid var(--color-border)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '12px 16px',
+                    width: '100%',
+                    background: 'var(--neutral-50)',
+                  }}
+                >
+                  {REQUEST_TYPES.map(rt => (
+                    <option key={rt.id} value={rt.id}>{t(rt.labelKey)}</option>
+                  ))}
+                </select>
+              </div>
+
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
                 <div className="form-group">
                   <label className="form-label">{t('contact_form_name')}</label>
@@ -118,7 +191,7 @@ export default function Contact() {
                 </div>
                 <div className="form-group">
                   <label className="form-label">{t('contact_form_email')}</label>
-                  <input className="form-input" name="email" type="email" placeholder="email@example.com" value={form.email} onChange={handleChange} />
+                  <input className="form-input" name="email" type="email" placeholder="email@example.com" value={form.email} onChange={handleChange} disabled={selectedType.viaWhatsApp} />
                 </div>
               </div>
 
@@ -132,8 +205,14 @@ export default function Contact() {
                 <textarea className="form-textarea" name="message" placeholder={t('contact_form_message_placeholder')} value={form.message} onChange={handleChange} />
               </div>
 
+              {selectedType.viaWhatsApp && (
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>
+                  {t('contact_whatsapp_notice')}
+                </p>
+              )}
+
               <button className="btn-primary" onClick={handleSubmit} style={{ marginTop: 'var(--space-sm)' }}>
-                {t('contact_form_submit')}
+                {selectedType.viaWhatsApp ? t('contact_whatsapp_submit') : t('contact_form_submit')}
               </button>
             </div>
           )}

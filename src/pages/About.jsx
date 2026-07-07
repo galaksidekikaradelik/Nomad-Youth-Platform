@@ -3,8 +3,8 @@ import { useLanguage } from '../hooks/useLanguage'
 
 const team = [
   { name: 'Raul Israfilov',   roleKey: 'about_role_ceo',         emoji: '👨‍💼' },
-  { name: 'Gümüş Hüseynova',  roleKey: 'about_role_dev',     emoji: '👩‍💻' },
-  { name: 'Şəbnəm Osmanova',  roleKey: 'about_role_dev',       emoji: '👩‍💻' },
+  { name: 'Gümüş Hüseynova',  roleKey: 'about_role_dev1',     emoji: '👩‍💻' },
+  { name: 'Şəbnəm Osmanova',  roleKey: 'about_role_dev2',       emoji: '👩‍💻' },
   { name: 'Əminə Qocayeva', roleKey: 'about_role_partnership', emoji: '👨‍🎨' },
   { name: 'Nəzrin Xankişiyeva', roleKey: 'about_role_partnership', emoji: '👨‍🎨' }
 ]
@@ -22,7 +22,7 @@ export default function About() {
     { num: '50+',  labelKey: 'about_stat_opportunities' },
     { num: '10+',  labelKey: 'about_stat_services' },
     { num: '7/24', labelKey: 'about_stat_available' },
-    { num: '9',    labelKey: 'about_stat_category' },
+    { num: '10+',    labelKey: 'about_stat_category' },
   ]
 
   return (

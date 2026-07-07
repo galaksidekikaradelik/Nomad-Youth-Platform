@@ -6,6 +6,7 @@ import { CANONICAL_CATEGORIES } from '../utils/categoryMapping'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
 import { opportunities } from '../data/opportunities'
+import { filterActiveOpportunities } from '../utils/opportunityStatus'
 
 
 const SCOPES = [
@@ -40,7 +41,7 @@ const SORT_OPTIONS = [
   { id: 'country',  labelKey: 'sort_country' },
 ]
 
-const enriched = opportunities.map(op => ({
+const enriched = filterActiveOpportunities(opportunities).map(op => ({
   ...op,
   scope: op.location === 'Azərbaycan' ? 'yerli' : 'beynelxalq',
 }))
@@ -57,7 +58,6 @@ export default function Opportunities() {
   const initialCategory = searchParams.get('category') || ''
 
   const [search,     setSearch]     = useState(initialQuery)
-  // Çoxlu kateqoriya seçimi üçün array. Boş array = "Hamısı" (filter yoxdur).
   const [categories, setCategories] = useState(initialCategory ? [initialCategory] : [])
   const [types,      setTypes]      = useState([])
   const [scope,      setScope]      = useState(initialScope)
@@ -135,7 +135,6 @@ export default function Opportunities() {
               />
             </div>
 
-            {/* Filters */}
             <div className="filter-group">
               <div className="filter-group__row">
                 <span className="filter-group__label">{t('filter_scope_label')}</span>

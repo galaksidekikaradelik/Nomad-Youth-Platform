@@ -1,0 +1,160 @@
+.faq-item {
+  width: 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.faq-answer p {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+@media (max-width: 640px) {
+  .faq-question {
+    padding: var(--space-md);
+    font-size: 0.92rem;
+    gap: var(--space-sm);
+  }
+  .faq-answer,
+  .faq-answer--open {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .opportunity-card {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .opportunity-card__title {
+    font-size: 1.2rem;
+    min-height: calc(3 * 1.25em);
+  }
+
+  .opportunity-card__apply-btn,
+  .opportunity-card__detail-btn {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .opportunity-card__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .opportunity-card__footer-actions {
+    width: 100%;
+  }
+
+  .opportunity-card__topic-label {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .opportunity-card__title {
+    font-size: 1.05rem;
+  }
+  .opportunity-card__tag {
+    font-size: 0.72rem;
+    padding: 5px 12px;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .filter-group__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .filter-group__label {
+    min-width: 0;
+  }
+
+  .filter-group {
+    padding: var(--space-md);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .auth-modal,
+  .detail-modal {
+    padding: var(--space-lg);
+    border-radius: 12px;
+  }
+
+  .auth-modal__title,
+  .detail-modal__title {
+    font-size: 1.1rem;
+  }
+
+  .detail-modal__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-modal__icons {
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .navbar__logo img {
+    height: 36px;
+  }
+  .navbar__logo {
+    font-size: 1rem;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .auth-page {
+    padding: var(--space-xl) var(--space-sm);
+  }
+  .auth-card {
+    padding: var(--space-lg);
+    border-radius: 14px;
+  }
+  .auth-title {
+    font-size: 1.5rem;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .page-header {
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+
+  .cta-banner__title {
+    font-size: 1.3rem;
+  }
+
+  .category-card {
+    padding: var(--space-md);
+  }
+
+  .value-card {
+    padding: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  h1, h2, h3 {
+    overflow-wrap: break-word;
+  }
+}

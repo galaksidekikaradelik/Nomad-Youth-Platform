@@ -4,6 +4,7 @@ import Hero from '../components/Hero'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
 import { opportunities } from '../data/opportunities'
+import { filterActiveOpportunities } from '../utils/opportunityStatus'
 import { useLanguage } from '../hooks/useLanguage'
 import aboutImg from '../assets/images/aboutUs.png'
 import servicesImg from '../assets/images/services.png'
@@ -22,7 +23,10 @@ export default function Home() {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
 
-  const preview = useMemo(() => opportunities.slice(0, 6), [])
+  const preview = useMemo(
+    () => filterActiveOpportunities(opportunities).slice(0, 6),
+    []
+  )
 
   const handleSearchSubmit = ({ query, category }) => {
     const params = new URLSearchParams()
@@ -80,7 +84,7 @@ export default function Home() {
               <img src={servicesImg} alt="Xidmətlər" className="info-card__image" />
               <span className="info-card__label">{t('info_services')}</span>
             </Link>
-            <Link to="/services#terefdas" className="info-card">
+            <Link to="/contact" className="info-card">
               <img src={partnerImg} alt="Tərəfdaşlıq" className="info-card__image" />
               <span className="info-card__label">{t('info_partnership')}</span>
             </Link>
