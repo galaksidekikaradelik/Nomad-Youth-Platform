@@ -5,7 +5,7 @@ const team = [
   { name: 'Raul Israfilov',   roleKey: 'about_role_ceo',         emoji: '👨‍💼' },
   { name: 'Gümüş Hüseynova',  roleKey: 'about_role_dev1',     emoji: '👩‍💻' },
   { name: 'Şəbnəm Osmanova',  roleKey: 'about_role_dev2',       emoji: '👩‍💻' },
-  { name: 'Əminə Qocayeva', roleKey: 'about_role_partnership', emoji: '👨‍🎨' },
+  { name: 'Əminə Qocayeva', roleKey: 'about_role_comms', emoji: '👨‍🎨' },
   { name: 'Nəzrin Xankişiyeva', roleKey: 'about_role_partnership', emoji: '👨‍🎨' }
 ]
 

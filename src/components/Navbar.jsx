@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
-import logoLight from '../assets/images/logo-light.png'
-import logoDark from '../assets/images/logo-dark.png'
+import logoLight from '../assets/images/logo-light2.png'
+import logoDark from '../assets/images/logo-dark2.png'
 import { useAuth } from "../hooks/useAuth";
 
 const LANGUAGES = [
@@ -86,7 +86,7 @@ export default function Navbar() {
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
         <div className="container navbar__inner">
           <Link to="/" className="navbar__logo">
-            <img src={darkMode ? logoDark : logoLight} alt="Nomad Youth" style={{ height: '160px', width: 'auto' }} />
+            <img src={darkMode ? logoDark : logoLight} alt="Nomad Youth" style={{ height: '60px', width: 'auto' }} />
           </Link>
 
           <ul className="navbar__links">

@@ -8,7 +8,7 @@ export default function Hero() {
   const stats = [
     { num: '50+', label: t('hero_stat_opportunities') },
     { num: '10+', label: t('hero_stat_services') },
-    { num: '10',  label: t('hero_stat_category') },
+    { num: '10+',  label: t('hero_stat_category') },
   ]
 
   return (

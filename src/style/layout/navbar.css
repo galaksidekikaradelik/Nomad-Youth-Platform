@@ -234,9 +234,4 @@
   .navbar__hamburger { display: flex; }
 }
 
-/* ─── NAVBAR LOGO IMAGE ─────────────────────────────────────── */
-.navbar__logo img {
-  height: 48px;
-  width: auto;
-  object-fit: contain;
-}
+

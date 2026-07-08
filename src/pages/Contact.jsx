@@ -20,7 +20,9 @@ const PinIcon = () => (
   </svg>
 )
 
-
+// Müraciət növləri. 'general' adi form vasitəsilə göndərilir,
+// 'partnership' və 'project' isə WhatsApp-a yönləndirilir.
+// label artıq tərcümə açarıdır (labelKey), t() ilə render zamanı açılır.
 const REQUEST_TYPES = [
   { id: 'general',     labelKey: 'contact_request_general',     viaWhatsApp: false },
   { id: 'partnership', labelKey: 'contact_request_partnership', viaWhatsApp: true },
@@ -32,6 +34,9 @@ export default function Contact() {
   const [form, setForm]           = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [requestType, setRequestType] = useState('general')
+  // Yalnız kartların vizual "seçili" görünüşü üçün — səhifə açılanda heç biri
+  // işıqlanmasın deyə requestType-dan ayrı saxlanılır (requestType formun işləməsi üçün 'general' qalır).
+  const [selectedCard, setSelectedCard] = useState(null)
   const formRef = useRef(null)
 
   const infoCards = [
@@ -56,6 +61,7 @@ export default function Contact() {
 
   const handleCardClick = (typeId) => {
     setRequestType(typeId)
+    setSelectedCard(typeId)
     scrollToForm()
   }
 
@@ -85,9 +91,10 @@ export default function Contact() {
           <p className="page-header__desc">{t('contact_desc')}</p>
         </div>
 
+        {/* İkili müraciət yönləndirici kartlar */}
         <div className="grid-2" style={{ marginBottom: 'var(--space-2xl)' }}>
           <button
-            className={`category-card${requestType === 'general' ? ' active' : ''}`}
+            className={`category-card${selectedCard === 'general' ? ' active' : ''}`}
             onClick={() => handleCardClick('general')}
             style={{ width: '100%', textAlign: 'left' }}
           >
@@ -96,11 +103,10 @@ export default function Contact() {
           </button>
 
           <button
-            className={`category-card${requestType !== 'general' ? ' active' : ''}`}
+            className={`category-card${selectedCard === 'partnership' || selectedCard === 'project' ? ' active' : ''}`}
             onClick={() => handleCardClick('partnership')}
             style={{ width: '100%', textAlign: 'left' }}
           >
-
             <div className="category-card__name">{t('contact_card_partnership_title')}</div>
             <div className="category-card__count">{t('contact_card_partnership_desc')}</div>
           </button>
@@ -169,7 +175,7 @@ export default function Contact() {
                 <select
                   className="search-bar__select"
                   value={requestType}
-                  onChange={(e) => setRequestType(e.target.value)}
+                  onChange={(e) => { setRequestType(e.target.value); setSelectedCard(e.target.value) }}
                   style={{
                     border: '1.5px solid var(--color-border)',
                     borderRadius: 'var(--radius-md)',

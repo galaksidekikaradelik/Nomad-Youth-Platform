@@ -53,3 +53,29 @@
 }
 
 .category-card.active .category-card__count { color: #7A5C00; }
+
+
+
+
+.service-icon-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--accent-200);
+  color: var(--brand-900);
+  flex-shrink: 0;
+}
+
+.service-icon-badge--card {
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-sm);
+}
+
+.service-icon-badge--modal {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  margin: 0 auto var(--space-md);
+}

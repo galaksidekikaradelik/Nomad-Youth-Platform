@@ -1,12 +1,18 @@
 import { createPortal } from 'react-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
+// TODO: Məsul şəxsin WhatsApp nömrəsini ölkə kodu ilə, boşluqsuz və "+" işarəsiz yaz.
+// Məsələn: '994501234567'
 const WHATSAPP_NUMBER = '994702343591'
 
+// service: Services.jsx tərəfindən artıq tərcümə edilmiş { title, desc, icon } şəklində ötürülür.
+// service.icon burada lucide-react komponentinin özüdür (JSX deyil).
 export default function ServicePopupModal({ service, onClose }) {
   const { t } = useLanguage()
 
   if (!service) return null
+
+  const Icon = service.icon
 
   const buildWhatsAppLink = (serviceTitle) => {
     const message = t('modal_whatsapp_greeting').replace('{service}', serviceTitle)
@@ -64,7 +70,9 @@ export default function ServicePopupModal({ service, onClose }) {
           ×
         </button>
 
-        <div style={{ fontSize: '2.5rem', marginBottom: 'var(--space-sm)' }}>{service.icon}</div>
+        <div className="service-icon-badge service-icon-badge--modal">
+          <Icon size={30} strokeWidth={1.75} />
+        </div>
 
         <h2 style={{
           fontFamily: 'var(--font-display)',
