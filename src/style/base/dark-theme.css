@@ -78,3 +78,16 @@
   color: var(--accent-400);
   border: 1px solid var(--color-border-hover);
 }
+
+
+[data-theme="dark"] .category-card.active .category-card__name {
+  color: var(--brand-900);
+}
+
+[data-theme="dark"] .filter-btn.active{
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .btn-outline:hover {
+    color: var(--brand-900);
+}

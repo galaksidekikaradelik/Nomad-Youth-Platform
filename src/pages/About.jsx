@@ -12,10 +12,11 @@ const team = [
 export default function About() {
   const { t } = useLanguage()
 
+  // emoji ikon götürüldü — "Böyük nömrələr" dizaynında ehtiyac qalmır.
   const howItWorks = [
-    { num: '1', icon: '🔍', titleKey: 'about_step1_title', descKey: 'about_step1_desc' },
-    { num: '2', icon: '📝', titleKey: 'about_step2_title', descKey: 'about_step2_desc' },
-    { num: '3', icon: '🚀', titleKey: 'about_step3_title', descKey: 'about_step3_desc' },
+    { num: '01', titleKey: 'about_step1_title', descKey: 'about_step1_desc' },
+    { num: '02', titleKey: 'about_step2_title', descKey: 'about_step2_desc' },
+    { num: '03', titleKey: 'about_step3_title', descKey: 'about_step3_desc' },
   ]
 
   const stats = [
@@ -62,8 +63,23 @@ export default function About() {
           <div className="about-values">
             {howItWorks.map(step => (
               <div key={step.num} className="value-card">
-                <div className="value-card__icon">{step.icon}</div>
-                <div className="value-card__title">{step.num}. {t(step.titleKey)}</div>
+                <div
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '4.5rem',
+                    fontWeight: 800,
+                    lineHeight: 1,
+                    color: 'var(--accent-400)',
+                    opacity: 0.55,
+                    marginBottom: 'var(--space-sm)',
+                    userSelect: 'none',
+                  }}
+                >
+                  {step.num}
+                </div>
+                <div className="value-card__title" style={{ position: 'relative', zIndex: 1 }}>
+                  {t(step.titleKey)}
+                </div>
                 <p className="value-card__desc">{t(step.descKey)}</p>
               </div>
             ))}

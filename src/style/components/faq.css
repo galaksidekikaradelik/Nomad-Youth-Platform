@@ -28,7 +28,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1rem;
-  color: var(--brand-900);
+  color: var(--text-primary);
 }
 
 .faq-icon {
@@ -37,7 +37,7 @@
   height: 28px;
   border-radius: var(--radius-full);
   background: var(--neutral-100);
-  color: var(--brand-900);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
