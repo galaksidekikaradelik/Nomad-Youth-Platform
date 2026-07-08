@@ -3,6 +3,7 @@ import { useLanguage } from '..//hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
+import { STATUS_CONFIG, getStatusStorageKey, readStoredStatuses } from '../utils/applicationStatus'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
 
@@ -93,16 +94,6 @@ const TYPE_LABEL_KEYS = {
   'Fəaliyyət': 'type_activity',
 }
 
-// Müraciət statusu üçün tərcümə açarları və modifier className-lər.
-// İstifadəçi kartdan özü seçir; hələ backend yoxdur — user-ə görə localStorage-da saxlanır.
-// Mümkün dəyərlər: 'preparing' | 'applied' | 'accepted' | 'rejected'
-const STATUS_CONFIG = {
-  preparing: { labelKey: 'status_preparing', modifier: 'preparing' },
-  applied:   { labelKey: 'status_applied',   modifier: 'applied' },
-  accepted:  { labelKey: 'status_accepted',  modifier: 'accepted' },
-  rejected:  { labelKey: 'status_rejected',  modifier: 'rejected' },
-}
-
 // Like/Save da status kimi user-ə görə localStorage-da saxlanır (backend hazır olana qədər).
 function getLikeStorageKey(user) {
   const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
@@ -117,21 +108,6 @@ function getSaveStorageKey(user) {
 function readStoredSet(storageKey) {
   try {
     return JSON.parse(localStorage.getItem(storageKey) || '{}')
-  } catch {
-    return {}
-  }
-}
-
-// Statuslar hələ backend-də saxlanmır — user-ə görə localStorage-da saxlanır.
-// user.id yoxdursa email-ə, o da yoxdursa username-ə keçir ki, kod sınmasın.
-function getStatusStorageKey(user) {
-  const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
-  return `nomad_opportunity_status_${uid}`
-}
-
-function readStoredStatuses(user) {
-  try {
-    return JSON.parse(localStorage.getItem(getStatusStorageKey(user)) || '{}')
   } catch {
     return {}
   }

@@ -190,7 +190,7 @@ export default function Contact() {
                 </select>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
+              <div className="contact-form__row">
                 <div className="form-group">
                   <label className="form-label">{t('contact_form_name')}</label>
                   <input className="form-input" name="name" placeholder={t('contact_form_name_placeholder')} value={form.name} onChange={handleChange} />

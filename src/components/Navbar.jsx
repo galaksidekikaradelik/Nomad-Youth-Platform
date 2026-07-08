@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { Bell, User, LayoutDashboard, Settings, LogOut } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import logoLight from '../assets/images/logo-light2.png'
 import logoDark from '../assets/images/logo-dark2.png'
@@ -33,6 +34,12 @@ function getInitialDarkMode() {
   return false
 }
 
+// user.name, user.email və s. sahələrdən ilk hərfi (böyük) çıxarır. Heç biri yoxdursa "?" göstərir.
+function getUserInitial(user) {
+  const source = user?.name || user?.firstName || user?.email || ''
+  return source.trim().charAt(0).toUpperCase() || '?'
+}
+
 export default function Navbar() {
   const { lang, setLanguage, t } = useLanguage()
   const { user, logout } = useAuth();
@@ -40,7 +47,9 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(getInitialDarkMode)
   const [langMenuOpen, setLangMenuOpen] = useState(false)
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false)
   const langMenuRef = useRef(null)
+  const profileMenuRef = useRef(null)
 
   const links = [
     { to: '/',              label: t('nav_home') },
@@ -62,6 +71,9 @@ export default function Navbar() {
       if (langMenuRef.current && !langMenuRef.current.contains(e.target)) {
         setLangMenuOpen(false)
       }
+      if (profileMenuRef.current && !profileMenuRef.current.contains(e.target)) {
+        setProfileMenuOpen(false)
+      }
     }
     document.addEventListener('mousedown', onClickOutside)
     return () => document.removeEventListener('mousedown', onClickOutside)
@@ -79,6 +91,11 @@ export default function Navbar() {
   const selectLang = (code) => {
     setLanguage(code)
     setLangMenuOpen(false)
+  }
+
+  const handleLogout = () => {
+    logout()
+    setProfileMenuOpen(false)
   }
 
   return (
@@ -136,29 +153,57 @@ export default function Navbar() {
               {darkMode ? <SunIcon /> : <MoonIcon />}
             </button>
 
-            {user ? (
-          <>
-          <Link to="/profile" className="navbar__cta">
-                {t('nav_profile')}
-              </Link>
-
-              <button
-                className="navbar__cta"
-                onClick={logout}
-                style={{
-                  marginLeft: "10px",
-                  cursor: "pointer",
-                  border: "none"
-                }}
-              >
-                {t('nav_logout')}
+            {user && (
+              // TODO: real bildiriş sayı/siyahısı gələndə bu düymə funksional edilə bilər.
+              <button className="navbar__icon-btn" aria-label={t('nav_notifications_aria')}>
+                <Bell size={18} />
               </button>
-            </>
-          ) : (
-            <Link to="/register" className="navbar__cta">
-              {t('nav_create_account')}
-            </Link>
-          )}
+            )}
+
+            {user ? (
+              <div className="navbar__profile-wrap" ref={profileMenuRef}>
+                <button
+                  className="navbar__avatar-btn"
+                  onClick={() => setProfileMenuOpen(o => !o)}
+                  aria-label={t('nav_profile')}
+                >
+                  {getUserInitial(user)}
+                </button>
+
+                {profileMenuOpen && (
+                  <div className="navbar__profile-dropdown">
+                    <div className="navbar__profile-info">
+                      <div className="navbar__profile-name">{user?.name || user?.email}</div>
+                      {(user?.major || user?.university) && (
+                        <div className="navbar__profile-sub">{user?.major || user?.university}</div>
+                      )}
+                    </div>
+
+                    <div className="navbar__profile-divider" />
+
+                    <Link to="/profile" className="navbar__profile-item" onClick={() => setProfileMenuOpen(false)}>
+                      <User size={16} /> {t('nav_profile')}
+                    </Link>
+                    <Link to="/dashboard" className="navbar__profile-item" onClick={() => setProfileMenuOpen(false)}>
+                      <LayoutDashboard size={16} /> {t('nav_dashboard')}
+                    </Link>
+                    <Link to="/settings" className="navbar__profile-item" onClick={() => setProfileMenuOpen(false)}>
+                      <Settings size={16} /> {t('nav_settings')}
+                    </Link>
+
+                    <div className="navbar__profile-divider" />
+
+                    <button className="navbar__profile-item navbar__profile-item--danger" onClick={handleLogout}>
+                      <LogOut size={16} /> {t('nav_logout')}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link to="/register" className="navbar__cta">
+                {t('nav_create_account')}
+              </Link>
+            )}
           </div>
 
           <button
@@ -201,8 +246,24 @@ export default function Navbar() {
 
         {user ? (
           <>
-            <Link to="/profile" className="navbar__cta" onClick={handleLinkClick}>
-              {t('nav_profile')}
+            <div className="navbar__mobile-profile">
+              <div className="navbar__avatar-btn navbar__avatar-btn--static">{getUserInitial(user)}</div>
+              <div>
+                <div className="navbar__profile-name">{user?.name || user?.email}</div>
+                {(user?.major || user?.university) && (
+                  <div className="navbar__profile-sub">{user?.major || user?.university}</div>
+                )}
+              </div>
+            </div>
+
+            <Link to="/profile" className="navbar__link" onClick={handleLinkClick}>
+              <User size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} /> {t('nav_profile')}
+            </Link>
+            <Link to="/dashboard" className="navbar__link" onClick={handleLinkClick}>
+              <LayoutDashboard size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} /> {t('nav_dashboard')}
+            </Link>
+            <Link to="/settings" className="navbar__link" onClick={handleLinkClick}>
+              <Settings size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} /> {t('nav_settings')}
             </Link>
 
             <button

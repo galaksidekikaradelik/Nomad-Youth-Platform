@@ -12,6 +12,9 @@
   "nav_lang_select_aria": "Dil seçimi",
   "nav_theme_toggle_aria": "Tema dəyiş",
   "nav_menu_aria": "Menyu",
+  "nav_dashboard": "Panel",
+  "nav_settings": "Ayarlar",
+  "nav_notifications_aria": "Bildirişlər",
 
   "search_placeholder": "Layihə, ölkə və ya təşkilat axtar...",
   "search_all_categories": "Bütün kateqoriyalar",
@@ -69,7 +72,7 @@
   "format_onsite": "Əyani",
   "filter_sort_label": "Sırala",
 
-  "sort_deadline": "Deadline (yaxın)",
+  "sort_deadline": "Son tarix (yaxın)",
   "sort_newest": "Əlavə olunma tarixi (yeni)",
   "sort_country": "Ölkəyə görə (A-Z)",
 
@@ -284,6 +287,43 @@
   "modal_close_aria": "Bağla",
   "modal_whatsapp_desc": "Bu xidmətlə bağlı müraciətinizi WhatsApp üzərindən qəbul edirik. Düyməyə klikləyərək komanda üzvümüzlə əlaqə saxlaya bilərsiniz.",
   "modal_whatsapp_btn": "WhatsApp-da davam et",
-  "modal_whatsapp_greeting": "Salam! Nomad Youth vasitəsilə {service} xidməti ilə bağlı məlumat almaq istəyirəm."
+  "modal_whatsapp_greeting": "Salam! Nomad Youth vasitəsilə {service} xidməti ilə bağlı məlumat almaq istəyirəm.",
+
+  "dashboard_eyebrow": "Hesab",
+  "dashboard_title": "Müraciətlərim",
+  "dashboard_desc": "Status işarələdiyiniz layihələrin siyahısı. Üzərinə klikləyərək detallarına baxa bilərsiniz.",
+  "dashboard_auth_required_title": "Bu səhifəyə baxmaq üçün daxil olun",
+  "dashboard_auth_required_desc": "Müraciətlərinizi görmək üçün hesabınıza daxil olmalısınız.",
+  "dashboard_empty_title": "Hələ heç bir müraciətiniz yoxdur",
+  "dashboard_empty_desc": "İmkanlar səhifəsindəki kartlarda status seçəndə, o layihə burada görünəcək.",
+  "dashboard_field_title": "Layihə adı",
+  "dashboard_field_status": "Status",
+  "dashboard_field_deadline": "Son tarix:",
+  "dashboard_field_listing_status": "Elanın vəziyyəti",
+  "dashboard_status_closed": "Bağlanıb",
+  "dashboard_status_active": "Aktivdir (açıqdır)",
+  
+  "settings_title": "İdarə paneli",
+  "settings_desc": "Hesab məlumatlarınızı idarə edin.",
+  "settings_profile_section_title": "Məlumatları dəyiş",
+  "settings_save_btn": "Yadda saxla",
+  "settings_profile_saved_msg": "Məlumatlar yeniləndi.",
+  "settings_password_section_title": "Şifrəni yeniləyin",
+  "settings_current_password_label": "Cari şifrə",
+  "settings_new_password_label": "Yeni şifrə",
+  "settings_password_hint": "Minimum 8 simvoldan istifadə edin.",
+  "settings_confirm_new_password_label": "Yeni şifrəni təkrarla",
+  "settings_error_password_mismatch": "Şifrələr bir-biri ilə uyğun gəlmir.",
+  "settings_error_wrong_password": "Cari şifrə yanlışdır.",
+  "settings_error_user_not_found": "İstifadəçi tapılmadı.",
+  "settings_password_saved_msg": "Şifrə uğurla yeniləndi.",
+  "settings_update_password_btn": "Şifrəni yenilə",
+  "settings_account_actions_title": "Hesab əməliyyatları",
+  "settings_logout_btn": "Hesabdan çıxış et",
+  "settings_delete_account_btn": "Hesabı sil",
+  "settings_delete_modal_title": "Hesabı silmək istəyirsiniz?",
+  "settings_delete_modal_desc": "Bu əməliyyat geri qaytarıla bilməz. Hesabınız və ona bağlı bütün məlumatlar silinəcək.",
+  "settings_delete_modal_cancel": "Ləğv et",
+  "settings_delete_modal_confirm": "Bəli, sil"
 
 }

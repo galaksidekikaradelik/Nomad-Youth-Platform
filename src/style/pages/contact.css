@@ -50,6 +50,12 @@
 
 .form-textarea { resize: vertical; min-height: 140px; }
 
+.contact-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
 .contact-info {
   display: flex;
   flex-direction: column;
@@ -120,6 +126,11 @@
 
 /* ---------- Mobil ---------- */
 @media (max-width: 640px) {
+  .contact-form__row {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
   .contact-form {
     padding: var(--space-md);
     gap: var(--space-sm);
