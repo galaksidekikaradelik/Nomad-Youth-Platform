@@ -23,10 +23,10 @@ const Profile = () => {
   const [selectedCountries] = useState(mockSelectedCountries);
   const [savedItems] = useState(mockSavedItems);
 
-  const firstName = user
+  const firstNameValue = user
     ? `${user.firstName || ''}`.trim()
     : '';
-  const name = firstName || 'İstifadəçi';
+  const name = firstNameValue || 'İstifadəçi';
 
   return (
     <div className="profile-page">
