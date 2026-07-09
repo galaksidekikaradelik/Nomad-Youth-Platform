@@ -10,6 +10,7 @@ import Settings from "../pages/Settings";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Profile from "../pages/Profile";   {/* ← yeni əlavə */}
 
 export default function AppRoutes() {
   return (
@@ -23,6 +24,7 @@ export default function AppRoutes() {
         <Route path="/services" element={<Services />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />   {/* ← yeni əlavə */}
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
