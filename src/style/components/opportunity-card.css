@@ -320,18 +320,18 @@
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
-  background: #fff;
-  border: 1px solid #e5e5e5;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   white-space: nowrap;
   cursor: pointer;
   font-family: inherit;
 }
 
 .opportunity-card__status-badge--empty {
-  color: #6b7280;
+  color: var(--text-muted);
 }
 .opportunity-card__status-badge--empty .opportunity-card__status-dot {
-  background: #d1d5db;
+  background: var(--neutral-200);
 }
 
 .opportunity-card__status-dropdown {
@@ -340,10 +340,10 @@
   right: 0;
   z-index: 20;
   min-width: 160px;
-  background: #fff;
-  border: 1px solid #e5e5e5;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
   padding: 4px;
   display: flex;
   flex-direction: column;
@@ -363,14 +363,25 @@
   text-align: left;
   cursor: pointer;
   font-family: inherit;
-  color: #1f2937;
+  color: var(--text-secondary);
 }
 
 .opportunity-card__status-option:hover {
-  background: #f3f4f6;
+  background: var(--color-primary-light);
 }
 
 .opportunity-card__status-option--preparing .opportunity-card__status-dot { background: #f5a623; }
 .opportunity-card__status-option--applied .opportunity-card__status-dot { background: #4a6cf7; }
 .opportunity-card__status-option--accepted .opportunity-card__status-dot { background: #34c759; }
 .opportunity-card__status-option--rejected .opportunity-card__status-dot { background: #ff3b30; }
+
+
+[data-theme="dark"] .opportunity-card__status-badge--preparing { color: #FBBF24; }
+[data-theme="dark"] .opportunity-card__status-badge--applied   { color: #93C5FD; }
+[data-theme="dark"] .opportunity-card__status-badge--accepted  { color: #6EE7B7; }
+[data-theme="dark"] .opportunity-card__status-badge--rejected  { color: #FCA5A5; }
+
+[data-theme="dark"] .opportunity-card__status-option:hover {
+  background: var(--neutral-100);
+  color: var(--text-primary);
+}

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Bell } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { opportunities } from '../data/opportunities'
@@ -17,9 +18,13 @@ function timeAgo(isoDate) {
 
 export default function NotificationsDropdown() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef(null)
 
+  // Effect əvəzinə lazy init + render zamanı sinxronlaşdırma (OpportunityCard.jsx-dəki
+  // StatusSelector ilə eyni pattern) — useEffect daxilində mount/user-dəyişmə zamanı
+  // setState çağırışının yaratdığı "cascading render" xəbərdarlığını aradan qaldırır.
   const [trackedUser, setTrackedUser] = useState(user)
   const [notifications, setNotifications] = useState(() =>
     user ? syncNotifications(user, opportunities) : []
@@ -54,6 +59,11 @@ export default function NotificationsDropdown() {
     }
   }
 
+  const handleNotificationClick = (n) => {
+    setOpen(false)
+    navigate(`/opportunities?show=${encodeURIComponent(n.oppKey)}`)
+  }
+
   return (
     <div className="navbar__notif-wrap" ref={wrapperRef}>
       <button
@@ -75,7 +85,13 @@ export default function NotificationsDropdown() {
             <div className="navbar__notif-empty">Bildiriş yoxdur</div>
           ) : (
             notifications.map(n => (
-              <div key={n.id} className="navbar__notif-item">
+              <div
+                key={n.id}
+                className="navbar__notif-item navbar__notif-item--clickable"
+                onClick={() => handleNotificationClick(n)}
+                role="button"
+                tabIndex={0}
+              >
                 <div className="navbar__notif-item__type">
                   {n.type === 'similar_match' ? '💡 Bunu bəyənə bilərsiniz' : '🆕 Yeni elan'}
                 </div>

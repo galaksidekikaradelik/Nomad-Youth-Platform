@@ -173,12 +173,23 @@ function StatusSelector({ opportunity, t }) {
   )
 }
 
-export default function OpportunityCard({ opportunity }) {
+export default function OpportunityCard({ opportunity, autoOpenDetail = false }) {
   const { t, lang } = useLanguage()
   const { user } = useAuth()
   const { title, format, category, type, location, deadline, applyLink, publishedAt } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
-  const [showDetail, setShowDetail] = useState(false)
+  const [showDetail, setShowDetail] = useState(autoOpenDetail)
+  const cardRef = useRef(null)
+
+
+  useEffect(() => {
+    if (!autoOpenDetail) return
+    const timer = setTimeout(() => {
+      cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 100)
+    return () => clearTimeout(timer)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // opportunity.id yoxdursa title-a fallback edir (status selector-dakı ilə eyni məntiq)
   const oppKey = opportunity.id || opportunity.title
@@ -244,7 +255,7 @@ export default function OpportunityCard({ opportunity }) {
   const categories = Array.isArray(category) ? category : (category ? [category] : [])
 
   return (
-    <div className="opportunity-card">
+    <div className="opportunity-card" ref={cardRef}>
       <div className="opportunity-card__top">
         <div className="opportunity-card__top-row">
           <span className="opportunity-card__tag opportunity-card__tag--flag opportunity-card__tag--flag-top">

@@ -31,3 +31,5 @@
   flex-wrap: wrap;
   gap: var(--space-sm);
 }
+
+/* ---------- Mobil: çox sayda chip bir sətirdə sıxılmasın, üfüqi sürüşən sıra olsun ---------- */

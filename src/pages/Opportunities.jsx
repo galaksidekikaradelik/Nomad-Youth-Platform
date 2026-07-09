@@ -56,8 +56,11 @@ export default function Opportunities() {
   const initialScope    = searchParams.get('scope') || 'hamisi'
   const initialQuery    = searchParams.get('query') || ''
   const initialCategory = searchParams.get('category') || ''
+  // Bildiriş və ya digər yerlərdən "bu elanı göstər" keçidi üçün (məs. /opportunities?show=12)
+  const highlightOppKey = searchParams.get('show') || null
 
   const [search,     setSearch]     = useState(initialQuery)
+  // Çoxlu kateqoriya seçimi üçün array. Boş array = "Hamısı" (filter yoxdur).
   const [categories, setCategories] = useState(initialCategory ? [initialCategory] : [])
   const [types,      setTypes]      = useState([])
   const [scope,      setScope]      = useState(initialScope)
@@ -135,6 +138,7 @@ export default function Opportunities() {
               />
             </div>
 
+            {/* Filters */}
             <div className="filter-group">
               <div className="filter-group__row">
                 <span className="filter-group__label">{t('filter_scope_label')}</span>
@@ -203,7 +207,13 @@ export default function Opportunities() {
 
             {sorted.length > 0 ? (
               <div className="grid-3">
-                {sorted.map(op => <OpportunityCard key={op.id} opportunity={op} />)}
+                {sorted.map(op => (
+                  <OpportunityCard
+                    key={op.id}
+                    opportunity={op}
+                    autoOpenDetail={highlightOppKey !== null && String(op.id || op.title) === String(highlightOppKey)}
+                  />
+                ))}
               </div>
             ) : (
               <div className="empty-state">

@@ -61,6 +61,15 @@
   border-bottom: none;
 }
 
+.navbar__notif-item--clickable {
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.navbar__notif-item--clickable:hover {
+  background: var(--color-primary-light);
+}
+
 .navbar__notif-item__type {
   font-weight: 600;
   color: var(--brand-900);

@@ -46,9 +46,6 @@ function DeleteConfirmModal({ t, onCancel, onConfirm }) {
   )
 }
 
-// Accordion bölmə: başlıq həmişə görünür, məzmun yalnız açıq olanda göstərilir.
-// FAQ.jsx-dəki faq-item/faq-question/faq-answer class-larından istifadə edir ki,
-// stil saytın qalan hissəsi ilə uyğun olsun.
 function SettingsSection({ title, isOpen, onToggle, children }) {
   return (
     <div className="faq-item" style={{ marginBottom: 'var(--space-md)' }}>
@@ -72,7 +69,6 @@ export default function Settings() {
   const { t } = useLanguage()
   const navigate = useNavigate()
 
-  // Bölmələr defolt bağlıdır — düymə basılanda açılır.
   const [openSection, setOpenSection] = useState(null)
   const toggleSection = (id) => setOpenSection(prev => (prev === id ? null : id))
 
@@ -155,7 +151,6 @@ export default function Settings() {
           <p className="page-header__desc">{t('settings_desc')}</p>
         </div>
 
-        {/* Məlumatları dəyiş */}
         <SettingsSection
           title={t('settings_profile_section_title')}
           isOpen={openSection === 'profile'}
@@ -204,7 +199,6 @@ export default function Settings() {
           </button>
         </SettingsSection>
 
-        {/* Şifrəni yeniləyin */}
         <SettingsSection
           title={t('settings_password_section_title')}
           isOpen={openSection === 'password'}
@@ -240,7 +234,6 @@ export default function Settings() {
           </button>
         </SettingsSection>
 
-        {/* Hesabdan çıxış / Hesabı sil */}
         <SettingsSection
           title={t('settings_account_actions_title')}
           isOpen={openSection === 'account'}
