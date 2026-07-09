@@ -698,5 +698,33 @@
       "Seminar",
       "İdarəetmə"
     ]
+  },
+  {
+    "id": 26,
+    "title": "Why municipal youth participation? - 2",
+    "deadline": "2026-09-06",
+    "type": "Seminar",
+    "format": "Offline",
+    "category": [
+      "İdarəetmə"
+    ],
+    "categoryGroups": [
+      "Liderlik"
+    ],
+    "location": "Macarıstan",
+    "applyLink": "http://trainings.salto-youth.net/14905",
+    "publishedAt": "2026-09-18",
+    "description": "Macarıstanda keçiriləcək bu seminar yerli bələdiyyələrdə gənclərin qərarvermə proseslərində iştirakını gücləndirməyi hədəfləyir. İştirakçılar yeni Avropa Xartiyasının müddəalarını və gənclər siyasəti alətlərini öyrənərək təcrübə mübadiləsi aparacaqlar.",
+    "descriptionTranslations": {
+      "az": "Macarıstanda keçiriləcək bu seminar yerli bələdiyyələrdə gənclərin qərarvermə proseslərində iştirakını gücləndirməyi hədəfləyir. İştirakçılar yeni Avropa Xartiyasının müddəalarını və gənclər siyasəti alətlərini öyrənərək təcrübə mübadiləsi aparacaqlar.",
+      "en": "This seminar in Hungary focuses on strengthening youth participation in local decision-making processes. Participants will explore the provisions of the new European Charter, learn about youth policy tools, and exchange best practices.",
+      "ru": "Этот семинар в Венгрии посвящён расширению участия молодёжи в процессах принятия решений на местном уровне. Участники изучат положения новой Европейской хартии, познакомятся с инструментами молодёжной политики и обменяются лучшими практиками."
+    },
+    "tags": [
+      "Offline",
+      "Macarıstan",
+      "Seminar",
+      "İdarəetmə"
+    ]
   }
 ]

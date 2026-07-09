@@ -24,6 +24,7 @@
 @import 'components/disclaimer-banner.css';
 @import 'components/modal.css';
 @import 'components/faq.css';
+@import 'components/notifications.css';
 
 @import 'pages/about.css';
 @import 'pages/contact.css';
@@ -33,3 +34,5 @@
 
 
 @import 'base/dark-theme.css';
+
+@import 'utilities/responsive.css';

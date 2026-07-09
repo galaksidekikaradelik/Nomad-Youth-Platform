@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { Bell, User, LayoutDashboard, Settings, LogOut } from 'lucide-react'
+import { User, LayoutDashboard, Settings, LogOut } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import logoLight from '../assets/images/logo-light2.png'
 import logoDark from '../assets/images/logo-dark2.png'
 import { useAuth } from "../hooks/useAuth";
+import NotificationsDropdown from './NotificationsDropdown'
 
 const LANGUAGES = [
   { code: 'az', label: 'Azərbaycan' },
@@ -153,12 +154,7 @@ export default function Navbar() {
               {darkMode ? <SunIcon /> : <MoonIcon />}
             </button>
 
-            {user && (
-              // TODO: real bildiriş sayı/siyahısı gələndə bu düymə funksional edilə bilər.
-              <button className="navbar__icon-btn" aria-label={t('nav_notifications_aria')}>
-                <Bell size={18} />
-              </button>
-            )}
+            {user && <NotificationsDropdown />}
 
             {user ? (
               <div className="navbar__profile-wrap" ref={profileMenuRef}>

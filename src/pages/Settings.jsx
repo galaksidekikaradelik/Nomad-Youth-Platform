@@ -46,10 +46,35 @@ function DeleteConfirmModal({ t, onCancel, onConfirm }) {
   )
 }
 
+// Accordion bölmə: başlıq həmişə görünür, məzmun yalnız açıq olanda göstərilir.
+// FAQ.jsx-dəki faq-item/faq-question/faq-answer class-larından istifadə edir ki,
+// stil saytın qalan hissəsi ilə uyğun olsun.
+function SettingsSection({ title, isOpen, onToggle, children }) {
+  return (
+    <div className="faq-item" style={{ marginBottom: 'var(--space-md)' }}>
+      <button className="faq-question" onClick={onToggle} aria-expanded={isOpen}>
+        <span>{title}</span>
+        <span className={`faq-icon${isOpen ? ' faq-icon--open' : ''}`} aria-hidden="true">
+          +
+        </span>
+      </button>
+      <div className={`faq-answer${isOpen ? ' faq-answer--open' : ''}`}>
+        <div style={{ paddingBottom: 'var(--space-lg)', display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Settings() {
   const { user, updateUser, changePassword, logout, deleteAccount } = useAuth()
   const { t } = useLanguage()
   const navigate = useNavigate()
+
+  // Bölmələr defolt bağlıdır — düymə basılanda açılır.
+  const [openSection, setOpenSection] = useState(null)
+  const toggleSection = (id) => setOpenSection(prev => (prev === id ? null : id))
 
   const [profileForm, setProfileForm] = useState({
     firstName: user?.firstName || '',
@@ -131,11 +156,11 @@ export default function Settings() {
         </div>
 
         {/* Məlumatları dəyiş */}
-        <div className="contact-form" style={{ marginBottom: 'var(--space-xl)' }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.1rem', marginBottom: 'var(--space-sm)' }}>
-            {t('settings_profile_section_title')}
-          </div>
-
+        <SettingsSection
+          title={t('settings_profile_section_title')}
+          isOpen={openSection === 'profile'}
+          onToggle={() => toggleSection('profile')}
+        >
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
             <div className="form-group">
               <label className="form-label">{t('auth_first_name')}</label>
@@ -174,17 +199,17 @@ export default function Settings() {
             </p>
           )}
 
-          <button className="btn-primary" onClick={handleProfileSubmit} style={{ marginTop: 'var(--space-sm)' }}>
+          <button className="btn-primary" onClick={handleProfileSubmit}>
             {t('settings_save_btn')}
           </button>
-        </div>
+        </SettingsSection>
 
         {/* Şifrəni yeniləyin */}
-        <div className="contact-form" style={{ marginBottom: 'var(--space-xl)' }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.1rem', marginBottom: 'var(--space-sm)' }}>
-            {t('settings_password_section_title')}
-          </div>
-
+        <SettingsSection
+          title={t('settings_password_section_title')}
+          isOpen={openSection === 'password'}
+          onToggle={() => toggleSection('password')}
+        >
           <div className="form-group">
             <label className="form-label">{t('settings_current_password_label')}</label>
             <input className="form-input" name="currentPassword" type="password" value={passwordForm.currentPassword} onChange={handlePasswordChange} />
@@ -210,17 +235,17 @@ export default function Settings() {
             </p>
           )}
 
-          <button className="btn-primary" onClick={handlePasswordSubmit} style={{ marginTop: 'var(--space-sm)' }}>
+          <button className="btn-primary" onClick={handlePasswordSubmit}>
             {t('settings_update_password_btn')}
           </button>
-        </div>
+        </SettingsSection>
 
         {/* Hesabdan çıxış / Hesabı sil */}
-        <div className="contact-form" style={{ gap: 'var(--space-md)' }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.1rem' }}>
-            {t('settings_account_actions_title')}
-          </div>
-
+        <SettingsSection
+          title={t('settings_account_actions_title')}
+          isOpen={openSection === 'account'}
+          onToggle={() => toggleSection('account')}
+        >
           <button className="btn-outline" onClick={handleLogout} style={{ width: '100%', justifyContent: 'center' }}>
             {t('settings_logout_btn')}
           </button>
@@ -232,7 +257,7 @@ export default function Settings() {
           >
             {t('settings_delete_account_btn')}
           </button>
-        </div>
+        </SettingsSection>
 
       </div>
 

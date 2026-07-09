@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
 import { STATUS_CONFIG, getStatusStorageKey, readStoredStatuses } from '../utils/applicationStatus'
+import { getLikeStorageKey, getSaveStorageKey, readStoredSet } from '../utils/likes'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
 
@@ -92,25 +93,6 @@ const TYPE_LABEL_KEYS = {
   'Konfrans':  'type_conference',
   'Vebinar':   'type_webinar',
   'Fəaliyyət': 'type_activity',
-}
-
-// Like/Save da status kimi user-ə görə localStorage-da saxlanır (backend hazır olana qədər).
-function getLikeStorageKey(user) {
-  const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
-  return `nomad_opportunity_likes_${uid}`
-}
-
-function getSaveStorageKey(user) {
-  const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
-  return `nomad_opportunity_saves_${uid}`
-}
-
-function readStoredSet(storageKey) {
-  try {
-    return JSON.parse(localStorage.getItem(storageKey) || '{}')
-  } catch {
-    return {}
-  }
 }
 
 function StatusSelector({ opportunity, t }) {
