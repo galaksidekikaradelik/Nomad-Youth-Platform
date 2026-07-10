@@ -6,12 +6,10 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import FAQ from "../pages/FAQ";
 import Services from "../pages/Services";
-import Settings from "../pages/Settings";
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Profile from "../pages/Profile";   {/* ← yeni əlavə */}
-
+import Profile from "../pages/Profile";   
 export default function AppRoutes() {
   return (
     <Routes>
@@ -22,10 +20,8 @@ export default function AppRoutes() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />   {/* ← yeni əlavə */}
-
+        <Route path="/profile" element={<Profile />} />   
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>

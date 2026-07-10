@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { User, LayoutDashboard, Settings, LogOut } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import logoLight from '../assets/images/logo-light2.png'
@@ -35,7 +35,6 @@ function getInitialDarkMode() {
   return false
 }
 
-// user.name, user.email və s. sahələrdən ilk hərfi (böyük) çıxarır. Heç biri yoxdursa "?" göstərir.
 function getUserInitial(user) {
   const source = user?.name || user?.firstName || user?.email || ''
   return source.trim().charAt(0).toUpperCase() || '?'
@@ -44,6 +43,7 @@ function getUserInitial(user) {
 export default function Navbar() {
   const { lang, setLanguage, t } = useLanguage()
   const { user, logout } = useAuth();
+  const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(getInitialDarkMode)
@@ -97,6 +97,12 @@ export default function Navbar() {
   const handleLogout = () => {
     logout()
     setProfileMenuOpen(false)
+  }
+
+  const goToProfileSettings = () => {
+    navigate('/profile', { state: { view: 'settings' } })
+    setProfileMenuOpen(false)
+    setMenuOpen(false)
   }
 
   return (
@@ -183,9 +189,9 @@ export default function Navbar() {
                     <Link to="/dashboard" className="navbar__profile-item" onClick={() => setProfileMenuOpen(false)}>
                       <LayoutDashboard size={16} /> {t('nav_dashboard')}
                     </Link>
-                    <Link to="/settings" className="navbar__profile-item" onClick={() => setProfileMenuOpen(false)}>
+                    <button type="button" className="navbar__profile-item" onClick={goToProfileSettings}>
                       <Settings size={16} /> {t('nav_settings')}
-                    </Link>
+                    </button>
 
                     <div className="navbar__profile-divider" />
 
@@ -258,9 +264,9 @@ export default function Navbar() {
             <Link to="/dashboard" className="navbar__link" onClick={handleLinkClick}>
               <LayoutDashboard size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} /> {t('nav_dashboard')}
             </Link>
-            <Link to="/settings" className="navbar__link" onClick={handleLinkClick}>
+            <button type="button" className="navbar__link" onClick={goToProfileSettings} style={{ textAlign: 'left', width: '100%' }}>
               <Settings size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} /> {t('nav_settings')}
-            </Link>
+            </button>
 
             <button
               className="navbar__cta"

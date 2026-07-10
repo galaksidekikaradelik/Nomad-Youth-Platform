@@ -26,8 +26,10 @@
 @import 'components/faq.css';
 @import 'components/notifications.css';
 
+
 @import 'pages/about.css';
 @import 'pages/contact.css';
+@import 'pages/profil.css';
 
 @import 'utilities/helpers.css';
 @import 'utilities/animations.css';

@@ -1,82 +1,640 @@
-// src/pages/Profile.jsx
-import { useState } from 'react';
-import { useAuth } from '../hooks/useAuth'; // öz yoluna uyğunlaşdır
-import { Settings, ArrowDown } from 'lucide-react';
-import './Profile.css';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import { useLanguage } from '../hooks/useLanguage';
+import { getLikeStorageKey, getSaveStorageKey, readStoredSet } from '../utils/likes';
+import { STATUS_CONFIG, readStoredStatuses } from '../utils/applicationStatus';
+import opportunities from '../data/opportunities.json';
+import {
+  LayoutGrid,
+  Send,
+  Bookmark,
+  Bell,
+  Settings as SettingsIcon,
+  LogOut,
+  ChevronRight,
+  ChevronLeft,
+  Pencil,
+  CheckCircle2,
+  Clock,
+  Loader2,
+  XCircle,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from 'lucide-react';
 
-// Backend gələnə kimi mock data
-const mockSelectedCountries = [
-  'Türkiyə',
-  'Almaniya',
-  'Polşa',
-  'İtaliya',
-  'İspaniya',
+function getDaysLeft(deadline) {
+  if (!deadline) return null;
+  const diff = new Date(deadline) - new Date();
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+  return days > 0 ? days : 0;
+}
+
+// Artıq bütün item-lər Profile daxilində "view" olaraq açılır, ayrı route yoxdur
+const NAV_ITEMS = [
+  { key: 'overview', labelKey: 'profile_nav_overview', icon: LayoutGrid },
+  { key: 'applications', labelKey: 'profile_nav_applications', icon: Send },
+  { key: 'saved', labelKey: 'profile_nav_saved', icon: Bookmark },
+  { key: 'notifications', labelKey: 'profile_nav_notifications', icon: Bell },
+  { key: 'settings', labelKey: 'profile_nav_settings', icon: SettingsIcon },
 ];
 
-const mockSavedItems = [
-  { id: 1, title: 'Gənclər Mübadiləsi - Berlin', daysLeft: 1 },
-  { id: 2, title: 'Təlim Kursu - Varşava', daysLeft: 3 },
-];
-
-const Profile = () => {
-  const { user } = useAuth();
-  const [selectedCountries] = useState(mockSelectedCountries);
-  const [savedItems] = useState(mockSavedItems);
-
-  const firstNameValue = user
-    ? `${user.firstName || ''}`.trim()
-    : '';
-  const name = firstNameValue || 'İstifadəçi';
+function Sidebar({ activeView, onNavigate, collapsed, onToggleCollapse }) {
+  const { logout } = useAuth();
+  const { t } = useLanguage();
 
   return (
-    <div className="profile-page">
-      <div className="profile-header">
-        <h1>Xoş gəlmisiniz, {name}!</h1>
-        <button className="profile-settings-btn" aria-label="Ayarlar">
-          <Settings size={22} />
+    <aside className={`profile-sidebar${collapsed ? ' profile-sidebar--collapsed' : ''}`}>
+      <button
+        type="button"
+        className="profile-sidebar__toggle"
+        onClick={onToggleCollapse}
+        aria-label={collapsed ? t('profile_sidebar_open_aria') : t('profile_sidebar_close_aria')}
+      >
+        {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+      </button>
+
+      <nav className="profile-sidebar__nav">
+        {NAV_ITEMS.map((item) => {
+          const Icon = item.icon;
+          const isActive = item.key === activeView;
+          const label = t(item.labelKey);
+
+          return (
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => onNavigate(item.key)}
+              className={`profile-sidebar__item${isActive ? ' profile-sidebar__item--active' : ''}`}
+              title={collapsed ? label : undefined}
+            >
+              <Icon size={18} />
+              <span>{label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      <button
+        className="profile-sidebar__item profile-sidebar__item--logout"
+        onClick={logout}
+        title={collapsed ? t('nav_logout') : undefined}
+      >
+        <LogOut size={18} />
+        <span>{t('nav_logout')}</span>
+      </button>
+    </aside>
+  );
+}
+
+function ProfileStatsBar({ applications }) {
+  const { t } = useLanguage();
+
+  const countOf = (modifiers) =>
+    applications.filter((a) => modifiers.includes(STATUS_CONFIG[a.status]?.modifier)).length;
+
+  const stats = [
+    { key: 'accepted', count: countOf(['accepted', 'approved']), label: t('profile_stat_accepted'), icon: CheckCircle2 },
+    { key: 'pending', count: countOf(['applied', 'pending']), label: t('profile_stat_pending'), icon: Clock },
+    { key: 'preparing', count: countOf(['preparing', 'in_progress']), label: t('profile_stat_preparing'), icon: Loader2 },
+    { key: 'rejected', count: countOf(['rejected']), label: t('profile_stat_rejected'), icon: XCircle },
+  ];
+
+  return (
+    <div className="profile-stats-bar">
+      {stats.map(({ key, count, label, icon: Icon }) => (
+        <div key={key} className={`profile-stats-bar__item profile-stats-bar__item--${key}`}>
+          <span className="profile-stats-bar__icon">
+            <Icon size={22} />
+          </span>
+          <div>
+            <span className="profile-stats-bar__count">{count}</span>
+            <span className="profile-stats-bar__label">{label}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ProfileHeader({ name }) {
+  const { t } = useLanguage();
+  const initial = name ? name.charAt(0).toUpperCase() : 'İ';
+
+  return (
+    <div className="profile-header">
+      <div className="profile-header__avatar-wrap">
+        <div className="profile-header__avatar">{initial}</div>
+        <button className="profile-header__avatar-edit" aria-label={t('profile_avatar_edit_aria')}>
+          <Pencil size={12} />
         </button>
       </div>
+      <div className="profile-header__body">
+        <h1>{t('profile_welcome').replace('{name}', name)}</h1>
+        <p className="profile-header__subtitle">
+          {t('profile_subtitle')}
+        </p>
+      </div>
+    </div>
+  );
+}
 
-      <div className="profile-sections">
-        {/* Seçimlilər */}
-        <div className="profile-section">
-          <h2>Seçilmişlər</h2>
-          <ArrowDown className="section-arrow" size={20} />
-          <ul className="country-list">
-            {selectedCountries.length > 0 ? (
-              selectedCountries.map((country) => (
-                <li key={country}>{country}</li>
-              ))
-            ) : (
-              <li className="empty-text">Hələ ölkə seçilməyib</li>
-            )}
-          </ul>
-        </div>
-
-        {/* Yadda saxlanılanlar */}
-        <div className="profile-section">
-          <h2>Yadda saxlanılanlar</h2>
-          <ArrowDown className="section-arrow" size={20} />
-          <ul className="saved-list">
-            {savedItems.length > 0 ? (
-              savedItems.map((item) => (
-                <li key={item.id} className="saved-item">
-                  <span>{item.title}</span>
-                  {item.daysLeft <= 1 && (
-                    <span className="badge-urgent">
-                      Son {item.daysLeft} gün qalıb!
-                    </span>
-                  )}
-                </li>
-              ))
-            ) : (
-              <li className="empty-text">Yadda saxlanılan yoxdur</li>
-            )}
-          </ul>
+function OpportunityMiniRow({ opp, statusBadge }) {
+  const { t } = useLanguage();
+  const daysLeft = getDaysLeft(opp.deadline);
+  return (
+    <div className="profile-mini-row">
+      <div className="profile-mini-row__text">
+        <span className="profile-mini-row__title">{opp.title}</span>
+        {opp.location && <span className="profile-mini-row__location"> - {opp.location}</span>}
+        <div className="profile-mini-row__meta">
+          {opp.type && <span className="profile-mini-row__tag">{opp.type}</span>}
+          {daysLeft !== null && <span className="profile-mini-row__days">{daysLeft} {t('card_days_left')}</span>}
+          {statusBadge}
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default Profile;
+function EmptyRow({ text }) {
+  return <div className="profile-mini-row profile-mini-row--empty">{text}</div>;
+}
+
+function NotificationsBanner({ onManage }) {
+  const { t } = useLanguage();
+  return (
+    <div className="profile-notif-banner">
+      <div className="profile-notif-banner__icon">
+        <Bell size={20} />
+      </div>
+      <div className="profile-notif-banner__text">
+        <h3>{t('profile_notif_banner_title')}</h3>
+        <p>{t('profile_notif_banner_desc')}</p>
+      </div>
+      <button type="button" className="profile-notif-banner__btn" onClick={onManage}>
+        {t('profile_notif_banner_btn')} <ChevronRight size={16} />
+      </button>
+    </div>
+  );
+}
+
+// Tam siyahı görünüşü — Seçilmişlər / Yadda saxlananlar üçün ortaq
+function FullListView({ title, items, emptyText, onBack, renderRow }) {
+  const { t } = useLanguage();
+  return (
+    <div className="profile-panel profile-panel--full">
+      <button type="button" className="profile-panel__back" onClick={onBack}>
+        <ChevronLeft size={16} /> {t('profile_back_to_overview')}
+      </button>
+      <div className="profile-panel__header">
+        <h2>{title}</h2>
+        <span className="profile-panel__count">{items.length}</span>
+      </div>
+      <div className="profile-panel__body">
+        {items.length > 0 ? (
+          items.map((item) => (renderRow ? renderRow(item) : <OpportunityMiniRow key={item.id || item.title} opp={item} />))
+        ) : (
+          <EmptyRow text={emptyText} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+function NotificationsView({ onBack }) {
+  const { t } = useLanguage();
+  return (
+    <div className="profile-panel profile-panel--full">
+      <button type="button" className="profile-panel__back" onClick={onBack}>
+        <ChevronLeft size={16} /> {t('profile_back_to_overview')}
+      </button>
+      <div className="profile-panel__header">
+        <h2>{t('profile_nav_notifications')}</h2>
+      </div>
+      <div className="profile-panel__body">
+        <EmptyRow text={t('profile_notifications_empty')} />
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Hesab parametrləri (əvvəlki Settings.jsx-dən köçürülüb) ---------- */
+
+function DeleteConfirmModal({ t, onCancel, onConfirm }) {
+  return (
+    <div
+      className="modal-overlay"
+      onClick={(e) => { if (e.target === e.currentTarget) onCancel(); }}
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        zIndex: 1000, padding: 'var(--space-md)',
+      }}
+    >
+      <div
+        className="modal-content"
+        style={{
+          background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)',
+          padding: 'var(--space-2xl)', maxWidth: 420, width: '100%',
+          textAlign: 'center', boxSizing: 'border-box',
+        }}
+      >
+        <div style={{ fontSize: '2.5rem', marginBottom: 'var(--space-md)' }}>⚠️</div>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 700, marginBottom: 'var(--space-sm)' }}>
+          {t('settings_delete_modal_title')}
+        </h2>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 'var(--space-xl)', lineHeight: 1.6 }}>
+          {t('settings_delete_modal_desc')}
+        </p>
+        <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
+          <button className="btn-outline" style={{ flex: 1, justifyContent: 'center' }} onClick={onCancel}>
+            {t('settings_delete_modal_cancel')}
+          </button>
+          <button
+            className="btn-primary"
+            style={{ flex: 1, justifyContent: 'center', background: 'var(--status-error)' }}
+            onClick={onConfirm}
+          >
+            {t('settings_delete_modal_confirm')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SettingsAccordion({ title, isOpen, onToggle, children }) {
+  return (
+    <div className="faq-item" style={{ marginBottom: 'var(--space-md)' }}>
+      <button className="faq-question" onClick={onToggle} aria-expanded={isOpen}>
+        <span>{title}</span>
+        <span className={`faq-icon${isOpen ? ' faq-icon--open' : ''}`} aria-hidden="true">+</span>
+      </button>
+      <div className={`faq-answer${isOpen ? ' faq-answer--open' : ''}`}>
+        <div style={{ paddingBottom: 'var(--space-lg)', display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SettingsView({ onBack }) {
+  const { user, updateUser, changePassword, deleteAccount, logout } = useAuth();
+  const { t } = useLanguage();
+
+  const [openSection, setOpenSection] = useState(null);
+  const toggleSection = (id) => setOpenSection((prev) => (prev === id ? null : id));
+
+  const [profileForm, setProfileForm] = useState({
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    university: user?.university || '',
+    major: user?.major || '',
+  });
+  const [profileSaved, setProfileSaved] = useState(false);
+
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '', newPassword: '', confirmPassword: '',
+  });
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordSaved, setPasswordSaved] = useState(false);
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleProfileChange = (e) => {
+    setProfileForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    setProfileSaved(false);
+  };
+
+  const handleProfileSubmit = () => {
+    updateUser(profileForm);
+    setProfileSaved(true);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPasswordForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    setPasswordError('');
+    setPasswordSaved(false);
+  };
+
+  const handlePasswordSubmit = () => {
+    setPasswordError('');
+    setPasswordSaved(false);
+
+    if (!passwordForm.newPassword || passwordForm.newPassword.length < 8) {
+      setPasswordError(t('settings_password_hint'));
+      return;
+    }
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      setPasswordError(t('settings_error_password_mismatch'));
+      return;
+    }
+
+    const result = changePassword(passwordForm.currentPassword, passwordForm.newPassword);
+    if (!result.success) {
+      const errorKey = result.error === 'wrong_password' ? 'settings_error_wrong_password' : 'settings_error_user_not_found';
+      setPasswordError(t(errorKey));
+      return;
+    }
+
+    setPasswordSaved(true);
+    setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  const handleDeleteConfirm = () => {
+    deleteAccount();
+    setShowDeleteModal(false);
+  };
+
+  return (
+    <div className="profile-panel profile-panel--full">
+      <button type="button" className="profile-panel__back" onClick={onBack}>
+        <ChevronLeft size={16} /> {t('profile_back_to_overview')}
+      </button>
+      <div className="profile-panel__header">
+        <h2>{t('settings_title')}</h2>
+      </div>
+
+      <SettingsAccordion
+        title={t('settings_profile_section_title')}
+        isOpen={openSection === 'profile'}
+        onToggle={() => toggleSection('profile')}
+      >
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
+          <div className="form-group">
+            <label className="form-label">{t('auth_first_name')}</label>
+            <input className="form-input" name="firstName" value={profileForm.firstName} onChange={handleProfileChange} />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{t('auth_last_name')}</label>
+            <input className="form-input" name="lastName" value={profileForm.lastName} onChange={handleProfileChange} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">{t('auth_email')}</label>
+          <input className="form-input" name="email" type="email" value={profileForm.email} onChange={handleProfileChange} />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">{t('auth_phone')}</label>
+          <input className="form-input" name="phone" value={profileForm.phone} onChange={handleProfileChange} />
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
+          <div className="form-group">
+            <label className="form-label">{t('auth_university')}</label>
+            <input className="form-input" name="university" value={profileForm.university} onChange={handleProfileChange} />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{t('auth_major')}</label>
+            <input className="form-input" name="major" value={profileForm.major} onChange={handleProfileChange} />
+          </div>
+        </div>
+
+        {profileSaved && (
+          <p style={{ color: 'var(--status-success)', fontSize: '0.875rem', margin: 0 }}>
+            {t('settings_profile_saved_msg')}
+          </p>
+        )}
+
+        <button className="btn-primary" onClick={handleProfileSubmit}>
+          {t('settings_save_btn')}
+        </button>
+      </SettingsAccordion>
+
+      <SettingsAccordion
+        title={t('settings_password_section_title')}
+        isOpen={openSection === 'password'}
+        onToggle={() => toggleSection('password')}
+      >
+        <div className="form-group">
+          <label className="form-label">{t('settings_current_password_label')}</label>
+          <input className="form-input" name="currentPassword" type="password" value={passwordForm.currentPassword} onChange={handlePasswordChange} />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">{t('settings_new_password_label')}</label>
+          <input className="form-input" name="newPassword" type="password" value={passwordForm.newPassword} onChange={handlePasswordChange} />
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('settings_password_hint')}</span>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">{t('settings_confirm_new_password_label')}</label>
+          <input className="form-input" name="confirmPassword" type="password" value={passwordForm.confirmPassword} onChange={handlePasswordChange} />
+        </div>
+
+        {passwordError && <p className="auth-error" style={{ margin: 0 }}>{passwordError}</p>}
+        {passwordSaved && (
+          <p style={{ color: 'var(--status-success)', fontSize: '0.875rem', margin: 0 }}>
+            {t('settings_password_saved_msg')}
+          </p>
+        )}
+
+        <button className="btn-primary" onClick={handlePasswordSubmit}>
+          {t('settings_update_password_btn')}
+        </button>
+      </SettingsAccordion>
+
+      <SettingsAccordion
+        title={t('settings_account_actions_title')}
+        isOpen={openSection === 'account'}
+        onToggle={() => toggleSection('account')}
+      >
+        <button className="btn-outline" onClick={handleLogout} style={{ width: '100%', justifyContent: 'center' }}>
+          {t('settings_logout_btn')}
+        </button>
+
+        <button
+          className="btn-outline"
+          onClick={() => setShowDeleteModal(true)}
+          style={{ width: '100%', justifyContent: 'center', borderColor: 'var(--status-error)', color: 'var(--status-error)' }}
+        >
+          {t('settings_delete_account_btn')}
+        </button>
+      </SettingsAccordion>
+
+      {showDeleteModal && (
+        <DeleteConfirmModal t={t} onCancel={() => setShowDeleteModal(false)} onConfirm={handleDeleteConfirm} />
+      )}
+    </div>
+  );
+}
+
+/* ---------- Əsas Profile komponenti ---------- */
+
+export default function Profile() {
+  const { user } = useAuth();
+  const { t } = useLanguage();
+  const location = useLocation();
+  const [activeView, setActiveView] = useState(location.state?.view || 'overview');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [likedOpportunities, setLikedOpportunities] = useState([]);
+  const [savedOpportunities, setSavedOpportunities] = useState([]);
+  const [applications, setApplications] = useState([]);
+
+  // Naviqasiyadan (məs. hamburger menyudakı "Parametrlər" düyməsindən)
+  // eyni səhifədə (Profile artıq açıqdırsa) view dəyişəndə də reaksiya versin.
+  // useEffect içində sinxron setState çağırmaq əvəzinə, React-in tövsiyə etdiyi
+  // "render zamanı state tənzimləmə" pattern-i istifadə olunur.
+  const [handledLocationState, setHandledLocationState] = useState(location.state);
+  if (location.state?.view && location.state !== handledLocationState) {
+    setHandledLocationState(location.state);
+    setActiveView(location.state.view);
+  }
+
+  useEffect(() => {
+    if (!user) {
+      setLikedOpportunities([]);
+      setSavedOpportunities([]);
+      setApplications([]);
+      return;
+    }
+
+    const likedSet = readStoredSet(getLikeStorageKey(user));
+    const savedSet = readStoredSet(getSaveStorageKey(user));
+    const statuses = readStoredStatuses(user);
+
+    setLikedOpportunities(opportunities.filter((opp) => likedSet[opp.id || opp.title]));
+    setSavedOpportunities(opportunities.filter((opp) => savedSet[opp.id || opp.title]));
+
+    const applied = opportunities
+      .filter((opp) => statuses[opp.id || opp.title])
+      .map((opp) => ({ opp, status: statuses[opp.id || opp.title] }));
+    setApplications(applied);
+  }, [user]);
+
+  const firstNameValue = user ? `${user.firstName || ''}`.trim() : '';
+  const name = firstNameValue || t('profile_default_name');
+
+  const goOverview = () => setActiveView('overview');
+
+  return (
+    <div className="profile-page">
+      <div className="container">
+        <ProfileHeader name={name} onSettingsClick={() => setActiveView('settings')} />
+
+        <ProfileStatsBar applications={applications} />
+
+        <div className="profile-layout">
+          <Sidebar
+            activeView={activeView}
+            onNavigate={setActiveView}
+            collapsed={sidebarCollapsed}
+            onToggleCollapse={() => setSidebarCollapsed((prev) => !prev)}
+          />
+
+          <div className="profile-content">
+            {activeView === 'overview' && (
+              <>
+                <div className="profile-panel">
+                  <div className="profile-panel__header">
+                    <h2>{t('profile_liked_title')}</h2>
+                    <button
+                      type="button"
+                      className="profile-panel__see-all-icon"
+                      onClick={() => setActiveView('liked')}
+                      aria-label={t('profile_liked_see_all_aria')}
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+                  <div className="profile-panel__body">
+                    {likedOpportunities.length > 0 ? (
+                      likedOpportunities.slice(0, 3).map((opp) => (
+                        <OpportunityMiniRow key={opp.id || opp.title} opp={opp} />
+                      ))
+                    ) : (
+                      <EmptyRow text={t('profile_liked_empty')} />
+                    )}
+                  </div>
+                  <button type="button" className="profile-panel__footer-btn" onClick={() => setActiveView('liked')}>
+                    {t('profile_see_all_btn')} <ChevronRight size={16} />
+                  </button>
+                </div>
+
+                <div className="profile-panel">
+                  <div className="profile-panel__header">
+                    <h2>{t('profile_saved_title')}</h2>
+                    <button
+                      type="button"
+                      className="profile-panel__see-all-icon"
+                      onClick={() => setActiveView('saved')}
+                      aria-label={t('profile_saved_see_all_aria')}
+                    >
+                      <ChevronRight size={20} />
+                    </button>
+                  </div>
+                  <div className="profile-panel__body">
+                    {savedOpportunities.length > 0 ? (
+                      savedOpportunities.slice(0, 3).map((opp) => (
+                        <OpportunityMiniRow key={opp.id || opp.title} opp={opp} />
+                      ))
+                    ) : (
+                      <EmptyRow text={t('profile_saved_empty')} />
+                    )}
+                  </div>
+                  <button type="button" className="profile-panel__footer-btn" onClick={() => setActiveView('saved')}>
+                    {t('profile_see_all_btn')} <ChevronRight size={16} />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {activeView === 'liked' && (
+              <FullListView
+                title={t('profile_liked_title')}
+                items={likedOpportunities}
+                emptyText={t('profile_liked_empty')}
+                onBack={goOverview}
+              />
+            )}
+
+            {activeView === 'saved' && (
+              <FullListView
+                title={t('profile_saved_title')}
+                items={savedOpportunities}
+                emptyText={t('profile_saved_empty')}
+                onBack={goOverview}
+              />
+            )}
+
+            {activeView === 'applications' && (
+              <FullListView
+                title={t('profile_applications_title')}
+                items={applications}
+                emptyText={t('profile_applications_empty')}
+                onBack={goOverview}
+                renderRow={({ opp, status }) => {
+                  const cfg = STATUS_CONFIG[status];
+                  const badge = cfg ? (
+                    <span className={`profile-status-badge profile-status-badge--${cfg.modifier}`}>
+                      {t(cfg.labelKey)}
+                    </span>
+                  ) : null;
+                  return <OpportunityMiniRow key={opp.id || opp.title} opp={opp} statusBadge={badge} />;
+                }}
+              />
+            )}
+
+            {activeView === 'notifications' && <NotificationsView onBack={goOverview} />}
+
+            {activeView === 'settings' && <SettingsView onBack={goOverview} />}
+          </div>
+        </div>
+
+        {activeView === 'overview' && (
+          <NotificationsBanner onManage={() => setActiveView('notifications')} />
+        )}
+      </div>
+    </div>
+  );
+}

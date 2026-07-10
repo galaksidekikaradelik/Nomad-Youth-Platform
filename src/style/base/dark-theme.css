@@ -91,3 +91,97 @@
 [data-theme="dark"] .btn-outline:hover {
     color: var(--brand-900);
 }
+
+[data-theme="dark"] .profile-page {
+  --navy: var(--color-primary);
+}
+ 
+[data-theme="dark"] .profile-stats-bar__item--accepted .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--accepted,
+[data-theme="dark"] .profile-status-badge--approved {
+  background: rgba(16, 185, 129, 0.18);
+}
+ 
+[data-theme="dark"] .profile-stats-bar__item--pending .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--applied,
+[data-theme="dark"] .profile-status-badge--pending {
+  background: rgba(249, 115, 22, 0.18);
+}
+ 
+[data-theme="dark"] .profile-stats-bar__item--preparing .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--preparing,
+[data-theme="dark"] .profile-status-badge--in_progress,
+[data-theme="dark"] .profile-mini-row__tag {
+  background: rgba(59, 130, 246, 0.18);
+}
+ 
+[data-theme="dark"] .profile-stats-bar__item--rejected .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--rejected {
+  background: rgba(239, 68, 68, 0.18);
+}
+ 
+[data-theme="dark"] .profile-header__avatar {
+  color: var(--brand-900);
+  background: var(--accent);
+}
+ 
+[data-theme="dark"] .profile-quote-card__author,
+[data-theme="dark"] .profile-quote-card__mark {
+  color: var(--accent);
+}
+ 
+[data-theme="dark"] .profile-quote-card__cta,
+[data-theme="dark"] .profile-notif-banner__icon {
+  color: var(--brand-900);
+}
+
+[data-theme="dark"] .profile-page {
+  background: var(--color-background);
+}
+
+[data-theme="dark"] .profile-panel,
+[data-theme="dark"] .profile-sidebar,
+[data-theme="dark"] .profile-stats-bar,
+[data-theme="dark"] .profile-notif-banner {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+[data-theme="dark"] .profile-panel h2,
+[data-theme="dark"] .profile-header h1,
+[data-theme="dark"] .profile-sidebar__item,
+[data-theme="dark"] .profile-mini-row__title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .profile-header__subtitle,
+[data-theme="dark"] .profile-mini-row__location,
+[data-theme="dark"] .profile-mini-row__days {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .profile-panel__footer-btn {
+  background: var(--color-background-secondary);
+}
+
+[data-theme="dark"] .profile-mini-row {
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .profile-sidebar__item:hover {
+  background: var(--accent-100);
+  color: var(--brand-900);
+}
+
+[data-theme="dark"] .profile-sidebar__item--active{
+  background-color: var(--accent-200);
+  color: var(--brand-900);
+}
+
+[data-theme = "dark"] .profile-stats-bar__count{
+  color: var(--accent-300);
+}
+
+[data-theme = "dark"] .profile-sidebar__item--logout{
+  color: var(--status-error);
+}

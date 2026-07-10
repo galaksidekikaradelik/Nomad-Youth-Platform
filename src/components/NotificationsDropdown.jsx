@@ -21,10 +21,6 @@ export default function NotificationsDropdown() {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef(null)
-
-  // Effect əvəzinə lazy init + render zamanı sinxronlaşdırma (OpportunityCard.jsx-dəki
-  // StatusSelector ilə eyni pattern) — useEffect daxilində mount/user-dəyişmə zamanı
-  // setState çağırışının yaratdığı "cascading render" xəbərdarlığını aradan qaldırır.
   const [trackedUser, setTrackedUser] = useState(user)
   const [notifications, setNotifications] = useState(() =>
     user ? syncNotifications(user, opportunities) : []
@@ -71,7 +67,7 @@ export default function NotificationsDropdown() {
         aria-label="Bildirişlər"
         onClick={handleToggle}
       >
-        <Bell size={18} />
+        <Bell size={24} />
         {unreadCount > 0 && (
           <span className="navbar__notif-badge">
             {unreadCount > 9 ? '9+' : unreadCount}
