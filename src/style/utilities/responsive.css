@@ -202,7 +202,6 @@
   }
 }
 
-/* ---------- Çox kiçik ekranlar: label sətri chip-lərin üstünə keçsin (daha çox yer qalsın) ---------- */
 @media (max-width: 480px) {
   .filter-group__row {
     flex-direction: column;
@@ -212,5 +211,59 @@
 
   .filter-group__label {
     padding-top: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-sidebar {
+    width: auto;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .profile-sidebar__toggle {
+    display: none;
+  }
+
+  .profile-sidebar__item span {
+    display: none;
+  }
+
+  .profile-content {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-panel--full {
+    grid-column: span 1;
+  }
+
+  .profile-quote-card__text {
+    max-width: 100%;
+  }
+
+  .profile-notif-banner {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 20px 0;
+  }
+
+  .profile-header {
+    flex-wrap: wrap;
+  }
+
+  .profile-header__settings-btn {
+    margin-left: 0;
+  }
+
+  .profile-stats-bar {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

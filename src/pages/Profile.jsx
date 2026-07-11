@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../hooks/useLanguage';
@@ -208,38 +208,22 @@ function NotificationsView({ onBack }) {
 function DeleteConfirmModal({ t, onCancel, onConfirm }) {
   return (
     <div
-      className="modal-overlay"
+      className="modal-overlay delete-modal-overlay"
       onClick={(e) => { if (e.target === e.currentTarget) onCancel(); }}
-      style={{
-        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        zIndex: 1000, padding: 'var(--space-md)',
-      }}
     >
-      <div
-        className="modal-content"
-        style={{
-          background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)',
-          padding: 'var(--space-2xl)', maxWidth: 420, width: '100%',
-          textAlign: 'center', boxSizing: 'border-box',
-        }}
-      >
-        <div style={{ fontSize: '2.5rem', marginBottom: 'var(--space-md)' }}>⚠️</div>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 700, marginBottom: 'var(--space-sm)' }}>
+      <div className="modal-content delete-modal-content">
+        <div className="delete-modal__icon">⚠️</div>
+        <h2 className="delete-modal__title">
           {t('settings_delete_modal_title')}
         </h2>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: 'var(--space-xl)', lineHeight: 1.6 }}>
+        <p className="delete-modal__desc">
           {t('settings_delete_modal_desc')}
         </p>
-        <div style={{ display: 'flex', gap: 'var(--space-sm)' }}>
-          <button className="btn-outline" style={{ flex: 1, justifyContent: 'center' }} onClick={onCancel}>
+        <div className="delete-modal__actions">
+          <button className="btn-outline" onClick={onCancel}>
             {t('settings_delete_modal_cancel')}
           </button>
-          <button
-            className="btn-primary"
-            style={{ flex: 1, justifyContent: 'center', background: 'var(--status-error)' }}
-            onClick={onConfirm}
-          >
+          <button className="btn-primary btn-primary--danger" onClick={onConfirm}>
             {t('settings_delete_modal_confirm')}
           </button>
         </div>
@@ -250,13 +234,13 @@ function DeleteConfirmModal({ t, onCancel, onConfirm }) {
 
 function SettingsAccordion({ title, isOpen, onToggle, children }) {
   return (
-    <div className="faq-item" style={{ marginBottom: 'var(--space-md)' }}>
+    <div className="faq-item settings-accordion">
       <button className="faq-question" onClick={onToggle} aria-expanded={isOpen}>
         <span>{title}</span>
         <span className={`faq-icon${isOpen ? ' faq-icon--open' : ''}`} aria-hidden="true">+</span>
       </button>
       <div className={`faq-answer${isOpen ? ' faq-answer--open' : ''}`}>
-        <div style={{ paddingBottom: 'var(--space-lg)', display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
+        <div className="settings-accordion__content">
           {children}
         </div>
       </div>
@@ -352,7 +336,7 @@ function SettingsView({ onBack }) {
         isOpen={openSection === 'profile'}
         onToggle={() => toggleSection('profile')}
       >
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
+        <div className="settings-form-grid-2">
           <div className="form-group">
             <label className="form-label">{t('auth_first_name')}</label>
             <input className="form-input" name="firstName" value={profileForm.firstName} onChange={handleProfileChange} />
@@ -373,7 +357,7 @@ function SettingsView({ onBack }) {
           <input className="form-input" name="phone" value={profileForm.phone} onChange={handleProfileChange} />
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-md)' }}>
+        <div className="settings-form-grid-2">
           <div className="form-group">
             <label className="form-label">{t('auth_university')}</label>
             <input className="form-input" name="university" value={profileForm.university} onChange={handleProfileChange} />
@@ -385,7 +369,7 @@ function SettingsView({ onBack }) {
         </div>
 
         {profileSaved && (
-          <p style={{ color: 'var(--status-success)', fontSize: '0.875rem', margin: 0 }}>
+          <p className="settings-success-msg">
             {t('settings_profile_saved_msg')}
           </p>
         )}
@@ -408,7 +392,7 @@ function SettingsView({ onBack }) {
         <div className="form-group">
           <label className="form-label">{t('settings_new_password_label')}</label>
           <input className="form-input" name="newPassword" type="password" value={passwordForm.newPassword} onChange={handlePasswordChange} />
-          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t('settings_password_hint')}</span>
+          <span className="settings-hint">{t('settings_password_hint')}</span>
         </div>
 
         <div className="form-group">
@@ -416,9 +400,9 @@ function SettingsView({ onBack }) {
           <input className="form-input" name="confirmPassword" type="password" value={passwordForm.confirmPassword} onChange={handlePasswordChange} />
         </div>
 
-        {passwordError && <p className="auth-error" style={{ margin: 0 }}>{passwordError}</p>}
+        {passwordError && <p className="auth-error settings-error-msg">{passwordError}</p>}
         {passwordSaved && (
-          <p style={{ color: 'var(--status-success)', fontSize: '0.875rem', margin: 0 }}>
+          <p className="settings-success-msg">
             {t('settings_password_saved_msg')}
           </p>
         )}
@@ -433,14 +417,13 @@ function SettingsView({ onBack }) {
         isOpen={openSection === 'account'}
         onToggle={() => toggleSection('account')}
       >
-        <button className="btn-outline" onClick={handleLogout} style={{ width: '100%', justifyContent: 'center' }}>
+        <button className="btn-outline settings-btn-full" onClick={handleLogout}>
           {t('settings_logout_btn')}
         </button>
 
         <button
-          className="btn-outline"
+          className="btn-outline settings-btn-full settings-btn-danger-outline"
           onClick={() => setShowDeleteModal(true)}
-          style={{ width: '100%', justifyContent: 'center', borderColor: 'var(--status-error)', color: 'var(--status-error)' }}
         >
           {t('settings_delete_account_btn')}
         </button>
@@ -455,15 +438,18 @@ function SettingsView({ onBack }) {
 
 /* ---------- Əsas Profile komponenti ---------- */
 
+const EMPTY_PROFILE_DATA = {
+  likedOpportunities: [],
+  savedOpportunities: [],
+  applications: [],
+};
+
 export default function Profile() {
   const { user } = useAuth();
   const { t } = useLanguage();
   const location = useLocation();
   const [activeView, setActiveView] = useState(location.state?.view || 'overview');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [likedOpportunities, setLikedOpportunities] = useState([]);
-  const [savedOpportunities, setSavedOpportunities] = useState([]);
-  const [applications, setApplications] = useState([]);
 
   // Naviqasiyadan (məs. hamburger menyudakı "Parametrlər" düyməsindən)
   // eyni səhifədə (Profile artıq açıqdırsa) view dəyişəndə də reaksiya versin.
@@ -475,26 +461,34 @@ export default function Profile() {
     setActiveView(location.state.view);
   }
 
-  useEffect(() => {
-    if (!user) {
-      setLikedOpportunities([]);
-      setSavedOpportunities([]);
-      setApplications([]);
-      return;
-    }
+  // likedOpportunities / savedOpportunities / applications əslində `user`-dən
+  // TÖRƏMƏ (derived) datadır — user dəyişəndə yenidən hesablanmalıdır, amma
+  // özləri müstəqil state deyil. Bu səbəbdən useEffect+setState əvəzinə
+  // useMemo istifadə olunur: heç bir setState çağırışı yoxdur, deməli
+  // "Calling setState synchronously within an effect" xəbərdarlığı da
+  // tamamilə aradan qalxır (fayl ayırmaqdan fərqli olaraq, bu, problemin
+  // kökünü aradan qaldırır).
+  const profileData = useMemo(() => {
+    if (!user) return EMPTY_PROFILE_DATA;
 
     const likedSet = readStoredSet(getLikeStorageKey(user));
     const savedSet = readStoredSet(getSaveStorageKey(user));
     const statuses = readStoredStatuses(user);
 
-    setLikedOpportunities(opportunities.filter((opp) => likedSet[opp.id || opp.title]));
-    setSavedOpportunities(opportunities.filter((opp) => savedSet[opp.id || opp.title]));
-
+    const liked = opportunities.filter((opp) => likedSet[opp.id || opp.title]);
+    const saved = opportunities.filter((opp) => savedSet[opp.id || opp.title]);
     const applied = opportunities
       .filter((opp) => statuses[opp.id || opp.title])
       .map((opp) => ({ opp, status: statuses[opp.id || opp.title] }));
-    setApplications(applied);
+
+    return {
+      likedOpportunities: liked,
+      savedOpportunities: saved,
+      applications: applied,
+    };
   }, [user]);
+
+  const { likedOpportunities, savedOpportunities, applications } = profileData;
 
   const firstNameValue = user ? `${user.firstName || ''}`.trim() : '';
   const name = firstNameValue || t('profile_default_name');
