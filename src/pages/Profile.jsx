@@ -161,23 +161,7 @@ function EmptyRow({ text }) {
   return <div className="profile-mini-row profile-mini-row--empty">{text}</div>;
 }
 
-function NotificationsBanner({ onManage }) {
-  const { t } = useLanguage();
-  return (
-    <div className="profile-notif-banner">
-      <div className="profile-notif-banner__icon">
-        <Bell size={20} />
-      </div>
-      <div className="profile-notif-banner__text">
-        <h3>{t('profile_notif_banner_title')}</h3>
-        <p>{t('profile_notif_banner_desc')}</p>
-      </div>
-      <button type="button" className="profile-notif-banner__btn" onClick={onManage}>
-        {t('profile_notif_banner_btn')} <ChevronRight size={16} />
-      </button>
-    </div>
-  );
-}
+
 
 // Tam siyahı görünüşü — Seçilmişlər / Yadda saxlananlar üçün ortaq
 function FullListView({ title, items, emptyText, onBack, renderRow }) {
@@ -631,9 +615,7 @@ export default function Profile() {
           </div>
         </div>
 
-        {activeView === 'overview' && (
-          <NotificationsBanner onManage={() => setActiveView('notifications')} />
-        )}
+        
       </div>
     </div>
   );
