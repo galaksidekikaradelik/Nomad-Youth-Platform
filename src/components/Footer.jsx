@@ -45,7 +45,7 @@ export default function Footer() {
 
           {Object.entries(nav).map(([title, items]) => (
             <div className="footer__col" key={title}>
-              <h4>{title}</h4>
+              <p className="footer__col-title">{title}</p>
               <ul>
                 {items.map(item => (
                   <li key={item.label}>

@@ -202,6 +202,14 @@
   }
 }
 
+@media (max-width: 900px) {
+  .footer__grid { grid-template-columns: 1fr 1fr; gap: var(--space-xl); }
+}
+@media (max-width: 500px) {
+  .footer__grid { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; gap: var(--space-md); text-align: center; }
+}
+
 @media (max-width: 480px) {
   .filter-group__row {
     flex-direction: column;
@@ -215,38 +223,52 @@
 }
 
 @media (max-width: 900px) {
-  .profile-layout {
+  .profile-page .profile-layout {
     grid-template-columns: 1fr;
   }
 
-  .profile-sidebar {
+  .profile-page .profile-sidebar {
     width: auto;
     flex-direction: row;
+    align-items: center;
     overflow-x: auto;
+    gap: 4px;
   }
 
-  .profile-sidebar__toggle {
+  .profile-page .profile-sidebar__toggle {
     display: none;
   }
 
-  .profile-sidebar__item span {
+  /* .profile-page prefiksi Profile.css-dəki bazadakı .profile-sidebar__nav
+     qaydasından yüksək specificity almaq üçündür — import sırasından
+     asılı qalmasın deyə */
+  .profile-page .profile-sidebar__nav {
+    flex-direction: row;
+    flex: 1;
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .profile-page .profile-sidebar__item span {
     display: none;
   }
 
-  .profile-content {
-    grid-template-columns: 1fr;
+  .profile-page .profile-sidebar__item {
+    width: auto;
+    flex-shrink: 0;
+    justify-content: center;
+    padding: 10px 14px;
   }
 
-  .profile-panel--full {
-    grid-column: span 1;
+  .profile-page .profile-sidebar__item--active {
+    border-left: none;
+    border-bottom: 3px solid var(--accent);
+    padding-left: 14px;
   }
 
-  .profile-quote-card__text {
-    max-width: 100%;
-  }
-
-  .profile-notif-banner {
-    flex-wrap: wrap;
+  .profile-page .profile-sidebar__item--logout {
+    margin-top: 0;
+    flex-shrink: 0;
   }
 }
 

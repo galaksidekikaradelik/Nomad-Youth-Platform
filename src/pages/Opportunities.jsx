@@ -128,7 +128,7 @@ export default function Opportunities() {
 
         {tab === 'opportunities' && (
           <>
-            <div style={{ marginBottom: 'var(--space-xl)' }}>
+            <div className="opportunities-searchbar-wrap">
               <SearchBar
                 placeholder={t('opp_search_placeholder')}
                 query={search}
@@ -187,12 +187,13 @@ export default function Opportunities() {
               </div>
 
               <div className="filter-group__row">
-                <span className="filter-group__label">{t('filter_sort_label')}</span>
+                <label htmlFor="opp-sort-select" className="filter-group__label">{t('filter_sort_label')}</label>
                 <select
-                  className="search-bar__select"
+                  id="opp-sort-select"
+                  className="search-bar__select filter-group__sort-select"
                   value={sort}
                   onChange={(e) => setSort(e.target.value)}
-                  style={{ border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-full)', padding: '8px 16px' }}
+                  aria-label={t('filter_sort_label')}
                 >
                   {SORT_OPTIONS.map(o => (
                     <option key={o.id} value={o.id}>{t(o.labelKey)}</option>
@@ -201,8 +202,8 @@ export default function Opportunities() {
               </div>
             </div>
 
-            <div style={{ marginBottom: 'var(--space-lg)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-              {t('opp_results_prefix')} <span style={{ color: 'var(--brand-900)', fontWeight: 700 }}>{sorted.length}</span> {t('opp_results_suffix')}
+            <div className="opportunities-results-count">
+              {t('opp_results_prefix')} <span className="opportunities-results-count__number">{sorted.length}</span> {t('opp_results_suffix')}
             </div>
 
             {sorted.length > 0 ? (

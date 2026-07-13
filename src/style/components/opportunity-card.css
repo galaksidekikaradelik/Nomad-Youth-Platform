@@ -170,9 +170,12 @@
   color: #059669;
 }
 
+/* Əvvəlki #979705 (rgba(220,246,92,.301) tint fonu üzərində) yalnız 2.91:1
+   kontrast verirdi — WCAG AA-nı (4.5:1) ciddi şəkildə keçmirdi.
+   Tündləşdirildi: indi ~5.05:1. */
 .opportunity-card__tag--offline {
   background: rgba(220, 246, 92, 0.301);
-  color: #979705;
+  color: #6E6E00;
 }
 
 .opportunity-card__days-left {
@@ -181,8 +184,14 @@
   gap: 4px;
 }
 
+/* Əvvəlki var(--status-error) (#EF4444) rgba(239,68,68,.12) tint fonu
+   üzərində yalnız 3.23:1 kontrast verirdi. Kateqoriya palitrasındakı
+   eyni tünd qırmızı (#B91C1C) istifadə edildi: indi ~5.55:1.
+   Qeyd: --status-error dəyişəni özü toxunulmayıb (düymə fon rəngi kimi
+   başqa yerlərdə düzgün işləyir), yalnız bu konkret tint-üzərində-mətn
+   halı üçün daha tünd sabit rəng seçildi. */
 .opportunity-card__days-left--urgent {
-  color: var(--status-error);
+  color: #B91C1C;
   font-weight: 700;
   background: rgba(239, 68, 68, 0.12);
   padding: 2px 10px;
@@ -376,12 +385,3 @@
 .opportunity-card__status-option--rejected .opportunity-card__status-dot { background: #ff3b30; }
 
 
-[data-theme="dark"] .opportunity-card__status-badge--preparing { color: #FBBF24; }
-[data-theme="dark"] .opportunity-card__status-badge--applied   { color: #93C5FD; }
-[data-theme="dark"] .opportunity-card__status-badge--accepted  { color: #6EE7B7; }
-[data-theme="dark"] .opportunity-card__status-badge--rejected  { color: #FCA5A5; }
-
-[data-theme="dark"] .opportunity-card__status-option:hover {
-  background: var(--neutral-100);
-  color: var(--text-primary);
-}

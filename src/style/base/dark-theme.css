@@ -185,3 +185,13 @@
 [data-theme = "dark"] .profile-sidebar__item--logout{
   color: var(--status-error);
 }
+
+[data-theme="dark"] .opportunity-card__status-badge--preparing { color: #FBBF24; }
+[data-theme="dark"] .opportunity-card__status-badge--applied   { color: #93C5FD; }
+[data-theme="dark"] .opportunity-card__status-badge--accepted  { color: #6EE7B7; }
+[data-theme="dark"] .opportunity-card__status-badge--rejected  { color: #FCA5A5; }
+
+[data-theme="dark"] .opportunity-card__status-option:hover {
+  background: var(--neutral-100);
+  color: var(--text-primary);
+}

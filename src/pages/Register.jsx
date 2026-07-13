@@ -4,8 +4,17 @@ import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import "../style/pages/auth.css";
 
+const EDUCATION_LEVELS = [
+  "Orta təhsil",
+  "Peşə təhsili",
+  "Subbakalavr",
+  "Bakalavr",
+  "Magistratura",
+  "Doktorantura",
+  "Məzun",
+];
 
-const EDUCATION_LEVELS = ["Orta məktəb", "Bakalavr", "Magistr", "Doktorantura", "Digər"];
+const PASSWORD_MIN_LENGTH = 8;
 
 const EMPTY_FORM = {
   firstName: "",
@@ -23,11 +32,21 @@ const EMPTY_FORM = {
   acceptMarketing: false,
 };
 
+// Kiçik yardımçı: məcburi sahələrin yanında qırmızı "*" göstərir.
+function RequiredMark() {
+  return (
+    <span className="auth-required-mark" aria-hidden="true">
+      *
+    </span>
+  );
+}
+
 export default function Register() {
   const { t } = useLanguage();
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [isGoogleSignup, setIsGoogleSignup] = useState(false);
   const [errors, setErrors] = useState({});
+  const [modalTab, setModalTab] = useState(null); // null | "privacy" | "terms"
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -58,10 +77,18 @@ export default function Register() {
       if (!formData.firstName.trim()) newErrors.firstName = t("auth_error_first_name");
       if (!formData.lastName.trim()) newErrors.lastName = t("auth_error_last_name");
       if (!formData.email.trim()) newErrors.email = t("auth_error_email");
-      if (!formData.password || formData.password.length < 6)
-        newErrors.password = t("auth_error_password");
-      if (formData.password !== formData.confirmPassword)
+
+      if (!formData.password) {
+        newErrors.password = t("auth_error_password_required");
+      } else if (formData.password.length < PASSWORD_MIN_LENGTH) {
+        newErrors.password = t("auth_error_password_length");
+      }
+
+      if (!formData.confirmPassword) {
+        newErrors.confirmPassword = t("auth_error_confirm_password_required");
+      } else if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = t("auth_error_confirm_password");
+      }
     }
 
     if (!formData.phone.trim()) newErrors.phone = t("auth_error_phone");
@@ -113,7 +140,10 @@ export default function Register() {
             <>
               <div className="auth-row">
                 <div className="auth-group">
-                  <label>{t("auth_first_name")}</label>
+                  <label>
+                    {t("auth_first_name")}
+                    <RequiredMark />
+                  </label>
                   <input
                     className="auth-input"
                     type="text"
@@ -126,7 +156,10 @@ export default function Register() {
                 </div>
 
                 <div className="auth-group">
-                  <label>{t("auth_last_name")}</label>
+                  <label>
+                    {t("auth_last_name")}
+                    <RequiredMark />
+                  </label>
                   <input
                     className="auth-input"
                     type="text"
@@ -140,7 +173,10 @@ export default function Register() {
               </div>
 
               <div className="auth-group">
-                <label>{t("auth_email")}</label>
+                <label>
+                  {t("auth_email")}
+                  <RequiredMark />
+                </label>
                 <input
                   className="auth-input"
                   type="email"
@@ -153,7 +189,10 @@ export default function Register() {
               </div>
 
               <div className="auth-group">
-                <label>{t("auth_password")}</label>
+                <label>
+                  {t("auth_password")}
+                  <RequiredMark />
+                </label>
                 <input
                   className="auth-input"
                   type="password"
@@ -162,11 +201,15 @@ export default function Register() {
                   onChange={handleChange}
                   placeholder={t("auth_password_create_placeholder")}
                 />
+                <p className="auth-hint">{t("auth_password_hint")}</p>
                 {errors.password && <p className="auth-error">{errors.password}</p>}
               </div>
 
               <div className="auth-group">
-                <label>{t("auth_confirm_password")}</label>
+                <label>
+                  {t("auth_confirm_password")}
+                  <RequiredMark />
+                </label>
                 <input
                   className="auth-input"
                   type="password"
@@ -184,7 +227,10 @@ export default function Register() {
 
           <div className="auth-row">
             <div className="auth-group">
-              <label>{t("auth_phone")}</label>
+              <label>
+                {t("auth_phone")}
+                <RequiredMark />
+              </label>
               <input
                 className="auth-input"
                 type="tel"
@@ -197,7 +243,10 @@ export default function Register() {
             </div>
 
             <div className="auth-group">
-              <label>{t("auth_birth_date")}</label>
+              <label>
+                {t("auth_birth_date")}
+                <RequiredMark />
+              </label>
               <input
                 className="auth-input"
                 type="date"
@@ -210,7 +259,10 @@ export default function Register() {
           </div>
 
           <div className="auth-group">
-            <label>{t("auth_university")}</label>
+            <label>
+              {t("auth_university")}
+              <RequiredMark />
+            </label>
             <input
               className="auth-input"
               type="text"
@@ -224,7 +276,10 @@ export default function Register() {
 
           <div className="auth-row">
             <div className="auth-group">
-              <label>{t("auth_education_level")}</label>
+              <label>
+                {t("auth_education_level")}
+                <RequiredMark />
+              </label>
               <select
                 className="auth-input"
                 name="educationLevel"
@@ -242,7 +297,10 @@ export default function Register() {
             </div>
 
             <div className="auth-group">
-              <label>{t("auth_major")}</label>
+              <label>
+                {t("auth_major")}
+                <RequiredMark />
+              </label>
               <input
                 className="auth-input"
                 type="text"
@@ -255,7 +313,6 @@ export default function Register() {
             </div>
           </div>
 
-
           <div className="auth-checkbox-group">
             <label className="auth-checkbox-row">
               <input
@@ -264,7 +321,26 @@ export default function Register() {
                 checked={formData.acceptTerms}
                 onChange={handleChange}
               />
-              <span>{t("auth_terms_label")}</span>
+              <span>
+                {t("auth_terms_text_before")}{" "}
+                <button
+                  type="button"
+                  className="auth-inline-link"
+                  onClick={() => setModalTab("privacy")}
+                >
+                  {t("auth_privacy_policy_label")}
+                </button>{" "}
+                {t("auth_terms_text_middle")}{" "}
+                <button
+                  type="button"
+                  className="auth-inline-link"
+                  onClick={() => setModalTab("terms")}
+                >
+                  {t("auth_terms_link_label")}
+                </button>{" "}
+                {t("auth_terms_text_after")}
+                <RequiredMark />
+              </span>
             </label>
             {errors.acceptTerms && <p className="auth-error">{errors.acceptTerms}</p>}
 
@@ -291,6 +367,69 @@ export default function Register() {
           </Link>
         </div>
       </div>
+
+      {modalTab && (
+        <div
+          className="auth-modal-overlay"
+          role="presentation"
+          onClick={() => setModalTab(null)}
+        >
+          <div
+            className="auth-modal"
+            role="dialog"
+            aria-modal="true"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="auth-modal-header">
+              <div className="auth-modal-tabs">
+                <button
+                  type="button"
+                  className={`auth-modal-tab ${modalTab === "privacy" ? "active" : ""}`}
+                  onClick={() => setModalTab("privacy")}
+                >
+                  {t("modal_privacy_title")}
+                </button>
+                <button
+                  type="button"
+                  className={`auth-modal-tab ${modalTab === "terms" ? "active" : ""}`}
+                  onClick={() => setModalTab("terms")}
+                >
+                  {t("modal_terms_title")}
+                </button>
+              </div>
+              <button
+                type="button"
+                className="auth-modal-close"
+                aria-label={t("modal_close_aria")}
+                onClick={() => setModalTab(null)}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="auth-modal-body">
+              {(modalTab === "privacy"
+                ? t("modal_privacy_content")
+                : t("modal_terms_content")
+              )
+                .split("\n\n")
+                .map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+            </div>
+
+            <div className="auth-modal-footer">
+              <button
+                type="button"
+                className="auth-modal-close-btn"
+                onClick={() => setModalTab(null)}
+              >
+                {t("modal_close_btn")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

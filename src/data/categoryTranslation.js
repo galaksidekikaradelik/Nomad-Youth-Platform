@@ -1,7 +1,3 @@
-// Kateqoriya adları data-da (Google Sheets) İngiliscə saxlanılır.
-// Bu fayl həmin İngiliscə adları AZ/EN/RU-ya çevirmək üçündür.
-// Filtrasiya və data uyğunluğu üçün "id" (İngiliscə) dəyişməz qalır, yalnız görünüş dəyişir.
-
 export const categoryTranslations = {
   'Təhsil':           { az: 'Təhsil',              en: 'Education',           ru: 'Образование' },
   'Texnologiya':        { az: 'Texnologiya',            en: 'Technology',        ru: 'Технологии' },

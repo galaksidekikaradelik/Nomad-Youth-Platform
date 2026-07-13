@@ -16,7 +16,10 @@
 
   --text-primary:   #202940;
   --text-secondary: #4B556B;
-  --text-muted:     #7B8798;
+  /* Əvvəlki #7B8798 ağ/açıq fonlarda yalnız ~3.6:1 kontrast verirdi (WCAG AA
+     tələbi 4.5:1-dir). Tündləşdirildi: indi ağ fonda ~5.26:1,
+     --neutral-100 kart fonunda ~4.67:1 verir. */
+  --text-muted:     #626D7C;
 
   --status-info:    #3B82F6;
   --status-success: #10B981;
@@ -81,7 +84,7 @@
 
   --text-primary:   #F1F4F9;
   --text-secondary: #B8C0D4;
-  --text-muted:     #7E89A3;
+  --text-muted:     #8C96AF;
 
   --color-bg:           #111624;
   --color-surface:      var(--neutral-0);

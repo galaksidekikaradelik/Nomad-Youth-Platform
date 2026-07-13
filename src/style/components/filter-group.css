@@ -32,4 +32,23 @@
   gap: var(--space-sm);
 }
 
-/* ---------- Mobil: çox sayda chip bir sətirdə sıxılmasın, üfüqi sürüşən sıra olsun ---------- */
+.opportunities-searchbar-wrap {
+  margin-bottom: var(--space-xl);
+}
+
+.filter-group__sort-select {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+}
+
+.opportunities-results-count {
+  margin-bottom: var(--space-lg);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.opportunities-results-count__number {
+  color: var(--brand-900);
+  font-weight: 700;
+}

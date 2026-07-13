@@ -27,7 +27,11 @@ export default function SearchBar({
   return (
     <form className="search-bar" onSubmit={handleSubmit}>
       <span className="search-bar__icon"><SearchIcon /></span>
+      <label htmlFor="search-bar-query" className="sr-only">
+        {placeholder || t('search_placeholder')}
+      </label>
       <input
+        id="search-bar-query"
         type="text"
         className="search-bar__input"
         placeholder={placeholder || t('search_placeholder')}
@@ -35,10 +39,15 @@ export default function SearchBar({
         onChange={(e) => onQueryChange(e.target.value)}
       />
       <span className="search-bar__divider" />
+      <label htmlFor="search-bar-category" className="sr-only">
+        {t('search_all_categories')}
+      </label>
       <select
+        id="search-bar-category"
         className="search-bar__select"
         value={category}
         onChange={(e) => onCategoryChange(e.target.value)}
+        aria-label={t('search_all_categories')}
       >
         <option value="">{t('search_all_categories')}</option>
         <option value="Climate">{translateCategory('Climate', lang)}</option>

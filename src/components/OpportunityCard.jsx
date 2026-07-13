@@ -85,8 +85,6 @@ function FlagIcon({ location }) {
 
 const URGENT_THRESHOLD_DAYS = 3
 
-// "Növ" sahəsi (Seminar/Kurs/Konfrans/Vebinar/Fəaliyyət) üçün tərcümə açarları.
-// Opportunities.jsx-dəki TYPES sabitiylə eyni açarlardan istifadə edir.
 const TYPE_LABEL_KEYS = {
   'Seminar':   'type_seminar',
   'Kurs':      'type_course',
@@ -99,12 +97,8 @@ function StatusSelector({ opportunity, t }) {
   const { user } = useAuth()
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef(null)
-  // opportunity.id yoxdursa title-a fallback edir (unikal olmasa da işə yarayır)
   const oppKey = opportunity.id || opportunity.title
 
-  // Effect əvəzinə lazy init + render zamanı sinxronlaşdırma (React-in rəsmi
-  // tövsiyəsi: "adjusting state when a prop changes"). Bu, useEffect daxilində
-  // mount zamanı setState çağırışının yaratdığı əlavə render dövrəsini aradan qaldırır.
   const [trackedUser, setTrackedUser] = useState(user)
   const [status, setStatus] = useState(() =>
     user ? (readStoredStatuses(user)[oppKey] || null) : null
@@ -191,7 +185,6 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // opportunity.id yoxdursa title-a fallback edir (status selector-dakı ilə eyni məntiq)
   const oppKey = opportunity.id || opportunity.title
 
   const [liked, setLiked] = useState(() =>
@@ -201,8 +194,6 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     user ? !!readStoredSet(getSaveStorageKey(user))[oppKey] : false
   )
 
-  // Effect əvəzinə lazy init + render zamanı sinxronlaşdırma — user login/logout
-  // olanda (məs. kart mount olaraq qalıb, amma auth vəziyyəti dəyişib) yenidən oxuyur.
   const [trackedAuthUser, setTrackedAuthUser] = useState(user)
   if (user !== trackedAuthUser) {
     setTrackedAuthUser(user)
