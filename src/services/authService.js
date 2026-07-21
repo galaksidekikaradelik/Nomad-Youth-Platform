@@ -1,0 +1,124 @@
+import apiClient from "../api/axios";
+
+
+const EDUCATION_LEVEL_MAP = {
+  "Orta təhsil": "HIGH_SCHOOL",
+  "Peşə təhsili": "HIGH_SCHOOL", 
+  "Subbakalavr": "BACHELOR", 
+  "Bakalavr": "BACHELOR",
+  "Magistratura": "MASTER",
+  "Doktorantura": "PHD",
+  "Məzun": "BACHELOR", 
+};
+
+function mapEducationLevel(label) {
+  return EDUCATION_LEVEL_MAP[label] ?? null;
+}
+
+function buildRegisterPayload(formData) {
+  return {
+    firstName: formData.firstName,
+    lastName: formData.lastName,
+    email: formData.email,
+    password: formData.password,
+    confirmPassword: formData.confirmPassword,
+    phoneNumber: formData.phone,
+    birthDate: formData.birthDate, // <input type="date"> "YYYY-MM-DD" formatını verir
+    university: formData.university,
+    major: formData.major,
+    educationLevel: mapEducationLevel(formData.educationLevel),
+    interests: formData.interests?.length ? formData.interests : [],
+    termsAccepted: formData.acceptTerms,
+    newsletter: formData.acceptMarketing,
+  };
+}
+
+export async function login(credentials) {
+  const { data } = await apiClient.post("/auth/login", credentials);
+
+  if (!data.token) {
+    throw new Error("Login uğursuz oldu. Token tapılmadı.");
+  }
+
+  localStorage.setItem("authToken", data.token);
+
+
+  if (data.refreshToken) {
+    localStorage.setItem("refreshToken", data.refreshToken);
+  }
+
+  const meResponse = await apiClient.get("/auth/me");
+
+  const user = meResponse.data.user;
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  return user;
+}
+
+export async function register(formData) {
+  const payload = buildRegisterPayload(formData);
+  const { data } = await apiClient.post("/auth/register", payload);
+
+  if (data.accessToken) {
+    localStorage.setItem("authToken", data.accessToken);
+
+
+    if (data.refreshToken) {
+      localStorage.setItem("refreshToken", data.refreshToken);
+    }
+
+    const meResponse = await apiClient.get("/auth/me");
+
+    const user = meResponse.data.user;
+
+    localStorage.setItem("user", JSON.stringify(user));
+
+    return user;
+  }
+
+  return data;
+}
+
+export async function loginWithGoogle(idToken) {
+  const { data } = await apiClient.post("/auth/google", { idToken });
+
+  if (!data.token) {
+    throw new Error("Google login uğursuz oldu. Token tapılmadı.");
+  }
+
+  localStorage.setItem("authToken", data.token);
+
+  if (data.refreshToken) {
+    localStorage.setItem("refreshToken", data.refreshToken);
+  }
+
+  const meResponse = await apiClient.get("/auth/me");
+  const user = meResponse.data.user;
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  return user;
+}
+
+
+export async function logout() {
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  if (refreshToken) {
+    try {
+      await apiClient.post("/auth/logout", { refreshToken });
+    } catch (err) {
+      console.error("Backend logout çağırışı uğursuz oldu:", err);
+    }
+  }
+
+  localStorage.removeItem("authToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+}
+
+export async function getCurrentUser() {
+  const { data } = await apiClient.get("/auth/me");
+  return data.user;
+}

@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useApplicationStatus } from '../hooks/useApplicationStatus'
 import { useLanguage } from '../hooks/useLanguage'
-import { opportunities } from '../data/opportunities'
 import { isExpired } from '../utils/opportunityStatus'
-import { STATUS_CONFIG, readStoredStatuses } from '../utils/applicationStatus'
+import { STATUS_CONFIG } from '../utils/applicationStatus'
 
 function DashboardItem({ item, isOpen, onToggle, t, locale }) {
   const config = STATUS_CONFIG[item.status]
@@ -59,18 +59,15 @@ export default function Dashboard() {
   const [openIndex, setOpenIndex] = useState(null)
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
+  // DƏYİŞDİ: statik data/opportunities.js + localStorage yerinə,
+  // backend-ə bağlı ApplicationStatusContext-dən gəlir (bax:
+  // ApplicationStatusProvider.jsx - statusItems).
+  const { statusItems } = useApplicationStatus()
+
   const applications = useMemo(() => {
     if (!user) return []
-    const statuses = readStoredStatuses(user)
-
-    return Object.entries(statuses)
-      .map(([oppKey, status]) => {
-        const opportunity = opportunities.find(op => String(op.id || op.title) === String(oppKey))
-        if (!opportunity) return null
-        return { ...opportunity, status }
-      })
-      .filter(Boolean)
-  }, [user])
+    return statusItems.map(({ opp, status }) => ({ ...opp, status }))
+  }, [user, statusItems])
 
   if (!user) {
     return (

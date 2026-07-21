@@ -53,6 +53,7 @@
 
   "type_online": "Онлайн",
   "type_offline": "Очно",
+  "date_not_specified": "Не указано" ,
 
   "opp_eyebrow": "Исследуй",
   "opp_title": "Возможности",
@@ -206,6 +207,12 @@
   "auth_error_education_level": "Выберите ваш уровень образования.",
   "auth_error_major": "Введите вашу специальность.",
   "auth_error_terms": "Чтобы продолжить, вы должны принять условия.",
+  "auth_submitting": "Отправка...",
+  "auth_error_login_required": "Введите email и пароль",
+  "auth_error_invalid_credentials": "Неверный email или пароль",
+  "auth_error_login_failed": "Не удалось войти, попробуйте снова",
+  "auth_error_email_taken": "Этот email уже используется",
+  "auth_error_register_failed": "Регистрация не удалась, попробуйте снова",
   "status_preparing": "Готовится",
   "status_applied": "Заявка подана",
   "status_accepted": "Принято",
@@ -262,6 +269,8 @@
   "contact_whatsapp_name_label": "Имя:",
   "contact_whatsapp_subject_label": "Тема:",
   "contact_whatsapp_message_label": "Сообщение:",
+  "contact_submitting": "Отправка...",
+  "contact_error_generic": "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз.",
 
   "services_eyebrow": "Поддержка",
   "services_title": "Наши услуги",

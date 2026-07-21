@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 import "../style/pages/auth.css";
 
 const EDUCATION_LEVELS = [
@@ -44,10 +45,11 @@ function RequiredMark() {
 export default function Register() {
   const { t } = useLanguage();
   const [formData, setFormData] = useState(EMPTY_FORM);
-  const [isGoogleSignup, setIsGoogleSignup] = useState(false);
   const [errors, setErrors] = useState({});
+  const [submitError, setSubmitError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalTab, setModalTab] = useState(null); // null | "privacy" | "terms"
-  const { login } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -58,37 +60,23 @@ export default function Register() {
     }));
   };
 
-  // Frontend-only demo. Real Google OAuth backend/Supabase qoşulanda
-  // bu funksiya əsl auth axını ilə əvəz olunacaq (authService.js üzərindən).
-  const handleGoogleSignup = () => {
-    setFormData((prev) => ({
-      ...prev,
-      firstName: prev.firstName || "Google",
-      lastName: prev.lastName || "İstifadəçi",
-      email: prev.email || "google.istifadeci@example.com",
-    }));
-    setIsGoogleSignup(true);
-  };
-
   const validate = () => {
     const newErrors = {};
 
-    if (!isGoogleSignup) {
-      if (!formData.firstName.trim()) newErrors.firstName = t("auth_error_first_name");
-      if (!formData.lastName.trim()) newErrors.lastName = t("auth_error_last_name");
-      if (!formData.email.trim()) newErrors.email = t("auth_error_email");
+    if (!formData.firstName.trim()) newErrors.firstName = t("auth_error_first_name");
+    if (!formData.lastName.trim()) newErrors.lastName = t("auth_error_last_name");
+    if (!formData.email.trim()) newErrors.email = t("auth_error_email");
 
-      if (!formData.password) {
-        newErrors.password = t("auth_error_password_required");
-      } else if (formData.password.length < PASSWORD_MIN_LENGTH) {
-        newErrors.password = t("auth_error_password_length");
-      }
+    if (!formData.password) {
+      newErrors.password = t("auth_error_password_required");
+    } else if (formData.password.length < PASSWORD_MIN_LENGTH) {
+      newErrors.password = t("auth_error_password_length");
+    }
 
-      if (!formData.confirmPassword) {
-        newErrors.confirmPassword = t("auth_error_confirm_password_required");
-      } else if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = t("auth_error_confirm_password");
-      }
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = t("auth_error_confirm_password_required");
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = t("auth_error_confirm_password");
     }
 
     if (!formData.phone.trim()) newErrors.phone = t("auth_error_phone");
@@ -102,13 +90,28 @@ export default function Register() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError("");
     if (!validate()) return;
-    // eslint-disable-next-line no-unused-vars
-    const { password, confirmPassword, ...userData } = formData;
-    login(userData);
-    navigate("/");
+
+    setIsSubmitting(true);
+    try {
+      await register(formData);
+      navigate("/");
+    } catch (err) {
+      // Backend validasiya xətaları adətən 400 + { message } və ya
+      // field-based xəta obyekti qaytarır. Konkret formatı backend-dən
+      // görəndən sonra bura field-səviyyəli mapping əlavə edilə bilər.
+      const message =
+        err?.response?.data?.message ||
+        (err?.response?.status === 409
+          ? t("auth_error_email_taken")
+          : t("auth_error_register_failed"));
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -117,113 +120,101 @@ export default function Register() {
         <h1 className="auth-title">{t("auth_register_title")}</h1>
         <p className="auth-subtitle">{t("auth_register_subtitle")}</p>
 
-        {!isGoogleSignup && (
-          <>
-            <button type="button" className="auth-google-btn" onClick={handleGoogleSignup}>
-              <GoogleIcon />
-              {t("auth_google_signup")}
-            </button>
-            <div className="auth-divider">
-              <span>{t("auth_or")}</span>
-            </div>
-          </>
-        )}
+        {/* Real Google OAuth - backend-i doğrulayır, hesab yoxdursa
+            avtomatik yaradır və birbaşa daxil edir. Əlavə profil
+            sahələrini (universitet, telefon və s.) istifadəçi sonradan
+            Profil > Parametrlər bölməsindən doldura bilər. */}
+        <GoogleLoginButton onSuccess={() => navigate("/")} />
 
-        {isGoogleSignup && (
-          <div className="auth-banner">
-            {t("auth_google_banner")} ({formData.email}). {t("auth_google_banner_cont")}
-          </div>
-        )}
+        <div className="auth-divider">
+          <span>{t("auth_or")}</span>
+        </div>
 
         <form onSubmit={handleSubmit} noValidate>
-          {!isGoogleSignup && (
-            <>
-              <div className="auth-row">
-                <div className="auth-group">
-                  <label>
-                    {t("auth_first_name")}
-                    <RequiredMark />
-                  </label>
-                  <input
-                    className="auth-input"
-                    type="text"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder={t("auth_first_name_placeholder")}
-                  />
-                  {errors.firstName && <p className="auth-error">{errors.firstName}</p>}
-                </div>
+          <div className="auth-row">
+            <div className="auth-group">
+              <label>
+                {t("auth_first_name")}
+                <RequiredMark />
+              </label>
+              <input
+                className="auth-input"
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder={t("auth_first_name_placeholder")}
+              />
+              {errors.firstName && <p className="auth-error">{errors.firstName}</p>}
+            </div>
 
-                <div className="auth-group">
-                  <label>
-                    {t("auth_last_name")}
-                    <RequiredMark />
-                  </label>
-                  <input
-                    className="auth-input"
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder={t("auth_last_name_placeholder")}
-                  />
-                  {errors.lastName && <p className="auth-error">{errors.lastName}</p>}
-                </div>
-              </div>
+            <div className="auth-group">
+              <label>
+                {t("auth_last_name")}
+                <RequiredMark />
+              </label>
+              <input
+                className="auth-input"
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder={t("auth_last_name_placeholder")}
+              />
+              {errors.lastName && <p className="auth-error">{errors.lastName}</p>}
+            </div>
+          </div>
 
-              <div className="auth-group">
-                <label>
-                  {t("auth_email")}
-                  <RequiredMark />
-                </label>
-                <input
-                  className="auth-input"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder={t("auth_email_placeholder")}
-                />
-                {errors.email && <p className="auth-error">{errors.email}</p>}
-              </div>
+          <div className="auth-group">
+            <label>
+              {t("auth_email")}
+              <RequiredMark />
+            </label>
+            <input
+              className="auth-input"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder={t("auth_email_placeholder")}
+            />
+            {errors.email && <p className="auth-error">{errors.email}</p>}
+          </div>
 
-              <div className="auth-group">
-                <label>
-                  {t("auth_password")}
-                  <RequiredMark />
-                </label>
-                <input
-                  className="auth-input"
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder={t("auth_password_create_placeholder")}
-                />
-                <p className="auth-hint">{t("auth_password_hint")}</p>
-                {errors.password && <p className="auth-error">{errors.password}</p>}
-              </div>
+          <div className="auth-group">
+            <label>
+              {t("auth_password")}
+              <RequiredMark />
+            </label>
+            <input
+              className="auth-input"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder={t("auth_password_create_placeholder")}
+            />
+            <p className="auth-hint">{t("auth_password_hint")}</p>
+            {errors.password && <p className="auth-error">{errors.password}</p>}
+          </div>
 
-              <div className="auth-group">
-                <label>
-                  {t("auth_confirm_password")}
-                  <RequiredMark />
-                </label>
-                <input
-                  className="auth-input"
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder={t("auth_confirm_password_placeholder")}
-                />
-                {errors.confirmPassword && (
-                  <p className="auth-error">{errors.confirmPassword}</p>
-                )}
-              </div>
-            </>
-          )}
+          <div className="auth-group">
+            <label>
+              {t("auth_confirm_password")}
+              <RequiredMark />
+            </label>
+            <input
+              className="auth-input"
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder={t("auth_confirm_password_placeholder")}
+            />
+            {errors.confirmPassword && (
+              <p className="auth-error">{errors.confirmPassword}</p>
+            )}
+          </div>
 
           <div className="auth-row">
             <div className="auth-group">
@@ -355,8 +346,10 @@ export default function Register() {
             </label>
           </div>
 
-          <button type="submit" className="auth-button">
-            {isGoogleSignup ? t("auth_complete_profile") : t("auth_create_account")}
+          {submitError && <p className="auth-error">{submitError}</p>}
+
+          <button type="submit" className="auth-button" disabled={isSubmitting}>
+            {isSubmitting ? t("auth_submitting") : t("auth_create_account")}
           </button>
         </form>
 
@@ -431,28 +424,5 @@ export default function Register() {
         </div>
       )}
     </div>
-  );
-}
-
-function GoogleIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-      <path
-        fill="#4285F4"
-        d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"
-      />
-      <path
-        fill="#34A853"
-        d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.87-3.04.87-2.34 0-4.32-1.58-5.03-3.7H.94v2.33A9 9 0 0 0 9 18z"
-      />
-      <path
-        fill="#FBBC05"
-        d="M3.97 10.73A5.4 5.4 0 0 1 3.68 9c0-.6.1-1.19.29-1.73V4.94H.94A9 9 0 0 0 0 9c0 1.45.35 2.83.94 4.06l3.03-2.33z"
-      />
-      <path
-        fill="#EA4335"
-        d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .94 4.94l3.03 2.33C4.68 5.16 6.66 3.58 9 3.58z"
-      />
-    </svg>
   );
 }

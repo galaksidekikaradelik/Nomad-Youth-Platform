@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useLanguage } from '../hooks/useLanguage'
 import { buildWhatsAppLink } from '../config/whatsapp'
+import { sendContactMessage } from '../services/contactService'
 
 const MailIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -34,6 +35,8 @@ export default function Contact() {
   const [form, setForm]           = useState({ name: '', email: '', subject: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
   const [requestType, setRequestType] = useState('general')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
   // Yalnız kartların vizual "seçili" görünüşü üçün — səhifə açılanda heç biri
   // işıqlanmasın deyə requestType-dan ayrı saxlanılır (requestType formun işləməsi üçün 'general' qalır).
   const [selectedCard, setSelectedCard] = useState(null)
@@ -51,7 +54,10 @@ export default function Contact() {
     { day: t('contact_hours_sunday'),   time: t('contact_hours_off') },
   ]
 
-  const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const handleChange = e => {
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+    setSubmitError('')
+  }
 
   const selectedType = REQUEST_TYPES.find(rt => rt.id === requestType)
 
@@ -65,7 +71,7 @@ export default function Contact() {
     scrollToForm()
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (selectedType.viaWhatsApp) {
       const greeting = t('contact_whatsapp_greeting').replace('{type}', t(selectedType.labelKey))
       const lines = [greeting]
@@ -78,7 +84,22 @@ export default function Contact() {
     }
 
     if (!form.name || !form.email || !form.message) return
-    setSubmitted(true)
+
+    setSubmitError('')
+    setIsSubmitting(true)
+    try {
+      await sendContactMessage(form)
+      setSubmitted(true)
+    } catch (err) {
+      // Backend validasiya xətalarında sadə mətn (məs. "Ad sahəsi boş
+      // buraxıla bilməz!") qaytarır, JSON obyekt yox.
+      const message =
+        (typeof err?.response?.data === 'string' && err.response.data) ||
+        t('contact_error_generic')
+      setSubmitError(message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -217,8 +238,21 @@ export default function Contact() {
                 </p>
               )}
 
-              <button className="btn-primary" onClick={handleSubmit} style={{ marginTop: 'var(--space-sm)' }}>
-                {selectedType.viaWhatsApp ? t('contact_whatsapp_submit') : t('contact_form_submit')}
+              {submitError && (
+                <p className="auth-error" style={{ margin: 0 }}>{submitError}</p>
+              )}
+
+              <button
+                className="btn-primary"
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                style={{ marginTop: 'var(--space-sm)' }}
+              >
+                {isSubmitting
+                  ? t('contact_submitting')
+                  : selectedType.viaWhatsApp
+                  ? t('contact_whatsapp_submit')
+                  : t('contact_form_submit')}
               </button>
             </div>
           )}

@@ -53,6 +53,7 @@
 
   "type_online": "Online",
   "type_offline": "In-person",
+  "date_not_specified": "Not specified" ,
 
   "opp_eyebrow": "Discover",
   "opp_title": "Opportunities",
@@ -206,6 +207,12 @@
   "auth_error_education_level": "Please select your education level.",
   "auth_error_major": "Please enter your major.",
   "auth_error_terms": "You must accept the terms to continue.",
+  "auth_submitting": "Submitting...",
+  "auth_error_login_required": "Enter your email and password",
+  "auth_error_invalid_credentials": "Invalid email or password",
+  "auth_error_login_failed": "Login failed, please try again",
+  "auth_error_email_taken": "This email is already in use",
+  "auth_error_register_failed": "Registration failed, please try again",
   "status_preparing": "Preparing",
   "status_applied": "Applied",
   "status_accepted": "Accepted",
@@ -262,6 +269,8 @@
   "contact_whatsapp_name_label": "Name:",
   "contact_whatsapp_subject_label": "Subject:",
   "contact_whatsapp_message_label": "Message:",
+  "contact_submitting": "Sending...",
+  "contact_error_generic": "An error occurred while sending the message. Please try again.",
 
   "services_eyebrow": "Support",
   "services_title": "Our Services",

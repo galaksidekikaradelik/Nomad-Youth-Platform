@@ -3,8 +3,10 @@ import { useLanguage } from '..//hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
-import { STATUS_CONFIG, getStatusStorageKey, readStoredStatuses } from '../utils/applicationStatus'
-import { getLikeStorageKey, getSaveStorageKey, readStoredSet } from '../utils/likes'
+import { STATUS_CONFIG } from '../utils/applicationStatus'
+import { useApplicationStatus } from '../hooks/useApplicationStatus'
+import { useWishlist } from '../hooks/useWishlist'
+import { useLike } from '../hooks/useLike'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
 
@@ -95,19 +97,9 @@ const TYPE_LABEL_KEYS = {
 
 function StatusSelector({ opportunity, t }) {
   const { user } = useAuth()
+  const { statusMap, setStatus: setStatusRemote } = useApplicationStatus()
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef(null)
-  const oppKey = opportunity.id || opportunity.title
-
-  const [trackedUser, setTrackedUser] = useState(user)
-  const [status, setStatus] = useState(() =>
-    user ? (readStoredStatuses(user)[oppKey] || null) : null
-  )
-
-  if (user !== trackedUser) {
-    setTrackedUser(user)
-    setStatus(user ? (readStoredStatuses(user)[oppKey] || null) : null)
-  }
 
   useEffect(() => {
     if (!open) return
@@ -121,13 +113,12 @@ function StatusSelector({ opportunity, t }) {
   }, [open])
 
   if (!user) return null
+  if (!opportunity.id) return null // backend-ə bağlanmaq üçün real id lazımdır
+
+  const status = statusMap[opportunity.id] || null
 
   function selectStatus(newStatus) {
-    const key = getStatusStorageKey(user)
-    const stored = readStoredStatuses(user)
-    stored[oppKey] = newStatus
-    localStorage.setItem(key, JSON.stringify(stored))
-    setStatus(newStatus)
+    setStatusRemote(opportunity.id, newStatus)
     setOpen(false)
   }
 
@@ -185,57 +176,47 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const oppKey = opportunity.id || opportunity.title
-
-  const [liked, setLiked] = useState(() =>
-    user ? !!readStoredSet(getLikeStorageKey(user))[oppKey] : false
-  )
-  const [saved, setSaved] = useState(() =>
-    user ? !!readStoredSet(getSaveStorageKey(user))[oppKey] : false
-  )
-
-  const [trackedAuthUser, setTrackedAuthUser] = useState(user)
-  if (user !== trackedAuthUser) {
-    setTrackedAuthUser(user)
-    setLiked(user ? !!readStoredSet(getLikeStorageKey(user))[oppKey] : false)
-    setSaved(user ? !!readStoredSet(getSaveStorageKey(user))[oppKey] : false)
-  }
+  // "Bəyən" (heart) - artıq backend like-inə bağlıdır.
+  // Vəziyyət (liked) və dəyişdirmə (toggleLike) mərkəzi LikeContext-dən
+  // gəlir, hər kart öz-özünə backend-i çağırmır.
+  const { likedIds, toggleLike: toggleLikeRemote } = useLike()
+  const liked = opportunity.id ? likedIds.has(opportunity.id) : false
 
   function toggleLike(e) {
     e.stopPropagation()
     if (!user) { setShowAuthPrompt(true); return }
-    const key = getLikeStorageKey(user)
-    const likes = readStoredSet(key)
-    const next = !liked
-    if (next) likes[oppKey] = true
-    else delete likes[oppKey]
-    localStorage.setItem(key, JSON.stringify(likes))
-    setLiked(next)
+    if (!opportunity.id) return // like üçün real backend id lazımdır
+    toggleLikeRemote(opportunity.id)
   }
+
+  // "Yadda saxla" (bookmark) - artıq backend wishlist-inə bağlıdır.
+  // Vəziyyət (saved) və dəyişdirmə (toggleSave) mərkəzi WishlistContext-dən
+  // gəlir, hər kart öz-özünə backend-i çağırmır.
+  const { savedIds, toggleSave: toggleWishlist } = useWishlist()
+  const saved = opportunity.id ? savedIds.has(opportunity.id) : false
 
   function toggleSave(e) {
     e.stopPropagation()
     if (!user) { setShowAuthPrompt(true); return }
-    const key = getSaveStorageKey(user)
-    const saves = readStoredSet(key)
-    const next = !saved
-    if (next) saves[oppKey] = true
-    else delete saves[oppKey]
-    localStorage.setItem(key, JSON.stringify(saves))
-    setSaved(next)
+    if (!opportunity.id) return // wishlist üçün real backend id lazımdır
+    toggleWishlist(opportunity.id)
   }
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
+  // DƏYİŞDİ: tarix yoxdursa artıq sətir gizlənmir, "Müəyyən olunmayıb"
+  // (dilə uyğun tərcümə açarı: date_not_specified) göstərilir.
+  const dateNotSpecified = t('date_not_specified') || 'Müəyyən olunmayıb'
+
   const formattedDeadline = deadline
     ? new Date(deadline).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
-    : null
+    : dateNotSpecified
 
   const daysLeft = getDaysLeft(deadline)
   const isUrgent = daysLeft !== null && daysLeft <= URGENT_THRESHOLD_DAYS
   const formattedPublished = publishedAt
     ? new Date(publishedAt).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
-    : null
+    : dateNotSpecified
 
   const formatLabel = format === 'Online' ? t('type_online') : format === 'Offline' ? t('type_offline') : format
   const formatModifier = format === 'Online' ? 'online' : format === 'Offline' ? 'offline' : null
@@ -304,21 +285,17 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
       <div className="opportunity-card__footer">
         <div className="opportunity-card__footer-top">
           <div className="opportunity-card__dates">
-            {formattedDeadline && (
-              <div className="opportunity-card__date-row">
-                {t('card_deadline')} {formattedDeadline}{' '}
-                {daysLeft !== null && (
-                  <span className={`opportunity-card__days-left${isUrgent ? ' opportunity-card__days-left--urgent' : ''}`}>
-                    {isUrgent && <WarningIcon />} {daysLeft} {t('card_days_left')}
-                  </span>
-                )}
-              </div>
-            )}
-            {formattedPublished && (
-              <div className="opportunity-card__date-row opportunity-card__date-row--muted">
-                {t('card_published')} {formattedPublished}
-              </div>
-            )}
+            <div className="opportunity-card__date-row">
+              {t('card_deadline')} {formattedDeadline}{' '}
+              {daysLeft !== null && (
+                <span className={`opportunity-card__days-left${isUrgent ? ' opportunity-card__days-left--urgent' : ''}`}>
+                  {isUrgent && <WarningIcon />} {daysLeft} {t('card_days_left')}
+                </span>
+              )}
+            </div>
+            <div className="opportunity-card__date-row opportunity-card__date-row--muted">
+              {t('card_published')} {formattedPublished}
+            </div>
           </div>
 
           <StatusSelector opportunity={opportunity} t={t} />

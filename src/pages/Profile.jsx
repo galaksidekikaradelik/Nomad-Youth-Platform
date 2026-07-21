@@ -1,10 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useWishlist } from '../hooks/useWishlist';
+import { useLike } from '../hooks/useLike';
+import { useApplicationStatus } from '../hooks/useApplicationStatus';
 import { useLanguage } from '../hooks/useLanguage';
-import { getLikeStorageKey, getSaveStorageKey, readStoredSet } from '../utils/likes';
-import { STATUS_CONFIG, readStoredStatuses } from '../utils/applicationStatus';
-import opportunities from '../data/opportunities.json';
+import { STATUS_CONFIG } from '../utils/applicationStatus';
 import {
   LayoutGrid,
   Send,
@@ -438,12 +439,6 @@ function SettingsView({ onBack }) {
 
 /* ---------- Əsas Profile komponenti ---------- */
 
-const EMPTY_PROFILE_DATA = {
-  likedOpportunities: [],
-  savedOpportunities: [],
-  applications: [],
-};
-
 export default function Profile() {
   const { user } = useAuth();
   const { t } = useLanguage();
@@ -453,42 +448,25 @@ export default function Profile() {
 
   // Naviqasiyadan (məs. hamburger menyudakı "Parametrlər" düyməsindən)
   // eyni səhifədə (Profile artıq açıqdırsa) view dəyişəndə də reaksiya versin.
-  // useEffect içində sinxron setState çağırmaq əvəzinə, React-in tövsiyə etdiyi
-  // "render zamanı state tənzimləmə" pattern-i istifadə olunur.
   const [handledLocationState, setHandledLocationState] = useState(location.state);
   if (location.state?.view && location.state !== handledLocationState) {
     setHandledLocationState(location.state);
     setActiveView(location.state.view);
   }
 
-  // likedOpportunities / savedOpportunities / applications əslində `user`-dən
-  // TÖRƏMƏ (derived) datadır — user dəyişəndə yenidən hesablanmalıdır, amma
-  // özləri müstəqil state deyil. Bu səbəbdən useEffect+setState əvəzinə
-  // useMemo istifadə olunur: heç bir setState çağırışı yoxdur, deməli
-  // "Calling setState synchronously within an effect" xəbərdarlığı da
-  // tamamilə aradan qalxır (fayl ayırmaqdan fərqli olaraq, bu, problemin
-  // kökünü aradan qaldırır).
-  const profileData = useMemo(() => {
-    if (!user) return EMPTY_PROFILE_DATA;
+  // DƏYİŞDİ: "Bəyənilənlər" artıq localStorage-dan yox, backend like-inə
+  // bağlı LikeContext-dən gəlir (bax: LikeProvider.jsx - likedOpportunities).
+  const { likedOpportunities } = useLike();
 
-    const likedSet = readStoredSet(getLikeStorageKey(user));
-    const savedSet = readStoredSet(getSaveStorageKey(user));
-    const statuses = readStoredStatuses(user);
+  // DƏYİŞDİ: "Yadda saxlanılanlar" artıq statik JSON + localStorage-dan
+  // yox, backend wishlist-inə bağlı WishlistContext-dən gəlir (bax:
+  // WishlistProvider.jsx - savedOpportunities).
+  const { savedOpportunities } = useWishlist();
 
-    const liked = opportunities.filter((opp) => likedSet[opp.id || opp.title]);
-    const saved = opportunities.filter((opp) => savedSet[opp.id || opp.title]);
-    const applied = opportunities
-      .filter((opp) => statuses[opp.id || opp.title])
-      .map((opp) => ({ opp, status: statuses[opp.id || opp.title] }));
-
-    return {
-      likedOpportunities: liked,
-      savedOpportunities: saved,
-      applications: applied,
-    };
-  }, [user]);
-
-  const { likedOpportunities, savedOpportunities, applications } = profileData;
+  // DƏYİŞDİ: "Müraciətlər" artıq statik JSON + localStorage-dan yox,
+  // backend-ə bağlı ApplicationStatusContext-dən gəlir (bax:
+  // ApplicationStatusProvider.jsx - statusItems).
+  const { statusItems: applications } = useApplicationStatus();
 
   const firstNameValue = user ? `${user.firstName || ''}`.trim() : '';
   const name = firstNameValue || t('profile_default_name');

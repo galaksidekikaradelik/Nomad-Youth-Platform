@@ -5,7 +5,7 @@ import { translateCategory } from '../data/categoryTranslation'
 import { CANONICAL_CATEGORIES } from '../utils/categoryMapping'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
-import { opportunities } from '../data/opportunities'
+import { useOpportunities } from '../hooks/useOpportunities'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
 
 
@@ -41,11 +41,6 @@ const SORT_OPTIONS = [
   { id: 'country',  labelKey: 'sort_country' },
 ]
 
-const enriched = filterActiveOpportunities(opportunities).map(op => ({
-  ...op,
-  scope: op.location === 'Azərbaycan' ? 'yerli' : 'beynelxalq',
-}))
-
 const FilterChip = ({ label, active, onClick }) => (
   <button className={`filter-btn${active ? ' active' : ''}`} onClick={onClick}>{label}</button>
 )
@@ -58,6 +53,9 @@ export default function Opportunities() {
   const initialCategory = searchParams.get('category') || ''
   // Bildiriş və ya digər yerlərdən "bu elanı göstər" keçidi üçün (məs. /opportunities?show=12)
   const highlightOppKey = searchParams.get('show') || null
+
+  // Backend-dən opportunity cards çəkilir (əvvəlki statik import əvəzinə)
+  const { opportunities, loading, error } = useOpportunities()
 
   const [search,     setSearch]     = useState(initialQuery)
   // Çoxlu kateqoriya seçimi üçün array. Boş array = "Hamısı" (filter yoxdur).
@@ -88,6 +86,16 @@ export default function Opportunities() {
     )
   }
 
+  // Fetch olunan datadan aktiv elanları çıxarıb "scope" sahəsini hesablayır.
+  // Əvvəlki modul-səviyyəli `enriched` sabiti burada, opportunities dəyişdikdə
+  // yenidən hesablanacaq şəkildə useMemo ilə saxlanılır.
+  const enriched = useMemo(() => (
+    filterActiveOpportunities(opportunities).map(op => ({
+      ...op,
+      scope: op.location === 'Azərbaycan' ? 'yerli' : 'beynelxalq',
+    }))
+  ), [opportunities])
+
   const filtered = useMemo(() => enriched.filter(op => {
     const matchCat    = categories.length === 0 ||
       (Array.isArray(op.categoryGroups) && categories.some(cat => op.categoryGroups.includes(cat)))
@@ -101,7 +109,7 @@ export default function Opportunities() {
       op.organization?.toLocaleLowerCase('az').includes(q) ||
       op.tags.some(tag => tag.toLocaleLowerCase('az').includes(q))
     return matchCat && matchType && matchScope && matchFormat && matchSearch
-  }), [search, categories, types, scope, format])
+  }), [enriched, search, categories, types, scope, format])
 
   const sorted = useMemo(() => {
     const arr = [...filtered]
@@ -202,26 +210,40 @@ export default function Opportunities() {
               </div>
             </div>
 
-            <div className="opportunities-results-count">
-              {t('opp_results_prefix')} <span className="opportunities-results-count__number">{sorted.length}</span> {t('opp_results_suffix')}
-            </div>
-
-            {sorted.length > 0 ? (
-              <div className="grid-3">
-                {sorted.map(op => (
-                  <OpportunityCard
-                    key={op.id}
-                    opportunity={op}
-                    autoOpenDetail={highlightOppKey !== null && String(op.id || op.title) === String(highlightOppKey)}
-                  />
-                ))}
+            {loading ? (
+              <div className="empty-state">
+                <div className="empty-state__title">{t('opp_loading') || 'Yüklənir...'}</div>
+              </div>
+            ) : error ? (
+              <div className="empty-state">
+                <div className="empty-state__icon">⚠️</div>
+                <div className="empty-state__title">{t('opp_error') || 'Elanları yükləmək mümkün olmadı.'}</div>
+                <p className="empty-state__desc">Zəhmət olmasa bir az sonra yenidən cəhd edin.</p>
               </div>
             ) : (
-              <div className="empty-state">
-                <div className="empty-state__icon">🔍</div>
-                <div className="empty-state__title">{t('opp_empty_title')}</div>
-                <p className="empty-state__desc">{t('opp_empty_desc')}</p>
-              </div>
+              <>
+                <div className="opportunities-results-count">
+                  {t('opp_results_prefix')} <span className="opportunities-results-count__number">{sorted.length}</span> {t('opp_results_suffix')}
+                </div>
+
+                {sorted.length > 0 ? (
+                  <div className="grid-3">
+                    {sorted.map(op => (
+                      <OpportunityCard
+                        key={op.id}
+                        opportunity={op}
+                        autoOpenDetail={highlightOppKey !== null && String(op.id || op.title) === String(highlightOppKey)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__icon">🔍</div>
+                    <div className="empty-state__title">{t('opp_empty_title')}</div>
+                    <p className="empty-state__desc">{t('opp_empty_desc')}</p>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}

@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.13.5",
+    "axios": "^1.18.1",
     "flag-icons": "^7.5.0",
     "lucide-react": "^1.23.0",
     "papaparse": "^5.5.4",
