@@ -16,6 +16,14 @@ const ArrowIcon = () => (
   </svg>
 )
 
+const WarningTriangleIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+)
+
 export default function Home() {
   const { t } = useLanguage()
   const navigate = useNavigate()
@@ -23,12 +31,7 @@ export default function Home() {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
 
-  // DÜZƏLDİLDİ: əvvəllər statik data/opportunities.js istifadə olunurdu,
-  // onun ID-ləri backend-dəki real Opportunity cədvəlinin ID-ləri ilə
-  // HEÇ ƏLAQƏLİ deyildi - ona görə Home-da bəyənilən/saxlanılan elan,
-  // backend-də tam başqa (əlaqəsiz) bir elana bağlanırdı və Profil-də
-  // fərqli elan kimi görünürdü. İndi Opportunities.jsx (İmkanlar) kimi
-  // real backend datası istifadə olunur - ID-lər həmişə uyğun gələcək.
+  
   const { opportunities, loading, error } = useOpportunities()
 
   const preview = useMemo(
@@ -77,7 +80,9 @@ export default function Home() {
             </div>
           ) : error ? (
             <div className="empty-state">
-              <div className="empty-state__icon">⚠️</div>
+              <div className="empty-state__icon" style={{ color: 'var(--color-warning, #f59e0b)' }}>
+                <WarningTriangleIcon />
+              </div>
               <div className="empty-state__title">{t('opp_error') || 'Elanları yükləmək mümkün olmadı.'}</div>
             </div>
           ) : (
