@@ -1,68 +1,62 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { WishlistContext } from "./WishlistContext";
 import { useAuth } from "../hooks/useAuth";
 import * as wishlistService from "../services/wishlistService";
-import opportunities from "../data/opportunities.json";
 
 export function WishlistProvider({ children }) {
   const { user } = useAuth();
-  const [savedIds, setSavedIds] = useState(new Set());
+  const [savedOpportunities, setSavedOpportunities] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!user) {
-      setSavedIds(new Set());
+      setSavedOpportunities([]);
       return;
     }
     setLoading(true);
     wishlistService
       .getUserWishlist(user.id)
       .then((items) => {
-        // DİQQƏT: backend cavabında layihə id-si hansı sahədədirsə
-        // (projectId? project.id?), buraya uyğunlaşdırın
-        const ids = items.map(
-          (item) => item.projectId ?? item.project?.id ?? item.id
-        );
-        setSavedIds(new Set(ids));
+        // DÜZƏLDİLDİ: statik opportunities.json-dan filtr etmək əvəzinə,
+        // backend-in qaytardığı UserProject list-indən birbaşa daxili
+        // "opportunity" obyektini çıxarırıq. Bu, elan Home-dan (statik
+        // datadan) və ya İmkanlar-dan (backend-dən) saxlanmasından
+        // asılı olmayaraq HƏMİŞƏ düzgün işləyir, çünki backend hər iki
+        // halda öz DB-sindəki real Opportunity-ni qaytarır.
+        const opps = items
+          .map((item) => item.opportunity)
+          .filter(Boolean);
+        setSavedOpportunities(opps);
       })
       .catch((err) => console.error("Wishlist yüklənmədi:", err))
       .finally(() => setLoading(false));
   }, [user]);
 
-  // savedIds-ə uyğun tam opportunity obyektlərini opportunities.json-dan
-  // çıxarırıq (Profile.jsx-də likedOpportunities-in etdiyi kimi)
-  const savedOpportunities = useMemo(() => {
-    if (savedIds.size === 0) return [];
-    return opportunities.filter((opp) => savedIds.has(opp.id));
-  }, [savedIds]);
+  // savedIds indi savedOpportunities-dən törənir (Set kimi lazım olan
+  // yerlərdə - məs. OpportunityCard-da "bu elan saxlanılıbmı?" sualı üçün)
+  const savedIds = new Set(savedOpportunities.map((opp) => opp.id));
 
   const toggleSave = useCallback(
     async (projectId) => {
       if (!user) return;
-      const isSaved = savedIds.has(projectId);
-
-      setSavedIds((prev) => {
-        const next = new Set(prev);
-        isSaved ? next.delete(projectId) : next.add(projectId);
-        return next;
-      });
+      const isSaved = savedOpportunities.some((opp) => opp.id === projectId);
 
       try {
         if (isSaved) {
           await wishlistService.removeFromWishlist(user.id, projectId);
+          setSavedOpportunities((prev) => prev.filter((opp) => opp.id !== projectId));
         } else {
           await wishlistService.addToWishlist(user.id, projectId);
+          // Backend-dən təzə siyahını çəkirik ki, yeni saxlanılan elanın
+          // tam (title, location, deadline və s.) datası da gəlsin.
+          const items = await wishlistService.getUserWishlist(user.id);
+          setSavedOpportunities(items.map((item) => item.opportunity).filter(Boolean));
         }
       } catch (err) {
         console.error("Wishlist yenilənmədi:", err);
-        setSavedIds((prev) => {
-          const next = new Set(prev);
-          isSaved ? next.add(projectId) : next.delete(projectId);
-          return next;
-        });
       }
     },
-    [user, savedIds]
+    [user, savedOpportunities]
   );
 
   return (

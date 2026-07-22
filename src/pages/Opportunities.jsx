@@ -9,6 +9,21 @@ import { useOpportunities } from '../hooks/useOpportunities'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
 
 
+const WarningTriangleIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+)
+
+const SearchIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8" />
+    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+  </svg>
+)
+
 const SCOPES = [
   { id: 'hamisi',     labelKey: 'scope_all' },
   { id: 'beynelxalq', labelKey: 'scope_international' },
@@ -216,7 +231,9 @@ export default function Opportunities() {
               </div>
             ) : error ? (
               <div className="empty-state">
-                <div className="empty-state__icon">⚠️</div>
+                <div className="empty-state__icon" style={{ color: 'var(--color-warning, #f59e0b)' }}>
+                  <WarningTriangleIcon />
+                </div>
                 <div className="empty-state__title">{t('opp_error') || 'Elanları yükləmək mümkün olmadı.'}</div>
                 <p className="empty-state__desc">Zəhmət olmasa bir az sonra yenidən cəhd edin.</p>
               </div>
@@ -238,7 +255,9 @@ export default function Opportunities() {
                   </div>
                 ) : (
                   <div className="empty-state">
-                    <div className="empty-state__icon">🔍</div>
+                    <div className="empty-state__icon" style={{ color: 'var(--color-text-muted, #94a3b8)' }}>
+                      <SearchIcon />
+                    </div>
                     <div className="empty-state__title">{t('opp_empty_title')}</div>
                     <p className="empty-state__desc">{t('opp_empty_desc')}</p>
                   </div>

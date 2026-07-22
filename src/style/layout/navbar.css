@@ -196,7 +196,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--brand-900);
+  color: var(--text-secondary);
 }
 
 .navbar__profile-sub {

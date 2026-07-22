@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchOpportunityCards } from "../api/opportunities";
 
-/**
- * Loads opportunity cards from the backend once on mount.
- * Returns the mapped data plus loading/error state so pages can
- * render spinners / error messages without touching axios directly.
- */
 export function useOpportunities() {
   const [opportunities, setOpportunities] = useState([]);
   const [loading, setLoading] = useState(true);

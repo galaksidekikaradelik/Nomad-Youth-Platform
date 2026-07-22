@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Hero from '../components/Hero'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
-import { opportunities } from '../data/opportunities'
+import { useOpportunities } from '../hooks/useOpportunities'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
 import { useLanguage } from '../hooks/useLanguage'
 import aboutImg from '../assets/images/aboutUs.png'
@@ -23,9 +23,17 @@ export default function Home() {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('')
 
+  // DÜZƏLDİLDİ: əvvəllər statik data/opportunities.js istifadə olunurdu,
+  // onun ID-ləri backend-dəki real Opportunity cədvəlinin ID-ləri ilə
+  // HEÇ ƏLAQƏLİ deyildi - ona görə Home-da bəyənilən/saxlanılan elan,
+  // backend-də tam başqa (əlaqəsiz) bir elana bağlanırdı və Profil-də
+  // fərqli elan kimi görünürdü. İndi Opportunities.jsx (İmkanlar) kimi
+  // real backend datası istifadə olunur - ID-lər həmişə uyğun gələcək.
+  const { opportunities, loading, error } = useOpportunities()
+
   const preview = useMemo(
     () => filterActiveOpportunities(opportunities).slice(0, 6),
-    []
+    [opportunities]
   )
 
   const handleSearchSubmit = ({ query, category }) => {
@@ -63,11 +71,22 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid-3">
-            {preview.map(op => (
-              <OpportunityCard key={op.id} opportunity={op} />
-            ))}
-          </div>
+          {loading ? (
+            <div className="empty-state">
+              <div className="empty-state__title">{t('opp_loading') || 'Yüklənir...'}</div>
+            </div>
+          ) : error ? (
+            <div className="empty-state">
+              <div className="empty-state__icon">⚠️</div>
+              <div className="empty-state__title">{t('opp_error') || 'Elanları yükləmək mümkün olmadı.'}</div>
+            </div>
+          ) : (
+            <div className="grid-3">
+              {preview.map(op => (
+                <OpportunityCard key={op.id} opportunity={op} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

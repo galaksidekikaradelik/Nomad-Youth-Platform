@@ -21,9 +21,12 @@ const PinIcon = () => (
   </svg>
 )
 
-// Müraciət növləri. 'general' adi form vasitəsilə göndərilir,
-// 'partnership' və 'project' isə WhatsApp-a yönləndirilir.
-// label artıq tərcümə açarıdır (labelKey), t() ilə render zamanı açılır.
+const CheckCircleIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+  </svg>
+)
+
 const REQUEST_TYPES = [
   { id: 'general',     labelKey: 'contact_request_general',     viaWhatsApp: false },
   { id: 'partnership', labelKey: 'contact_request_partnership', viaWhatsApp: true },
@@ -37,14 +40,12 @@ export default function Contact() {
   const [requestType, setRequestType] = useState('general')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
-  // Yalnız kartların vizual "seçili" görünüşü üçün — səhifə açılanda heç biri
-  // işıqlanmasın deyə requestType-dan ayrı saxlanılır (requestType formun işləməsi üçün 'general' qalır).
   const [selectedCard, setSelectedCard] = useState(null)
   const formRef = useRef(null)
 
   const infoCards = [
-    { icon: <MailIcon />,  label: t('contact_email_label'),   value: 'nomadyouthplatform@gmail.com' },
-    { icon: <PhoneIcon />, label: t('contact_phone_label'),   value: '+994 12 000 00 00' },
+    { icon: <MailIcon />,  label: t('contact_email_label'),   value: 'nomadyouth26@gmail.com' },
+    { icon: <PhoneIcon />, label: t('contact_phone_label'),   value: '+994 70 234 35 91' },
     { icon: <PinIcon />,   label: t('contact_address_label'), value: t('contact_address_value') },
   ]
 
@@ -91,8 +92,6 @@ export default function Contact() {
       await sendContactMessage(form)
       setSubmitted(true)
     } catch (err) {
-      // Backend validasiya xətalarında sadə mətn (məs. "Ad sahəsi boş
-      // buraxıla bilməz!") qaytarır, JSON obyekt yox.
       const message =
         (typeof err?.response?.data === 'string' && err.response.data) ||
         t('contact_error_generic')
@@ -112,7 +111,6 @@ export default function Contact() {
           <p className="page-header__desc">{t('contact_desc')}</p>
         </div>
 
-        {/* İkili müraciət yönləndirici kartlar */}
         <div className="grid-2" style={{ marginBottom: 'var(--space-2xl)' }}>
           <button
             className={`category-card${selectedCard === 'general' ? ' active' : ''}`}
@@ -174,7 +172,9 @@ export default function Contact() {
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               textAlign: 'center', gap: 'var(--space-md)',
             }}>
-              <div style={{ fontSize: '3rem' }}>✅</div>
+              <div style={{ color: 'var(--color-success, #16a34a)' }}>
+                <CheckCircleIcon />
+              </div>
               <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: 700 }}>
                 {t('contact_success_title')}
               </div>
