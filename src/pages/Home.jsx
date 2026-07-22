@@ -6,9 +6,9 @@ import OpportunityCard from '../components/OpportunityCard'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
 import { useLanguage } from '../hooks/useLanguage'
-import aboutImg from '../assets/images/aboutUs.png'
-import servicesImg from '../assets/images/services.png'
-import partnerImg from '../assets/images/partnership.png'
+import aboutImg from '../assets/images/aboutUs.webp'
+import servicesImg from '../assets/images/services.webp'
+import partnerImg from '../assets/images/partnership.webp'
 
 const ArrowIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
