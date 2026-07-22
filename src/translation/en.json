@@ -27,6 +27,7 @@
   "opportunities_empty_title": "No results found",
   "opportunities_empty_desc": "Try changing your search term and try again.",
   "opp_error": "Failed to load opportunities.",
+  "opp_loading": "Loading...",
 
   "hero_title_line1": "Build Your",
   "hero_title_em": "Future",

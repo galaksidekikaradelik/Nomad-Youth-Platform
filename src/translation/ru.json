@@ -27,6 +27,7 @@
   "opportunities_empty_title": "Результатов не найдено",
   "opportunities_empty_desc": "Измените поисковый запрос и попробуйте снова.",
   "opp_error": "Не удалось загрузить возможности.",
+  "opp_loading": "Загрузка...",
 
   "hero_title_line1": "Постройте своё",
   "hero_title_em": "Будущее",
