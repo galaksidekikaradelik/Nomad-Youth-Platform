@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
 
@@ -21,9 +22,9 @@ const FAQ_KEYS = [
   { qKey: 'faq_q16', aKey: 'faq_a16' },
 ]
 
-function FAQItem({ question, answer, isOpen, onToggle }) {
+function FAQItem({ question, answer, isOpen, onToggle, itemRef }) {
   return (
-    <div className="faq-item">
+    <div className="faq-item" ref={itemRef}>
       <button
         className="faq-question"
         onClick={onToggle}
@@ -44,6 +45,23 @@ function FAQItem({ question, answer, isOpen, onToggle }) {
 export default function FAQ() {
   const { t } = useLanguage()
   const [openIndex, setOpenIndex] = useState(null)
+  const [searchParams] = useSearchParams()
+  const itemRefs = useRef([])
+
+  // Footer/xarici linkdən ?q=3 kimi gələndə müvafiq sualı aç və ora scroll et
+  useEffect(() => {
+    const qParam = searchParams.get('q')
+    if (qParam) {
+      const idx = parseInt(qParam, 10) - 1
+      if (idx >= 0 && idx < FAQ_KEYS.length) {
+        setOpenIndex(idx)
+        // DOM render olunduqdan sonra scroll etmək üçün kiçik gecikmə
+        setTimeout(() => {
+          itemRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }, 100)
+      }
+    }
+  }, [searchParams])
 
   return (
     <div className="section">
@@ -59,6 +77,7 @@ export default function FAQ() {
           {FAQ_KEYS.map((item, i) => (
             <FAQItem
               key={item.qKey}
+              itemRef={el => (itemRefs.current[i] = el)}
               question={t(item.qKey)}
               answer={t(item.aKey)}
               isOpen={openIndex === i}

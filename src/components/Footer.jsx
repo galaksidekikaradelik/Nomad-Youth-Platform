@@ -14,6 +14,13 @@ const socials = [
   )},
 ]
 
+// FAQ sütununda göstəriləcək suallar (FAQ.jsx-dəki FAQ_KEYS massivinin indeksinə uyğun, 1-dən başlayaraq)
+const footerFaqItems = [
+  { qKey: 'faq_q1', index: 1 },
+  { qKey: 'faq_q2', index: 2 },
+  { qKey: 'faq_q3', index: 3 },
+]
+
 export default function Footer() {
   const { t } = useLanguage()
 
@@ -55,6 +62,17 @@ export default function Footer() {
               </ul>
             </div>
           ))}
+
+          <div className="footer__col" key="faq">
+            <p className="footer__col-title">{t('footer_col_faq')}</p>
+            <ul>
+              {footerFaqItems.map(item => (
+                <li key={item.qKey}>
+                  <Link to={`/faq?q=${item.index}`}>{t(item.qKey)}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="footer__disclaimer">
