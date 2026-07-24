@@ -112,6 +112,7 @@ This project is intended for educational and non-commercial purposes.
 
 <p align="center">
   <img src="./src/assets/images/logo-light.png" width="170" alt="Nomad Youth Logo">
+  <img src="./src/assets/images/logo-dark.png" width="170" alt="Nomad Youth Logo">
 </p>
 
 <h1 align="center">Nomad Youth Platform</h1>
