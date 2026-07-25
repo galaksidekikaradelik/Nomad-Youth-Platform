@@ -1,10 +1,11 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { translateCategory } from '../data/categoryTranslation'
 import { CANONICAL_CATEGORIES } from '../utils/categoryMapping'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
+import Pagination from '../components/Pagination'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
 
@@ -56,6 +57,8 @@ const SORT_OPTIONS = [
   { id: 'country',  labelKey: 'sort_country' },
 ]
 
+const PAGE_SIZE = 12
+
 const FilterChip = ({ label, active, onClick }) => (
   <button className={`filter-btn${active ? ' active' : ''}`} onClick={onClick}>{label}</button>
 )
@@ -80,6 +83,9 @@ export default function Opportunities() {
   const [format,     setFormat]     = useState('Hamısı')
   const [sort,       setSort]       = useState('deadline')
   const [tab]        = useState('opportunities')
+
+  // Cari səhifə (0-əsaslı, client-side pagination üçün)
+  const [page, setPage] = useState(0)
 
   const toggleCategory = (id) => {
     if (id === '') {
@@ -137,6 +143,24 @@ export default function Opportunities() {
     }
     return arr
   }, [filtered, sort])
+
+  // Filtr/axtarış/sıralama dəyişdikdə səhifəni sıfırla
+  useEffect(() => {
+    setPage(0)
+  }, [search, categories, types, scope, format, sort])
+
+  const totalPages = Math.ceil(sorted.length / PAGE_SIZE)
+
+  // Cari səhifəyə uyğun dilim
+  const paginated = useMemo(() => {
+    const start = page * PAGE_SIZE
+    return sorted.slice(start, start + PAGE_SIZE)
+  }, [sorted, page])
+
+  const handlePageChange = (p) => {
+    setPage(p)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <div className="section">
@@ -244,15 +268,23 @@ export default function Opportunities() {
                 </div>
 
                 {sorted.length > 0 ? (
-                  <div className="grid-3">
-                    {sorted.map(op => (
-                      <OpportunityCard
-                        key={op.id}
-                        opportunity={op}
-                        autoOpenDetail={highlightOppKey !== null && String(op.id || op.title) === String(highlightOppKey)}
-                      />
-                    ))}
-                  </div>
+                  <>
+                    <div className="grid-3">
+                      {paginated.map(op => (
+                        <OpportunityCard
+                          key={op.id}
+                          opportunity={op}
+                          autoOpenDetail={highlightOppKey !== null && String(op.id || op.title) === String(highlightOppKey)}
+                        />
+                      ))}
+                    </div>
+
+                    <Pagination
+                      currentPage={page}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  </>
                 ) : (
                   <div className="empty-state">
                     <div className="empty-state__icon" style={{ color: 'var(--color-text-muted, #94a3b8)' }}>

@@ -25,6 +25,7 @@
 @import 'components/modal.css';
 @import 'components/faq.css';
 @import 'components/notifications.css';
+@import 'components/pagination.css';
 
 
 @import 'pages/about.css';
