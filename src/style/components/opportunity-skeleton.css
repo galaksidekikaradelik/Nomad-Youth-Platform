@@ -1,0 +1,151 @@
+.opportunity-skeleton {
+  cursor: default;
+}
+
+.opportunity-skeleton:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.opportunity-skeleton__block {
+  position: relative;
+  display: block;
+  background: var(--neutral-100);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.opportunity-skeleton__block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: opportunity-skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+[data-theme="dark"] .opportunity-skeleton__block {
+  background: var(--neutral-100);
+}
+
+[data-theme="dark"] .opportunity-skeleton__block::after {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+@keyframes opportunity-skeleton-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.opportunity-skeleton__flag {
+  width: 28px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+}
+
+.opportunity-skeleton__icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+}
+
+.opportunity-skeleton__title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  -webkit-line-clamp: unset;
+}
+
+.opportunity-skeleton__line {
+  height: 14px;
+  border-radius: var(--radius-sm);
+  width: 100%;
+}
+
+.opportunity-skeleton__line--title-1 {
+  height: 20px;
+  width: 90%;
+}
+
+.opportunity-skeleton__line--title-2 {
+  height: 20px;
+  width: 60%;
+}
+
+.opportunity-skeleton__line--short {
+  width: 70%;
+}
+
+.opportunity-skeleton__line--date {
+  width: 140px;
+  height: 13px;
+}
+
+.opportunity-skeleton__line--date-muted {
+  width: 110px;
+  height: 12px;
+  margin-top: 2px;
+}
+
+.opportunity-skeleton__description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.opportunity-skeleton__tag {
+  width: 72px;
+  height: 26px;
+  border-radius: var(--radius-full);
+}
+
+.opportunity-skeleton__tag--wide {
+  width: 90px;
+}
+
+.opportunity-skeleton__tag--narrow {
+  width: 56px;
+}
+
+.opportunity-skeleton__status-badge {
+  width: 100px;
+  height: 24px;
+  border-radius: var(--radius-full);
+}
+
+.opportunity-skeleton__btn {
+  height: 42px;
+  border-radius: var(--radius-full);
+}
+
+.opportunity-skeleton__btn--detail {
+  width: 110px;
+}
+
+.opportunity-skeleton__btn--apply {
+  width: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opportunity-skeleton__block::after {
+    animation: none;
+  }
+  .opportunity-skeleton__block {
+    animation: opportunity-skeleton-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes opportunity-skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+}
