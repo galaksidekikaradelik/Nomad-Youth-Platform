@@ -1,3 +1,17 @@
+/**
+ * OpportunitySkeleton
+ *
+ * Loading placeholder for OpportunityCard. Reuses the exact same
+ * BEM classnames (.opportunity-card, .opportunity-card__*) as the real
+ * card so padding, gaps, border-radius, min-heights, and the grid layout
+ * are guaranteed to match — zero CLS when real cards swap in.
+ *
+ * Note: the real OpportunityCard has no image/banner block, so this
+ * skeleton doesn't render one either (adding one would break the
+ * "exact match" / no-CLS requirement). If a banner image gets added to
+ * OpportunityCard later, add a matching .opportunity-card__banner-skeleton
+ * block here at the same time.
+ */
 export default function OpportunitySkeleton() {
   return (
     <div className="opportunity-card opportunity-skeleton" aria-hidden="true">
@@ -10,12 +24,14 @@ export default function OpportunitySkeleton() {
           </div>
         </div>
 
+        {/* Title: 2 lines, matches .opportunity-card__title's own min-height */}
         <div className="opportunity-card__title opportunity-skeleton__title">
           <span className="opportunity-skeleton__block opportunity-skeleton__line opportunity-skeleton__line--title-1" />
           <span className="opportunity-skeleton__block opportunity-skeleton__line opportunity-skeleton__line--title-2" />
         </div>
       </div>
 
+      {/* Category / type badges */}
       <div className="opportunity-card__topic">
         <div className="opportunity-card__tags">
           <span className="opportunity-skeleton__block opportunity-skeleton__tag opportunity-skeleton__tag--wide" />
@@ -24,7 +40,9 @@ export default function OpportunitySkeleton() {
         </div>
       </div>
 
-    
+      {/* Description placeholder (real card shows this inside the detail
+          modal, but reserving 3 lines here keeps room for platforms that
+          add a card-level excerpt without a future CLS jump) */}
       <div className="opportunity-skeleton__description">
         <span className="opportunity-skeleton__block opportunity-skeleton__line" />
         <span className="opportunity-skeleton__block opportunity-skeleton__line" />

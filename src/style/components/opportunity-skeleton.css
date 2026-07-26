@@ -1,12 +1,21 @@
+/* ==========================================================================
+   Opportunity skeleton loader
+   Reuses .opportunity-card / .opportunity-card__* for structural sizing
+   (padding, gap, border-radius) so no dimensions are duplicated here.
+   Only the skeleton-specific blocks + shimmer animation live in this file.
+   ========================================================================== */
+
 .opportunity-skeleton {
   cursor: default;
 }
 
+/* Skeletons never lift/shadow on hover like real cards do */
 .opportunity-skeleton:hover {
   transform: none;
   box-shadow: none;
 }
 
+/* Base shimmering block ---------------------------------------------------- */
 .opportunity-skeleton__block {
   position: relative;
   display: block;
@@ -47,6 +56,7 @@
   100% { transform: translateX(100%); }
 }
 
+/* Top row: flag + like/save icon placeholders ------------------------------ */
 .opportunity-skeleton__flag {
   width: 28px;
   height: 20px;
@@ -59,6 +69,9 @@
   border-radius: var(--radius-sm);
 }
 
+/* Title: overrides real .opportunity-card__title text-clamp rules so it can
+   hold two skeleton bars instead, while keeping the exact same min-height
+   (3 lines * 1.3em) that reserves the real card's title space. */
 .opportunity-skeleton__title {
   display: flex;
   flex-direction: column;
@@ -98,12 +111,14 @@
   margin-top: 2px;
 }
 
+/* Description block (3 lines, spacing consistent with body text rhythm) */
 .opportunity-skeleton__description {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
+/* Category / type tag pills ------------------------------------------------ */
 .opportunity-skeleton__tag {
   width: 72px;
   height: 26px;
@@ -118,12 +133,14 @@
   width: 56px;
 }
 
+/* Status badge pill (top-right of footer) ---------------------------------- */
 .opportunity-skeleton__status-badge {
   width: 100px;
   height: 24px;
   border-radius: var(--radius-full);
 }
 
+/* Action buttons ------------------------------------------------------------ */
 .opportunity-skeleton__btn {
   height: 42px;
   border-radius: var(--radius-full);
@@ -137,6 +154,7 @@
   width: 96px;
 }
 
+/* Respect reduced-motion preference: swap shimmer sweep for a gentle pulse */
 @media (prefers-reduced-motion: reduce) {
   .opportunity-skeleton__block::after {
     animation: none;

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Hero from '../components/Hero'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
+import { OpportunitySkeletonGrid } from '../components/OpportunitySkeleton'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
 import { useLanguage } from '../hooks/useLanguage'
@@ -75,9 +76,7 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <div className="empty-state">
-              <div className="empty-state__title">{t('opp_loading') || 'Yüklənir...'}</div>
-            </div>
+            <OpportunitySkeletonGrid count={6} gridClassName="grid-3" />
           ) : error ? (
             <div className="empty-state">
               <div className="empty-state__icon" style={{ color: 'var(--color-warning, #f59e0b)' }}>

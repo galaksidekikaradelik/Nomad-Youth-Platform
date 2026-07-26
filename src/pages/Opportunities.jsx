@@ -5,6 +5,7 @@ import { translateCategory } from '../data/categoryTranslation'
 import { CANONICAL_CATEGORIES } from '../utils/categoryMapping'
 import SearchBar from '../components/SearchBar'
 import OpportunityCard from '../components/OpportunityCard'
+import { OpportunitySkeletonGrid } from '../components/OpportunitySkeleton'
 import Pagination from '../components/Pagination'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
@@ -250,9 +251,7 @@ export default function Opportunities() {
             </div>
 
             {loading ? (
-              <div className="empty-state">
-                <div className="empty-state__title">{t('opp_loading') || 'Yüklənir...'}</div>
-              </div>
+              <OpportunitySkeletonGrid count={8} gridClassName="grid-3" />
             ) : error ? (
               <div className="empty-state">
                 <div className="empty-state__icon" style={{ color: 'var(--color-warning, #f59e0b)' }}>
