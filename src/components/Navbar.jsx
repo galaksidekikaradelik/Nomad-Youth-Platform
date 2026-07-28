@@ -7,6 +7,7 @@ import logoDark from '../assets/images/logo-dark2.png'
 import { useAuth } from "../hooks/useAuth";
 import NotificationsDropdown from './NotificationsDropdown'
 import Avatar from './Avatar'
+import EmailVerificationBanner from './EmailVerificationBanner'
 
 const LANGUAGES = [
   { code: 'az', label: 'Azərbaycan' },
@@ -221,6 +222,13 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
+
+      {/* DƏYİŞDİ: Email təsdiqi banneri. Navbar-ın altında, bütün
+          səhifələrdə görünür (Navbar bütün route-larda ortaq
+          istifadə olunduğu üçün). Komponentin özü içəridə
+          user.emailVerified yoxlayır və təsdiqlənmiş istifadəçilər
+          üçün heç nə render etmir. */}
+      <EmailVerificationBanner />
 
       <div className={`navbar__mobile${menuOpen ? ' open' : ''}`}>
         {links.map(l => (
