@@ -35,7 +35,6 @@ function getDaysLeft(deadline) {
   return days > 0 ? days : 0;
 }
 
-// Artıq bütün item-lər Profile daxilində "view" olaraq açılır, ayrı route yoxdur
 const NAV_ITEMS = [
   { key: 'overview', labelKey: 'profile_nav_overview', icon: LayoutGrid },
   { key: 'applications', labelKey: 'profile_nav_applications', icon: Send },
@@ -99,10 +98,10 @@ function ProfileStatsBar({ applications }) {
     applications.filter((a) => modifiers.includes(STATUS_CONFIG[a.status]?.modifier)).length;
 
   const stats = [
-    { key: 'accepted', count: countOf(['accepted', 'approved']), label: t('profile_stat_accepted'), icon: CheckCircle2 },
-    { key: 'pending', count: countOf(['applied', 'pending']), label: t('profile_stat_pending'), icon: Clock },
+    { key: 'accepted', count: countOf(['accepted', 'approved']), label: t('status_accepted'), icon: CheckCircle2 },
+    { key: 'pending', count: countOf(['applied', 'pending']), label: t('status_applied'), icon: Clock },
     { key: 'preparing', count: countOf(['preparing', 'in_progress']), label: t('profile_stat_preparing'), icon: Loader2 },
-    { key: 'rejected', count: countOf(['rejected']), label: t('profile_stat_rejected'), icon: XCircle },
+    { key: 'rejected', count: countOf(['rejected']), label: t('status_rejected'), icon: XCircle },
   ];
 
   return (
@@ -122,15 +121,7 @@ function ProfileStatsBar({ applications }) {
   );
 }
 
-/**
- * ProfileHeader
- *
- * Avatar tam klikləndirilə bilər (və klaviatura ilə Enter/Space ilə əlçatan) —
- * klikləndikdə gizli file input açılır. Şəkil seçildikdən sonra mövcud
- * AvatarAdjustModal açılır; təsdiqdən sonra mövcud uploadAvatar API-si
- * çağrılır. Uğurlu yükləmə user obyektini (avatarUrl) yeniləyir və Avatar
- * komponenti bunu avtomatik render edir — səhifə reload olunmur.
- */
+
 function ProfileHeader({ user, name }) {
   const { t } = useLanguage();
   const { uploadAvatar, removeAvatar } = useAuth();
@@ -145,7 +136,6 @@ function ProfileHeader({ user, name }) {
     fileInputRef.current?.click();
   };
 
-  // Klaviatura dəstəyi: Enter və Space fayl seçicisini açsın
   const handleAvatarKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
