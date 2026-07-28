@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useWishlist } from '../hooks/useWishlist';
@@ -6,6 +6,8 @@ import { useLike } from '../hooks/useLike';
 import { useApplicationStatus } from '../hooks/useApplicationStatus';
 import { useLanguage } from '../hooks/useLanguage';
 import { STATUS_CONFIG } from '../utils/applicationStatus';
+import Avatar from '../components/Avatar';
+import AvatarAdjustModal from '../components/AvatarAdjustModal';
 import {
   LayoutGrid,
   Send,
@@ -16,6 +18,8 @@ import {
   ChevronRight,
   ChevronLeft,
   Pencil,
+  X,
+  Camera,
   CheckCircle2,
   Clock,
   Loader2,
@@ -118,24 +122,138 @@ function ProfileStatsBar({ applications }) {
   );
 }
 
-function ProfileHeader({ name }) {
+/**
+ * ProfileHeader
+ *
+ * Avatar tam klikləndirilə bilər (və klaviatura ilə Enter/Space ilə əlçatan) —
+ * klikləndikdə gizli file input açılır. Şəkil seçildikdən sonra mövcud
+ * AvatarAdjustModal açılır; təsdiqdən sonra mövcud uploadAvatar API-si
+ * çağrılır. Uğurlu yükləmə user obyektini (avatarUrl) yeniləyir və Avatar
+ * komponenti bunu avtomatik render edir — səhifə reload olunmur.
+ */
+function ProfileHeader({ user, name }) {
   const { t } = useLanguage();
-  const initial = name ? name.charAt(0).toUpperCase() : 'İ';
+  const { uploadAvatar, removeAvatar } = useAuth();
+  const fileInputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
+  const [pendingFile, setPendingFile] = useState(null); // seçilib, hələ düzəliş modalında olan fayl
+
+  const openFilePicker = () => {
+    if (uploading) return;
+    setError('');
+    fileInputRef.current?.click();
+  };
+
+  // Klaviatura dəstəyi: Enter və Space fayl seçicisini açsın
+  const handleAvatarKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openFilePicker();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // eyni faylı yenidən seçəndə də onChange tətiklənsin
+    if (!file) return;
+    setError('');
+    setPendingFile(file); // birbaşa yükləmirik — əvvəlcə düzəliş modalı açılır
+  };
+
+  const handleAdjustConfirm = async (adjustedFile) => {
+    setPendingFile(null);
+    setUploading(true);
+    try {
+      await uploadAvatar(adjustedFile);
+    } catch (err) {
+      console.error('Avatar yüklənmədi:', err);
+      setError(t('profile_avatar_upload_error') || 'Şəkil yüklənmədi, yenidən cəhd edin.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemove = async (e) => {
+    e.stopPropagation(); // wrap-ın öz onClick-i tətiklənməsin (fayl seçici açılmasın)
+    setError('');
+    setUploading(true);
+    try {
+      await removeAvatar();
+    } catch (err) {
+      console.error('Avatar silinmədi:', err);
+      setError(t('profile_avatar_remove_error') || 'Şəkil silinmədi, yenidən cəhd edin.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <div className="profile-header">
-      <div className="profile-header__avatar-wrap">
-        <div className="profile-header__avatar">{initial}</div>
-        <button className="profile-header__avatar-edit" aria-label={t('profile_avatar_edit_aria')}>
+      <div
+        className={`profile-header__avatar-wrap${uploading ? ' profile-header__avatar-wrap--uploading' : ''}`}
+        role="button"
+        tabIndex={0}
+        aria-label={t('profile_avatar_edit_aria')}
+        onClick={openFilePicker}
+        onKeyDown={handleAvatarKeyDown}
+      >
+        <Avatar user={user} size={88} className="profile-header__avatar" />
+
+        {/* Hover overlay + kamera ikonu / yüklənmə zamanı spinner */}
+        <div className="profile-header__avatar-overlay" aria-hidden="true">
+          {uploading ? (
+            <span className="profile-header__avatar-spinner" />
+          ) : (
+            <Camera size={22} className="profile-header__avatar-camera" />
+          )}
+        </div>
+
+        <button
+          type="button"
+          className="profile-header__avatar-edit"
+          aria-label={t('profile_avatar_edit_aria')}
+          onClick={(e) => { e.stopPropagation(); openFilePicker(); }}
+          disabled={uploading}
+          tabIndex={-1}
+        >
           <Pencil size={12} />
         </button>
+
+        {user?.avatarUrl && (
+          <button
+            type="button"
+            className="profile-header__avatar-remove"
+            aria-label={t('profile_avatar_remove_aria') || 'Şəkli sil'}
+            onClick={handleRemove}
+            disabled={uploading}
+          >
+            <X size={12} />
+          </button>
+        )}
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/png, image/jpeg, image/webp"
+          hidden
+          onChange={handleFileChange}
+        />
       </div>
       <div className="profile-header__body">
         <h1>{t('profile_welcome').replace('{name}', name)}</h1>
         <p className="profile-header__subtitle">
           {t('profile_subtitle')}
         </p>
+        {error && <p className="profile-header__avatar-error">{error}</p>}
       </div>
+
+      <AvatarAdjustModal
+        open={pendingFile !== null}
+        file={pendingFile}
+        onCancel={() => setPendingFile(null)}
+        onConfirm={handleAdjustConfirm}
+      />
     </div>
   );
 }
@@ -476,7 +594,7 @@ export default function Profile() {
   return (
     <div className="profile-page">
       <div className="container">
-        <ProfileHeader name={name} onSettingsClick={() => setActiveView('settings')} />
+        <ProfileHeader user={user} name={name} onSettingsClick={() => setActiveView('settings')} />
 
         <ProfileStatsBar applications={applications} />
 

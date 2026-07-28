@@ -86,7 +86,7 @@
 
   "about_eyebrow": "Haqqımızda",
   "about_title": "Gənclərin Platforması",
-  "about_desc": "Nomad Youth — Azərbaycan gənclərinin şəxsi və peşəkar inkişafını dəstəkləmək üçün yaradılmış rəqəmsal platformadır.",
+  "about_desc": "Nomad Youth Azərbaycandakı gənclərin beynəlxalq və yerli inkişaf imkanlarını daha rahat tapması üçün yaradılmış rəqəmsal platformadır. Platformamız Erasmus+, European Solidarity Corps (ESC), könüllülük, təcrübə, qrant, təlim, yay məktəbləri və digər inkişaf imkanlarını bir mərkəzdə toplayır. Məqsədimiz gənclərin etibarlı imkanlara daha sürətli çıxışını təmin etmək və müraciət prosesini onlar üçün daha sadə etməkdir. Bununla yanaşı, CV hazırlanması, motivasiya məktubu, layihə seçimi və müraciət dəstəyi kimi xidmətlərlə istifadəçilərin qəbul şansını artırmağa kömək edirik.",
   "about_stat_opportunities": "Aktiv İmkan",
   "about_stat_services": "Xidmət",
   "about_stat_available": "Əlçatan Platforma",
@@ -133,8 +133,12 @@
   "contact_form_message_placeholder": "Mesajınızı bura yazın...",
   "contact_form_submit": "Göndərin",
   "contact_success_title": "Mesajınız çatdı!",
-  "contact_success_desc": "Ən qısa zamanda sizə cavab verəcəyik. Təşəkkür edirik!",
+  "contact_success_desc": "Müraciətiniz uğurla göndərildi. Komandamız ən qısa zamanda sizinlə əlaqə saxlayacaq.",
   "contact_success_btn": "Yeni Mesaj",
+  "contact_error_name_required": "Ad daxil edilməlidir",
+  "contact_error_email_required": "E-poçt daxil edilməlidir",
+  "contact_error_email_invalid": "E-poçt formatı düzgün deyil",
+  "contact_error_message_required": "Mesaj daxil edilməlidir",
 
   "footer_col_platform": "Platform",
   "footer_col_category": "Kateqoriya",
@@ -216,11 +220,11 @@
   "auth_error_login_failed": "Daxil olmaq mümkün olmadı, yenidən cəhd edin",
   "auth_error_email_taken": "Bu e-poçt artıq istifadə olunub",
   "auth_error_register_failed": "Qeydiyyat uğursuz oldu, yenidən cəhd edin",
-  "status_preparing": "Hazırlanır",
-  "status_applied": "Müraciət edilib",
-  "status_accepted": "Qəbul edilib",
-  "status_rejected": "Rədd edilib",
-  "status_select": "Status seç",
+  "status_preparing": "İzlənilir",
+  "status_applied": "Müraciət olunub",
+  "status_accepted": "Qəbul olunub",
+  "status_rejected": "Qəbul olunmayıb",
+  "status_select": "Status yoxdur",
 
   "faq_eyebrow": "Kömək",
   "faq_title": "Tez-tez verilən suallar",
@@ -361,7 +365,6 @@
   "profile_stat_pending": "Gözləmədə",
   "profile_stat_preparing": "Hazırlanır",
   "profile_stat_rejected": "Rədd olunub",
-  "profile_avatar_edit_aria": "Şəkli dəyiş",
   "profile_welcome": "Xoş gəlmisiniz, {name}!",
   "profile_subtitle": "Burada profilinizi idarə edə, müraciətlərinizin və yadda saxladıqlarınızın izləyə bilərsiniz.",
   "profile_default_name": "İstifadəçi",
@@ -378,5 +381,19 @@
   "profile_liked_empty": "Hələ bəyəndiyiniz imkan yoxdur",
   "profile_saved_empty": "Yadda saxlanılan imkan yoxdur",
   "profile_applications_title": "Müraciətlərim",
-  "profile_applications_empty": "Hələ heç bir imkana müraciət statusu qoymamısınız"
+  "profile_applications_empty": "Hələ heç bir imkana müraciət statusu qoymamısınız",
+
+  "apply_confirm_title": "Nomad Youth platformasını tərk edirsiniz",
+  "apply_confirm_desc": "Siz Nomad Youth platformasından çıxaraq layihənin rəsmi müraciət səhifəsinə yönləndiriləcəksiniz.",
+  "apply_confirm_cancel": "Ləğv et",
+  "apply_confirm_continue": "Davam et",
+
+  
+  "avatar_adjust_title": "Şəkli düzəliş edin",
+  "avatar_adjust_hint": "Düzgün mövqe üçün şəkli yuxarı/aşağı sürüşdürün",
+  "avatar_adjust_saving": "Yaddaşa verilir...",
+  "profile_avatar_edit_aria": "Profil şəklini dəyiş",
+  "profile_avatar_remove_aria": "Şəkli sil",
+  "profile_avatar_upload_error": "Şəkil yüklənmədi, yenidən cəhd edin.",
+  "profile_avatar_remove_error": "Şəkil silinmədi, yenidən cəhd edin."
 }

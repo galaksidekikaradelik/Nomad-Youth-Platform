@@ -9,6 +9,7 @@ import { useWishlist } from '../hooks/useWishlist'
 import { useLike } from '../hooks/useLike'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
+import ApplyConfirmModal from './ApplyConfirmModal'
 
 const HeartIcon = ({ active }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -164,6 +165,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
   const { title, format, category, type, location, deadline, applyLink, publishedAt } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [showDetail, setShowDetail] = useState(autoOpenDetail)
+  const [showApplyConfirm, setShowApplyConfirm] = useState(false)
   const cardRef = useRef(null)
 
 
@@ -200,6 +202,22 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     if (!user) { setShowAuthPrompt(true); return }
     if (!opportunity.id) return // wishlist üçün real backend id lazımdır
     toggleWishlist(opportunity.id)
+  }
+
+  // "Müraciət et" - birbaşa xarici linkə açmaq əvəzinə, əvvəlcə
+  // istifadəçini platformadan ayrılacağı barədə xəbərdar edən təsdiq
+  // pəncərəsi göstərilir. Yalnız "Davam et" seçiləndə rəsmi müraciət
+  // linki yeni tab-da açılır.
+  function handleApplyClick(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    if (!applyLink) return
+    setShowApplyConfirm(true)
+  }
+
+  function confirmApply() {
+    setShowApplyConfirm(false)
+    window.open(applyLink, '_blank', 'noopener,noreferrer')
   }
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
@@ -316,7 +334,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
               target="_blank"
               rel="noopener noreferrer"
               className="opportunity-card__apply-btn"
-              onClick={(e) => e.stopPropagation()}
+              onClick={handleApplyClick}
             >
               {t('card_apply')} <ArrowIcon />
             </a>
@@ -336,6 +354,12 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
       />
 
       <AuthPromptModal open={showAuthPrompt} onClose={() => setShowAuthPrompt(false)} />
+
+      <ApplyConfirmModal
+        open={showApplyConfirm}
+        onCancel={() => setShowApplyConfirm(false)}
+        onConfirm={confirmApply}
+      />
     </div>
   )
 }

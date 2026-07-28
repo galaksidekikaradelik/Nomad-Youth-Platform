@@ -282,13 +282,22 @@
 .navbar__mobile {
   display: none;
   position: fixed;
-  top: var(--navbar-h); left: 0; right: 0;
+  top: var(--navbar-h);
+  left: 0;
+  right: 0;
+
+  height: calc(100vh - var(--navbar-h));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
   background: var(--neutral-0);
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--shadow-md);
   padding: var(--space-lg) var(--container-pad) var(--space-xl);
+
   flex-direction: column;
   gap: var(--space-md);
+
   animation: slideDown 0.25s ease;
   z-index: 99;
 }

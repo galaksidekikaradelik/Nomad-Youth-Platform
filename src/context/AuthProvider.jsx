@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import * as authService from "../services/authService";
+import * as avatarService from "../services/avatarService";
 
 const AUTH_TOKEN_KEY = "authToken";
 
@@ -89,6 +90,19 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  const uploadAvatar = async (file) => {
+    if (!user?.id) return;
+    const result = await avatarService.uploadAvatar(user.id, file);
+    updateUser({ avatarUrl: result.avatarUrl });
+    return result;
+  };
+
+  const removeAvatar = async () => {
+    if (!user?.id) return;
+    await avatarService.deleteAvatar(user.id);
+    updateUser({ avatarUrl: null });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -101,6 +115,8 @@ export function AuthProvider({ children }) {
         updateUser,
         changePassword,
         deleteAccount,
+        uploadAvatar,
+        removeAvatar,
       }}
     >
       {children}

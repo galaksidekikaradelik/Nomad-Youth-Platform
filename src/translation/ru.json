@@ -89,7 +89,7 @@
   "about_desc": "Nomad Youth — цифровая платформа, созданная для поддержки личного и профессионального развития молодёжи Азербайджана.",
   "about_stat_opportunities": "Активных возможностей",
   "about_stat_services": "Услуг",
-  "about_stat_available": "Доступная платформа",
+  "about_stat_available": "Доступна 24/7",
   "about_stat_category": "Партнёров",
   "about_how_eyebrow": "Как это работает",
   "about_how_title": "Как работает Nomad?",
@@ -134,7 +134,11 @@
   "contact_form_submit": "Отправить",
   "contact_success_title": "Ваше сообщение отправлено!",
   "contact_success_desc": "Мы ответим вам как можно скорее. Спасибо!",
-  "contact_success_btn": "Новое сообщение",
+  "contact_success_btn": "Отправить ещё одно сообщение",
+  "contact_error_name_required": "Требуется указать имя",
+  "contact_error_email_required": "Требуется указать адрес электронной почты",
+  "contact_error_email_invalid": "Неверный формат электронной почты",
+  "contact_error_message_required": "Требуется ввести сообщение",
 
   "footer_col_platform": "Платформа",
   "footer_col_category": "Категория",
@@ -325,9 +329,9 @@
   "dashboard_field_deadline": "Крайний срок:",
   "dashboard_field_listing_status": "Статус объявления",
   "dashboard_status_closed": "Закрыто",
-  "dashboard_status_active": "Активно (открыто)",
+  "dashboard_status_active": "Активно",
 
-  "settings_title": "Панель управления",
+  "settings_title": "Настройки",
   "settings_desc": "Управляйте информацией своего аккаунта.",
   "settings_profile_section_title": "Изменить данные",
   "settings_save_btn": "Сохранить",
@@ -361,7 +365,6 @@
   "profile_stat_pending": "В ожидании",
   "profile_stat_preparing": "Готовится",
   "profile_stat_rejected": "Отклонено",
-  "profile_avatar_edit_aria": "Изменить фото",
   "profile_welcome": "Добро пожаловать, {name}!",
   "profile_subtitle": "Здесь вы можете управлять своим профилем и отслеживать заявки и сохранённые элементы.",
   "profile_default_name": "Пользователь",
@@ -378,5 +381,20 @@
   "profile_liked_empty": "Вам пока не понравилась ни одна возможность",
   "profile_saved_empty": "Нет сохранённых возможностей",
   "profile_applications_title": "Мои заявки",
-  "profile_applications_empty": "Вы пока не отметили статус ни для одной возможности"
+  "profile_applications_empty": "Вы пока не отметили статус ни для одной возможности",
+
+  "apply_confirm_title": "Вы покидаете Nomad Youth",
+  "apply_confirm_desc": "Вы будете перенаправлены с платформы Nomad Youth на официальную страницу подачи заявки проекта.",
+  "apply_confirm_cancel": "Отмена",
+  "apply_confirm_continue": "Продолжить",
+
+  
+  "avatar_adjust_title": "Настройте фото",
+  "avatar_adjust_hint": "Перетащите фото вверх или вниз, чтобы расположить его",
+  "avatar_adjust_saving": "Сохранение...",
+  "profile_avatar_edit_aria": "Изменить фото профиля",
+  "profile_avatar_remove_aria": "Удалить фото",
+  "profile_avatar_upload_error": "Не удалось загрузить фото, попробуйте снова.",
+  "profile_avatar_remove_error": "Не удалось удалить фото, попробуйте снова."
+
 }

@@ -1,4 +1,5 @@
 export const STATUS_CONFIG = {
+  select:    { labelKey: 'status_select', modifier: 'select' },
   preparing: { labelKey: 'status_preparing', modifier: 'preparing' },
   applied:   { labelKey: 'status_applied',   modifier: 'applied' },
   accepted:  { labelKey: 'status_accepted',  modifier: 'accepted' },

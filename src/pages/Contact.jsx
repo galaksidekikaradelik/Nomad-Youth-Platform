@@ -33,9 +33,13 @@ const REQUEST_TYPES = [
   { id: 'project',     labelKey: 'contact_request_project',     viaWhatsApp: true },
 ]
 
+// Simple, permissive email format check: something@something.tld
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export default function Contact() {
   const { t } = useLanguage()
   const [form, setForm]           = useState({ name: '', email: '', subject: '', message: '' })
+  const [errors, setErrors]       = useState({})
   const [submitted, setSubmitted] = useState(false)
   const [requestType, setRequestType] = useState('general')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -56,8 +60,27 @@ export default function Contact() {
   ]
 
   const handleChange = e => {
-    setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+    const { name, value } = e.target
+    setForm(f => ({ ...f, [name]: value }))
     setSubmitError('')
+    // Clear this field's error as soon as the user edits it
+    setErrors(prev => (prev[name] ? { ...prev, [name]: undefined } : prev))
+  }
+
+  const validate = () => {
+    const newErrors = {}
+    if (!form.name.trim()) {
+      newErrors.name = t('contact_error_name_required')
+    }
+    if (!form.email.trim()) {
+      newErrors.email = t('contact_error_email_required')
+    } else if (!EMAIL_REGEX.test(form.email.trim())) {
+      newErrors.email = t('contact_error_email_invalid')
+    }
+    if (!form.message.trim()) {
+      newErrors.message = t('contact_error_message_required')
+    }
+    return newErrors
   }
 
   const selectedType = REQUEST_TYPES.find(rt => rt.id === requestType)
@@ -69,11 +92,13 @@ export default function Contact() {
   const handleCardClick = (typeId) => {
     setRequestType(typeId)
     setSelectedCard(typeId)
-    scrollToForm()
+    setErrors({})
+  scrollToForm()
   }
 
   const handleSubmit = async () => {
     if (selectedType.viaWhatsApp) {
+      // Name/message are optional context for the WhatsApp message, so no blocking validation here
       const greeting = t('contact_whatsapp_greeting').replace('{type}', t(selectedType.labelKey))
       const lines = [greeting]
       if (form.name)    lines.push(`${t('contact_whatsapp_name_label')} ${form.name}`)
@@ -84,7 +109,12 @@ export default function Contact() {
       return
     }
 
-    if (!form.name || !form.email || !form.message) return
+    const validationErrors = validate()
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+    setErrors({})
 
     setSubmitError('')
     setIsSubmitting(true)
@@ -181,7 +211,7 @@ export default function Contact() {
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>
                 {t('contact_success_desc')}
               </p>
-              <button className="btn-primary" onClick={() => { setSubmitted(false); setForm({ name: '', email: '', subject: '', message: '' }) }}>
+              <button className="btn-primary" onClick={() => { setSubmitted(false); setForm({ name: '', email: '', subject: '', message: '' }); setErrors({}) }}>
                 {t('contact_success_btn')}
               </button>
             </div>
@@ -196,7 +226,7 @@ export default function Contact() {
                 <select
                   className="search-bar__select"
                   value={requestType}
-                  onChange={(e) => { setRequestType(e.target.value); setSelectedCard(e.target.value) }}
+                  onChange={(e) => { setRequestType(e.target.value); setSelectedCard(e.target.value); setErrors({}) }}
                   style={{
                     border: '1.5px solid var(--color-border)',
                     borderRadius: 'var(--radius-md)',
@@ -214,11 +244,37 @@ export default function Contact() {
               <div className="contact-form__row">
                 <div className="form-group">
                   <label className="form-label">{t('contact_form_name')}</label>
-                  <input className="form-input" name="name" placeholder={t('contact_form_name_placeholder')} value={form.name} onChange={handleChange} />
+                  <input
+                    className="form-input"
+                    name="name"
+                    placeholder={t('contact_form_name_placeholder')}
+                    value={form.name}
+                    onChange={handleChange}
+                    aria-invalid={!!errors.name}
+                  />
+                  {errors.name && (
+                    <p className="field-error" style={{ color: 'var(--color-danger, #dc2626)', fontSize: '0.8rem', margin: '4px 0 0' }}>
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
                 <div className="form-group">
                   <label className="form-label">{t('contact_form_email')}</label>
-                  <input className="form-input" name="email" type="email" placeholder="email@example.com" value={form.email} onChange={handleChange} disabled={selectedType.viaWhatsApp} />
+                  <input
+                    className="form-input"
+                    name="email"
+                    type="email"
+                    placeholder="email@example.com"
+                    value={form.email}
+                    onChange={handleChange}
+                    disabled={selectedType.viaWhatsApp}
+                    aria-invalid={!!errors.email}
+                  />
+                  {errors.email && (
+                    <p className="field-error" style={{ color: 'var(--color-danger, #dc2626)', fontSize: '0.8rem', margin: '4px 0 0' }}>
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -229,7 +285,19 @@ export default function Contact() {
 
               <div className="form-group">
                 <label className="form-label">{t('contact_form_message')}</label>
-                <textarea className="form-textarea" name="message" placeholder={t('contact_form_message_placeholder')} value={form.message} onChange={handleChange} />
+                <textarea
+                  className="form-textarea"
+                  name="message"
+                  placeholder={t('contact_form_message_placeholder')}
+                  value={form.message}
+                  onChange={handleChange}
+                  aria-invalid={!!errors.message}
+                />
+                {errors.message && (
+                  <p className="field-error" style={{ color: 'var(--color-danger, #dc2626)', fontSize: '0.8rem', margin: '4px 0 0' }}>
+                    {errors.message}
+                  </p>
+                )}
               </div>
 
               {selectedType.viaWhatsApp && (

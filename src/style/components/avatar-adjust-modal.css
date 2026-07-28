@@ -1,0 +1,112 @@
+.avatar-adjust-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+  background: rgba(17, 22, 36, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.avatar-adjust-modal {
+  width: 100%;
+  max-width: 360px;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl) var(--space-lg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+}
+
+.avatar-adjust-modal__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--brand-900);
+  margin: 0;
+}
+
+.avatar-adjust-modal__hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.avatar-adjust-modal__viewport {
+  position: relative;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  background: var(--neutral-100);
+  touch-action: none;
+  cursor: grab;
+}
+
+.avatar-adjust-modal__viewport:active {
+  cursor: grabbing;
+}
+
+.avatar-adjust-modal__image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.avatar-adjust-modal__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+.avatar-adjust-modal__actions {
+  display: flex;
+  gap: var(--space-sm);
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.avatar-adjust-modal__btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.avatar-adjust-modal__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.avatar-adjust-modal__btn--cancel {
+  background: var(--neutral-100);
+  color: var(--text-secondary);
+}
+
+.avatar-adjust-modal__btn--cancel:hover {
+  background: var(--neutral-200);
+}
+
+.avatar-adjust-modal__btn--save {
+  background: var(--brand-900);
+  color: var(--accent-400);
+}
+
+.avatar-adjust-modal__btn--save:hover {
+  background: var(--brand-700);
+  transform: translateY(-2px);
+}

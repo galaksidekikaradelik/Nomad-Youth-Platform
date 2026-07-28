@@ -27,6 +27,8 @@
 @import 'components/notifications.css';
 @import 'components/pagination.css';
 @import 'components/opportunity-skeleton.css';
+@import 'components/avatar.css';
+@import 'components/avatar-adjust-modal.css';
 
 
 @import 'pages/about.css';

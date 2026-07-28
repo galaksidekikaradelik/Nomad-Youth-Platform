@@ -1,0 +1,96 @@
+.avatar {
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1;
+  user-select: none;
+}
+
+.avatar--image {
+  object-fit: cover;
+  display: block;
+}
+
+.avatar--initial {
+  background: var(--brand-900);
+  color: var(--accent-400);
+}
+
+/* ===================================================================
+   Profile avatar upload — hover overlay, kamera ikonu, spinner
+   Mövcud .profile-header__avatar-wrap sinifinə əlavə stillər.
+   Layout dəyişmir, yalnız görünüş qatı əlavə olunur.
+   =================================================================== */
+
+.profile-header__avatar-wrap {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.profile-header__avatar-wrap:hover,
+.profile-header__avatar-wrap:focus-visible {
+  transform: scale(1.05);
+}
+
+.profile-header__avatar-wrap:focus-visible {
+  outline: 2px solid var(--color-primary, #4f46e5);
+  outline-offset: 3px;
+}
+
+/* Dairəvi olduğundan əmin olmaq üçün (mövcud Avatar komponentində
+   artıq border-radius: 50% var, amma overlay ilə üst-üstə düşməsi
+   üçün burda da təkrar təhlükəsizlik məqsədilə saxlanılır) */
+.profile-header__avatar-wrap img,
+.profile-header__avatar-wrap .avatar {
+  border-radius: 50%;
+}
+
+.profile-header__avatar-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none; /* klik həmişə wrap-a düşsün, overlay-ə yox */
+}
+
+.profile-header__avatar-wrap:hover .profile-header__avatar-overlay,
+.profile-header__avatar-wrap:focus-visible .profile-header__avatar-overlay,
+.profile-header__avatar-wrap--uploading .profile-header__avatar-overlay {
+  opacity: 1;
+}
+
+.profile-header__avatar-camera {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.profile-header__avatar-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: avatar-spin 0.7s linear infinite;
+}
+
+@keyframes avatar-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Yüklənmə zamanı pencil/remove düymələri disabled görünsün */
+.profile-header__avatar-edit:disabled,
+.profile-header__avatar-remove:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

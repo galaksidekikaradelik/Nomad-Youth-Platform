@@ -648,3 +648,38 @@
   color: var(--status-error);
 }
 
+/* Yeni: silmə düyməsi, mövcud .profile-header__avatar-edit ilə eyni
+   mövqeləndirmə məntiqi (əcdad .profile-header__avatar-wrap artıq
+   position: relative olmalıdır ki, --avatar-edit düzgün işləsin). */
+.profile-header__avatar-remove {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--status-error, #EF4444);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-surface);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.profile-header__avatar-remove:hover {
+  transform: scale(1.08);
+}
+
+.profile-header__avatar-remove:disabled,
+.profile-header__avatar-edit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-header__avatar-error {
+  color: var(--status-error, #EF4444);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}

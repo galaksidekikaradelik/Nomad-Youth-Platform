@@ -135,6 +135,10 @@
   "contact_success_title": "Your message was sent!",
   "contact_success_desc": "We'll get back to you as soon as possible. Thank you!",
   "contact_success_btn": "New Message",
+  "contact_error_name_required": "Name is required",
+  "contact_error_email_required": "Email is required",
+  "contact_error_email_invalid": "Invalid email format",
+  "contact_error_message_required": "Message is required",
 
   "footer_col_platform": "Platform",
   "footer_col_category": "Category",
@@ -360,7 +364,6 @@
   "profile_stat_pending": "Pending",
   "profile_stat_preparing": "Preparing",
   "profile_stat_rejected": "Rejected",
-  "profile_avatar_edit_aria": "Change photo",
   "profile_welcome": "Welcome, {name}!",
   "profile_subtitle": "Manage your profile here and track your applications and saved items.",
   "profile_default_name": "User",
@@ -377,5 +380,21 @@
   "profile_liked_empty": "You haven't liked any opportunities yet",
   "profile_saved_empty": "No saved opportunities",
   "profile_applications_title": "My Applications",
-  "profile_applications_empty": "You haven't marked a status on any opportunity yet"
+  "profile_applications_empty": "You haven't marked a status on any opportunity yet",
+
+  
+  "apply_confirm_title": "You're leaving Nomad Youth",
+  "apply_confirm_desc": "You'll be redirected away from Nomad Youth to the project's official application page.",
+  "apply_confirm_cancel": "Cancel",
+  "apply_confirm_continue": "Continue",
+
+  
+  "avatar_adjust_title": "Adjust your photo",
+  "avatar_adjust_hint": "Drag the photo up or down to position it",
+  "avatar_adjust_saving": "Saving...",
+  "profile_avatar_edit_aria": "Change profile photo",
+  "profile_avatar_remove_aria": "Remove photo",
+  "profile_avatar_upload_error": "Photo upload failed, please try again.",
+  "profile_avatar_remove_error": "Photo removal failed, please try again."
+
 }

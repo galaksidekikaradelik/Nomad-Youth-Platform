@@ -72,6 +72,20 @@ export function ApplicationStatusProvider({ children }) {
     async (opportunityId, statusKey) => {
       if (!user?.id || opportunityId == null || !statusKey) return;
 
+      // "select" = "Seçim yoxdur" — real backend statusu deyil, sadəcə
+      // "status yoxdur" vəziyyətinin özüdür. Bunun üçün API-yə PUT
+      // göndərmirik (backend enum-u "SELECT" tanımır), sadəcə lokal
+      // statusMap-dən həmin opportunity-ni silirik ki, düymə yenidən
+      // placeholder ("Seçim yoxdur") göstərsin.
+      if (statusKey === "select") {
+        setState((prev) => {
+          const next = { ...prev.statusMap };
+          delete next[opportunityId];
+          return { ...prev, statusMap: next };
+        });
+        return;
+      }
+
       let prevStatus;
       setState((prev) => {
         prevStatus = prev.statusMap[opportunityId];

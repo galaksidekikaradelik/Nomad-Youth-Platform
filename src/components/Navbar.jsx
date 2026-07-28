@@ -6,6 +6,7 @@ import logoLight from '../assets/images/logo-light2.png'
 import logoDark from '../assets/images/logo-dark2.png'
 import { useAuth } from "../hooks/useAuth";
 import NotificationsDropdown from './NotificationsDropdown'
+import Avatar from './Avatar'
 
 const LANGUAGES = [
   { code: 'az', label: 'Azərbaycan' },
@@ -33,11 +34,6 @@ function getInitialDarkMode() {
     return true
   }
   return false
-}
-
-function getUserInitial(user) {
-  const source = user?.name || user?.firstName || user?.email || ''
-  return source.trim().charAt(0).toUpperCase() || '?'
 }
 
 export default function Navbar() {
@@ -79,6 +75,14 @@ export default function Navbar() {
     document.addEventListener('mousedown', onClickOutside)
     return () => document.removeEventListener('mousedown', onClickOutside)
   }, [])
+
+  useEffect(() => {
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+
+  return () => {
+    document.body.style.overflow = '';
+  };
+}, [menuOpen]);
 
   const toggleDarkMode = () => {
     const next = !darkMode
@@ -169,7 +173,7 @@ export default function Navbar() {
                   onClick={() => setProfileMenuOpen(o => !o)}
                   aria-label={t('nav_profile')}
                 >
-                  {getUserInitial(user)}
+                  <Avatar user={user} size={36} />
                 </button>
 
                 {profileMenuOpen && (
@@ -231,33 +235,9 @@ export default function Navbar() {
           </NavLink>
         ))}
 
-        <div className="navbar__mobile-actions">
-          {LANGUAGES.map(l => (
-            <button
-              key={l.code}
-              className={`navbar__lang-btn${l.code === lang ? ' active' : ''}`}
-              onClick={() => selectLang(l.code)}
-            >
-              {l.code.toUpperCase()}
-            </button>
-          ))}
-          <button className="navbar__theme-btn" onClick={toggleDarkMode} aria-label={t('nav_theme_toggle_aria')}>
-            {darkMode ? <SunIcon /> : <MoonIcon />}
-          </button>
-        </div>
-
         {user ? (
           <>
-            <div className="navbar__mobile-profile">
-              <div className="navbar__avatar-btn navbar__avatar-btn--static">{getUserInitial(user)}</div>
-              <div>
-                <div className="navbar__profile-name">{user?.name || user?.email}</div>
-                {(user?.major || user?.university) && (
-                  <div className="navbar__profile-sub">{user?.major || user?.university}</div>
-                )}
-              </div>
-            </div>
-
+            
             <Link to="/profile" className="navbar__link" onClick={handleLinkClick}>
               <User size={16} style={{ marginRight: 8, verticalAlign: 'middle' }} /> {t('nav_profile')}
             </Link>
