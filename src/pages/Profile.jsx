@@ -8,6 +8,7 @@ import { useLanguage } from '../hooks/useLanguage';
 import { STATUS_CONFIG } from '../utils/applicationStatus';
 import Avatar from '../components/Avatar';
 import AvatarAdjustModal from '../components/AvatarAdjustModal';
+import StatusSelector from '../components/StatusSelector';
 import {
   LayoutGrid,
   Send,
@@ -35,6 +36,7 @@ function getDaysLeft(deadline) {
   return days > 0 ? days : 0;
 }
 
+// Artıq bütün item-lər Profile daxilində "view" olaraq açılır, ayrı route yoxdur
 const NAV_ITEMS = [
   { key: 'overview', labelKey: 'profile_nav_overview', icon: LayoutGrid },
   { key: 'applications', labelKey: 'profile_nav_applications', icon: Send },
@@ -121,7 +123,15 @@ function ProfileStatsBar({ applications }) {
   );
 }
 
-
+/**
+ * ProfileHeader
+ *
+ * Avatar tam klikləndirilə bilər (və klaviatura ilə Enter/Space ilə əlçatan) —
+ * klikləndikdə gizli file input açılır. Şəkil seçildikdən sonra mövcud
+ * AvatarAdjustModal açılır; təsdiqdən sonra mövcud uploadAvatar API-si
+ * çağrılır. Uğurlu yükləmə user obyektini (avatarUrl) yeniləyir və Avatar
+ * komponenti bunu avtomatik render edir — səhifə reload olunmur.
+ */
 function ProfileHeader({ user, name }) {
   const { t } = useLanguage();
   const { uploadAvatar, removeAvatar } = useAuth();
@@ -136,6 +146,7 @@ function ProfileHeader({ user, name }) {
     fileInputRef.current?.click();
   };
 
+  // Klaviatura dəstəyi: Enter və Space fayl seçicisini açsın
   const handleAvatarKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -677,15 +688,18 @@ export default function Profile() {
                 items={applications}
                 emptyText={t('profile_applications_empty')}
                 onBack={goOverview}
-                renderRow={({ opp, status }) => {
-                  const cfg = STATUS_CONFIG[status];
-                  const badge = cfg ? (
-                    <span className={`profile-status-badge profile-status-badge--${cfg.modifier}`}>
-                      {t(cfg.labelKey)}
-                    </span>
-                  ) : null;
-                  return <OpportunityMiniRow key={opp.id || opp.title} opp={opp} statusBadge={badge} />;
-                }}
+                renderRow={({ opp }) => (
+                  // DƏYİŞDİ: statik badge əvəzinə interaktiv StatusSelector.
+                  // Burada status dəyişiləndə/sıfırlananda eyni
+                  // ApplicationStatusContext yenilənir, ona görə dəyişiklik
+                  // dərhal ProfileStatsBar-a (dashboard saylarına) və
+                  // OpportunityCard-dakı statusa da əks olunur.
+                  <OpportunityMiniRow
+                    key={opp.id || opp.title}
+                    opp={opp}
+                    statusBadge={<StatusSelector opportunity={opp} t={t} />}
+                  />
+                )}
               />
             )}
 

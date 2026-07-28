@@ -3,10 +3,9 @@ import { useLanguage } from '..//hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
-import { STATUS_CONFIG } from '../utils/applicationStatus'
-import { useApplicationStatus } from '../hooks/useApplicationStatus'
 import { useWishlist } from '../hooks/useWishlist'
 import { useLike } from '../hooks/useLike'
+import StatusSelector from './StatusSelector'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
 import ApplyConfirmModal from './ApplyConfirmModal'
@@ -94,69 +93,6 @@ const TYPE_LABEL_KEYS = {
   'Konfrans':  'type_conference',
   'Vebinar':   'type_webinar',
   'Fəaliyyət': 'type_activity',
-}
-
-function StatusSelector({ opportunity, t }) {
-  const { user } = useAuth()
-  const { statusMap, setStatus: setStatusRemote } = useApplicationStatus()
-  const [open, setOpen] = useState(false)
-  const wrapperRef = useRef(null)
-
-  useEffect(() => {
-    if (!open) return
-    function handleClickOutside(e) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
-        setOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [open])
-
-  if (!user) return null
-  if (!opportunity.id) return null // backend-ə bağlanmaq üçün real id lazımdır
-
-  const status = statusMap[opportunity.id] || null
-
-  function selectStatus(newStatus) {
-    setStatusRemote(opportunity.id, newStatus)
-    setOpen(false)
-  }
-
-  const config = status ? STATUS_CONFIG[status] : null
-
-  return (
-    <div
-      className="opportunity-card__status-selector"
-      ref={wrapperRef}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <button
-        type="button"
-        className={`opportunity-card__status-badge${config ? ` opportunity-card__status-badge--${config.modifier}` : ' opportunity-card__status-badge--empty'}`}
-        onClick={() => setOpen(o => !o)}
-      >
-        <span className="opportunity-card__status-dot" />
-        {config ? t(config.labelKey) : (t('status_select') || 'Status seç')}
-      </button>
-
-      {open && (
-        <div className="opportunity-card__status-dropdown">
-          {Object.entries(STATUS_CONFIG).map(([key, cfg]) => (
-            <button
-              key={key}
-              type="button"
-              className={`opportunity-card__status-option opportunity-card__status-option--${cfg.modifier}`}
-              onClick={() => selectStatus(key)}
-            >
-              <span className="opportunity-card__status-dot" />
-              {t(cfg.labelKey)}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  )
 }
 
 export default function OpportunityCard({ opportunity, autoOpenDetail = false }) {
