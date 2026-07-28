@@ -122,3 +122,16 @@ export async function getCurrentUser() {
   const { data } = await apiClient.get("/auth/me");
   return data.user;
 }
+
+
+export async function resendVerification() {
+  const { data } = await apiClient.post("/auth/resend-verification");
+  return data;
+}
+
+export async function verifyEmail(token) {
+  const { data } = await apiClient.get("/auth/verify-email", {
+    params: { token },
+  });
+  return data;
+}

@@ -47,16 +47,6 @@ export function ApplicationStatusProvider({ children }) {
 
   useEffect(() => {
     if (!user?.id) {
-      // İstifadəçi çıxış edəndə (əvvəllər user olub, indi yoxdursa)
-      // state-i sıfırlayırıq. Reference-bərabərlik yoxlaması ilə
-      // React artıq INITIAL_STATE-də olan halda əlavə render-i
-      // avtomatik bypass edir (updater eyni referansı qaytarsa,
-      // React heç bir re-render tətikləmir).
-      //
-      // Qalan sinxron setState burada qəsdəndir: bu, Effects-in
-      // məhz nəzərdə tutulduğu "xarici auth state-i React state-i
-      // ilə sinxronlaşdırmaq" ssenarisidir, ona görə xəbərdarlığı
-      // burada bilərəkdən susdururuq.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setState((prev) => (prev === INITIAL_STATE ? prev : INITIAL_STATE));
       return;
@@ -70,36 +60,30 @@ export function ApplicationStatusProvider({ children }) {
 
   const setStatus = useCallback(
     async (opportunityId, statusKey) => {
-      if (!user?.id || opportunityId == null || !statusKey) return;
+      if (!user?.id || opportunityId == null) return;
 
-      // "select" = "Seçim yoxdur" — real backend statusu deyil, sadəcə
-      // "status yoxdur" vəziyyətinin özüdür. Bunun üçün API-yə PUT
-      // göndərmirik (backend enum-u "SELECT" tanımır), sadəcə lokal
-      // statusMap-dən həmin opportunity-ni silirik ki, düymə yenidən
-      // placeholder ("Seçim yoxdur") göstərsin.
-      if (statusKey === "select") {
-        setState((prev) => {
-          const next = { ...prev.statusMap };
-          delete next[opportunityId];
-          return { ...prev, statusMap: next };
-        });
-        return;
-      }
+      const isReset = !statusKey || statusKey === "select";
+      const backendStatus = isReset ? null : statusKey.toUpperCase();
 
       let prevStatus;
       setState((prev) => {
         prevStatus = prev.statusMap[opportunityId];
-        return {
-          ...prev,
-          statusMap: { ...prev.statusMap, [opportunityId]: statusKey },
-        };
+        const nextMap = { ...prev.statusMap };
+
+        if (isReset) {
+          delete nextMap[opportunityId];
+        } else {
+          nextMap[opportunityId] = statusKey;
+        }
+
+        return { ...prev, statusMap: nextMap };
       });
 
       try {
         await applicationStatusService.setApplicationStatus(
           user.id,
           opportunityId,
-          statusKey.toUpperCase()
+          backendStatus
         );
         await refreshStatuses(user.id);
       } catch (err) {
