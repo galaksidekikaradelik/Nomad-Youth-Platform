@@ -99,8 +99,8 @@ function ProfileStatsBar({ applications }) {
 
   const stats = [
     { key: 'accepted', count: countOf(['accepted', 'approved']), label: t('status_accepted'), icon: CheckCircle2 },
-    { key: 'pending', count: countOf(['applied', 'pending']), label: t('status_applied'), icon: Clock },
-    { key: 'preparing', count: countOf(['preparing', 'in_progress']), label: t('profile_stat_preparing'), icon: Loader2 },
+    { key: 'pending', count: countOf(['applied', 'pending']), label: t('status_preparing'), icon: Clock },
+    { key: 'preparing', count: countOf(['preparing', 'in_progress']), label: t('status_applied'), icon: Loader2 },
     { key: 'rejected', count: countOf(['rejected']), label: t('status_rejected'), icon: XCircle },
   ];
 
