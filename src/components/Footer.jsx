@@ -14,7 +14,6 @@ const socials = [
   )},
 ]
 
-// FAQ sütununda göstəriləcək suallar (FAQ.jsx-dəki FAQ_KEYS massivinin indeksinə uyğun, 1-dən başlayaraq)
 const footerFaqItems = [
   { qKey: 'faq_q1', index: 1 },
   { qKey: 'faq_q2', index: 2 },

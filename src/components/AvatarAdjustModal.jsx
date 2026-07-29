@@ -5,24 +5,12 @@ import { useLanguage } from '../hooks/useLanguage'
 const VIEWPORT_SIZE = 240   // ekranda göstərilən dairənin ölçüsü (px)
 const OUTPUT_SIZE = 400     // yadda saxlanılan şəklin son ölçüsü (px, kvadrat)
 
-/**
- * AvatarAdjustModal
- * Seçilmiş şəkli dairəvi bir "viewport" daxilində göstərir, istifadəçi
- * şəkli yalnız şaquli (yuxarı/aşağı) sürüşdürə bilir ki, üz/əsas hissə
- * kadrın ortasında qalsın. "Yadda saxla" seçiləndə cari mövqeyə uyğun
- * kvadrat bir şəkil canvas üzərində çəkilib File kimi qaytarılır.
- *
- * Props:
- * - open: boolean
- * - file: seçilmiş orijinal şəkil (File)
- * - onCancel: () => void
- * - onConfirm: (adjustedFile: File) => void
- */
+
 export default function AvatarAdjustModal({ open, file, onCancel, onConfirm }) {
   const { t } = useLanguage()
   const [imgEl, setImgEl] = useState(null)
-  const [scale, setScale] = useState(1)      // "cover" üçün baza miqyas
-  const [offsetY, setOffsetY] = useState(0)  // mərkəzdən şaquli sürüşmə (px, viewport miqyasında)
+  const [scale, setScale] = useState(1)      
+  const [offsetY, setOffsetY] = useState(0) 
   const [maxOffset, setMaxOffset] = useState(0)
   const [saving, setSaving] = useState(false)
   const dragState = useRef(null)
@@ -81,7 +69,6 @@ export default function AvatarAdjustModal({ open, file, onCancel, onConfirm }) {
     const x = (OUTPUT_SIZE - drawnWidth) / 2
     const y = (OUTPUT_SIZE - drawnHeight) / 2 + offsetY * outputScale
 
-    // Dairəvi maska ilə kəsib kvadrat (şəffaf kənarlı) PNG kimi çəkirik.
     ctx.save()
     ctx.beginPath()
     ctx.arc(OUTPUT_SIZE / 2, OUTPUT_SIZE / 2, OUTPUT_SIZE / 2, 0, Math.PI * 2)

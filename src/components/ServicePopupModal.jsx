@@ -1,12 +1,8 @@
 import { createPortal } from 'react-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
-// TODO: Məsul şəxsin WhatsApp nömrəsini ölkə kodu ilə, boşluqsuz və "+" işarəsiz yaz.
-// Məsələn: '994501234567'
 const WHATSAPP_NUMBER = '994702343591'
 
-// service: Services.jsx tərəfindən artıq tərcümə edilmiş { title, desc, icon } şəklində ötürülür.
-// service.icon burada lucide-react komponentinin özüdür (JSX deyil).
 export default function ServicePopupModal({ service, onClose }) {
   const { t } = useLanguage()
 

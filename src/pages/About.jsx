@@ -12,7 +12,6 @@ const team = [
 export default function About() {
   const { t } = useLanguage()
 
-  // emoji ikon götürüldü — "Böyük nömrələr" dizaynında ehtiyac qalmır.
   const howItWorks = [
     { num: '01', titleKey: 'about_step1_title', descKey: 'about_step1_desc' },
     { num: '02', titleKey: 'about_step2_title', descKey: 'about_step2_desc' },

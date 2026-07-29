@@ -111,12 +111,8 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
       cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }, 100)
     return () => clearTimeout(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // "Bəyən" (heart) - artıq backend like-inə bağlıdır.
-  // Vəziyyət (liked) və dəyişdirmə (toggleLike) mərkəzi LikeContext-dən
-  // gəlir, hər kart öz-özünə backend-i çağırmır.
   const { likedIds, toggleLike: toggleLikeRemote } = useLike()
   const liked = opportunity.id ? likedIds.has(opportunity.id) : false
 
@@ -127,9 +123,6 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     toggleLikeRemote(opportunity.id)
   }
 
-  // "Yadda saxla" (bookmark) - artıq backend wishlist-inə bağlıdır.
-  // Vəziyyət (saved) və dəyişdirmə (toggleSave) mərkəzi WishlistContext-dən
-  // gəlir, hər kart öz-özünə backend-i çağırmır.
   const { savedIds, toggleSave: toggleWishlist } = useWishlist()
   const saved = opportunity.id ? savedIds.has(opportunity.id) : false
 
@@ -140,10 +133,6 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     toggleWishlist(opportunity.id)
   }
 
-  // "Müraciət et" - birbaşa xarici linkə açmaq əvəzinə, əvvəlcə
-  // istifadəçini platformadan ayrılacağı barədə xəbərdar edən təsdiq
-  // pəncərəsi göstərilir. Yalnız "Davam et" seçiləndə rəsmi müraciət
-  // linki yeni tab-da açılır.
   function handleApplyClick(e) {
     e.stopPropagation()
     e.preventDefault()
@@ -158,8 +147,6 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
-  // DƏYİŞDİ: tarix yoxdursa artıq sətir gizlənmir, "Müəyyən olunmayıb"
-  // (dilə uyğun tərcümə açarı: date_not_specified) göstərilir.
   const dateNotSpecified = t('date_not_specified') || 'Müəyyən olunmayıb'
 
   const formattedDeadline = deadline

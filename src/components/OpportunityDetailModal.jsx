@@ -38,7 +38,6 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
   const typeLabel = format === 'Online' ? t('type_online') : format === 'Offline' ? t('type_offline') : format
   const categories = Array.isArray(category) ? category : (category ? [category] : [])
 
-  // Seçilmiş dildə tərcümə varsa onu göstər; yoxdursa AZ-a düş və bunu istifadəçiyə bildir.
   const translatedDescription = descriptionTranslations?.[lang]
   const fallbackDescription = descriptionTranslations?.az || description
   const showingFallback = !translatedDescription && lang !== 'az'

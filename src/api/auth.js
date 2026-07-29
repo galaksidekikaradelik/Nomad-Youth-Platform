@@ -25,7 +25,6 @@ export async function login(credentials) {
 export async function register(payload) {
   const { data } = await apiClient.post("/auth/register", payload);
 
-  // Register accessToken qaytarır
   if (data.accessToken) {
     localStorage.setItem("authToken", data.accessToken);
 

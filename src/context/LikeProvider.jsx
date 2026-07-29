@@ -17,12 +17,6 @@ export function LikeProvider({ children }) {
     likeService
       .getUserLikes(user.id)
       .then((items) => {
-        // DÜZƏLDİLDİ: statik opportunities.json-dan filtr etmək əvəzinə,
-        // backend-in qaytardığı UserProject list-indən birbaşa daxili
-        // "opportunity" obyektini çıxarırıq. Bu, elan Home-dan (statik
-        // datadan) və ya İmkanlar-dan (backend-dən) bəyənilməsindən
-        // asılı olmayaraq HƏMİŞƏ düzgün işləyir, çünki backend hər iki
-        // halda öz DB-sindəki real Opportunity-ni qaytarır.
         const opps = items
           .map((item) => item.opportunity)
           .filter(Boolean);
@@ -32,8 +26,6 @@ export function LikeProvider({ children }) {
       .finally(() => setLoading(false));
   }, [user]);
 
-  // likedIds indi likedOpportunities-dən törənir (Set kimi lazım olan
-  // yerlərdə - məs. OpportunityCard-da "bu elan bəyənilibmi?" sualı üçün)
   const likedIds = new Set(likedOpportunities.map((opp) => opp.id));
 
   const toggleLike = useCallback(
@@ -47,10 +39,6 @@ export function LikeProvider({ children }) {
           setLikedOpportunities((prev) => prev.filter((opp) => opp.id !== projectId));
         } else {
           await likeService.addLike(user.id, projectId);
-          // Backend-dən təzə siyahını çəkirik ki, yeni bəyənilən elanın
-          // tam (title, location, deadline və s.) datası da gəlsin -
-          // yalnız ID-ni optimistic əlavə etsək kart üçün lazımi
-          // məlumatlar (title və s.) olmayacaqdı.
           const items = await likeService.getUserLikes(user.id);
           setLikedOpportunities(items.map((item) => item.opportunity).filter(Boolean));
         }

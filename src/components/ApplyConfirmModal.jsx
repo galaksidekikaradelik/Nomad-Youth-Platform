@@ -10,16 +10,6 @@ const ExternalLinkIcon = () => (
   </svg>
 )
 
-/**
- * ApplyConfirmModal
- * Shown right before an opportunity's official apply link is opened, so the
- * user knows they're about to leave Nomad Youth for an external site.
- *
- * Props:
- * - open: boolean
- * - onCancel: () => void      ("Ləğv et")
- * - onConfirm: () => void     ("Davam et" — caller opens the link)
- */
 export default function ApplyConfirmModal({ open, onCancel, onConfirm }) {
   const { t } = useLanguage()
   const dialogRef = useRef(null)

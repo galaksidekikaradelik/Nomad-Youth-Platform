@@ -1,14 +1,3 @@
-// Bildiriş sistemi (backend hazır olana qədər user-ə görə localStorage-da).
-//
-// İki növ bildiriş yaradılır:
-// 1. "new_listing"    — opportunities.json-a yeni əlavə olunan hər elan üçün.
-// 2. "similar_match"   — istifadəçinin bəyəndiyi elanlarla eyni kateqoriyaya
-//                        (categoryGroups) aid yeni elan gələndə əlavə olaraq.
-//
-// Qeyd: elanlar statik JSON-dan gəldiyi üçün "yeni elan" aşkarlanması yalnız
-// sayt yenidən build/deploy olunub istifadəçi səhifəni yenidən açanda baş verir
-// (convertExcel.js → opportunities.json yenilənəndə). Real-time deyil.
-
 import { getLikeStorageKey, readStoredSet } from './likes'
 
 const MAX_NOTIFICATIONS = 50

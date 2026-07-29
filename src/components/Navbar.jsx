@@ -222,12 +222,6 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
-
-      {/* DƏYİŞDİ: Email təsdiqi banneri. Navbar-ın altında, bütün
-          səhifələrdə görünür (Navbar bütün route-larda ortaq
-          istifadə olunduğu üçün). Komponentin özü içəridə
-          user.emailVerified yoxlayır və təsdiqlənmiş istifadəçilər
-          üçün heç nə render etmir. */}
       <EmailVerificationBanner />
 
       <div className={`navbar__mobile${menuOpen ? ' open' : ''}`}>
