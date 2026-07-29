@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useWishlist } from '../hooks/useWishlist';
@@ -6,6 +6,7 @@ import { useLike } from '../hooks/useLike';
 import { useApplicationStatus } from '../hooks/useApplicationStatus';
 import { useLanguage } from '../hooks/useLanguage';
 import { STATUS_CONFIG } from '../utils/applicationStatus';
+import * as notificationService from '../services/notificationService';
 import Avatar from '../components/Avatar';
 import AvatarAdjustModal from '../components/AvatarAdjustModal';
 import StatusSelector from '../components/StatusSelector';
@@ -34,6 +35,18 @@ function getDaysLeft(deadline) {
   const diff = new Date(deadline) - new Date();
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
   return days > 0 ? days : 0;
+}
+
+function timeAgo(isoDate) {
+  if (!isoDate) return '';
+  const diffMs = Date.now() - new Date(isoDate).getTime();
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return 'indicə';
+  if (mins < 60) return `${mins} dəq əvvəl`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours} saat əvvəl`;
+  const days = Math.floor(hours / 24);
+  return `${days} gün əvvəl`;
 }
 
 // Artıq bütün item-lər Profile daxilində "view" olaraq açılır, ayrı route yoxdur
@@ -100,10 +113,10 @@ function ProfileStatsBar({ applications }) {
     applications.filter((a) => modifiers.includes(STATUS_CONFIG[a.status]?.modifier)).length;
 
   const stats = [
-    { key: 'accepted', count: countOf(['accepted', 'approved']), label: t('status_accepted'), icon: CheckCircle2 },
-    { key: 'pending', count: countOf(['applied', 'pending']), label: t('status_preparing'), icon: Clock },
-    { key: 'preparing', count: countOf(['preparing', 'in_progress']), label: t('status_applied'), icon: Loader2 },
-    { key: 'rejected', count: countOf(['rejected']), label: t('status_rejected'), icon: XCircle },
+    { key: 'accepted', count: countOf(['accepted', 'approved']), label: t('profile_stat_accepted'), icon: CheckCircle2 },
+    { key: 'pending', count: countOf(['applied', 'pending']), label: t('profile_stat_pending'), icon: Clock },
+    { key: 'preparing', count: countOf(['preparing', 'in_progress']), label: t('profile_stat_preparing'), icon: Loader2 },
+    { key: 'rejected', count: countOf(['rejected']), label: t('profile_stat_rejected'), icon: XCircle },
   ];
 
   return (
@@ -306,8 +319,48 @@ function FullListView({ title, items, emptyText, onBack, renderRow }) {
   );
 }
 
+// DƏYİŞDİ: əvvəllər həmişə boş placeholder göstərirdi. İndi real
+// backend-dən (/api/notifications) bildirişləri çəkir və göstərir.
+// NotificationsDropdown-dakı kimi, açılanda oxunmamışlar avtomatik
+// "oxundu" işarələnir.
 function NotificationsView({ onBack }) {
   const { t } = useLanguage();
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      setLoading(true);
+      setError(null);
+      try {
+        const list = await notificationService.fetchMyNotifications();
+        if (cancelled) return;
+        setNotifications(list || []);
+
+        const unread = (list || []).filter((n) => !n.read);
+        if (unread.length > 0) {
+          await Promise.all(unread.map((n) => notificationService.markAsRead(n.id)));
+          if (!cancelled) {
+            setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+          }
+        }
+      } catch (err) {
+        console.error('Bildirişlər yüklənmədi:', err);
+        if (!cancelled) {
+          setError(t('profile_notifications_error') || 'Bildirişlər yüklənmədi. Yenidən cəhd edin.');
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    load();
+    return () => { cancelled = true; };
+  }, [t]);
+
   return (
     <div className="profile-panel profile-panel--full">
       <button type="button" className="profile-panel__back" onClick={onBack}>
@@ -315,9 +368,35 @@ function NotificationsView({ onBack }) {
       </button>
       <div className="profile-panel__header">
         <h2>{t('profile_nav_notifications')}</h2>
+        {!loading && !error && <span className="profile-panel__count">{notifications.length}</span>}
       </div>
       <div className="profile-panel__body">
-        <EmptyRow text={t('profile_notifications_empty')} />
+        {loading ? (
+          <EmptyRow text="Yüklənir..." />
+        ) : error ? (
+          <EmptyRow text={error} />
+        ) : notifications.length === 0 ? (
+          <EmptyRow text={t('profile_notifications_empty')} />
+        ) : (
+          notifications.map((n) => (
+            <div
+              key={n.id}
+              className={`profile-mini-row${n.read ? '' : ' profile-mini-row--unread'}`}
+            >
+              <div className="profile-mini-row__text">
+                <span className="profile-mini-row__title">{n.title}</span>
+                {n.message && (
+                  <div className="profile-mini-row__meta">
+                    <span className="profile-mini-row__tag">{n.message}</span>
+                  </div>
+                )}
+                <div className="profile-mini-row__meta profile-mini-row__meta--muted">
+                  {timeAgo(n.createdAt)}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
@@ -689,11 +768,6 @@ export default function Profile() {
                 emptyText={t('profile_applications_empty')}
                 onBack={goOverview}
                 renderRow={({ opp }) => (
-                  // DƏYİŞDİ: statik badge əvəzinə interaktiv StatusSelector.
-                  // Burada status dəyişiləndə/sıfırlananda eyni
-                  // ApplicationStatusContext yenilənir, ona görə dəyişiklik
-                  // dərhal ProfileStatsBar-a (dashboard saylarına) və
-                  // OpportunityCard-dakı statusa da əks olunur.
                   <OpportunityMiniRow
                     key={opp.id || opp.title}
                     opp={opp}
