@@ -52,6 +52,11 @@
   "card_apply": "Подать заявку",
   "card_view_details": "Подробнее",
   "card_description": "Описание",
+  "card_location": "Место проведения",
+  "card_duration": "Продолжительность",
+  "card_language": "Язык",
+  "card_event_date_range": "Дата проведения",
+  "card_financial_support": "Финансовая поддержка",
 
   "type_online": "Онлайн",
   "type_offline": "Очно",

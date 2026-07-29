@@ -6,13 +6,16 @@ export function mapOpportunity(raw) {
     title: raw.title,
     deadline: raw.deadline,
     applyLink: raw.applyLink,
-    location: raw.country ?? "",
+    location: raw.city ? `${raw.city}, ${raw.country ?? ""}` : (raw.country ?? ""),
+    city: raw.city ?? "",
+    country: raw.country ?? "",
     type: raw.type ?? "",
-    format: raw.sort ?? "Hamısı",
+    format: raw.format ?? "Hamısı",
     category: raw.category ?? null,
     categoryGroups: raw.category ? [raw.category] : [],
     tags: raw.category ? [raw.category] : [],
-    publishedAt: raw.openingDate ?? null,
+    openingDate: raw.openingDate ?? null,
+    publishedAt: raw.publishedAt ?? null,
     sortOrder: 0,
     description: raw.sumAz ?? "",
     descriptionTranslations: {
@@ -20,6 +23,15 @@ export function mapOpportunity(raw) {
       en: raw.sumEn ?? "",
       ru: raw.sumRus ?? "",
     },
+
+    duration: raw.duration ?? null,
+    language: raw.language ?? null,
+    eventDateRange: raw.eventDateRange ?? null,
+    participantCount: raw.participantCount ?? null,
+    financialSupport: raw.financialSupport ?? null,
+    ageRequirement: raw.ageRequirement ?? null,
+    escOrSalto: raw.escOrSalto ?? null,
+    volunteeringType: raw.volunteeringType ?? null,
   };
 }
 

@@ -53,6 +53,11 @@
   "card_view_details": "Ətraflı bax",
   "card_description": "Açıqlama",
   "date_not_specified": "Müəyyən olunmayıb",
+  "card_location": "Məkan",
+  "card_duration": "Layihə müddəti",
+  "card_language": "Dil",
+  "card_event_date_range": "Keçirilmə tarixi",
+  "card_financial_support": "Maliyyə dəstəyi",
 
   "type_online": "Onlayn",
   "type_offline": "Əyani",

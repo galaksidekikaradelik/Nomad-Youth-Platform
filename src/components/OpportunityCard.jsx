@@ -5,6 +5,7 @@ import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
 import { useWishlist } from '../hooks/useWishlist'
 import { useLike } from '../hooks/useLike'
+import apiClient from '../services/apiClient'
 import StatusSelector from './StatusSelector'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
@@ -98,10 +99,21 @@ const TYPE_LABEL_KEYS = {
 export default function OpportunityCard({ opportunity, autoOpenDetail = false }) {
   const { t, lang } = useLanguage()
   const { user } = useAuth()
-  const { title, format, category, type, location, deadline, applyLink, publishedAt } = opportunity
+  const { 
+    title, 
+    format, 
+    category, 
+    type, 
+    country: location, 
+    deadline, 
+    applyLink, 
+    publishedAt 
+} = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [showDetail, setShowDetail] = useState(autoOpenDetail)
   const [showApplyConfirm, setShowApplyConfirm] = useState(false)
+  const [detailData, setDetailData] = useState(null)
+  const [detailLoading, setDetailLoading] = useState(false)
   const cardRef = useRef(null)
 
 
@@ -144,6 +156,51 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     setShowApplyConfirm(false)
     window.open(applyLink, '_blank', 'noopener,noreferrer')
   }
+
+  async function openDetail(e) {
+    e.stopPropagation()
+    setShowDetail(true)
+
+    if (!opportunity.id) return // statik/id-siz kartlar üçün detal sorğusu atma
+
+    setDetailLoading(true)
+    try {
+      // Backend marşrutu: GET /api/opportunities/{id}/details
+      const res = await apiClient.get(`/opportunities/${opportunity.id}/details`, {
+        params: { userId: user?.id, lang },
+      })
+      setDetailData(res.data)
+    } catch (err) {
+      console.error('Opportunity detail fetch failed:', err)
+    } finally {
+      setDetailLoading(false)
+    }
+  }
+
+  function closeDetail() {
+    setShowDetail(false)
+    setDetailData(null)
+  }
+
+  // Kart datası (siyahıdan) + detal datası (backend-dən) merge olunur.
+  // Detal datası gələnə qədər kartdakı mövcud sahələr (title, location, tags və s.) göstərilir,
+  // yalnız duration/language/eventDateRange/financialSupport kimi sahələr detal gələndə əlavə olunur.
+  const mergedDetailOpportunity = detailData
+    ? {
+        ...opportunity,
+        deadline: detailData.deadline ?? opportunity.deadline,
+        applyLink: detailData.applyLink ?? opportunity.applyLink,
+        description: detailData.description ?? opportunity.description,
+        descriptionTranslations: {
+          ...opportunity.descriptionTranslations,
+          [lang]: detailData.description ?? opportunity.descriptionTranslations?.[lang],
+        },
+        duration: detailData.duration ?? null,
+        language: detailData.language ?? null,
+        eventDateRange: detailData.eventDateRange ?? null,
+        financialSupport: detailData.financialSupport ?? null,
+      }
+    : opportunity
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
@@ -246,7 +303,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
           <button
             type="button"
             className="opportunity-card__detail-btn"
-            onClick={(e) => { e.stopPropagation(); setShowDetail(true) }}
+            onClick={openDetail}
           >
             {t('card_view_details') || 'Ətraflı bax'}
           </button>
@@ -270,10 +327,11 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
       </div>
 
       <OpportunityDetailModal
-        opportunity={opportunity}
+        opportunity={mergedDetailOpportunity}
+        loading={detailLoading}
         open={showDetail}
-        onClose={() => setShowDetail(false)}
-        onRequireAuth={() => { setShowDetail(false); setShowAuthPrompt(true) }}
+        onClose={closeDetail}
+        onRequireAuth={() => { closeDetail(); setShowAuthPrompt(true) }}
       />
 
       <AuthPromptModal open={showAuthPrompt} onClose={() => setShowAuthPrompt(false)} />

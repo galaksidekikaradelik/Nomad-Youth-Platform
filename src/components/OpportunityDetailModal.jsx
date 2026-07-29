@@ -21,18 +21,74 @@ const ArrowIcon = () => (
   </svg>
 )
 
+const CalendarIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M16 2v4M8 2v4M3 10h18" />
+  </svg>
+)
+
+const PinIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+)
+
+const ClockIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+)
+
+const GlobeIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z" />
+  </svg>
+)
+
+const DateRangeIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M16 2v4M8 2v4M3 10h18M8 14h2M14 14h2" />
+  </svg>
+)
+
+const CoinIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v10M9 9.5c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5-1.3 2-3 2.5-3 1-3 2.5 1.3 2.5 3 2.5 3-1 3-2.5" />
+  </svg>
+)
+
+function InfoItem({ icon, label, value }) {
+  if (!value) return null
+  return (
+    <div className="detail-modal__info-item">
+      <div className="detail-modal__info-icon">{icon}</div>
+      <div className="detail-modal__info-text">
+        <span className="detail-modal__info-label">{label}</span>
+        <span className="detail-modal__info-value">{value}</span>
+      </div>
+    </div>
+  )
+}
+
 export default function OpportunityDetailModal({ opportunity, open, onClose, onRequireAuth }) {
   const { t, lang } = useLanguage()
   if (!open || !opportunity) return null
 
-  const { title, format, category, location, deadline, applyLink, description, descriptionTranslations, publishedAt } = opportunity
+  const {
+    title, format, category, location, deadline, applyLink,
+    description, descriptionTranslations, publishedAt,
+    duration, language, eventDateRange, financialSupport,
+  } = opportunity
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
   const formattedDeadline = deadline
     ? new Date(deadline).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
-    : null
-  const formattedPublished = publishedAt
-    ? new Date(publishedAt).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
     : null
 
   const typeLabel = format === 'Online' ? t('type_online') : format === 'Offline' ? t('type_offline') : format
@@ -84,17 +140,13 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
           </div>
         )}
 
-        <div className="detail-modal__meta">
-          {formattedDeadline && (
-            <div className="detail-modal__meta-row">
-              <strong>{t('card_deadline')}</strong> {formattedDeadline}
-            </div>
-          )}
-          {formattedPublished && (
-            <div className="detail-modal__meta-row detail-modal__meta-row--muted">
-              <strong>{t('card_published')}</strong> {formattedPublished}
-            </div>
-          )}
+        <div className="detail-modal__info-grid">
+          <InfoItem icon={<CalendarIcon />} label={t('card_deadline')} value={formattedDeadline} />
+          <InfoItem icon={<PinIcon />} label={t('card_location')} value={location} />
+          <InfoItem icon={<ClockIcon />} label={t('card_duration')} value={duration} />
+          <InfoItem icon={<GlobeIcon />} label={t('card_language')} value={language} />
+          <InfoItem icon={<DateRangeIcon />} label={t('card_event_date_range')} value={eventDateRange} />
+          <InfoItem icon={<CoinIcon />} label={t('card_financial_support')} value={financialSupport} />
         </div>
 
         <div className="detail-modal__divider" />

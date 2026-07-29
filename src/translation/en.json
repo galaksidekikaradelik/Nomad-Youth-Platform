@@ -52,6 +52,11 @@
   "card_apply": "Apply",
   "card_view_details": "View details",
   "card_description": "Description",
+  "card_location": "Location",
+  "card_duration": "Duration",
+  "card_language": "Language",
+  "card_event_date_range": "Event Date",
+  "card_financial_support": "Financial Support",
 
   "type_online": "Online",
   "type_offline": "In-person",
