@@ -96,6 +96,17 @@ const TYPE_LABEL_KEYS = {
   'Fəaliyyət': 'type_activity',
 }
 
+// YENİ: ESC/SALTO və Individual/Team üçün label mapping (i18n açarları ilə, fallback öz dəyəri)
+const ESC_SALTO_LABEL_KEYS = {
+  'ESC': 'badge_esc',
+  'SALTO': 'badge_salto',
+}
+
+const VOLUNTEERING_TYPE_LABEL_KEYS = {
+  'Individual': 'badge_individual',
+  'Team': 'badge_team',
+}
+
 export default function OpportunityCard({ opportunity, autoOpenDetail = false }) {
   const { t, lang } = useLanguage()
   const { user } = useAuth()
@@ -107,7 +118,9 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     country: location, 
     deadline, 
     applyLink, 
-    publishedAt 
+    publishedAt,
+    escOrSalto,        // YENİ
+    volunteeringType,  // YENİ
 } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [showDetail, setShowDetail] = useState(autoOpenDetail)
@@ -182,9 +195,6 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     setDetailData(null)
   }
 
-  // Kart datası (siyahıdan) + detal datası (backend-dən) merge olunur.
-  // Detal datası gələnə qədər kartdakı mövcud sahələr (title, location, tags və s.) göstərilir,
-  // yalnız duration/language/eventDateRange/financialSupport kimi sahələr detal gələndə əlavə olunur.
   const mergedDetailOpportunity = detailData
     ? {
         ...opportunity,
@@ -224,6 +234,28 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
 
   const categories = Array.isArray(category) ? category : (category ? [category] : [])
 
+  // YENİ: ESC/SALTO badge üçün label və modifier hazırlanır
+  const escSaltoLabelKey = escOrSalto ? ESC_SALTO_LABEL_KEYS[escOrSalto] : null
+  const escSaltoLabel = escSaltoLabelKey ? t(escSaltoLabelKey) : escOrSalto
+  const escSaltoModifier = escOrSalto === 'ESC' ? 'esc' : escOrSalto === 'SALTO' ? 'salto' : null
+  const normalizedVolunteeringType =
+  volunteeringType?.replace('İ', 'I')
+
+  const volunteeringLabelKey = normalizedVolunteeringType
+  ? VOLUNTEERING_TYPE_LABEL_KEYS[normalizedVolunteeringType]
+  : null
+
+const volunteeringLabel = volunteeringLabelKey
+  ? t(volunteeringLabelKey)
+  : normalizedVolunteeringType
+
+const volunteeringModifier =
+  normalizedVolunteeringType === 'Individual'
+    ? 'individual'
+    : normalizedVolunteeringType === 'Team'
+      ? 'team'
+      : null
+  
   return (
     <div className="opportunity-card" ref={cardRef}>
       <div className="opportunity-card__top">
@@ -275,6 +307,20 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
               {translateCategory(cat, lang)}
             </span>
           ))}
+
+          {/* YENİ: ESC/SALTO badge — yalnız məlumat mövcud olduqda göstərilir */}
+          {escSaltoModifier && (
+            <span className={`opportunity-card__tag opportunity-card__tag--${escSaltoModifier}`}>
+              {escSaltoLabel}
+            </span>
+          )}
+
+          {/* YENİ: Individual/Team badge — yalnız məlumat mövcud olduqda göstərilir */}
+          {volunteeringModifier && (
+            <span className={`opportunity-card__tag opportunity-card__tag--${volunteeringModifier}`}>
+              {volunteeringLabel}
+            </span>
+          )}
         </div>
       </div>
 

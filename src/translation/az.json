@@ -400,5 +400,11 @@
   "profile_avatar_edit_aria": "Profil şəklini dəyiş",
   "profile_avatar_remove_aria": "Şəkli sil",
   "profile_avatar_upload_error": "Şəkil yüklənmədi, yenidən cəhd edin.",
-  "profile_avatar_remove_error": "Şəkil silinmədi, yenidən cəhd edin."
+  "profile_avatar_remove_error": "Şəkil silinmədi, yenidən cəhd edin.",
+
+  "badge_esc": "ESC",
+  "badge_salto": "SALTO",
+  "badge_individual": "Fərdi",
+  "badge_team": "Komanda"
+
 }

@@ -195,3 +195,28 @@
   background: var(--neutral-100);
   color: var(--text-primary);
 }
+
+[data-theme="dark"] .opportunity-card__tag--esc {
+    background-color: #e6f4ff;
+    color: #0958d9;
+    border: 1px solid #91caff;
+}
+
+[data-theme="dark"] .opportunity-card__tag--salto {
+  background-color: #fff2e8;
+  color: #d4380d;
+  border: 1px solid #ffbb96;
+}
+
+[data-theme="dark"] .opportunity-card__tag--individual {
+  background-color: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+}
+
+[data-theme="dark"] .opportunity-card__tag--team {
+  background-color: #f9f0ff;
+  color: #722ed1;
+  border: 1px solid #d3adf7;
+}
+

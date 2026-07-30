@@ -400,6 +400,12 @@
   "profile_avatar_edit_aria": "Изменить фото профиля",
   "profile_avatar_remove_aria": "Удалить фото",
   "profile_avatar_upload_error": "Не удалось загрузить фото, попробуйте снова.",
-  "profile_avatar_remove_error": "Не удалось удалить фото, попробуйте снова."
+  "profile_avatar_remove_error": "Не удалось удалить фото, попробуйте снова.",
+
+  "badge_esc": "ESC",
+  "badge_salto": "SALTO",
+  "badge_individual": "Индивидуальный",
+  "badge_team": "Командный"
+
 
 }

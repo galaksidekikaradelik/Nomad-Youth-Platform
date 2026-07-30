@@ -400,6 +400,11 @@
   "profile_avatar_edit_aria": "Change profile photo",
   "profile_avatar_remove_aria": "Remove photo",
   "profile_avatar_upload_error": "Photo upload failed, please try again.",
-  "profile_avatar_remove_error": "Photo removal failed, please try again."
+  "profile_avatar_remove_error": "Photo removal failed, please try again.",
+
+  "badge_esc": "ESC",
+  "badge_salto": "SALTO",
+  "badge_individual": "Individual",
+  "badge_team": "Team"
 
 }

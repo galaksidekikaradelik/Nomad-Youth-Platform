@@ -170,9 +170,7 @@
   color: #059669;
 }
 
-/* Əvvəlki #979705 (rgba(220,246,92,.301) tint fonu üzərində) yalnız 2.91:1
-   kontrast verirdi — WCAG AA-nı (4.5:1) ciddi şəkildə keçmirdi.
-   Tündləşdirildi: indi ~5.05:1. */
+
 .opportunity-card__tag--offline {
   background: rgba(220, 246, 92, 0.301);
   color: #6E6E00;
@@ -184,12 +182,7 @@
   gap: 4px;
 }
 
-/* Əvvəlki var(--status-error) (#EF4444) rgba(239,68,68,.12) tint fonu
-   üzərində yalnız 3.23:1 kontrast verirdi. Kateqoriya palitrasındakı
-   eyni tünd qırmızı (#B91C1C) istifadə edildi: indi ~5.55:1.
-   Qeyd: --status-error dəyişəni özü toxunulmayıb (düymə fon rəngi kimi
-   başqa yerlərdə düzgün işləyir), yalnız bu konkret tint-üzərində-mətn
-   halı üçün daha tünd sabit rəng seçildi. */
+
 .opportunity-card__days-left--urgent {
   color: #B91C1C;
   font-weight: 700;
@@ -429,4 +422,39 @@
   .detail-modal__info-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ESC / SALTO badge-ləri */
+.opportunity-card__tag--esc {
+  background-color: #e6f4ff;
+  color: #0958d9;
+  border: 1px solid #91caff;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.opportunity-card__tag--salto {
+  background-color: #fff2e8;
+  color: #d4380d;
+  border: 1px solid #ffbb96;
+  font-size: 0.7rem;
+  font-weight: 600;
+
+}
+
+/* Individual / Team badge-ləri */
+.opportunity-card__tag--individual {
+  background-color: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.opportunity-card__tag--team {
+  background-color: #f9f0ff;
+  color: #722ed1;
+  border: 1px solid #d3adf7;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
