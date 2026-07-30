@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
-const WHATSAPP_NUMBER = '994702343591'
+const WHATSAPP_NUMBER = '994517773764'
 
 export default function ServicePopupModal({ service, onClose }) {
   const { t } = useLanguage()
