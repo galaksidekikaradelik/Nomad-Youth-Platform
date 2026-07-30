@@ -10,7 +10,7 @@ export function mapOpportunity(raw) {
     city: raw.city ?? "",
     country: raw.country ?? "",
     type: raw.type ?? "",
-    format: raw.format ?? "Hamısı",
+    typeDetail: raw.typeDetail ?? "Hamısı",
     category: raw.category ?? null,
     categoryGroups: raw.category ? [raw.category] : [],
     tags: raw.category ? [raw.category] : [],
