@@ -49,7 +49,7 @@ export default function Contact() {
 
   const infoCards = [
     { icon: <MailIcon />,  label: t('contact_email_label'),   value: 'nomadyouth26@gmail.com' },
-    { icon: <PhoneIcon />, label: t('contact_phone_label'),   value: '+994 70 234 35 91' },
+    { icon: <PhoneIcon />, label: t('contact_phone_label'),   value: '+994 51 777 37 64' },
     { icon: <PinIcon />,   label: t('contact_address_label'), value: t('contact_address_value') },
   ]
 
@@ -63,7 +63,6 @@ export default function Contact() {
     const { name, value } = e.target
     setForm(f => ({ ...f, [name]: value }))
     setSubmitError('')
-    // Clear this field's error as soon as the user edits it
     setErrors(prev => (prev[name] ? { ...prev, [name]: undefined } : prev))
   }
 
@@ -98,7 +97,6 @@ export default function Contact() {
 
   const handleSubmit = async () => {
     if (selectedType.viaWhatsApp) {
-      // Name/message are optional context for the WhatsApp message, so no blocking validation here
       const greeting = t('contact_whatsapp_greeting').replace('{type}', t(selectedType.labelKey))
       const lines = [greeting]
       if (form.name)    lines.push(`${t('contact_whatsapp_name_label')} ${form.name}`)

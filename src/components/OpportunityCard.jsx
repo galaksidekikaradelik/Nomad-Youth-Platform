@@ -64,6 +64,7 @@ const COUNTRY_CODES = {
   'Bolqarıstan': 'bg',
   'Estoniya': 'ee',
   'Latviya': 'lv',
+  'Litvanya': 'lt',
   'Litva': 'lt',
   'Sloveniya': 'si',
   'Slovakiya': 'sk',
@@ -96,7 +97,6 @@ const TYPE_LABEL_KEYS = {
   'Fəaliyyət': 'type_activity',
 }
 
-// YENİ: ESC/SALTO və Individual/Team üçün label mapping (i18n açarları ilə, fallback öz dəyəri)
 const ESC_SALTO_LABEL_KEYS = {
   'ESC': 'badge_esc',
   'SALTO': 'badge_salto',
@@ -112,15 +112,15 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
   const { user } = useAuth()
   const { 
     title, 
-    format, 
+    typeDetail, 
     category, 
     type, 
     country: location, 
     deadline, 
     applyLink, 
     publishedAt,
-    escOrSalto,        // YENİ
-    volunteeringType,  // YENİ
+    escOrSalto,        
+    volunteeringType,  
 } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [showDetail, setShowDetail] = useState(autoOpenDetail)
@@ -154,7 +154,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
   function toggleSave(e) {
     e.stopPropagation()
     if (!user) { setShowAuthPrompt(true); return }
-    if (!opportunity.id) return // wishlist üçün real backend id lazımdır
+    if (!opportunity.id) return 
     toggleWishlist(opportunity.id)
   }
 
@@ -174,11 +174,9 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     e.stopPropagation()
     setShowDetail(true)
 
-    if (!opportunity.id) return // statik/id-siz kartlar üçün detal sorğusu atma
-
+    if (!opportunity.id) return 
     setDetailLoading(true)
     try {
-      // Backend marşrutu: GET /api/opportunities/{id}/details
       const res = await apiClient.get(`/opportunities/${opportunity.id}/details`, {
         params: { userId: user?.id, lang },
       })
@@ -226,15 +224,14 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     ? new Date(publishedAt).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
     : dateNotSpecified
 
-  const formatLabel = format === 'Online' ? t('type_online') : format === 'Offline' ? t('type_offline') : format
-  const formatModifier = format === 'Online' ? 'online' : format === 'Offline' ? 'offline' : null
+  const formatLabel = typeDetail === 'Online' ? t('type_online') : typeDetail === 'Offline' ? t('type_offline') : typeDetail
+  const formatModifier = typeDetail === 'Online' ? 'online' : typeDetail === 'Offline' ? 'offline' : null
 
   const typeLabelKey = type ? TYPE_LABEL_KEYS[type] : null
   const typeLabel = typeLabelKey ? t(typeLabelKey) : type
 
   const categories = Array.isArray(category) ? category : (category ? [category] : [])
 
-  // YENİ: ESC/SALTO badge üçün label və modifier hazırlanır
   const escSaltoLabelKey = escOrSalto ? ESC_SALTO_LABEL_KEYS[escOrSalto] : null
   const escSaltoLabel = escSaltoLabelKey ? t(escSaltoLabelKey) : escOrSalto
   const escSaltoModifier = escOrSalto === 'ESC' ? 'esc' : escOrSalto === 'SALTO' ? 'salto' : null
