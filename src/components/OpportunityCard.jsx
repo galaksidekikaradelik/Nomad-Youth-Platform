@@ -109,9 +109,6 @@ const VOLUNTEERING_TYPE_LABEL_KEYS = {
 
 export default function OpportunityCard({ opportunity, autoOpenDetail = false }) {
 
-
-  console.log("Opportunity:", opportunity)
-  console.log("typeDetail:", opportunity.typeDetail)
   const { t, lang } = useLanguage()
   const { user } = useAuth()
   const { 

@@ -70,18 +70,15 @@ export default function Opportunities() {
   const initialScope    = searchParams.get('scope') || 'hamisi'
   const initialQuery    = searchParams.get('query') || ''
   const initialCategory = searchParams.get('category') || ''
-  // Bildiriş və ya digər yerlərdən "bu elanı göstər" keçidi üçün (məs. /opportunities?show=12)
   const highlightOppKey = searchParams.get('show') || null
 
-  // Backend-dən opportunity cards çəkilir (əvvəlki statik import əvəzinə)
   const { opportunities, loading, error } = useOpportunities()
 
   const [search,     setSearch]     = useState(initialQuery)
-  // Çoxlu kateqoriya seçimi üçün array. Boş array = "Hamısı" (filter yoxdur).
   const [categories, setCategories] = useState(initialCategory ? [initialCategory] : [])
   const [types,      setTypes]      = useState([])
   const [scope,      setScope]      = useState(initialScope)
-  const [format,     setFormat]     = useState('Hamısı')
+  const [typeDetail,     setFormat]     = useState('Hamısı')
   const [sort,       setSort]       = useState('deadline')
   const [tab]        = useState('opportunities')
 
@@ -123,7 +120,7 @@ export default function Opportunities() {
       (Array.isArray(op.categoryGroups) && categories.some(cat => op.categoryGroups.includes(cat)))
     const matchType   = types.length === 0 || types.includes(op.type)
     const matchScope  = scope === 'hamisi' || op.scope === scope
-    const matchFormat = format === 'Hamısı' || op.format === format
+    const matchFormat = typeDetail === 'Hamısı' || op.typeDetail === typeDetail
     const q = search.toLocaleLowerCase('az')
     const matchSearch = !search ||
       op.title.toLocaleLowerCase('az').includes(q) ||
@@ -131,7 +128,7 @@ export default function Opportunities() {
       op.organization?.toLocaleLowerCase('az').includes(q) ||
       op.tags.some(tag => tag.toLocaleLowerCase('az').includes(q))
     return matchCat && matchType && matchScope && matchFormat && matchSearch
-  }), [enriched, search, categories, types, scope, format])
+  }), [enriched, search, categories, types, scope, typeDetail])
 
   const sorted = useMemo(() => {
     const arr = [...filtered]
@@ -148,7 +145,7 @@ export default function Opportunities() {
   // Filtr/axtarış/sıralama dəyişdikdə səhifəni sıfırla
   useEffect(() => {
     setPage(0)
-  }, [search, categories, types, scope, format, sort])
+  }, [search, categories, types, scope, typeDetail, sort])
 
   const totalPages = Math.ceil(sorted.length / PAGE_SIZE)
 
@@ -229,7 +226,7 @@ export default function Opportunities() {
                 <span className="filter-group__label">{t('filter_format_label')}</span>
                 <div className="filter-group__chips">
                   {FORMATS.map(f => (
-                    <FilterChip key={f.id} label={t(f.labelKey)} active={format === f.id} onClick={() => setFormat(f.id)} />
+                    <FilterChip key={f.id} label={t(f.labelKey)} active={typeDetail === f.id} onClick={() => setFormat(f.id)} />
                   ))}
                 </div>
               </div>
