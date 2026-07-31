@@ -135,3 +135,23 @@ export async function verifyEmail(token) {
   });
   return data;
 }
+
+export async function updateProfile(payload) {
+  const { data } = await apiClient.put("/users/me", payload);
+  return data.user ?? data;
+}
+
+// DƏYİŞDİ: Şifrə dəyişmə üçün əlavə edildi.
+export async function changePassword(currentPassword, newPassword) {
+  const { data } = await apiClient.put("/users/change-password", {
+    currentPassword,
+    newPassword,
+  });
+  return data;
+}
+
+// DƏYİŞDİ: Hesabın silinməsi üçün əlavə edildi.
+export async function deleteAccount() {
+  const { data } = await apiClient.delete("/users/me");
+  return data;
+}

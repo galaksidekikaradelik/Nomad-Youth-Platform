@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useWishlist } from '../hooks/useWishlist';
 import { useLike } from '../hooks/useLike';
@@ -404,7 +404,7 @@ function NotificationsView({ onBack }) {
 
 /* ---------- Hesab parametrləri (əvvəlki Settings.jsx-dən köçürülüb) ---------- */
 
-function DeleteConfirmModal({ t, onCancel, onConfirm }) {
+function DeleteConfirmModal({ t, onCancel, onConfirm, error, deleting }) {
   return (
     <div
       className="modal-overlay delete-modal-overlay"
@@ -418,11 +418,12 @@ function DeleteConfirmModal({ t, onCancel, onConfirm }) {
         <p className="delete-modal__desc">
           {t('settings_delete_modal_desc')}
         </p>
+        {error && <p className="auth-error settings-error-msg">{error}</p>}
         <div className="delete-modal__actions">
-          <button className="btn-outline" onClick={onCancel}>
+          <button className="btn-outline" onClick={onCancel} disabled={deleting}>
             {t('settings_delete_modal_cancel')}
           </button>
-          <button className="btn-primary btn-primary--danger" onClick={onConfirm}>
+          <button className="btn-primary btn-primary--danger" onClick={onConfirm} disabled={deleting}>
             {t('settings_delete_modal_confirm')}
           </button>
         </div>
@@ -450,6 +451,7 @@ function SettingsAccordion({ title, isOpen, onToggle, children }) {
 function SettingsView({ onBack }) {
   const { user, updateUser, changePassword, deleteAccount, logout } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const [openSection, setOpenSection] = useState(null);
   const toggleSection = (id) => setOpenSection((prev) => (prev === id ? null : id));
@@ -463,23 +465,43 @@ function SettingsView({ onBack }) {
     major: user?.major || '',
   });
   const [profileSaved, setProfileSaved] = useState(false);
+  const [profileError, setProfileError] = useState('');
+  const [profileSaving, setProfileSaving] = useState(false);
 
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: '', newPassword: '', confirmPassword: '',
   });
   const [passwordError, setPasswordError] = useState('');
   const [passwordSaved, setPasswordSaved] = useState(false);
+  const [passwordSaving, setPasswordSaving] = useState(false);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+  const [deleting, setDeleting] = useState(false);
 
   const handleProfileChange = (e) => {
     setProfileForm((f) => ({ ...f, [e.target.name]: e.target.value }));
     setProfileSaved(false);
   };
 
-  const handleProfileSubmit = () => {
-    updateUser(profileForm);
-    setProfileSaved(true);
+  // DƏYİŞDİ: async oldu, backend inteqrasiyası üçün await updateUser(...)
+  // çağırılır və xəta try/catch ilə tutulub istifadəçiyə göstərilir.
+  const handleProfileSubmit = async () => {
+    setProfileError('');
+    setProfileSaving(true);
+    try {
+      await updateUser(profileForm);
+      setProfileSaved(true);
+    } catch (err) {
+      setProfileSaved(false);
+      setProfileError(
+        err.response?.data?.message ||
+        t('settings_profile_error') ||
+        'Profil yenilənmədi, yenidən cəhd edin.'
+      );
+    } finally {
+      setProfileSaving(false);
+    }
   };
 
   const handlePasswordChange = (e) => {
@@ -488,7 +510,11 @@ function SettingsView({ onBack }) {
     setPasswordSaved(false);
   };
 
-  const handlePasswordSubmit = () => {
+  // DƏYİŞDİ: async oldu, backend inteqrasiyası üçün await changePassword(...)
+  // çağırılır. changePassword() { success, error } formatını qoruyub, ona
+  // görə mövcud error-mapping məntiqi (wrong_password / user_not_found)
+  // saxlanılıb; digər backend xətaları birbaşa mesaj kimi göstərilir.
+  const handlePasswordSubmit = async () => {
     setPasswordError('');
     setPasswordSaved(false);
 
@@ -501,24 +527,49 @@ function SettingsView({ onBack }) {
       return;
     }
 
-    const result = changePassword(passwordForm.currentPassword, passwordForm.newPassword);
-    if (!result.success) {
-      const errorKey = result.error === 'wrong_password' ? 'settings_error_wrong_password' : 'settings_error_user_not_found';
-      setPasswordError(t(errorKey));
-      return;
-    }
+    setPasswordSaving(true);
+    try {
+      const result = await changePassword(passwordForm.currentPassword, passwordForm.newPassword);
+      if (!result.success) {
+        const errorKey =
+          result.error === 'wrong_password'
+            ? 'settings_error_wrong_password'
+            : result.error === 'user_not_found'
+            ? 'settings_error_user_not_found'
+            : null;
+        setPasswordError(errorKey ? t(errorKey) : (result.error || t('settings_error_user_not_found')));
+        return;
+      }
 
-    setPasswordSaved(true);
-    setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      setPasswordSaved(true);
+      setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (err) {
+      setPasswordError(err.response?.data?.message || t('settings_error_user_not_found'));
+    } finally {
+      setPasswordSaving(false);
+    }
   };
 
   const handleLogout = () => {
     logout();
   };
 
-  const handleDeleteConfirm = () => {
-    deleteAccount();
-    setShowDeleteModal(false);
+  // DƏYİŞDİ: async oldu, await deleteAccount() çağırılır, uğurlu olduqda
+  // logout() edilib istifadəçi ana səhifəyə yönləndirilir. Xəta baş
+  // verərsə modal açıq qalır və xəta mesajı göstərilir.
+  const handleDeleteConfirm = async () => {
+    setDeleteError('');
+    setDeleting(true);
+    try {
+      await deleteAccount();
+      await logout();
+      setShowDeleteModal(false);
+      navigate('/');
+    } catch (err) {
+      setDeleteError(err.response?.data?.message || 'Hesab silinmədi, yenidən cəhd edin.');
+    } finally {
+      setDeleting(false);
+    }
   };
 
   return (
@@ -567,13 +618,14 @@ function SettingsView({ onBack }) {
           </div>
         </div>
 
+        {profileError && <p className="auth-error settings-error-msg">{profileError}</p>}
         {profileSaved && (
           <p className="settings-success-msg">
             {t('settings_profile_saved_msg')}
           </p>
         )}
 
-        <button className="btn-primary" onClick={handleProfileSubmit}>
+        <button className="btn-primary" onClick={handleProfileSubmit} disabled={profileSaving}>
           {t('settings_save_btn')}
         </button>
       </SettingsAccordion>
@@ -606,7 +658,7 @@ function SettingsView({ onBack }) {
           </p>
         )}
 
-        <button className="btn-primary" onClick={handlePasswordSubmit}>
+        <button className="btn-primary" onClick={handlePasswordSubmit} disabled={passwordSaving}>
           {t('settings_update_password_btn')}
         </button>
       </SettingsAccordion>
@@ -629,7 +681,13 @@ function SettingsView({ onBack }) {
       </SettingsAccordion>
 
       {showDeleteModal && (
-        <DeleteConfirmModal t={t} onCancel={() => setShowDeleteModal(false)} onConfirm={handleDeleteConfirm} />
+        <DeleteConfirmModal
+          t={t}
+          onCancel={() => { if (!deleting) { setShowDeleteModal(false); setDeleteError(''); } }}
+          onConfirm={handleDeleteConfirm}
+          error={deleteError}
+          deleting={deleting}
+        />
       )}
     </div>
   );
