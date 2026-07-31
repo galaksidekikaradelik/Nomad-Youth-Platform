@@ -405,7 +405,52 @@
   "badge_esc": "ESC",
   "badge_salto": "SALTO",
   "badge_individual": "Индивидуальный",
-  "badge_team": "Командный"
+  "badge_team": "Командный",
+
+  "profile_setup_title": "Заполните профиль",
+"profile_setup_subtitle": "Заполните профиль, чтобы персонализировать ваш опыт на Nomad Youth.",
+"step": "Шаг",
+"of": "из",
+"first_name": "Имя",
+"last_name": "Фамилия",
+"phone_number": "Номер телефона",
+"country": "Страна",
+"city": "Город",
+"university": "Университет",
+"education_level": "Уровень образования",
+"field_of_study": "Специальность",
+"date_of_birth": "Дата рождения",
+"short_bio": "Краткая информация о себе",
+"optional": "(необязательно)",
+"bio_placeholder": "Расскажите немного о себе...",
+"select_placeholder": "Выберите...",
+"required_field": "Это поле обязательно",
+"back": "Назад",
+"continue": "Продолжить",
+"finish_setup": "Завершить настройку",
+
+"notification_preferences_title": "Настройте уведомления",
+"notification_preferences_subtitle": "Мы будем уведомлять вас о новых возможностях, соответствующих вашим интересам.",
+
+"preferred_countries": "Предпочитаемые страны",
+"preferred_countries_hint": "Выберите страны, из которых вы хотите получать возможности.",
+
+"opportunity_categories": "Категории возможностей",
+"opportunity_categories_hint": "Выберите интересующие вас типы возможностей.",
+
+"opportunity_format": "Формат возможностей",
+
+"deadline_reminders": "Напоминания о сроках",
+
+"notification_channels": "Каналы уведомлений",
+
+"email_notifications": "Уведомления по электронной почте",
+
+"push_notifications": "Push-уведомления",
+"coming_soon": "Скоро",
+
+"saving_preferences": "Сохраняем ваши настройки...",
+"redirecting_dashboard": "Готово! Перенаправляем вас в личный кабинет..."
 
 
 }

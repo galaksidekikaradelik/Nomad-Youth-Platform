@@ -405,6 +405,50 @@
   "badge_esc": "ESC",
   "badge_salto": "SALTO",
   "badge_individual": "Individual",
-  "badge_team": "Team"
+  "badge_team": "Team",
 
+  "profile_setup_title": "Complete Your Profile",
+"profile_setup_subtitle": "Complete your profile to personalize your experience on Nomad Youth.",
+"step": "Step",
+"of": "of",
+"first_name": "First Name",
+"last_name": "Last Name",
+"phone_number": "Phone Number",
+"country": "Country",
+"city": "City",
+"university": "University",
+"education_level": "Education Level",
+"field_of_study": "Field of Study",
+"date_of_birth": "Date of Birth",
+"short_bio": "Short Bio",
+"optional": "(optional)",
+"bio_placeholder": "Tell us a little about yourself...",
+"select_placeholder": "Select...",
+"required_field": "This field is required",
+"back": "Back",
+"continue": "Continue",
+"finish_setup": "Finish Setup",
+
+"notification_preferences_title": "Choose Your Notification Preferences",
+"notification_preferences_subtitle": "We'll notify you whenever new opportunities match your interests.",
+
+"preferred_countries": "Preferred Countries",
+"preferred_countries_hint": "Select the countries you'd like opportunities from.",
+
+"opportunity_categories": "Opportunity Categories",
+"opportunity_categories_hint": "Choose the types of opportunities you're interested in.",
+
+"opportunity_format": "Opportunity Format",
+
+"deadline_reminders": "Deadline Reminders",
+
+"notification_channels": "Notification Channels",
+
+"email_notifications": "Email Notifications",
+
+"push_notifications": "Push Notifications",
+"coming_soon": "Coming Soon",
+
+"saving_preferences": "Saving your preferences...",
+"redirecting_dashboard": "All set! Redirecting you to your dashboard..."
 }

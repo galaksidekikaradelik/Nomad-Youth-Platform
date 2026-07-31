@@ -48,7 +48,7 @@ export default function Contact() {
   const formRef = useRef(null)
 
   const infoCards = [
-    { icon: <MailIcon />,  label: t('contact_email_label'),   value: 'nomadyouth26@gmail.com' },
+    { icon: <MailIcon />,  label: t('contact_email_label'),   value: 'info@nomadyouth.com.az' },
     { icon: <PhoneIcon />, label: t('contact_phone_label'),   value: '+994 51 777 37 64' },
     { icon: <PinIcon />,   label: t('contact_address_label'), value: t('contact_address_value') },
   ]

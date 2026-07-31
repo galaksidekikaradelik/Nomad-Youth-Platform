@@ -405,6 +405,46 @@
   "badge_esc": "ESC",
   "badge_salto": "SALTO",
   "badge_individual": "Fərdi",
-  "badge_team": "Komanda"
+  "badge_team": "Komanda",
+
+
+  "lang_name": "Azərbaycanca",
+  "s1_title": "Profilinizi Tamamlayın",
+  "s1_sub": "Nomad Youth-da təcrübənizi fərdiləşdirmək üçün profilinizi tamamlayın.",
+  "first_name": "Ad",
+  "last_name": "Soyad",
+  "phone": "Telefon Nömrəsi",
+  "country": "Ölkə",
+  "city": "Şəhər",
+  "university": "Universitet",
+  "education_level": "Təhsil Səviyyəsi",
+  "field_of_study": "İxtisas Sahəsi",
+  "date_of_birth": "Doğum Tarixi",
+  "bio": "Qısa Bio",
+  "bio_hint": "(könüllü)",
+  "bio_placeholder": "Özünüz haqqında bir neçə söz yazın…",
+  "select_placeholder": "Seçin…",
+  "required": "Bu sahə mütləqdir",
+  "back": "Geri",
+  "continue": "Davam et",
+  "finish_setup": "Qeydiyyatı Bitir",
+  "s2_title": "Bildiriş Seçimlərinizi Edin",
+  "s2_sub": "Maraqlarınıza uyğun yeni imkanlar olduqda sizə bildiriş göndərəcəyik.",
+  "preferred_countries": "Seçdiyiniz Ölkələr",
+  "preferred_countries_hint": "Hansı ölkələrdən imkanlar görmək istədiyinizi seçin.",
+  "opportunity_categories": "İmkan Kateqoriyaları",
+  "opportunity_categories_hint": "Maraqlandığınız imkan növlərini seçin.",
+  "opportunity_format": "İmkan Formatı",
+  "deadline_reminders": "Son Tarix Xatırlatmaları",
+  "notification_channels": "Bildiriş Kanalları",
+  "email_notifications": "E-poçt Bildirişləri",
+  "push_notifications_soon": "Push bildirişləri — tezliklə",
+  "saving_preferences": "Seçimləriniz yadda saxlanılır…",
+  "redirecting_dashboard": "Hazırdır! İdarə panelinizə yönləndirilirsiniz…"
+
+  
+
+
+
 
 }
