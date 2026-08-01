@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { LikeContext } from "./LikeContext";
 import { useAuth } from "../hooks/useAuth";
 import * as likeService from "../services/likeService";
@@ -17,33 +17,61 @@ export function LikeProvider({ children }) {
     likeService
       .getUserLikes(user.id)
       .then((items) => {
-        const opps = items
-          .map((item) => item.opportunity)
-          .filter(Boolean);
+        const opps = items.map((item) => item.opportunity).filter(Boolean);
         setLikedOpportunities(opps);
       })
       .catch((err) => console.error("Like-lar yüklənmədi:", err))
       .finally(() => setLoading(false));
   }, [user]);
 
-  const likedIds = new Set(likedOpportunities.map((opp) => opp.id));
+  const likedIds = useMemo(
+    () => new Set(likedOpportunities.map((opp) => opp.id)),
+    [likedOpportunities]
+  );
 
+  /**
+   * toggleLike(opportunity)
+   *
+   * Parametr olaraq YALNIZ id yox, tam `opportunity` obyekti gözlənilir —
+   * əsl optimistic UI üçün add zamanı elementin tam datasına ehtiyac var.
+   */
   const toggleLike = useCallback(
-    async (projectId) => {
-      if (!user) return;
-      const isLiked = likedOpportunities.some((opp) => opp.id === projectId);
+    async (opportunity) => {
+      if (!user || !opportunity?.id) return;
 
-      try {
-        if (isLiked) {
+      const projectId = opportunity.id;
+      const isLiked = likedOpportunities.some((opp) => opp.id === projectId);
+      const previous = [...likedOpportunities];
+
+      if (isLiked) {
+        // Optimistic remove
+        setLikedOpportunities((prev) =>
+          prev.filter((opp) => opp.id !== projectId)
+        );
+
+        try {
           await likeService.removeLike(user.id, projectId);
-          setLikedOpportunities((prev) => prev.filter((opp) => opp.id !== projectId));
-        } else {
-          await likeService.addLike(user.id, projectId);
-          const items = await likeService.getUserLikes(user.id);
-          setLikedOpportunities(items.map((item) => item.opportunity).filter(Boolean));
+        } catch (err) {
+          console.error("Like silinmədi:", err);
+          setLikedOpportunities(previous); // rollback
         }
-      } catch (err) {
-        console.error("Like yenilənmədi:", err);
+      } else {
+        // Optimistic add — UI dərhal yenilənir
+        setLikedOpportunities((prev) => [...prev, opportunity]);
+
+        try {
+          const created = await likeService.addLike(user.id, projectId);
+
+          // Backend-dən gələn "əsl" opportunity ilə əvəz et
+          setLikedOpportunities((prev) =>
+            prev.map((opp) =>
+              opp.id === projectId ? created.opportunity : opp
+            )
+          );
+        } catch (err) {
+          console.error("Like əlavə olunmadı:", err);
+          setLikedOpportunities(previous); // rollback
+        }
       }
     },
     [user, likedOpportunities]
