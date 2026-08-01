@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import GoogleLoginButton from "../components/GoogleLoginButton";
+import EmailVerificationBanner from "../components/EmailVerificationBanner";
 import "../style/pages/auth.css";
 
 const EDUCATION_LEVELS = [
@@ -49,6 +50,7 @@ export default function Register() {
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalTab, setModalTab] = useState(null); // null | "privacy" | "terms"
+  const [registeredEmail, setRegisteredEmail] = useState(""); // qeydiyyat uğurlu olduqda dolur
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -98,7 +100,9 @@ export default function Register() {
     setIsSubmitting(true);
     try {
       await register(formData);
-      navigate("/");
+      // Qeydiyyatdan sonra birbaşa "/" -ə yönləndirmirik —
+      // istifadəçi əvvəlcə e-mailini təsdiqləməlidir.
+      setRegisteredEmail(formData.email);
     } catch (err) {
       // Backend validasiya xətaları adətən 400 + { message } və ya
       // field-based xəta obyekti qaytarır. Konkret formatı backend-dən
@@ -113,6 +117,28 @@ export default function Register() {
       setIsSubmitting(false);
     }
   };
+
+  // Qeydiyyat uğurlu olubsa, forma yerinə e-mail təsdiq ekranını göstər.
+  if (registeredEmail) {
+    return (
+      <div className="auth-page">
+        <div className="auth-card">
+          <h1 className="auth-title">{t("auth_register_title")}</h1>
+          <p className="auth-subtitle">
+            Hesabınız uğurla yaradıldı. Davam etmək üçün e-mail ünvanınızı təsdiqləyin.
+          </p>
+
+          <EmailVerificationBanner email={registeredEmail} />
+
+          <div className="auth-footer">
+            <Link to="/login" className="auth-link">
+              {t("auth_sign_in")}
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="auth-page">

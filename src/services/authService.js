@@ -124,8 +124,17 @@ export async function getCurrentUser() {
 }
 
 
-export async function resendVerification() {
-  const { data } = await apiClient.post("/auth/resend-verification");
+export async function resendVerification(email) {
+  const { data } = await apiClient.post(
+    "/auth/resend-verification",
+    null,
+    {
+      params: {
+        email,
+      },
+    }
+  );
+
   return data;
 }
 
@@ -153,4 +162,6 @@ export async function deleteAccount() {
   const { data } = await apiClient.delete("/users/me");
   return data;
 }
+
+
 

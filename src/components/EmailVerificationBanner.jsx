@@ -1,16 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { useAuth } from "../hooks/useAuth";
 import { resendVerification } from "../services/authService";
 
-export default function EmailVerificationBanner() {
-  const { user } = useAuth();
+export default function EmailVerificationBanner({ email }) {
   const [loading, setLoading] = useState(false);
   const [cooldown, setCooldown] = useState(0);
   const [error, setError] = useState(null);
   const intervalRef = useRef(null);
-
-    console.log("User:", user);
-    console.log("emailVerified:", user?.emailVerified);
 
   useEffect(() => {
     return () => {
@@ -18,7 +13,7 @@ export default function EmailVerificationBanner() {
     };
   }, []);
 
-  if (!user || user.emailVerified) return null;
+  if (!email) return null;
 
   const startCooldown = () => {
     setCooldown(60);
@@ -37,7 +32,7 @@ export default function EmailVerificationBanner() {
     setError(null);
     setLoading(true);
     try {
-      await resendVerification();
+      await resendVerification(email);
       startCooldown();
     } catch (err) {
       setError("Göndərmək mümkün olmadı. Bir az sonra yenidən cəhd edin.");
@@ -50,7 +45,7 @@ export default function EmailVerificationBanner() {
   return (
     <div className="verification-banner" role="alert">
       <span>
-        E-mail ünvanınızı təsdiqləyin. Təsdiq linki e-mailinizə göndərilib.
+        <strong>{email}</strong> ünvanına təsdiq linki göndərildi.
       </span>
 
       <button
