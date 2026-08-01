@@ -141,7 +141,6 @@ export async function updateProfile(payload) {
   return data.user ?? data;
 }
 
-// DƏYİŞDİ: Şifrə dəyişmə üçün əlavə edildi.
 export async function changePassword(currentPassword, newPassword) {
   const { data } = await apiClient.put("/users/change-password", {
     currentPassword,
@@ -150,8 +149,8 @@ export async function changePassword(currentPassword, newPassword) {
   return data;
 }
 
-// DƏYİŞDİ: Hesabın silinməsi üçün əlavə edildi.
 export async function deleteAccount() {
   const { data } = await apiClient.delete("/users/me");
   return data;
 }
+
