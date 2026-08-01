@@ -156,7 +156,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     e.stopPropagation()
     if (!user) { setShowAuthPrompt(true); return }
     if (!opportunity.id) return 
-    toggleWishlist(opportunity.id)
+    toggleWishlist(opportunity)
   }
 
   function handleApplyClick(e) {

@@ -82,7 +82,7 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
 
   const {
     title, format, category, location, deadline, applyLink,
-    description, descriptionTranslations, publishedAt,
+    description, descriptionTranslations, 
     duration, language, eventDateRange, financialSupport,
   } = opportunity
 

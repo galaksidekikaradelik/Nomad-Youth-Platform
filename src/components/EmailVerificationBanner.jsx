@@ -9,6 +9,9 @@ export default function EmailVerificationBanner() {
   const [error, setError] = useState(null);
   const intervalRef = useRef(null);
 
+    console.log("User:", user);
+    console.log("emailVerified:", user?.emailVerified);
+
   useEffect(() => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);

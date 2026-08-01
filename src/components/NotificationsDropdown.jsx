@@ -36,7 +36,6 @@ export default function NotificationsDropdown() {
     }
   }, [user])
 
-  // İstifadəçi login olanda ilk sayı çək, sonra hər 60 saniyədə yenilə
   useEffect(() => {
     if (!user) {
       setNotifications([])
