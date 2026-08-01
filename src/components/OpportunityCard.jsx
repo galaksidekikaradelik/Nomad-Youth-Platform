@@ -146,7 +146,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     e.stopPropagation()
     if (!user) { setShowAuthPrompt(true); return }
     if (!opportunity.id) return // like üçün real backend id lazımdır
-    toggleLikeRemote(opportunity.id)
+    toggleLikeRemote(opportunity)
   }
 
   const { savedIds, toggleSave: toggleWishlist } = useWishlist()
