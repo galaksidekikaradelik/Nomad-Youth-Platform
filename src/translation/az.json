@@ -474,6 +474,31 @@
   "dl_1_week": "1 həftə qalanda",
 
   "profile_complete_card_title": "Profilinizi tamamlayın",
-  "profile_complete_card_btn": "İndi tamamla"
+  "profile_complete_card_btn": "İndi tamamla",
+
+  "phone_placeholder": "+994 50 000 00 00",
+  "submit_error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.",
+  "profile_saved": "Profiliniz uğurla tamamlandı. Profil səhifəsinə yönləndirilirsiniz...",
+
+  "country_azerbaijan": "Azərbaycan",
+  "country_germany": "Almaniya",
+  "country_italy": "İtaliya",
+  "country_poland": "Polşa",
+  "country_spain": "İspaniya",
+  "country_france": "Fransa",
+  "country_netherlands": "Niderland",
+  "country_turkey": "Türkiyə",
+  "country_georgia": "Gürcüstan",
+  "country_portugal": "Portuqaliya",
+  "country_greece": "Yunanıstan",
+  "country_romania": "Rumıniya",
+  "country_ukraine": "Ukrayna",
+  "country_lithuania": "Litva",
+  "country_latvia": "Latviya",
+  "country_estonia": "Estoniya",
+  "country_czechia": "Çexiya",
+  "country_slovakia": "Slovakiya",
+  "country_hungary": "Macarıstan",
+  "country_belgium": "Belçika"
 
 }

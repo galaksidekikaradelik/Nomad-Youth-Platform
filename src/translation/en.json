@@ -484,5 +484,30 @@
   "dl_1_week": "1 week before",
 
   "profile_complete_card_title": "Complete your profile",
-  "profile_complete_card_btn": "Complete now"
+  "profile_complete_card_btn": "Complete now",
+
+  "phone_placeholder": "+994 50 000 00 00",
+  "submit_error": "Something went wrong. Please try again.",
+  "profile_saved": "Your profile has been completed successfully. Redirecting to your profile...",
+
+  "country_azerbaijan": "Azerbaijan",
+  "country_germany": "Germany",
+  "country_italy": "Italy",
+  "country_poland": "Poland",
+  "country_spain": "Spain",
+  "country_france": "France",
+  "country_netherlands": "Netherlands",
+  "country_turkey": "Turkey",
+  "country_georgia": "Georgia",
+  "country_portugal": "Portugal",
+  "country_greece": "Greece",
+  "country_romania": "Romania",
+  "country_ukraine": "Ukraine",
+  "country_lithuania": "Lithuania",
+  "country_latvia": "Latvia",
+  "country_estonia": "Estonia",
+  "country_czechia": "Czechia",
+  "country_slovakia": "Slovakia",
+  "country_hungary": "Hungary",
+  "country_belgium": "Belgium"
 }

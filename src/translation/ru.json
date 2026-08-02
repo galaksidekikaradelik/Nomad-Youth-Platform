@@ -484,6 +484,31 @@
   "dl_1_week": "За 1 неделю",
 
   "profile_complete_card_title": "Заполните свой профиль",
-  "profile_complete_card_btn": "Заполнить сейчас"
+  "profile_complete_card_btn": "Заполнить сейчас",
+
+  "phone_placeholder": "+994 50 000 00 00",
+  "submit_error": "Произошла ошибка. Пожалуйста, попробуйте снова.",
+  "profile_saved": "Ваш профиль успешно заполнен. Перенаправление на страницу профиля...",
+
+  "country_azerbaijan": "Азербайджан",
+  "country_germany": "Германия",
+  "country_italy": "Италия",
+  "country_poland": "Польша",
+  "country_spain": "Испания",
+  "country_france": "Франция",
+  "country_netherlands": "Нидерланды",
+  "country_turkey": "Турция",
+  "country_georgia": "Грузия",
+  "country_portugal": "Португалия",
+  "country_greece": "Греция",
+  "country_romania": "Румыния",
+  "country_ukraine": "Украина",
+  "country_lithuania": "Литва",
+  "country_latvia": "Латвия",
+  "country_estonia": "Эстония",
+  "country_czechia": "Чехия",
+  "country_slovakia": "Словакия",
+  "country_hungary": "Венгрия",
+  "country_belgium": "Бельгия"
 
 }
