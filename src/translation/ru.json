@@ -450,7 +450,38 @@
 "coming_soon": "Скоро",
 
 "saving_preferences": "Сохраняем ваши настройки...",
-"redirecting_dashboard": "Готово! Перенаправляем вас в личный кабинет..."
+"redirecting_dashboard": "Готово! Перенаправляем вас в личный кабинет...",
+
+  "submit_error": "Произошла ошибка. Пожалуйста, попробуйте снова.",
+
+  "onboarding_step1": "Шаг 1",
+  "onboarding_step2": "Шаг 2",
+
+  "edu_high_school": "Среднее образование",
+  "edu_bachelor": "Бакалавриат",
+  "edu_master": "Магистратура",
+  "edu_phd": "Докторантура",
+  "edu_vocational": "Профессиональное образование",
+
+  "cat_volunteering": "Волонтёрство",
+  "cat_internship": "Стажировка",
+  "cat_training": "Обучение",
+  "cat_youth_exchange": "Молодёжный обмен",
+  "cat_scholarship": "Стипендия",
+  "cat_grant": "Грант",
+  "cat_conference": "Конференция",
+  "cat_competition": "Конкурс",
+  "cat_fellowship": "Fellowship",
+  "cat_solidarity_project": "Проект солидарности",
+  "cat_job": "Работа",
+
+  "fmt_online": "Онлайн",
+  "fmt_offline": "Очно",
+  "fmt_hybrid": "Гибридный",
+
+  "dl_1_day": "За 1 день",
+  "dl_3_days": "За 3 дня",
+  "dl_1_week": "За 1 неделю"
 
 
 }

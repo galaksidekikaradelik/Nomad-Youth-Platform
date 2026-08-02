@@ -440,9 +440,39 @@
   "email_notifications": "E-poçt Bildirişləri",
   "push_notifications_soon": "Push bildirişləri — tezliklə",
   "saving_preferences": "Seçimləriniz yadda saxlanılır…",
-  "redirecting_dashboard": "Hazırdır! İdarə panelinizə yönləndirilirsiniz…"
+  "redirecting_dashboard": "Hazırdır! İdarə panelinizə yönləndirilirsiniz…",
 
-  
+  "submit_error": "Xəta baş verdi, yenidən cəhd edin.",
+
+  "onboarding_step1": "1-ci Addım",
+  "onboarding_step2": "2-ci Addım",
+
+  "edu_high_school": "Orta məktəb",
+  "edu_bachelor": "Bakalavr",
+  "edu_master": "Magistr",
+  "edu_phd": "Doktorantura",
+  "edu_vocational": "Peşə təhsili",
+
+  "cat_volunteering": "Könüllülük",
+  "cat_internship": "Təcrübə",
+  "cat_training": "Təlim",
+  "cat_youth_exchange": "Gənclər Mübadiləsi",
+  "cat_scholarship": "Təqaüd",
+  "cat_grant": "Qrant",
+  "cat_conference": "Konfrans",
+  "cat_competition": "Müsabiqə",
+  "cat_fellowship": "Fellowship",
+  "cat_solidarity_project": "Həmrəylik Layihəsi",
+  "cat_job": "İş",
+
+  "fmt_online": "Onlayn",
+  "fmt_offline": "Əyani",
+  "fmt_hybrid": "Hibrid",
+
+  "dl_1_day": "1 gün qalanda",
+  "dl_3_days": "3 gün qalanda",
+  "dl_1_week": "1 həftə qalanda"
+
 
 
 
