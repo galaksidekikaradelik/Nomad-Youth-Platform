@@ -15,13 +15,20 @@ const COUNTRIES = [
 
 const EDU_LEVELS = ["high_school", "bachelor", "master", "phd", "vocational"];
 
+// Frontend-də istifadə olunan key-lər backend enum-una uyğunlaşdırılır.
+// Backend-də EducationLevel enum-unun dəqiq adlarını yoxlayın və lazım gələrsə düzəldin.
+const EDU_LEVEL_ENUM_MAP = {
+  high_school: "HIGH_SCHOOL",
+  bachelor: "BACHELOR",
+  master: "MASTER",
+  phd: "PHD",
+  vocational: "VOCATIONAL",
+};
+
 const CATEGORIES = [
   "volunteering", "internship", "training", "youth_exchange", "scholarship",
   "grant", "conference", "competition", "fellowship", "solidarity_project", "job",
 ];
-
-const FORMATS = ["online", "offline", "hybrid"];
-const DEADLINES = ["1_day", "3_days", "1_week"];
 
 
 
@@ -49,7 +56,7 @@ function Chip({ active, onClick, children }) {
 
 
 export default function NomadYouthOnboarding() {
-  const t = useLanguage();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const { completeProfile } = useAuth();
 
@@ -65,11 +72,8 @@ export default function NomadYouthOnboarding() {
   const [errors, setErrors] = useState({});
 
   const [prefs, setPrefs] = useState({
-    preferredCountries: [],
-    categories: [],
-    formats: [],
-    deadline: "1_week",
-    channels: { email: true },
+    interests: [],
+    newsletter: true,
   });
 
   const setP = (k, v) => setProfile((p) => ({ ...p, [k]: v }));
@@ -79,9 +83,9 @@ export default function NomadYouthOnboarding() {
 
   function validateStep1() {
     const e = {};
-    if (!profile.firstName.trim()) e.firstName = t.required;
-    if (!profile.lastName.trim()) e.lastName = t.required;
-    if (!profile.country.trim()) e.country = t.required;
+    if (!profile.firstName.trim()) e.firstName = t("required");
+    if (!profile.lastName.trim()) e.lastName = t("required");
+    if (!profile.country.trim()) e.country = t("required");
     setErrors(e);
     return Object.keys(e).length === 0;
   }
@@ -100,19 +104,16 @@ export default function NomadYouthOnboarding() {
       const payload = {
         firstName: profile.firstName,
         lastName: profile.lastName,
-        phone: profile.phone,
+        phoneNumber: profile.phone,
         country: profile.country,
         city: profile.city,
         university: profile.university,
-        educationLevel: profile.eduLevel,
-        fieldOfStudy: profile.fieldOfStudy,
+        educationLevel: EDU_LEVEL_ENUM_MAP[profile.eduLevel] || null,
+        major: profile.fieldOfStudy,
         birthDate: profile.dob,
         bio: profile.bio,
-        preferredCountries: prefs.preferredCountries,
-        categories: prefs.categories,
-        formats: prefs.formats,
-        deadlineReminder: prefs.deadline,
-        notificationChannels: prefs.channels,
+        interests: prefs.interests,
+        newsletter: prefs.newsletter,
       };
 
       await completeProfile(payload);
@@ -121,7 +122,7 @@ export default function NomadYouthOnboarding() {
     } catch (err) {
       console.error("Profil tamamlanmadı:", err);
       setSubmitError(
-        err.response?.data?.message || t.submitError || "Xəta baş verdi, yenidən cəhd edin."
+        err.response?.data?.message || t("submit_error") || "Xəta baş verdi, yenidən cəhd edin."
       );
     } finally {
       setSaving(false);
@@ -137,14 +138,14 @@ export default function NomadYouthOnboarding() {
       <div className="ny-stage">
         <div className="ny-card">
           {done ? (
-            <SuccessPanel text={t.redirecting} />
+            <SuccessPanel text={t("redirecting_dashboard")} />
           ) : (
             <>
               <div className="ny-progress-wrap">
                 <div className="ny-progress-track">
                   <div className="ny-progress-fill" style={{ width: progressPct + "%" }} />
                 </div>
-                <div className="ny-progress-label">{t.step(step)}</div>
+                <div className="ny-progress-label">{t(`onboarding_step${step}`)}</div>
               </div>
 
               <div className="ny-anim-wrap">
@@ -186,62 +187,62 @@ export default function NomadYouthOnboarding() {
 function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
   return (
     <div className="ny-step ny-fade-in">
-      <h1 className="ny-title">{t.s1_title}</h1>
-      <p className="ny-subtitle">{t.s1_sub}</p>
+      <h1 className="ny-title">{t("s1_title")}</h1>
+      <p className="ny-subtitle">{t("s1_sub")}</p>
 
       <div className="ny-grid-2">
-        <Field label={t.firstName} required error={errors.firstName}>
+        <Field label={t("first_name")} required error={errors.firstName}>
           <input className="ny-input" value={profile.firstName}
             onChange={(e) => setP("firstName", e.target.value)} />
         </Field>
-        <Field label={t.lastName} required error={errors.lastName}>
+        <Field label={t("last_name")} required error={errors.lastName}>
           <input className="ny-input" value={profile.lastName}
             onChange={(e) => setP("lastName", e.target.value)} />
         </Field>
 
-        <Field label={t.phone}>
+        <Field label={t("phone")}>
           <input className="ny-input" type="tel" value={profile.phone}
             onChange={(e) => setP("phone", e.target.value)} placeholder="+994 50 000 00 00" />
         </Field>
-        <Field label={t.country} required error={errors.country}>
+        <Field label={t("country")} required error={errors.country}>
           <select className="ny-input" value={profile.country}
             onChange={(e) => setP("country", e.target.value)}>
-            <option value="">{t.selectPlaceholder}</option>
+            <option value="">{t("select_placeholder")}</option>
             {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
         </Field>
 
-        <Field label={t.city}>
+        <Field label={t("city")}>
           <input className="ny-input" value={profile.city}
             onChange={(e) => setP("city", e.target.value)} />
         </Field>
-        <Field label={t.university}>
+        <Field label={t("university")}>
           <input className="ny-input" value={profile.university}
             onChange={(e) => setP("university", e.target.value)} />
         </Field>
 
-        <Field label={t.eduLevel}>
+        <Field label={t("education_level")}>
           <select className="ny-input" value={profile.eduLevel}
             onChange={(e) => setP("eduLevel", e.target.value)}>
-            <option value="">{t.selectPlaceholder}</option>
-            {EDU_LEVELS.map((k) => <option key={k} value={k}>{t.edu[k]}</option>)}
+            <option value="">{t("select_placeholder")}</option>
+            {EDU_LEVELS.map((k) => <option key={k} value={k}>{t(`edu_${k}`)}</option>)}
           </select>
         </Field>
-        <Field label={t.fieldOfStudy}>
+        <Field label={t("major")}>
           <input className="ny-input" value={profile.fieldOfStudy}
             onChange={(e) => setP("fieldOfStudy", e.target.value)} />
         </Field>
 
-        <Field label={t.dob}>
+        <Field label={t("date_of_birth")}>
           <input className="ny-input" type="date" value={profile.dob}
             onChange={(e) => setP("dob", e.target.value)} />
         </Field>
         <div />
 
         <div className="ny-span-2">
-          <Field label={t.bio} hint={t.bioHint}>
+          <Field label={t("bio")} hint={t("bio_hint")}>
             <textarea className="ny-input ny-textarea" rows={3} value={profile.bio}
-              placeholder={t.bioPlaceholder}
+              placeholder={t("bio_placeholder")}
               onChange={(e) => setP("bio", e.target.value)} />
           </Field>
         </div>
@@ -249,10 +250,10 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
 
       <div className="ny-actions">
         <button type="button" className="ny-btn ny-btn-ghost" onClick={onBack}>
-          {t.back}
+          {t("back")}
         </button>
         <button type="button" className="ny-btn ny-btn-primary" onClick={onContinue}>
-          {t.continueBtn}
+          {t("continue")}
         </button>
       </div>
     </div>
@@ -263,74 +264,33 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
 function StepPrefs({ t, prefs, setPrefs, toggleIn, saving, submitError, onBack, onFinish }) {
   return (
     <div className="ny-step ny-fade-in">
-      <h1 className="ny-title">{t.s2_title}</h1>
-      <p className="ny-subtitle">{t.s2_sub}</p>
+      <h1 className="ny-title">{t("s2_title")}</h1>
+      <p className="ny-subtitle">{t("s2_sub")}</p>
 
       <section className="ny-section">
-        <h2 className="ny-section-title">{t.preferredCountries}</h2>
-        <p className="ny-section-hint">{t.preferredCountriesHint}</p>
-        <div className="ny-chip-row">
-          {COUNTRIES.map((c) => (
-            <Chip key={c} active={prefs.preferredCountries.includes(c)}
-              onClick={() => setPrefs((p) => ({ ...p, preferredCountries: toggleIn(p.preferredCountries, c) }))}>
-              {c}
-            </Chip>
-          ))}
-        </div>
-      </section>
-
-      <section className="ny-section">
-        <h2 className="ny-section-title">{t.oppCategories}</h2>
-        <p className="ny-section-hint">{t.oppCategoriesHint}</p>
+        <h2 className="ny-section-title">{t("opportunity_categories")}</h2>
+        <p className="ny-section-hint">{t("opportunity_categories_hint")}</p>
         <div className="ny-chip-row">
           {CATEGORIES.map((k) => (
-            <Chip key={k} active={prefs.categories.includes(k)}
-              onClick={() => setPrefs((p) => ({ ...p, categories: toggleIn(p.categories, k) }))}>
-              {t.cat[k]}
+            <Chip key={k} active={prefs.interests.includes(k)}
+              onClick={() => setPrefs((p) => ({ ...p, interests: toggleIn(p.interests, k) }))}>
+              {t(`cat_${k}`)}
             </Chip>
           ))}
         </div>
       </section>
 
-      <div className="ny-grid-2 ny-section">
-        <div>
-          <h2 className="ny-section-title">{t.oppFormat}</h2>
-          <div className="ny-check-list">
-            {FORMATS.map((k) => (
-              <label key={k} className="ny-check-row">
-                <input type="checkbox" checked={prefs.formats.includes(k)}
-                  onChange={() => setPrefs((p) => ({ ...p, formats: toggleIn(p.formats, k) }))} />
-                <span>{t.fmt[k]}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h2 className="ny-section-title">{t.deadlineReminders}</h2>
-          <div className="ny-check-list">
-            {DEADLINES.map((k) => (
-              <label key={k} className="ny-check-row">
-                <input type="radio" name="deadline" checked={prefs.deadline === k}
-                  onChange={() => setPrefs((p) => ({ ...p, deadline: k }))} />
-                <span>{t.dl[k]}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <section className="ny-section">
-        <h2 className="ny-section-title">{t.notifChannels}</h2>
+        <h2 className="ny-section-title">{t("notification_channels")}</h2>
         <div className="ny-check-list">
           <label className="ny-check-row">
-            <input type="checkbox" checked={prefs.channels.email}
-              onChange={() => setPrefs((p) => ({ ...p, channels: { ...p.channels, email: !p.channels.email } }))} />
-            <span>{t.emailNotifications}</span>
+            <input type="checkbox" checked={prefs.newsletter}
+              onChange={() => setPrefs((p) => ({ ...p, newsletter: !p.newsletter }))} />
+            <span>{t("email_notifications")}</span>
           </label>
           <label className="ny-check-row ny-check-disabled">
             <input type="checkbox" disabled />
-            <span>{t.pushSoon}</span>
+            <span>{t("push_notifications_soon")}</span>
           </label>
         </div>
       </section>
@@ -339,10 +299,10 @@ function StepPrefs({ t, prefs, setPrefs, toggleIn, saving, submitError, onBack, 
 
       <div className="ny-actions">
         <button type="button" className="ny-btn ny-btn-ghost" onClick={onBack} disabled={saving}>
-          {t.back}
+          {t("back")}
         </button>
         <button type="button" className="ny-btn ny-btn-primary" onClick={onFinish} disabled={saving}>
-          {saving ? t.savingUp : t.finish}
+          {saving ? t("saving_preferences") : t("finish_setup")}
         </button>
       </div>
     </div>
