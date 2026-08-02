@@ -73,9 +73,8 @@ function Sidebar({ activeView, onNavigate, collapsed, onToggleCollapse }) {
         {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
       </button>
 
-      {/* DƏYİŞDİ: profileCompleted şərti çıxarıldı — kart artıq həmişə
-          görünür, məcburi deyil, sadəcə könüllü tamamlama üçün. */}
-      {user && (
+
+      {user && !user.profileCompleted && (
         <div
           className="profile-sidebar__complete-card"
           title={collapsed ? (t('profile_complete_card_title') || 'Profilinizi tamamlayın') : undefined}
