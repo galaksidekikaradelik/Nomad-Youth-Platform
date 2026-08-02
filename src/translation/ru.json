@@ -481,7 +481,9 @@
 
   "dl_1_day": "За 1 день",
   "dl_3_days": "За 3 дня",
-  "dl_1_week": "За 1 неделю"
+  "dl_1_week": "За 1 неделю",
 
+  "profile_complete_card_title": "Заполните свой профиль",
+  "profile_complete_card_btn": "Заполнить сейчас"
 
 }
