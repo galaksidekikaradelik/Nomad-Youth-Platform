@@ -94,9 +94,7 @@ export default function NomadYouthOnboarding() {
     if (validateStep1()) setStep(2);
   }
 
-  // DƏYİŞDİ: setTimeout mock-u yerinə real POST /api/profile/complete
-  // çağırışı. Uğurlu cavabdan sonra AuthContext user-i profileCompleted=true
-  // ilə yeniləyir; qısa uğur animasiyasından sonra ana səhifəyə yönləndirilir.
+  
   async function handleFinish() {
     setSubmitError("");
     setSaving(true);
@@ -118,7 +116,7 @@ export default function NomadYouthOnboarding() {
 
       await completeProfile(payload);
       setDone(true);
-      setTimeout(() => navigate("/", { replace: true }), 1200);
+      setTimeout(() => navigate("/profile", { replace: true }), 1200);
     } catch (err) {
       console.error("Profil tamamlanmadı:", err);
       setSubmitError(
@@ -157,9 +155,7 @@ export default function NomadYouthOnboarding() {
                     setP={setP}
                     errors={errors}
                     onContinue={handleContinue}
-                    onBack={() => {
-                      console.log("Back pressed on step 1 — return to Google login");
-                    }}
+                    onBack={() => navigate("/profile")}
                   />
                 ) : (
                   <StepPrefs
