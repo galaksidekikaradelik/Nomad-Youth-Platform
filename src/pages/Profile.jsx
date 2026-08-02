@@ -49,7 +49,6 @@ function timeAgo(isoDate) {
   return `${days} gün əvvəl`;
 }
 
-// Artıq bütün item-lər Profile daxilində "view" olaraq açılır, ayrı route yoxdur
 const NAV_ITEMS = [
   { key: 'overview', labelKey: 'profile_nav_overview', icon: LayoutGrid },
   { key: 'applications', labelKey: 'profile_nav_applications', icon: Send },
@@ -58,8 +57,6 @@ const NAV_ITEMS = [
   { key: 'settings', labelKey: 'profile_nav_settings', icon: SettingsIcon },
 ];
 
-// DƏYİŞDİ: user əlavə edildi (logout-dan başqa) və navigate — profil
-// tamamlanmadıqda görünən "Profilinizi tamamlayın" kartı üçün.
 function Sidebar({ activeView, onNavigate, collapsed, onToggleCollapse }) {
   const { logout, user } = useAuth();
   const { t } = useLanguage();
@@ -76,8 +73,9 @@ function Sidebar({ activeView, onNavigate, collapsed, onToggleCollapse }) {
         {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
       </button>
 
-      {/* YENİ: yalnız profileCompleted=false olduqda görünən tamamlama kartı */}
-      {user && user.profileCompleted === false && (
+      {/* DƏYİŞDİ: profileCompleted şərti çıxarıldı — kart artıq həmişə
+          görünür, məcburi deyil, sadəcə könüllü tamamlama üçün. */}
+      {user && (
         <div
           className="profile-sidebar__complete-card"
           title={collapsed ? (t('profile_complete_card_title') || 'Profilinizi tamamlayın') : undefined}
@@ -160,15 +158,7 @@ function ProfileStatsBar({ applications }) {
   );
 }
 
-/**
- * ProfileHeader
- *
- * Avatar tam klikləndirilə bilər (və klaviatura ilə Enter/Space ilə əlçatan) —
- * klikləndikdə gizli file input açılır. Şəkil seçildikdən sonra mövcud
- * AvatarAdjustModal açılır; təsdiqdən sonra mövcud uploadAvatar API-si
- * çağrılır. Uğurlu yükləmə user obyektini (avatarUrl) yeniləyir və Avatar
- * komponenti bunu avtomatik render edir — səhifə reload olunmur.
- */
+
 function ProfileHeader({ user, name }) {
   const { t } = useLanguage();
   const { uploadAvatar, removeAvatar } = useAuth();
@@ -183,7 +173,6 @@ function ProfileHeader({ user, name }) {
     fileInputRef.current?.click();
   };
 
-  // Klaviatura dəstəyi: Enter və Space fayl seçicisini açsın
   const handleAvatarKeyDown = (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -193,10 +182,10 @@ function ProfileHeader({ user, name }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
-    e.target.value = ''; // eyni faylı yenidən seçəndə də onChange tətiklənsin
+    e.target.value = ''; 
     if (!file) return;
     setError('');
-    setPendingFile(file); // birbaşa yükləmirik — əvvəlcə düzəliş modalı açılır
+    setPendingFile(file); 
   };
 
   const handleAdjustConfirm = async (adjustedFile) => {
@@ -320,7 +309,6 @@ function EmptyRow({ text }) {
 
 
 
-// Tam siyahı görünüşü — Seçilmişlər / Yadda saxlananlar üçün ortaq
 function FullListView({ title, items, emptyText, onBack, renderRow }) {
   const { t } = useLanguage();
   return (
@@ -343,10 +331,6 @@ function FullListView({ title, items, emptyText, onBack, renderRow }) {
   );
 }
 
-// DƏYİŞDİ: əvvəllər həmişə boş placeholder göstərirdi. İndi real
-// backend-dən (/api/notifications) bildirişləri çəkir və göstərir.
-// NotificationsDropdown-dakı kimi, açılanda oxunmamışlar avtomatik
-// "oxundu" işarələnir.
 function NotificationsView({ onBack }) {
   const { t } = useLanguage();
   const [notifications, setNotifications] = useState([]);
@@ -426,7 +410,6 @@ function NotificationsView({ onBack }) {
   );
 }
 
-/* ---------- Hesab parametrləri (əvvəlki Settings.jsx-dən köçürülüb) ---------- */
 
 function DeleteConfirmModal({ t, onCancel, onConfirm, error, deleting }) {
   return (
@@ -508,8 +491,6 @@ function SettingsView({ onBack }) {
     setProfileSaved(false);
   };
 
-  // DƏYİŞDİ: async oldu, backend inteqrasiyası üçün await updateUser(...)
-  // çağırılır və xəta try/catch ilə tutulub istifadəçiyə göstərilir.
   const handleProfileSubmit = async () => {
     setProfileError('');
     setProfileSaving(true);
@@ -534,10 +515,6 @@ function SettingsView({ onBack }) {
     setPasswordSaved(false);
   };
 
-  // DƏYİŞDİ: async oldu, backend inteqrasiyası üçün await changePassword(...)
-  // çağırılır. changePassword() { success, error } formatını qoruyub, ona
-  // görə mövcud error-mapping məntiqi (wrong_password / user_not_found)
-  // saxlanılıb; digər backend xətaları birbaşa mesaj kimi göstərilir.
   const handlePasswordSubmit = async () => {
     setPasswordError('');
     setPasswordSaved(false);
@@ -578,9 +555,6 @@ function SettingsView({ onBack }) {
     logout();
   };
 
-  // DƏYİŞDİ: async oldu, await deleteAccount() çağırılır, uğurlu olduqda
-  // logout() edilib istifadəçi ana səhifəyə yönləndirilir. Xəta baş
-  // verərsə modal açıq qalır və xəta mesajı göstərilir.
   const handleDeleteConfirm = async () => {
     setDeleteError('');
     setDeleting(true);
@@ -717,8 +691,6 @@ function SettingsView({ onBack }) {
   );
 }
 
-/* ---------- Əsas Profile komponenti ---------- */
-
 export default function Profile() {
   const { user } = useAuth();
   const { t } = useLanguage();
@@ -726,26 +698,16 @@ export default function Profile() {
   const [activeView, setActiveView] = useState(location.state?.view || 'overview');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  // Naviqasiyadan (məs. hamburger menyudakı "Parametrlər" düyməsindən)
-  // eyni səhifədə (Profile artıq açıqdırsa) view dəyişəndə də reaksiya versin.
   const [handledLocationState, setHandledLocationState] = useState(location.state);
   if (location.state?.view && location.state !== handledLocationState) {
     setHandledLocationState(location.state);
     setActiveView(location.state.view);
   }
 
-  // DƏYİŞDİ: "Bəyənilənlər" artıq localStorage-dan yox, backend like-inə
-  // bağlı LikeContext-dən gəlir (bax: LikeProvider.jsx - likedOpportunities).
   const { likedOpportunities } = useLike();
 
-  // DƏYİŞDİ: "Yadda saxlanılanlar" artıq statik JSON + localStorage-dan
-  // yox, backend wishlist-inə bağlı WishlistContext-dən gəlir (bax:
-  // WishlistProvider.jsx - savedOpportunities).
   const { savedOpportunities } = useWishlist();
 
-  // DƏYİŞDİ: "Müraciətlər" artıq statik JSON + localStorage-dan yox,
-  // backend-ə bağlı ApplicationStatusContext-dən gəlir (bax:
-  // ApplicationStatusProvider.jsx - statusItems).
   const { statusItems: applications } = useApplicationStatus();
 
   const firstNameValue = user ? `${user.firstName || ''}`.trim() : '';
