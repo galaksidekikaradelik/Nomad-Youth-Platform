@@ -3,12 +3,12 @@ import apiClient from "../api/axios";
 
 const EDUCATION_LEVEL_MAP = {
   "Orta təhsil": "HIGH_SCHOOL",
-  "Peşə təhsili": "HIGH_SCHOOL", 
-  "Subbakalavr": "BACHELOR", 
+  "Peşə təhsili": "HIGH_SCHOOL",
+  "Subbakalavr": "BACHELOR",
   "Bakalavr": "BACHELOR",
   "Magistratura": "MASTER",
   "Doktorantura": "PHD",
-  "Məzun": "BACHELOR", 
+  "Məzun": "BACHELOR",
 };
 
 function mapEducationLevel(label) {
@@ -120,6 +120,20 @@ export async function logout() {
 
 export async function getCurrentUser() {
   const { data } = await apiClient.get("/auth/me");
+
+  // DƏYİŞDİ: dev-only yoxlama — ProfileCompletionGate və Profile.jsx-dəki
+  // "Profilinizi tamamlayın" kartı user.profileCompleted sahəsinə etibar
+  // edir. Əgər backend /auth/me cavabında bu sahəni qaytarmırsa, hər ikisi
+  // səhv davranar (undefined === false → false, yəni yönləndirmə/kart heç vaxt
+  // tetiklənməz). Burada yalnız development mühitində xəbərdarlıq veririk,
+  // production-da heç nəyi poza bilməsin deyə istisna atmırıq.
+  if (import.meta.env?.DEV && data?.user && data.user.profileCompleted === undefined) {
+    console.warn(
+      "[authService] /auth/me cavabında 'profileCompleted' sahəsi tapılmadı. " +
+      "Backend CompleteProfileRequest / UserResponse DTO-sunu yoxlayın."
+    );
+  }
+
   return data.user;
 }
 
@@ -162,6 +176,3 @@ export async function deleteAccount() {
   const { data } = await apiClient.delete("/users/me");
   return data;
 }
-
-
-

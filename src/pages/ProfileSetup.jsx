@@ -1,7 +1,8 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 import { useLanguage } from "../hooks/useLanguage";
+import { useAuth } from "../hooks/useAuth";
 import "../style/index.css";
 
 
@@ -49,10 +50,13 @@ function Chip({ active, onClick, children }) {
 
 export default function NomadYouthOnboarding() {
   const t = useLanguage();
+  const navigate = useNavigate();
+  const { completeProfile } = useAuth();
 
   const [step, setStep] = useState(1);
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const [profile, setProfile] = useState({
     firstName: "", lastName: "", phone: "", country: "", city: "",
@@ -86,13 +90,42 @@ export default function NomadYouthOnboarding() {
     if (validateStep1()) setStep(2);
   }
 
-  function handleFinish() {
+  // DƏYİŞDİ: setTimeout mock-u yerinə real POST /api/profile/complete
+  // çağırışı. Uğurlu cavabdan sonra AuthContext user-i profileCompleted=true
+  // ilə yeniləyir; qısa uğur animasiyasından sonra ana səhifəyə yönləndirilir.
+  async function handleFinish() {
+    setSubmitError("");
     setSaving(true);
+    try {
+      const payload = {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        phone: profile.phone,
+        country: profile.country,
+        city: profile.city,
+        university: profile.university,
+        educationLevel: profile.eduLevel,
+        fieldOfStudy: profile.fieldOfStudy,
+        birthDate: profile.dob,
+        bio: profile.bio,
+        preferredCountries: prefs.preferredCountries,
+        categories: prefs.categories,
+        formats: prefs.formats,
+        deadlineReminder: prefs.deadline,
+        notificationChannels: prefs.channels,
+      };
 
-    setTimeout(() => {
-      setSaving(false);
+      await completeProfile(payload);
       setDone(true);
-    }, 900);
+      setTimeout(() => navigate("/", { replace: true }), 1200);
+    } catch (err) {
+      console.error("Profil tamamlanmadı:", err);
+      setSubmitError(
+        err.response?.data?.message || t.submitError || "Xəta baş verdi, yenidən cəhd edin."
+      );
+    } finally {
+      setSaving(false);
+    }
   }
 
   const progressPct = step === 1 ? 50 : 100;
@@ -135,6 +168,7 @@ export default function NomadYouthOnboarding() {
                     setPrefs={setPrefs}
                     toggleIn={toggleIn}
                     saving={saving}
+                    submitError={submitError}
                     onBack={() => setStep(1)}
                     onFinish={handleFinish}
                   />
@@ -226,7 +260,7 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
 }
 
 
-function StepPrefs({ t, prefs, setPrefs, toggleIn, saving, onBack, onFinish }) {
+function StepPrefs({ t, prefs, setPrefs, toggleIn, saving, submitError, onBack, onFinish }) {
   return (
     <div className="ny-step ny-fade-in">
       <h1 className="ny-title">{t.s2_title}</h1>
@@ -301,6 +335,8 @@ function StepPrefs({ t, prefs, setPrefs, toggleIn, saving, onBack, onFinish }) {
         </div>
       </section>
 
+      {submitError && <p className="ny-error ny-submit-error">{submitError}</p>}
+
       <div className="ny-actions">
         <button type="button" className="ny-btn ny-btn-ghost" onClick={onBack} disabled={saving}>
           {t.back}
@@ -321,4 +357,3 @@ function SuccessPanel({ text }) {
     </div>
   );
 }
-

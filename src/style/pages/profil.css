@@ -683,3 +683,55 @@
   font-size: 0.85rem;
   margin-top: 4px;
 }
+
+/* ---------- YENİ: "Profilinizi tamamlayın" kartı (Sidebar) ---------- */
+
+.profile-sidebar__complete-card {
+  background: var(--accent-soft);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-sidebar__complete-text {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.3;
+}
+
+.profile-sidebar__complete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--accent);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  width: 100%;
+}
+
+.profile-sidebar__complete-btn:hover {
+  filter: brightness(0.96);
+}
+
+.profile-sidebar--collapsed .profile-sidebar__complete-card {
+  padding: 8px;
+}
+
+
+.ny-submit-error {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  text-align: center;
+}

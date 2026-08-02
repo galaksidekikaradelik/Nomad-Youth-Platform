@@ -58,9 +58,12 @@ const NAV_ITEMS = [
   { key: 'settings', labelKey: 'profile_nav_settings', icon: SettingsIcon },
 ];
 
+// DƏYİŞDİ: user əlavə edildi (logout-dan başqa) və navigate — profil
+// tamamlanmadıqda görünən "Profilinizi tamamlayın" kartı üçün.
 function Sidebar({ activeView, onNavigate, collapsed, onToggleCollapse }) {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   return (
     <aside className={`profile-sidebar${collapsed ? ' profile-sidebar--collapsed' : ''}`}>
@@ -72,6 +75,27 @@ function Sidebar({ activeView, onNavigate, collapsed, onToggleCollapse }) {
       >
         {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
       </button>
+
+      {/* YENİ: yalnız profileCompleted=false olduqda görünən tamamlama kartı */}
+      {user && user.profileCompleted === false && (
+        <div
+          className="profile-sidebar__complete-card"
+          title={collapsed ? (t('profile_complete_card_title') || 'Profilinizi tamamlayın') : undefined}
+        >
+          {!collapsed && (
+            <p className="profile-sidebar__complete-text">
+              {t('profile_complete_card_title') || 'Profilinizi tamamlayın'}
+            </p>
+          )}
+          <button
+            type="button"
+            className="profile-sidebar__complete-btn"
+            onClick={() => navigate('/profile-setup')}
+          >
+            {collapsed ? <Pencil size={16} /> : (t('profile_complete_card_btn') || 'Profili tamamla')}
+          </button>
+        </div>
+      )}
 
       <nav className="profile-sidebar__nav">
         {NAV_ITEMS.map((item) => {

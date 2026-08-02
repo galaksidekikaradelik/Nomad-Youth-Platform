@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import * as authService from "../services/authService";
 import * as avatarService from "../services/avatarService";
+import * as profileService from "../services/profileService";
 
 const AUTH_TOKEN_KEY = "authToken";
 
@@ -127,6 +128,30 @@ export function AuthProvider({ children }) {
     updateUserLocal({ avatarUrl: null });
   };
 
+  // YENİ: user-i backend-dən yenidən çəkmək üçün (/api/auth/me).
+  // İstənilən vaxt (məs. profil tamamlandıqdan sonra) user + localStorage-i
+  // yeniləmək üçün istifadə oluna bilər.
+  const refreshUser = async () => {
+    const freshUser = await authService.getCurrentUser();
+    setUser(freshUser);
+    localStorage.setItem("user", JSON.stringify(freshUser));
+    return freshUser;
+  };
+
+  // DƏYİŞDİ: POST /api/profile/complete cavabını artıq birbaşa setUser
+  // etmirik. Backend bu endpoint-in cavabında bütün user sahələrini
+  // (məs. avatarUrl, tam profil obyekti) qaytarmaya bilər, ona görə
+  // "yarımçıq" user obyektini state-ə yazmaq riskli idi. Bunun əvəzinə,
+  // uğurlu POST-dan sonra refreshUser() (/auth/me) çağırılır və user
+  // state-i backend-in "source of truth" cavabı ilə tam sinxronlaşdırılır.
+  // Bu həm də ProfileCompletionGate-in profileCompleted=true görməsini
+  // təmin edir.
+  const completeProfile = async (payload) => {
+    await profileService.completeProfile(payload);
+    const freshUser = await refreshUser();
+    return freshUser;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -141,6 +166,8 @@ export function AuthProvider({ children }) {
         deleteAccount,
         uploadAvatar,
         removeAvatar,
+        refreshUser,
+        completeProfile,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import MainLayout from "../layouts/MainLayout";
+import ProfileCompletionGate from "../layouts/ProfileCompletionGate";
 
 import Home from "../pages/Home";
 import Opportunities from "../pages/Opportunities";
@@ -11,6 +11,7 @@ import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
+import ProfileSetup from "../pages/ProfileSetup";
 import VerifyEmail from "../pages/VerifyEmail";
 
 export default function AppRoutes() {
@@ -19,7 +20,10 @@ export default function AppRoutes() {
 
       <Route path="/verify-email" element={<VerifyEmail />} />
 
-      <Route element={<MainLayout />}>
+      <Route path="/profile-setup" element={<ProfileSetup />} />
+
+      
+      <Route element={<ProfileCompletionGate />}>
         <Route path="/" element={<Home />} />
         <Route path="/opportunities" element={<Opportunities />} />
         <Route path="/about" element={<About />} />
