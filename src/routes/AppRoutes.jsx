@@ -20,7 +20,6 @@ export default function AppRoutes() {
 
       <Route path="/verify-email" element={<VerifyEmail />} />
 
-      <Route path="/profile-setup" element={<ProfileSetup />} />
 
       
       <Route element={<ProfileCompletionGate />}>
@@ -32,6 +31,8 @@ export default function AppRoutes() {
         <Route path="/services" element={<Services />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile-setup" element={<ProfileSetup />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
