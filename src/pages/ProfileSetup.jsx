@@ -8,15 +8,30 @@ import "../style/index.css";
 
 
 const COUNTRIES = [
-  "Azerbaijan", "Germany", "Italy", "Poland", "Spain", "France", "Netherlands",
-  "Turkey", "Georgia", "Portugal", "Greece", "Romania", "Ukraine", "Lithuania",
-  "Latvia", "Estonia", "Czechia", "Slovakia", "Hungary", "Belgium",
+  { value: "Azerbaijan", key: "country_azerbaijan" },
+  { value: "Germany", key: "country_germany" },
+  { value: "Italy", key: "country_italy" },
+  { value: "Poland", key: "country_poland" },
+  { value: "Spain", key: "country_spain" },
+  { value: "France", key: "country_france" },
+  { value: "Netherlands", key: "country_netherlands" },
+  { value: "Turkey", key: "country_turkey" },
+  { value: "Georgia", key: "country_georgia" },
+  { value: "Portugal", key: "country_portugal" },
+  { value: "Greece", key: "country_greece" },
+  { value: "Romania", key: "country_romania" },
+  { value: "Ukraine", key: "country_ukraine" },
+  { value: "Lithuania", key: "country_lithuania" },
+  { value: "Latvia", key: "country_latvia" },
+  { value: "Estonia", key: "country_estonia" },
+  { value: "Czechia", key: "country_czechia" },
+  { value: "Slovakia", key: "country_slovakia" },
+  { value: "Hungary", key: "country_hungary" },
+  { value: "Belgium", key: "country_belgium" },
 ];
 
 const EDU_LEVELS = ["high_school", "bachelor", "master", "phd", "vocational"];
 
-// Frontend-də istifadə olunan key-lər backend enum-una uyğunlaşdırılır.
-// Backend-də EducationLevel enum-unun dəqiq adlarını yoxlayın və lazım gələrsə düzəldin.
 const EDU_LEVEL_ENUM_MAP = {
   high_school: "HIGH_SCHOOL",
   bachelor: "BACHELOR",
@@ -94,9 +109,7 @@ export default function NomadYouthOnboarding() {
     if (validateStep1()) setStep(2);
   }
 
-  // DƏYİŞDİ: setTimeout mock-u yerinə real POST /api/profile/complete
-  // çağırışı. Uğurlu cavabdan sonra AuthContext user-i profileCompleted=true
-  // ilə yeniləyir; qısa uğur animasiyasından sonra ana səhifəyə yönləndirilir.
+  
   async function handleFinish() {
     setSubmitError("");
     setSaving(true);
@@ -118,7 +131,7 @@ export default function NomadYouthOnboarding() {
 
       await completeProfile(payload);
       setDone(true);
-      setTimeout(() => navigate("/", { replace: true }), 1200);
+      setTimeout(() => navigate("/profile", { replace: true }), 1200);
     } catch (err) {
       console.error("Profil tamamlanmadı:", err);
       setSubmitError(
@@ -157,9 +170,7 @@ export default function NomadYouthOnboarding() {
                     setP={setP}
                     errors={errors}
                     onContinue={handleContinue}
-                    onBack={() => {
-                      console.log("Back pressed on step 1 — return to Google login");
-                    }}
+                    onBack={() => navigate("/profile")}
                   />
                 ) : (
                   <StepPrefs
@@ -202,13 +213,18 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
 
         <Field label={t("phone")}>
           <input className="ny-input" type="tel" value={profile.phone}
-            onChange={(e) => setP("phone", e.target.value)} placeholder="+994 50 000 00 00" />
+            onChange={(e) => setP("phone", e.target.value)}
+            placeholder={t("phone_placeholder") || "+994 50 000 00 00"} />
         </Field>
         <Field label={t("country")} required error={errors.country}>
           <select className="ny-input" value={profile.country}
             onChange={(e) => setP("country", e.target.value)}>
             <option value="">{t("select_placeholder")}</option>
-            {COUNTRIES.map((c) => <option key={c} value={c}>{c}</option>)}
+           {COUNTRIES.map((c) => (
+                <option key={c.value} value={c.value}>
+                    {t(c.key)}
+                </option>
+                ))}
           </select>
         </Field>
 
