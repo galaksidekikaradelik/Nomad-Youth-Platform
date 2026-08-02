@@ -481,5 +481,8 @@
 
   "dl_1_day": "1 day before",
   "dl_3_days": "3 days before",
-  "dl_1_week": "1 week before"
+  "dl_1_week": "1 week before",
+
+  "profile_complete_card_title": "Complete your profile",
+  "profile_complete_card_btn": "Complete now"
 }
