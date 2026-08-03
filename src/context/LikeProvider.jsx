@@ -29,12 +29,6 @@ export function LikeProvider({ children }) {
     [likedOpportunities]
   );
 
-  /**
-   * toggleLike(opportunity)
-   *
-   * Parametr olaraq YALNIZ id yox, tam `opportunity` obyekti gözlənilir —
-   * əsl optimistic UI üçün add zamanı elementin tam datasına ehtiyac var.
-   */
   const toggleLike = useCallback(
     async (opportunity) => {
       if (!user || !opportunity?.id) return;
@@ -44,7 +38,6 @@ export function LikeProvider({ children }) {
       const previous = [...likedOpportunities];
 
       if (isLiked) {
-        // Optimistic remove
         setLikedOpportunities((prev) =>
           prev.filter((opp) => opp.id !== projectId)
         );
@@ -56,13 +49,11 @@ export function LikeProvider({ children }) {
           setLikedOpportunities(previous); // rollback
         }
       } else {
-        // Optimistic add — UI dərhal yenilənir
         setLikedOpportunities((prev) => [...prev, opportunity]);
 
         try {
           const created = await likeService.addLike(user.id, projectId);
 
-          // Backend-dən gələn "əsl" opportunity ilə əvəz et
           setLikedOpportunities((prev) =>
             prev.map((opp) =>
               opp.id === projectId ? created.opportunity : opp

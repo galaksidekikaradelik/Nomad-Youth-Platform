@@ -29,17 +29,6 @@ export function WishlistProvider({ children }) {
     [savedOpportunities]
   );
 
-  /**
-   * toggleSave(opportunity)
-   *
-   * Diqqət: parametr olaraq artıq YALNIZ id yox, tam `opportunity` obyekti
-   * gözlənilir. Bunun səbəbi əsl optimistic UI qurmaqdır — add zamanı
-   * backend cavabını gözləmədən UI-ni dərhal yeniləmək üçün elementin
-   * tam datasına ehtiyac var (id, title, şəkil və s.).
-   *
-   * Əgər çağıran yerlərdə hələ də yalnız id ötürülürsə, həmin komponentləri
-   * `toggleSave(project)` şəklində çağıracaq formada yeniləmək lazımdır.
-   */
   const toggleSave = useCallback(
     async (opportunity) => {
       if (!user || !opportunity?.id) return;
@@ -49,7 +38,6 @@ export function WishlistProvider({ children }) {
       const previous = [...savedOpportunities];
 
       if (isSaved) {
-        // Optimistic remove
         setSavedOpportunities((prev) =>
           prev.filter((opp) => opp.id !== projectId)
         );
@@ -61,13 +49,11 @@ export function WishlistProvider({ children }) {
           setSavedOpportunities(previous); // rollback
         }
       } else {
-        // Optimistic add — UI dərhal yenilənir
         setSavedOpportunities((prev) => [...prev, opportunity]);
 
         try {
           const created = await wishlistService.addToWishlist(user.id, projectId);
 
-          // Backend-dən gələn "əsl" opportunity ilə əvəz et
           setSavedOpportunities((prev) =>
             prev.map((opp) =>
               opp.id === projectId ? created.opportunity : opp

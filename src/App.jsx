@@ -26,7 +26,6 @@ function App() {
           </WishlistProvider>
         </AuthProvider>
       </LanguageProvider>
-
     </GoogleOAuthProvider>  
     
   );

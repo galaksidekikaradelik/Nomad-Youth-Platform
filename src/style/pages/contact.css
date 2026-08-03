@@ -161,7 +161,6 @@
   }
 }
 
-/* ---------- Çox kiçik ekranlar ---------- */
 @media (max-width: 400px) {
   .contact-info-card {
     flex-direction: column;

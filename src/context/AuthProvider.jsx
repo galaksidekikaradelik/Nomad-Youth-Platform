@@ -17,7 +17,6 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem(AUTH_TOKEN_KEY);
     if (!token) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
       return;
     }
@@ -61,11 +60,6 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-
-  // DƏYİŞDİ: local state yeniləmə yerinə PUT /api/users/me çağırılır.
-  // Backend-dən qayıdan yenilənmiş user obyekti setUser edilir və
-  // localStorage yenilənir. Xəta zəngi çağıran tərəfə (Profile.jsx)
-  // ötürülür ki, orada try/catch ilə göstərilə bilsin.
   const updateUser = async (updates) => {
     const updatedUser = await authService.updateProfile(updates);
     setUser(updatedUser);
@@ -73,11 +67,6 @@ export function AuthProvider({ children }) {
     return updatedUser;
   };
 
-
-  // DƏYİŞDİ: local password müqayisəsi yerinə PUT
-  // /api/users/change-password çağırılır. Əvvəlki interfeys ({ success,
-  // error }) qorunub ki, Profile.jsx-də mövcud error-mapping məntiqi
-  // işləməyə davam etsin.
   const changePassword = async (currentPassword, newPassword) => {
     try {
       await authService.changePassword(currentPassword, newPassword);
@@ -91,9 +80,6 @@ export function AuthProvider({ children }) {
     }
   };
 
-
-  // DƏYİŞDİ: DELETE /api/users/me çağırılır, uğurlu olduqda
-  // authToken/user localStorage-dan silinir və user null edilir.
   const deleteAccount = async () => {
     await authService.deleteAccount();
     localStorage.removeItem(AUTH_TOKEN_KEY);
@@ -102,10 +88,6 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-  // DƏYİŞDİ: avatarUrl-in local sinxronizasiyası üçün ayrıca (backend-ə
-  // toxunmayan) helper. updateUser() indi PUT /api/users/me çağırdığından,
-  // avatar funksiyalarının davranışını dəyişməmək üçün onlar bunu istifadə
-  // edir (avatarService özü artıq öz endpoint-i ilə yükləmə/silməni edir).
   const updateUserLocal = (updates) => {
     setUser((prev) => {
       if (!prev) return prev;
@@ -128,9 +110,6 @@ export function AuthProvider({ children }) {
     updateUserLocal({ avatarUrl: null });
   };
 
-  // YENİ: user-i backend-dən yenidən çəkmək üçün (/api/auth/me).
-  // İstənilən vaxt (məs. profil tamamlandıqdan sonra) user + localStorage-i
-  // yeniləmək üçün istifadə oluna bilər.
   const refreshUser = async () => {
     const freshUser = await authService.getCurrentUser();
     setUser(freshUser);
@@ -138,14 +117,6 @@ export function AuthProvider({ children }) {
     return freshUser;
   };
 
-  // DƏYİŞDİ: POST /api/profile/complete cavabını artıq birbaşa setUser
-  // etmirik. Backend bu endpoint-in cavabında bütün user sahələrini
-  // (məs. avatarUrl, tam profil obyekti) qaytarmaya bilər, ona görə
-  // "yarımçıq" user obyektini state-ə yazmaq riskli idi. Bunun əvəzinə,
-  // uğurlu POST-dan sonra refreshUser() (/auth/me) çağırılır və user
-  // state-i backend-in "source of truth" cavabı ilə tam sinxronlaşdırılır.
-  // Bu həm də ProfileCompletionGate-in profileCompleted=true görməsini
-  // təmin edir.
   const completeProfile = async (payload) => {
     await profileService.completeProfile(payload);
     const freshUser = await refreshUser();

@@ -44,16 +44,11 @@ function writeNotifications(user, notifications) {
   return trimmed
 }
 
-// Yeni elanları (və bəyənilən kateqoriyalara bənzər olanları) aşkarlayıb
-// bildiriş siyahısını yeniləyir. Səhifə açılanda (Navbar mount olanda) çağırılır.
 export function syncNotifications(user, opportunities) {
   if (!user) return []
 
   const seenIds = readSeenIds(user)
 
-  // İlk dəfə işə düşürsə (heç bir "seen" yoxdursa) — mövcud bütün elanları
-  // "artıq görülüb" kimi işarələ, amma bildiriş yaratma. Əks halda istifadəçi
-  // ilk girişdə bütün mövcud elanlar üçün bildiriş "bombardmanı" alar.
   if (seenIds.size === 0) {
     const initialIds = new Set(opportunities.map(oppKeyOf))
     writeSeenIds(user, initialIds)

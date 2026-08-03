@@ -131,12 +131,6 @@ export async function logout() {
 export async function getCurrentUser() {
   const { data } = await apiClient.get("/auth/me");
 
-  // DƏYİŞDİ: dev-only yoxlama — ProfileCompletionGate və Profile.jsx-dəki
-  // "Profilinizi tamamlayın" kartı user.profileCompleted sahəsinə etibar
-  // edir. Əgər backend /auth/me cavabında bu sahəni qaytarmırsa, hər ikisi
-  // səhv davranar (undefined === false → false, yəni yönləndirmə/kart heç vaxt
-  // tetiklənməz). Burada yalnız development mühitində xəbərdarlıq veririk,
-  // production-da heç nəyi poza bilməsin deyə istisna atmırıq.
   if (import.meta.env?.DEV && data?.user && data.user.profileCompleted === undefined) {
     console.warn(
       "[authService] /auth/me cavabında 'profileCompleted' sahəsi tapılmadı. " +
