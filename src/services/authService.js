@@ -1,5 +1,15 @@
 import apiClient from "../api/axios";
 
+const BACKEND_ORIGIN = "http://localhost:8080";
+
+function normalizeUser(user) {
+  if (!user) return user;
+  const avatarUrl = user.profileImageUrl
+    ? (user.profileImageUrl.startsWith("http") ? user.profileImageUrl : `${BACKEND_ORIGIN}${user.profileImageUrl}`)
+    : null;
+  return { ...user, avatarUrl };
+}
+
 
 const EDUCATION_LEVEL_MAP = {
   "Orta təhsil": "HIGH_SCHOOL",
@@ -49,7 +59,7 @@ export async function login(credentials) {
 
   const meResponse = await apiClient.get("/auth/me");
 
-  const user = meResponse.data.user;
+  const user = normalizeUser(meResponse.data.user);
 
   localStorage.setItem("user", JSON.stringify(user));
 
@@ -70,7 +80,7 @@ export async function register(formData) {
 
     const meResponse = await apiClient.get("/auth/me");
 
-    const user = meResponse.data.user;
+    const user = normalizeUser(meResponse.data.user);
 
     localStorage.setItem("user", JSON.stringify(user));
 
@@ -94,7 +104,7 @@ export async function loginWithGoogle(idToken) {
   }
 
   const meResponse = await apiClient.get("/auth/me");
-  const user = meResponse.data.user;
+  const user = normalizeUser(meResponse.data.user);
 
   localStorage.setItem("user", JSON.stringify(user));
 
@@ -134,7 +144,8 @@ export async function getCurrentUser() {
     );
   }
 
-  return data.user;
+  return normalizeUser(data.user);
+
 }
 
 
