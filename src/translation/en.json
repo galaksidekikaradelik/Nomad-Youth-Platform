@@ -420,6 +420,7 @@
   "education_level": "Education Level",
   "field_of_study": "Field of Study",
   "date_of_birth": "Date of Birth",
+  "major": "Major",
   "short_bio": "Short Bio",
   "optional": "(optional)",
   "bio_placeholder": "Tell us a little about yourself...",
