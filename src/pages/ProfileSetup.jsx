@@ -38,7 +38,6 @@ const EDU_LEVEL_ENUM_MAP = {
   bachelor: "BACHELOR",
   master: "MASTER",
   phd: "PHD",
-  vocational: "VOCATIONAL",
 };
 
 const PROJECT_TYPES = [

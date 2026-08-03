@@ -102,6 +102,7 @@ export default function Navbar() {
   const handleLogout = () => {
     logout()
     setProfileMenuOpen(false)
+    navigate("/")
   }
 
   const goToProfileSettings = () => {
