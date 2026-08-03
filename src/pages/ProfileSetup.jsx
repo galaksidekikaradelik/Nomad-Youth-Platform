@@ -407,7 +407,6 @@ function StepPrefs({
               <option key={c.value} value={c.value}>{t(c.key)}</option>
             ))}
           </select>
-          <button type="button" className="ny-btn-add" onClick={addCountry}>+</button>
         </div>
         <div className="ny-chip-row">
           <Chip active={allCountriesSelected} onClick={toggleAllCountries}>
