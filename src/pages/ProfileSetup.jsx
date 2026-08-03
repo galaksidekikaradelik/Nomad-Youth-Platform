@@ -129,6 +129,7 @@ export default function NomadYouthOnboarding() {
     durations: [],
     deadlineReminderDays: 3,
   });
+  const [pendingCountry, setPendingCountry] = useState("");
 
   const setP = (k, v) => setProfile((p) => ({ ...p, [k]: v }));
 
@@ -235,6 +236,8 @@ export default function NomadYouthOnboarding() {
                     prefs={prefs}
                     setPrefs={setPrefs}
                     toggleIn={toggleIn}
+                    pendingCountry={pendingCountry}
+                    setPendingCountry={setPendingCountry}
                     saving={saving}
                     submitError={submitError}
                     onBack={() => setStep(1)}
@@ -328,8 +331,23 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
 
 function StepPrefs({
   t, prefs, setPrefs, toggleIn,
+  pendingCountry, setPendingCountry,
   saving, submitError, onBack, onFinish,
 }) {
+  const addCountry = () => {
+    if (!pendingCountry) return;
+    setPrefs((p) =>
+      p.countries.includes(pendingCountry)
+        ? p
+        : { ...p, countries: [...p.countries, pendingCountry] }
+    );
+    setPendingCountry("");
+  };
+
+  const removeCountry = (val) => {
+    setPrefs((p) => ({ ...p, countries: p.countries.filter((c) => c !== val) }));
+  };
+
   const allCountriesSelected = prefs.countries.length === COUNTRIES.length;
   const toggleAllCountries = () => {
     setPrefs((p) => ({
@@ -378,21 +396,39 @@ function StepPrefs({
       {/* 1. Ölkə seçimi */}
       <section className="ny-section">
         <h2 className="ny-section-title">{t("country_selection")}</h2>
+        <div className="ny-inline-add">
+          <select
+            className="ny-input"
+            value={pendingCountry}
+            onChange={(e) => setPendingCountry(e.target.value)}
+          >
+            <option value="">{t("select_placeholder")}</option>
+            {COUNTRIES.filter((c) => !prefs.countries.includes(c.value)).map((c) => (
+              <option key={c.value} value={c.value}>{t(c.key)}</option>
+            ))}
+          </select>
+          <button type="button" className="ny-btn-add" onClick={addCountry}>+</button>
+        </div>
         <div className="ny-chip-row">
           <Chip active={allCountriesSelected} onClick={toggleAllCountries}>
             {t("all")}
           </Chip>
-          {COUNTRIES.map((country) => (
-            <Chip
-              key={country.value}
-              active={prefs.countries.includes(country.value)}
-              onClick={() =>
-                setPrefs((p) => ({ ...p, countries: toggleIn(p.countries, country.value) }))
-              }
-            >
-              {t(country.key)}
-            </Chip>
-          ))}
+          {prefs.countries.map((val) => {
+            const meta = COUNTRIES.find((c) => c.value === val);
+            return (
+              <span key={val} className="ny-chip ny-chip-active ny-chip-removable">
+                {meta ? t(meta.key) : val}
+                <button
+                  type="button"
+                  className="ny-chip-remove"
+                  onClick={() => removeCountry(val)}
+                  aria-label={t("remove")}
+                >
+                  ×
+                </button>
+              </span>
+            );
+          })}
         </div>
       </section>
 
