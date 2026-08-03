@@ -12,5 +12,15 @@ export async function markAsRead(notificationId) {
 
 export async function fetchUnreadCount() {
   const { data } = await apiClient.get("/notifications/unread-count");
-  return data; 
+  return data;
+}
+
+export async function fetchNotificationSettings() {
+  const { data } = await apiClient.get("/notification-settings");
+  return data;
+}
+
+export async function updateNotificationSettings(settings) {
+  const { data } = await apiClient.put("/notification-settings", settings);
+  return data;
 }

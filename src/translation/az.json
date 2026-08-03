@@ -498,6 +498,19 @@
   "country_czechia": "Çexiya",
   "country_slovakia": "Slovakiya",
   "country_hungary": "Macarıstan",
-  "country_belgium": "Belçika"
+  "country_belgium": "Belçika",
+
+  "notificationSettings": "Bildiriş Ayarları",
+  "emailNotifications": "E-poçt bildirişləri",
+  "inAppNotifications": "Tətbiq daxili bildirişlər",
+  "newOpportunities": "Yeni imkanlar",
+  "deadlineReminders": "Son tarix xatırlatmaları",
+  "savedOpportunityUpdates": "Yadda saxlanılan imkan yenilikləri",
+  "platformNews": "Platforma xəbərləri",
+  "save": "Yadda saxla",
+  "notificationSettingsLoading": "Ayarlar yüklənir...",
+  "notificationSettingsError": "Ayarlar yüklənmədi. Yenidən cəhd edin.",
+  "notificationSettingsSaved": "Ayarlar yadda saxlanıldı",
+  "notificationSettingsSaveError": "Ayarlar yadda saxlanmadı. Yenidən cəhd edin."
 
 }

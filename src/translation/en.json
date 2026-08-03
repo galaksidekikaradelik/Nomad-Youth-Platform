@@ -508,5 +508,19 @@
   "country_czechia": "Czechia",
   "country_slovakia": "Slovakia",
   "country_hungary": "Hungary",
-  "country_belgium": "Belgium"
+  "country_belgium": "Belgium",
+
+  "notificationSettings": "Notification Settings",
+  "emailNotifications": "Email notifications",
+  "inAppNotifications": "In-app notifications",
+  "newOpportunities": "New opportunities",
+  "deadlineReminders": "Deadline reminders",
+  "savedOpportunityUpdates": "Saved opportunity updates",
+  "platformNews": "Platform news",
+  "save": "Save",
+  "notificationSettingsLoading": "Loading settings...",
+  "notificationSettingsError": "Failed to load settings. Please try again.",
+  "notificationSettingsSaved": "Settings saved",
+  "notificationSettingsSaveError": "Failed to save settings. Please try again."
+
 }

@@ -508,6 +508,20 @@
   "country_czechia": "Чехия",
   "country_slovakia": "Словакия",
   "country_hungary": "Венгрия",
-  "country_belgium": "Бельгия"
+  "country_belgium": "Бельгия",
+
+  "notificationSettings": "Настройки уведомлений",
+  "emailNotifications": "Уведомления по email",
+  "inAppNotifications": "Уведомления в приложении",
+  "newOpportunities": "Новые возможности",
+  "deadlineReminders": "Напоминания о сроках",
+  "savedOpportunityUpdates": "Обновления сохранённых предложений",
+  "platformNews": "Новости платформы",
+  "save": "Сохранить",
+  "notificationSettingsLoading": "Загрузка настроек...",
+  "notificationSettingsError": "Не удалось загрузить настройки. Попробуйте снова.",
+  "notificationSettingsSaved": "Настройки сохранены",
+  "notificationSettingsSaveError": "Не удалось сохранить настройки. Попробуйте снова."
+
 
 }

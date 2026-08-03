@@ -10,6 +10,7 @@ import * as notificationService from '../services/notificationService';
 import Avatar from '../components/Avatar';
 import AvatarAdjustModal from '../components/AvatarAdjustModal';
 import StatusSelector from '../components/StatusSelector';
+import NotificationSettings from '../components/NotificationSettings';
 import {
   LayoutGrid,
   Send,
@@ -181,10 +182,10 @@ function ProfileHeader({ user, name }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
-    e.target.value = ''; 
+    e.target.value = '';
     if (!file) return;
     setError('');
-    setPendingFile(file); 
+    setPendingFile(file);
   };
 
   const handleAdjustConfirm = async (adjustedFile) => {
@@ -344,16 +345,7 @@ function NotificationsView({ onBack }) {
       setError(null);
       try {
         const list = await notificationService.fetchMyNotifications();
-        if (cancelled) return;
-        setNotifications(list || []);
-
-        const unread = (list || []).filter((n) => !n.read);
-        if (unread.length > 0) {
-          await Promise.all(unread.map((n) => notificationService.markAsRead(n.id)));
-          if (!cancelled) {
-            setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-          }
-        }
+        if (!cancelled) setNotifications(list || []);
       } catch (err) {
         console.error('Bildirişlər yüklənmədi:', err);
         if (!cancelled) {
@@ -367,6 +359,25 @@ function NotificationsView({ onBack }) {
     load();
     return () => { cancelled = true; };
   }, [t]);
+
+  const handleItemClick = async (n) => {
+    if (n.read) return;
+
+    // optimistic update
+    setNotifications((prev) =>
+      prev.map((item) => (item.id === n.id ? { ...item, read: true } : item))
+    );
+
+    try {
+      await notificationService.markAsRead(n.id);
+    } catch (err) {
+      console.error('Bildiriş oxunmuş kimi işarələnmədi:', err);
+      // rollback
+      setNotifications((prev) =>
+        prev.map((item) => (item.id === n.id ? { ...item, read: false } : item))
+      );
+    }
+  };
 
   return (
     <div className="profile-panel profile-panel--full">
@@ -389,6 +400,9 @@ function NotificationsView({ onBack }) {
             <div
               key={n.id}
               className={`profile-mini-row${n.read ? '' : ' profile-mini-row--unread'}`}
+              onClick={() => handleItemClick(n)}
+              role="button"
+              tabIndex={0}
             >
               <div className="profile-mini-row__text">
                 <span className="profile-mini-row__title">{n.title}</span>
@@ -661,6 +675,14 @@ function SettingsView({ onBack }) {
       </SettingsAccordion>
 
       <SettingsAccordion
+        title={t('notificationSettings')}
+        isOpen={openSection === 'notifications'}
+        onToggle={() => toggleSection('notifications')}
+      >
+        <NotificationSettings />
+      </SettingsAccordion>
+
+      <SettingsAccordion
         title={t('settings_account_actions_title')}
         isOpen={openSection === 'account'}
         onToggle={() => toggleSection('account')}
@@ -826,7 +848,7 @@ export default function Profile() {
           </div>
         </div>
 
-        
+
       </div>
     </div>
   );

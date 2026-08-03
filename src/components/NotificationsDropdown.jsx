@@ -15,7 +15,7 @@ function timeAgo(isoDate) {
   return `${days} gün əvvəl`
 }
 
-const UNREAD_POLL_INTERVAL_MS = 60000 // hər dəqiqə oxunmamış sayını yenilə
+const UNREAD_POLL_INTERVAL_MS = 60000
 
 export default function NotificationsDropdown() {
   const { user } = useAuth()
@@ -70,16 +70,8 @@ export default function NotificationsDropdown() {
     try {
       const list = await notificationService.fetchMyNotifications()
       setNotifications(list || [])
-
-      // Açılan kimi oxunmamışları backend-də "oxundu" et.
-      // Backend-də bulk "mark-all-read" endpoint-i olmadığı üçün
-      // hər bir oxunmamış bildiriş üçün ayrıca sorğu göndərilir.
-      const unread = (list || []).filter((n) => !n.read)
-      if (unread.length > 0) {
-        await Promise.all(unread.map((n) => notificationService.markAsRead(n.id)))
-        setNotifications((prev) => prev.map((n) => ({ ...n, read: true })))
-        setUnreadCount(0)
-      }
+      // DİQQƏT: dropdown açılanda bildirişlər artıq avtomatik "read" edilmir.
+      // Read statusu yalnız istifadəçi konkret notification-a klik edəndə dəyişir.
     } catch (err) {
       console.error('Bildirişlər yüklənmədi:', err)
     } finally {
@@ -87,11 +79,28 @@ export default function NotificationsDropdown() {
     }
   }
 
-  const handleNotificationClick = () => {
+  const handleNotificationClick = async (n) => {
     setOpen(false)
-    // Backend Notification entity-də opportunity id/key saxlanmır
-    // (yalnız title/message), ona görə deep-link əvəzinə istifadəçini
-    // Profile-dəki "Bildirişlər" görünüşünə yönləndiririk.
+
+    if (!n.read) {
+      // optimistic update
+      setNotifications((prev) =>
+        prev.map((item) => (item.id === n.id ? { ...item, read: true } : item))
+      )
+      setUnreadCount((prev) => Math.max(0, prev - 1))
+
+      try {
+        await notificationService.markAsRead(n.id)
+      } catch (err) {
+        console.error('Bildiriş oxunmuş kimi işarələnmədi:', err)
+        // rollback
+        setNotifications((prev) =>
+          prev.map((item) => (item.id === n.id ? { ...item, read: false } : item))
+        )
+        setUnreadCount((prev) => prev + 1)
+      }
+    }
+
     navigate('/profile', { state: { view: 'notifications' } })
   }
 
@@ -120,7 +129,9 @@ export default function NotificationsDropdown() {
             notifications.map((n) => (
               <div
                 key={n.id}
-                className="navbar__notif-item navbar__notif-item--clickable"
+                className={`navbar__notif-item navbar__notif-item--clickable${
+                  n.read ? '' : ' navbar__notif-item--unread'
+                }`}
                 onClick={() => handleNotificationClick(n)}
                 role="button"
                 tabIndex={0}
