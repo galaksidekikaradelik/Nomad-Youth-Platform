@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useLanguage } from "../hooks/useLanguage";
 import { useAuth } from "../hooks/useAuth";
+import { updateNotificationSettings } from "../services/notificationService";
 import "../style/index.css";
 
 
@@ -40,10 +41,44 @@ const EDU_LEVEL_ENUM_MAP = {
   vocational: "VOCATIONAL",
 };
 
-const CATEGORIES = [
-  "volunteering", "internship", "training", "youth_exchange", "scholarship",
-  "grant", "conference", "competition", "fellowship", "solidarity_project", "job",
+const PROJECT_TYPES = [
+  { value: "ESC", key: "type_esc" },
+  { value: "SALTO", key: "type_salto" },
+  { value: "Activity", key: "type_activity" },
+  { value: "Seminar", key: "type_seminar" },
+  { value: "Webinar", key: "type_webinar" },
+  { value: "Course", key: "type_course" },
+  { value: "Conference", key: "type_conference" },
+  { value: "International", key: "type_international" },
+  { value: "Local", key: "type_local" },
 ];
+
+const FORMATS = [
+  { value: "Online", key: "format_online" },
+  { value: "Offline", key: "format_offline" },
+];
+
+const CATEGORY_OPTIONS = [
+  { value: "Education", key: "cat_education" },
+  { value: "Technology", key: "cat_technology" },
+  { value: "Entrepreneurship", key: "cat_entrepreneurship" },
+  { value: "Leadership", key: "cat_leadership" },
+  { value: "Partnership", key: "cat_partnership" },
+  { value: "Ecology", key: "cat_ecology" },
+  { value: "Wellbeing", key: "cat_wellbeing" },
+  { value: "Culture", key: "cat_culture" },
+  { value: "Media", key: "cat_media" },
+  { value: "Law", key: "cat_law" },
+  { value: "Peace", key: "cat_peace" },
+  { value: "Youth", key: "cat_youth" },
+];
+
+const DURATIONS = [
+  { value: "Short-term", key: "duration_short" },
+  { value: "Long-term", key: "duration_long" },
+];
+
+const DEADLINE_OPTIONS = [1, 3, 7];
 
 
 
@@ -82,14 +117,19 @@ export default function NomadYouthOnboarding() {
 
   const [profile, setProfile] = useState({
     firstName: "", lastName: "", phone: "", country: "", city: "",
-    university: "", eduLevel: "", fieldOfStudy: "", dob: "", bio: "",
+    university: "", eduLevel: "", fieldOfStudy: "", dob: "",
   });
   const [errors, setErrors] = useState({});
 
   const [prefs, setPrefs] = useState({
-    interests: [],
-    newsletter: true,
+    countries: [],
+    projectTypes: [],
+    formats: [],
+    categories: [],
+    duration: "",
+    deadlineReminderDays: 3,
   });
+  const [pendingCountry, setPendingCountry] = useState("");
 
   const setP = (k, v) => setProfile((p) => ({ ...p, [k]: v }));
 
@@ -109,12 +149,12 @@ export default function NomadYouthOnboarding() {
     if (validateStep1()) setStep(2);
   }
 
-  
+
   async function handleFinish() {
     setSubmitError("");
     setSaving(true);
     try {
-      const payload = {
+      const profilePayload = {
         firstName: profile.firstName,
         lastName: profile.lastName,
         phoneNumber: profile.phone,
@@ -124,12 +164,29 @@ export default function NomadYouthOnboarding() {
         educationLevel: EDU_LEVEL_ENUM_MAP[profile.eduLevel] || null,
         major: profile.fieldOfStudy,
         birthDate: profile.dob,
-        bio: profile.bio,
-        interests: prefs.interests,
-        newsletter: prefs.newsletter,
       };
 
-      await completeProfile(payload);
+      const notificationSettings = {
+        emailNotifications: true,
+        inAppNotifications: true,
+        newOpportunities: true,
+        deadlineReminders: true,
+        savedProjectChanges: true,
+        platformUpdates: true,
+        countries: prefs.countries,
+        projectTypes: prefs.projectTypes,
+        categories: prefs.categories,
+        formats: prefs.formats,
+        deadlineReminderDays: prefs.deadlineReminderDays,
+        duration: prefs.duration,
+      };
+
+      // 1. Profili tamamla
+      await completeProfile(profilePayload);
+
+      // 2. Bildiriş ayarlarını ayrıca yadda saxla
+      await updateNotificationSettings(notificationSettings);
+
       setDone(true);
       setTimeout(() => navigate("/profile", { replace: true }), 1200);
     } catch (err) {
@@ -146,7 +203,7 @@ export default function NomadYouthOnboarding() {
 
   return (
     <div className="ny-root">
-      
+
 
       <div className="ny-stage">
         <div className="ny-card">
@@ -179,6 +236,8 @@ export default function NomadYouthOnboarding() {
                     prefs={prefs}
                     setPrefs={setPrefs}
                     toggleIn={toggleIn}
+                    pendingCountry={pendingCountry}
+                    setPendingCountry={setPendingCountry}
                     saving={saving}
                     submitError={submitError}
                     onBack={() => setStep(1)}
@@ -255,13 +314,6 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
         </Field>
         <div />
 
-        <div className="ny-span-2">
-          <Field label={t("bio")} hint={t("bio_hint")}>
-            <textarea className="ny-input ny-textarea" rows={3} value={profile.bio}
-              placeholder={t("bio_placeholder")}
-              onChange={(e) => setP("bio", e.target.value)} />
-          </Field>
-        </div>
       </div>
 
       <div className="ny-actions">
@@ -277,37 +329,169 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
 }
 
 
-function StepPrefs({ t, prefs, setPrefs, toggleIn, saving, submitError, onBack, onFinish }) {
+function StepPrefs({
+  t, prefs, setPrefs, toggleIn,
+  pendingCountry, setPendingCountry,
+  saving, submitError, onBack, onFinish,
+}) {
+  const addCountry = () => {
+    if (!pendingCountry) return;
+    setPrefs((p) =>
+      p.countries.includes(pendingCountry)
+        ? p
+        : { ...p, countries: [...p.countries, pendingCountry] }
+    );
+    setPendingCountry("");
+  };
+
+  const removeCountry = (val) => {
+    setPrefs((p) => ({ ...p, countries: p.countries.filter((c) => c !== val) }));
+  };
+
   return (
     <div className="ny-step ny-fade-in">
       <h1 className="ny-title">{t("s2_title")}</h1>
       <p className="ny-subtitle">{t("s2_sub")}</p>
 
+      {/* 1. Ölkə seçimi */}
       <section className="ny-section">
-        <h2 className="ny-section-title">{t("opportunity_categories")}</h2>
-        <p className="ny-section-hint">{t("opportunity_categories_hint")}</p>
+        <h2 className="ny-section-title">{t("country_selection")}</h2>
+        <div className="ny-inline-add">
+          <select
+            className="ny-input"
+            value={pendingCountry}
+            onChange={(e) => setPendingCountry(e.target.value)}
+          >
+            <option value="">{t("select_placeholder")}</option>
+            {COUNTRIES.filter((c) => !prefs.countries.includes(c.value)).map((c) => (
+              <option key={c.value} value={c.value}>{t(c.key)}</option>
+            ))}
+          </select>
+          <button type="button" className="ny-btn-add" onClick={addCountry}>+</button>
+        </div>
         <div className="ny-chip-row">
-          {CATEGORIES.map((k) => (
-            <Chip key={k} active={prefs.interests.includes(k)}
-              onClick={() => setPrefs((p) => ({ ...p, interests: toggleIn(p.interests, k) }))}>
-              {t(`cat_${k}`)}
+          {prefs.countries.map((val) => {
+            const meta = COUNTRIES.find((c) => c.value === val);
+            return (
+              <span key={val} className="ny-chip ny-chip-active ny-chip-removable">
+                {meta ? t(meta.key) : val}
+                <button
+                  type="button"
+                  className="ny-chip-remove"
+                  onClick={() => removeCountry(val)}
+                  aria-label={t("remove")}
+                >
+                  ×
+                </button>
+              </span>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 2. Növ seçimi */}
+      <section className="ny-section">
+        <h2 className="ny-section-title">{t("type_selection")}</h2>
+        <div className="ny-chip-row">
+          {PROJECT_TYPES.map((opt) => (
+            <Chip
+              key={opt.value}
+              active={prefs.projectTypes.includes(opt.value)}
+              onClick={() =>
+                setPrefs((p) => ({ ...p, projectTypes: toggleIn(p.projectTypes, opt.value) }))
+              }
+            >
+              {t(opt.key)}
             </Chip>
           ))}
         </div>
       </section>
 
+      {/* Format (Onlayn / Əyani) */}
       <section className="ny-section">
-        <h2 className="ny-section-title">{t("notification_channels")}</h2>
+        <h2 className="ny-section-title">{t("format_selection")}</h2>
+        <div className="ny-chip-row">
+          {FORMATS.map((opt) => (
+            <Chip
+              key={opt.value}
+              active={prefs.formats.includes(opt.value)}
+              onClick={() =>
+                setPrefs((p) => ({ ...p, formats: toggleIn(p.formats, opt.value) }))
+              }
+            >
+              {t(opt.key)}
+            </Chip>
+          ))}
+        </div>
+      </section>
+
+      {/* 3. Mövzu seçimi */}
+      <section className="ny-section">
+        <h2 className="ny-section-title">{t("topic_selection")}</h2>
+        <div className="ny-chip-row">
+          <Chip
+            active={prefs.categories.length === CATEGORY_OPTIONS.length}
+            onClick={() =>
+              setPrefs((p) => ({
+                ...p,
+                categories:
+                  p.categories.length === CATEGORY_OPTIONS.length
+                    ? []
+                    : CATEGORY_OPTIONS.map((o) => o.value),
+              }))
+            }
+          >
+            {t("all")}
+          </Chip>
+          {CATEGORY_OPTIONS.map((opt) => (
+            <Chip
+              key={opt.value}
+              active={prefs.categories.includes(opt.value)}
+              onClick={() =>
+                setPrefs((p) => ({ ...p, categories: toggleIn(p.categories, opt.value) }))
+              }
+            >
+              {t(opt.key)}
+            </Chip>
+          ))}
+        </div>
+      </section>
+
+      {/* Müddət */}
+      <section className="ny-section">
+        <h2 className="ny-section-title">{t("duration_selection")}</h2>
+        <div className="ny-chip-row">
+          {DURATIONS.map((opt) => (
+            <Chip
+              key={opt.value}
+              active={prefs.duration === opt.value}
+              onClick={() => setPrefs((p) => ({ ...p, duration: opt.value }))}
+            >
+              {t(opt.key)}
+            </Chip>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. Deadline bildirişi */}
+      <section className="ny-section">
+        <h2 className="ny-section-title">{t("deadline_notification")}</h2>
         <div className="ny-check-list">
-          <label className="ny-check-row">
-            <input type="checkbox" checked={prefs.newsletter}
-              onChange={() => setPrefs((p) => ({ ...p, newsletter: !p.newsletter }))} />
-            <span>{t("email_notifications")}</span>
-          </label>
-          <label className="ny-check-row ny-check-disabled">
-            <input type="checkbox" disabled />
-            <span>{t("push_notifications_soon")}</span>
-          </label>
+          {DEADLINE_OPTIONS.map((days) => (
+            <label key={days} className="ny-check-row">
+              <input
+                type="radio"
+                name="deadlineReminderDays"
+                checked={prefs.deadlineReminderDays === days}
+                onChange={() => setPrefs((p) => ({ ...p, deadlineReminderDays: days }))}
+              />
+              <span>
+                {days === 1 && t("deadline_1_day")}
+                {days === 3 && t("deadline_3_days")}
+                {days === 7 && t("deadline_1_week")}
+              </span>
+            </label>
+          ))}
         </div>
       </section>
 

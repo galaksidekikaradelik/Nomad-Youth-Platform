@@ -522,7 +522,51 @@
   "notificationSettingsLoading": "Загрузка настроек...",
   "notificationSettingsError": "Не удалось загрузить настройки. Попробуйте снова.",
   "notificationSettingsSaved": "Настройки сохранены",
-  "notificationSettingsSaveError": "Не удалось сохранить настройки. Попробуйте снова."
+  "notificationSettingsSaveError": "Не удалось сохранить настройки. Попробуйте снова.",
+
+   "s1_title": "Заполните профиль",
+  "s1_sub": "Заполните информацию о себе, чтобы мы могли рекомендовать подходящие возможности.",
+
+  "s2_title": "Настройки уведомлений",
+  "s2_sub": "Получайте уведомления в соответствии с вашими интересами.",
+
+  "required": "Это поле обязательно.",
+  "remove": "Удалить",
+
+  "phone": "Номер телефона",
+  "country_selection": "Предпочитаемые страны",
+  "type_selection": "Типы проектов",
+  "format_selection": "Формат",
+  "topic_selection": "Интересующие темы",
+  "duration_selection": "Продолжительность",
+  "deadline_notification": "Напоминание о дедлайне",
+
+  "all": "Все",
+
+  "deadline_1_day": "За 1 день",
+  "deadline_3_days": "За 3 дня",
+  "deadline_1_week": "За 1 неделю",
+
+  "type_esc": "ESC",
+  "type_salto": "SALTO",
+  "type_international": "Международный",
+  "type_local": "Местный",
+
+  "cat_education": "Образование",
+  "cat_technology": "Технологии",
+  "cat_entrepreneurship": "Предпринимательство",
+  "cat_leadership": "Лидерство",
+  "cat_partnership": "Партнерство",
+  "cat_ecology": "Экология",
+  "cat_wellbeing": "Благополучие",
+  "cat_culture": "Культура",
+  "cat_media": "Медиа",
+  "cat_law": "Право",
+  "cat_peace": "Мир",
+  "cat_youth": "Молодежь",
+
+  "duration_short": "Краткосрочный",
+  "duration_long": "Долгосрочный"
 
 
 }

@@ -512,6 +512,43 @@
   "notificationSettingsLoading": "Ayarlar yüklənir...",
   "notificationSettingsError": "Ayarlar yüklənmədi. Yenidən cəhd edin.",
   "notificationSettingsSaved": "Ayarlar yadda saxlanıldı",
-  "notificationSettingsSaveError": "Ayarlar yadda saxlanmadı. Yenidən cəhd edin."
+  "notificationSettingsSaveError": "Ayarlar yadda saxlanmadı. Yenidən cəhd edin.",
+  "remove": "Sil",
+
+
+  "country_selection": "Maraqlandığınız ölkələr",
+  "type_selection": "Layihə növləri",
+  "format_selection": "Format",
+  "topic_selection": "Maraq mövzuları",
+  "duration_selection": "Müddət",
+  "deadline_notification": "Deadline xatırlatması",
+
+  "all": "Hamısı",
+
+  "deadline_1_day": "1 gün əvvəl",
+  "deadline_3_days": "3 gün əvvəl",
+  "deadline_1_week": "1 həftə əvvəl",
+
+  "type_esc": "ESC",
+  "type_salto": "SALTO",
+  "type_international": "Beynəlxalq",
+  "type_local": "Yerli",
+  "format_offline": "Əyani",
+
+  "cat_education": "Təhsil",
+  "cat_technology": "Texnologiya",
+  "cat_entrepreneurship": "Sahibkarlıq",
+  "cat_leadership": "Liderlik",
+  "cat_partnership": "Tərəfdaşlıq",
+  "cat_ecology": "Ekologiya",
+  "cat_wellbeing": "Sağlamlıq",
+  "cat_culture": "Mədəniyyət",
+  "cat_media": "Media",
+  "cat_law": "Hüquq",
+  "cat_peace": "Sülh",
+  "cat_youth": "Gənclər",
+
+  "duration_short": "Qısamüddətli",
+  "duration_long": "Uzunmüddətli"
 
 }

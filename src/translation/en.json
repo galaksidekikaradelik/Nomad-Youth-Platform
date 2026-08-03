@@ -522,6 +522,53 @@
   "notificationSettingsLoading": "Loading settings...",
   "notificationSettingsError": "Failed to load settings. Please try again.",
   "notificationSettingsSaved": "Settings saved",
-  "notificationSettingsSaveError": "Failed to save settings. Please try again."
+  "notificationSettingsSaveError": "Failed to save settings. Please try again.",
+
+  "s1_title": "Complete Your Profile",
+  "s1_sub": "Fill in your information so we can recommend opportunities that match your interests.",
+
+  "s2_title": "Notification Preferences",
+  "s2_sub": "Receive notifications based on your interests.",
+
+  "required": "This field is required.",
+
+
+  "remove": "Remove",
+
+  "phone": "Phone Number",
+  "country_selection": "Preferred Countries",
+  "type_selection": "Project Types",
+  "format_selection": "Format",
+  "topic_selection": "Topics of Interest",
+  "duration_selection": "Duration",
+  "deadline_notification": "Deadline Reminder",
+
+  "all": "All",
+
+  "deadline_1_day": "1 day before",
+  "deadline_3_days": "3 days before",
+  "deadline_1_week": "1 week before",
+
+  "type_esc": "ESC",
+  "type_salto": "SALTO",
+  "type_international": "International",
+  "type_local": "Local",
+
+
+  "cat_education": "Education",
+  "cat_technology": "Technology",
+  "cat_entrepreneurship": "Entrepreneurship",
+  "cat_leadership": "Leadership",
+  "cat_partnership": "Partnership",
+  "cat_ecology": "Ecology",
+  "cat_wellbeing": "Wellbeing",
+  "cat_culture": "Culture",
+  "cat_media": "Media",
+  "cat_law": "Law",
+  "cat_peace": "Peace",
+  "cat_youth": "Youth",
+
+  "duration_short": "Short-term",
+  "duration_long": "Long-term"
 
 }
