@@ -1,6 +1,6 @@
 import apiClient from "../api/axios";
 
-const BACKEND_ORIGIN = "http://localhost:8080";
+const BACKEND_ORIGIN = import.meta.env.VITE_API_URL;
 
 function toAbsoluteUrl(url) {
   if (!url) return null;
