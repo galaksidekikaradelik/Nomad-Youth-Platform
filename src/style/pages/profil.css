@@ -885,3 +885,31 @@
 .ny-section{
   margin-bottom:32px;
 }
+
+
+.ny-inline-add {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ny-country-select {
+  width: 220px;
+  flex: none;
+}
+
+.ny-add-btn {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.ny-add-btn:hover {
+  opacity: 0.9;
+}

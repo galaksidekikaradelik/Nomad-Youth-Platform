@@ -394,27 +394,45 @@ function StepPrefs({
       <p className="ny-subtitle">{t("s2_sub")}</p>
 
       {/* 1. Ölkə seçimi */}
-      <section className="ny-section">
+     <section className="ny-section">
         <h2 className="ny-section-title">{t("country_selection")}</h2>
+
         <div className="ny-inline-add">
           <select
-            className="ny-input"
+            className="ny-input ny-country-select"
             value={pendingCountry}
             onChange={(e) => setPendingCountry(e.target.value)}
           >
             <option value="">{t("select_placeholder")}</option>
             {COUNTRIES.filter((c) => !prefs.countries.includes(c.value)).map((c) => (
-              <option key={c.value} value={c.value}>{t(c.key)}</option>
+              <option key={c.value} value={c.value}>
+                {t(c.key)}
+              </option>
             ))}
           </select>
-          <button type="button" className="ny-btn-add" onClick={addCountry}>+</button>
+
+          <button
+            type="button"
+            className="ny-add-btn"
+            onClick={() => {
+              if (pendingCountry) {
+                addCountry(pendingCountry);
+                setPendingCountry("");
+              }
+            }}
+          >
+            {t("add")}
+          </button>
         </div>
+
         <div className="ny-chip-row">
           <Chip active={allCountriesSelected} onClick={toggleAllCountries}>
             {t("all")}
           </Chip>
+
           {prefs.countries.map((val) => {
             const meta = COUNTRIES.find((c) => c.value === val);
+
             return (
               <span key={val} className="ny-chip ny-chip-active ny-chip-removable">
                 {meta ? t(meta.key) : val}
@@ -430,7 +448,7 @@ function StepPrefs({
             );
           })}
         </div>
-      </section>
+    </section>
 
       {/* 2. Növ seçimi */}
       <section className="ny-section">
