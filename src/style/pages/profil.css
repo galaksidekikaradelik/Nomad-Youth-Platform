@@ -828,3 +828,60 @@
 .profile-mini-row--unread .profile-mini-row__title {
   font-weight: 700;
 }
+
+.ny-chip-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+
+.ny-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+
+  min-height:38px;
+  padding:0 16px;
+
+  border:1px solid #d9e1ec;
+  border-radius:999px;
+
+  font-size:14px;
+  font-weight:500;
+  line-height:1;
+
+  white-space:nowrap;
+  transition:.2s;
+}
+
+.ny-chip-active{
+  background:#1f2a44;
+  color:#fff;
+  border-color:#1f2a44;
+}
+
+.ny-chip-removable{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding-right:10px;
+}
+
+.ny-chip-remove{
+  width:18px;
+  height:18px;
+
+  border:none;
+  background:transparent;
+  color:inherit;
+
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+}
+
+.ny-section{
+  margin-bottom:32px;
+}
