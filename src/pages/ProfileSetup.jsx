@@ -126,10 +126,9 @@ export default function NomadYouthOnboarding() {
     projectTypes: [],
     formats: [],
     categories: [],
-    duration: "",
+    durations: [],
     deadlineReminderDays: 3,
   });
-  const [pendingCountry, setPendingCountry] = useState("");
 
   const setP = (k, v) => setProfile((p) => ({ ...p, [k]: v }));
 
@@ -178,7 +177,7 @@ export default function NomadYouthOnboarding() {
         categories: prefs.categories,
         formats: prefs.formats,
         deadlineReminderDays: prefs.deadlineReminderDays,
-        duration: prefs.duration,
+        durations: prefs.durations,
       };
 
       // 1. Profili tamamla
@@ -236,8 +235,6 @@ export default function NomadYouthOnboarding() {
                     prefs={prefs}
                     setPrefs={setPrefs}
                     toggleIn={toggleIn}
-                    pendingCountry={pendingCountry}
-                    setPendingCountry={setPendingCountry}
                     saving={saving}
                     submitError={submitError}
                     onBack={() => setStep(1)}
@@ -331,21 +328,46 @@ function StepProfile({ t, profile, setP, errors, onContinue, onBack }) {
 
 function StepPrefs({
   t, prefs, setPrefs, toggleIn,
-  pendingCountry, setPendingCountry,
   saving, submitError, onBack, onFinish,
 }) {
-  const addCountry = () => {
-    if (!pendingCountry) return;
-    setPrefs((p) =>
-      p.countries.includes(pendingCountry)
-        ? p
-        : { ...p, countries: [...p.countries, pendingCountry] }
-    );
-    setPendingCountry("");
+  const allCountriesSelected = prefs.countries.length === COUNTRIES.length;
+  const toggleAllCountries = () => {
+    setPrefs((p) => ({
+      ...p,
+      countries: allCountriesSelected ? [] : COUNTRIES.map((c) => c.value),
+    }));
   };
 
-  const removeCountry = (val) => {
-    setPrefs((p) => ({ ...p, countries: p.countries.filter((c) => c !== val) }));
+  const allTypesSelected = prefs.projectTypes.length === PROJECT_TYPES.length;
+  const toggleAllTypes = () => {
+    setPrefs((p) => ({
+      ...p,
+      projectTypes: allTypesSelected ? [] : PROJECT_TYPES.map((o) => o.value),
+    }));
+  };
+
+  const allFormatsSelected = prefs.formats.length === FORMATS.length;
+  const toggleAllFormats = () => {
+    setPrefs((p) => ({
+      ...p,
+      formats: allFormatsSelected ? [] : FORMATS.map((o) => o.value),
+    }));
+  };
+
+  const allCategoriesSelected = prefs.categories.length === CATEGORY_OPTIONS.length;
+  const toggleAllCategories = () => {
+    setPrefs((p) => ({
+      ...p,
+      categories: allCategoriesSelected ? [] : CATEGORY_OPTIONS.map((o) => o.value),
+    }));
+  };
+
+  const allDurationsSelected = prefs.durations.length === DURATIONS.length;
+  const toggleAllDurations = () => {
+    setPrefs((p) => ({
+      ...p,
+      durations: allDurationsSelected ? [] : DURATIONS.map((o) => o.value),
+    }));
   };
 
   return (
@@ -356,36 +378,21 @@ function StepPrefs({
       {/* 1. Ölkə seçimi */}
       <section className="ny-section">
         <h2 className="ny-section-title">{t("country_selection")}</h2>
-        <div className="ny-inline-add">
-          <select
-            className="ny-input"
-            value={pendingCountry}
-            onChange={(e) => setPendingCountry(e.target.value)}
-          >
-            <option value="">{t("select_placeholder")}</option>
-            {COUNTRIES.filter((c) => !prefs.countries.includes(c.value)).map((c) => (
-              <option key={c.value} value={c.value}>{t(c.key)}</option>
-            ))}
-          </select>
-          <button type="button" className="ny-btn-add" onClick={addCountry}>+</button>
-        </div>
         <div className="ny-chip-row">
-          {prefs.countries.map((val) => {
-            const meta = COUNTRIES.find((c) => c.value === val);
-            return (
-              <span key={val} className="ny-chip ny-chip-active ny-chip-removable">
-                {meta ? t(meta.key) : val}
-                <button
-                  type="button"
-                  className="ny-chip-remove"
-                  onClick={() => removeCountry(val)}
-                  aria-label={t("remove")}
-                >
-                  ×
-                </button>
-              </span>
-            );
-          })}
+          <Chip active={allCountriesSelected} onClick={toggleAllCountries}>
+            {t("all")}
+          </Chip>
+          {COUNTRIES.map((country) => (
+            <Chip
+              key={country.value}
+              active={prefs.countries.includes(country.value)}
+              onClick={() =>
+                setPrefs((p) => ({ ...p, countries: toggleIn(p.countries, country.value) }))
+              }
+            >
+              {t(country.key)}
+            </Chip>
+          ))}
         </div>
       </section>
 
@@ -393,6 +400,9 @@ function StepPrefs({
       <section className="ny-section">
         <h2 className="ny-section-title">{t("type_selection")}</h2>
         <div className="ny-chip-row">
+          <Chip active={allTypesSelected} onClick={toggleAllTypes}>
+            {t("all")}
+          </Chip>
           {PROJECT_TYPES.map((opt) => (
             <Chip
               key={opt.value}
@@ -411,6 +421,9 @@ function StepPrefs({
       <section className="ny-section">
         <h2 className="ny-section-title">{t("format_selection")}</h2>
         <div className="ny-chip-row">
+          <Chip active={allFormatsSelected} onClick={toggleAllFormats}>
+            {t("all")}
+          </Chip>
           {FORMATS.map((opt) => (
             <Chip
               key={opt.value}
@@ -429,18 +442,7 @@ function StepPrefs({
       <section className="ny-section">
         <h2 className="ny-section-title">{t("topic_selection")}</h2>
         <div className="ny-chip-row">
-          <Chip
-            active={prefs.categories.length === CATEGORY_OPTIONS.length}
-            onClick={() =>
-              setPrefs((p) => ({
-                ...p,
-                categories:
-                  p.categories.length === CATEGORY_OPTIONS.length
-                    ? []
-                    : CATEGORY_OPTIONS.map((o) => o.value),
-              }))
-            }
-          >
+          <Chip active={allCategoriesSelected} onClick={toggleAllCategories}>
             {t("all")}
           </Chip>
           {CATEGORY_OPTIONS.map((opt) => (
@@ -461,11 +463,16 @@ function StepPrefs({
       <section className="ny-section">
         <h2 className="ny-section-title">{t("duration_selection")}</h2>
         <div className="ny-chip-row">
+          <Chip active={allDurationsSelected} onClick={toggleAllDurations}>
+            {t("all")}
+          </Chip>
           {DURATIONS.map((opt) => (
             <Chip
               key={opt.value}
-              active={prefs.duration === opt.value}
-              onClick={() => setPrefs((p) => ({ ...p, duration: opt.value }))}
+              active={prefs.durations.includes(opt.value)}
+              onClick={() =>
+                setPrefs((p) => ({ ...p, durations: toggleIn(p.durations, opt.value) }))
+              }
             >
               {t(opt.key)}
             </Chip>
