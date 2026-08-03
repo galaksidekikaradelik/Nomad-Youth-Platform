@@ -133,10 +133,17 @@ export default function Opportunities() {
   const sorted = useMemo(() => {
     const arr = [...filtered]
     if (sort === 'deadline') {
-      arr.sort((a, b) => new Date(a.deadline || 0) - new Date(b.deadline || 0))
-    } else if (sort === 'newest') {
+      arr.sort((a, b) => {
+        if (!a.deadline) return 1;
+        if (!b.deadline) return -1;
+
+        return new Date(a.deadline) - new Date(b.deadline);
+      });
+    }
+    else if (sort === 'newest') {
       arr.sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0))
-    } else if (sort === 'country') {
+    } 
+    else if (sort === 'country') {
       arr.sort((a, b) => a.location.localeCompare(b.location, 'az'))
     }
     return arr
