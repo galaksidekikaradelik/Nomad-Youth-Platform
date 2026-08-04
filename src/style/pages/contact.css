@@ -103,7 +103,6 @@
   color: var(--brand-900);
 }
 
-/* ---------- Tablet: 2 sütun daha kiçik nisbətlə saxlanılır, boşluqlar azalır ---------- */
 @media (max-width: 1024px) {
   .contact-grid {
     grid-template-columns: 1fr 1.3fr;
@@ -111,20 +110,17 @@
   }
 }
 
-/* ---------- Kiçik planşet / böyük mobil: tək sütuna keçid ---------- */
 @media (max-width: 900px) {
   .contact-grid {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
   }
 
-  /* Formu məlumat kartlarından əvvəl göstərmək daha yaxşı UX verir */
   .contact-form { order: -1; }
 
   .contact-form { padding: var(--space-lg); }
 }
 
-/* ---------- Mobil ---------- */
 @media (max-width: 640px) {
   .contact-form__row {
     grid-template-columns: 1fr;

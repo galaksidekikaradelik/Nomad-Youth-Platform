@@ -546,9 +546,7 @@
   font-family: inherit;
 }
 
-/* ---------- Profile.jsx-dən çıxarılmış inline style-lar ---------- */
 
-/* DeleteConfirmModal */
 .delete-modal-overlay {
   position: fixed;
   inset: 0;
@@ -604,7 +602,6 @@
   background: var(--status-error);
 }
 
-/* SettingsAccordion */
 .settings-accordion {
   margin-bottom: var(--space-md);
 }
@@ -616,7 +613,6 @@
   gap: var(--space-md);
 }
 
-/* SettingsView */
 .settings-form-grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -648,9 +644,6 @@
   color: var(--status-error);
 }
 
-/* Yeni: silmə düyməsi, mövcud .profile-header__avatar-edit ilə eyni
-   mövqeləndirmə məntiqi (əcdad .profile-header__avatar-wrap artıq
-   position: relative olmalıdır ki, --avatar-edit düzgün işləsin). */
 .profile-header__avatar-remove {
   position: absolute;
   bottom: 0;
@@ -683,8 +676,6 @@
   font-size: 0.85rem;
   margin-top: 4px;
 }
-
-/* ---------- YENİ: "Profilinizi tamamlayın" kartı (Sidebar) ---------- */
 
 .profile-sidebar__complete-card {
   background: var(--accent-soft);
@@ -735,8 +726,6 @@
   margin-bottom: 8px;
   text-align: center;
 }
-
-/* ---------- YENİ: Notification Settings toggle switch-ləri ---------- */
 
 .settings-toggle-row {
   display: flex;
@@ -804,8 +793,6 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
-
-/* ---------- YENİ: oxunmamış bildiriş indikatoru ---------- */
 
 .navbar__notif-item--unread,
 .profile-mini-row--unread {

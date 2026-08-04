@@ -123,7 +123,6 @@
   background: var(--color-primary-light);
 }
 
-/* Bildiriş zəngi düyməsi — lang/theme düymələri ilə eyni ölçüdə */
 .navbar__icon-btn {
   width: 36px; height: 36px;
   border-radius: var(--radius-full);
@@ -139,7 +138,6 @@
   background: var(--color-primary-light);
 }
 
-/* Avatar (istifadəçi adının ilk hərfi olan dairə) */
 .navbar__profile-wrap {
   position: relative;
 }

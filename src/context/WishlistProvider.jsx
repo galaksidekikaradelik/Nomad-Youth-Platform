@@ -46,7 +46,7 @@ export function WishlistProvider({ children }) {
           await wishlistService.removeFromWishlist(user.id, projectId);
         } catch (err) {
           console.error("Wishlist-dən silinmədi:", err);
-          setSavedOpportunities(previous); // rollback
+          setSavedOpportunities(previous);
         }
       } else {
         setSavedOpportunities((prev) => [...prev, opportunity]);
@@ -61,7 +61,7 @@ export function WishlistProvider({ children }) {
           );
         } catch (err) {
           console.error("Wishlist-ə əlavə olunmadı:", err);
-          setSavedOpportunities(previous); // rollback
+          setSavedOpportunities(previous); 
         }
       }
     },

@@ -8,7 +8,6 @@
   padding: var(--space-3xl) 0;
 }
 
-/* ─── 4. SCROLLBAR ──────────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--neutral-100); }
 ::-webkit-scrollbar-thumb {

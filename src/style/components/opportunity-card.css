@@ -424,7 +424,6 @@
   }
 }
 
-/* ESC / SALTO badge-ləri */
 .opportunity-card__tag--esc {
   background-color: #e6f4ff;
   color: #0958d9;
@@ -442,7 +441,6 @@
 
 }
 
-/* Individual / Team badge-ləri */
 .opportunity-card__tag--individual {
   background-color: #f6ffed;
   color: #389e0d;

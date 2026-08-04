@@ -33,7 +33,6 @@ const REQUEST_TYPES = [
   { id: 'project',     labelKey: 'contact_request_project',     viaWhatsApp: true },
 ]
 
-// Simple, permissive email format check: something@something.tld
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function Contact() {

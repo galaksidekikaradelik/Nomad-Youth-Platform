@@ -7,16 +7,9 @@ export async function login(credentials) {
   if (!data.token) {
     throw new Error("Login uğursuz oldu. Token tapılmadı.");
   }
-
-  // JWT-ni saxla
   localStorage.setItem("authToken", data.token);
-
-  // Token ilə istifadəçini götür
   const meResponse = await apiClient.get("/auth/me");
-
   const user = meResponse.data.user;
-
-  // İstifadəçini localStorage-də saxla
   localStorage.setItem("user", JSON.stringify(user));
 
   return user;
@@ -27,11 +20,8 @@ export async function register(payload) {
 
   if (data.accessToken) {
     localStorage.setItem("authToken", data.accessToken);
-
     const meResponse = await apiClient.get("/auth/me");
-
     const user = meResponse.data.user;
-
     localStorage.setItem("user", JSON.stringify(user));
 
     return user;

@@ -59,9 +59,7 @@ export default function Dashboard() {
   const [openIndex, setOpenIndex] = useState(null)
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
 
-  // DƏYİŞDİ: statik data/opportunities.js + localStorage yerinə,
-  // backend-ə bağlı ApplicationStatusContext-dən gəlir (bax:
-  // ApplicationStatusProvider.jsx - statusItems).
+
   const { statusItems } = useApplicationStatus()
 
   const applications = useMemo(() => {

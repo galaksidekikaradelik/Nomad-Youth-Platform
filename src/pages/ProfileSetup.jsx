@@ -86,10 +86,7 @@ export default function NomadYouthOnboarding() {
         durations: prefs.durations,
       };
 
-      // 1. Profili tamamla
       await completeProfile(profilePayload);
-
-      // 2. Bildiriş ayarlarını ayrıca yadda saxla
       await updateNotificationSettings(notificationSettings);
 
       setDone(true);

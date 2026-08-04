@@ -1,6 +1,3 @@
-// Like/Save saxlama məntiqi (backend hazır olana qədər user-ə görə localStorage-da).
-// OpportunityCard.jsx və notifications.js arasında ORTAQ mənbədir.
-
 export function getLikeStorageKey(user) {
   const uid = user?.id ?? user?.email ?? user?.username ?? 'anon'
   return `nomad_opportunity_likes_${uid}`

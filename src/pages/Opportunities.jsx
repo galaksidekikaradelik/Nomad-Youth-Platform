@@ -82,7 +82,6 @@ export default function Opportunities() {
   const [sort,       setSort]       = useState('deadline')
   const [tab]        = useState('opportunities')
 
-  // Cari səhifə (0-əsaslı, client-side pagination üçün)
   const [page, setPage] = useState(0)
 
   const toggleCategory = (id) => {
@@ -105,9 +104,6 @@ export default function Opportunities() {
     )
   }
 
-  // Fetch olunan datadan aktiv elanları çıxarıb "scope" sahəsini hesablayır.
-  // Əvvəlki modul-səviyyəli `enriched` sabiti burada, opportunities dəyişdikdə
-  // yenidən hesablanacaq şəkildə useMemo ilə saxlanılır.
   const enriched = useMemo(() => (
     filterActiveOpportunities(opportunities).map(op => ({
       ...op,
@@ -149,14 +145,12 @@ export default function Opportunities() {
     return arr
   }, [filtered, sort])
 
-  // Filtr/axtarış/sıralama dəyişdikdə səhifəni sıfırla
   useEffect(() => {
     setPage(0)
   }, [search, categories, types, scope, typeDetail, sort])
 
   const totalPages = Math.ceil(sorted.length / PAGE_SIZE)
 
-  // Cari səhifəyə uyğun dilim
   const paginated = useMemo(() => {
     const start = page * PAGE_SIZE
     return sorted.slice(start, start + PAGE_SIZE)
@@ -190,7 +184,6 @@ export default function Opportunities() {
               />
             </div>
 
-            {/* Filters */}
             <div className="filter-group">
               <div className="filter-group__row">
                 <span className="filter-group__label">{t('filter_scope_label')}</span>

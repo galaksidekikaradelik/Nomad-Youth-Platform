@@ -34,7 +34,6 @@ const EMPTY_FORM = {
   acceptMarketing: false,
 };
 
-// Kiçik yardımçı: məcburi sahələrin yanında qırmızı "*" göstərir.
 function RequiredMark() {
   return (
     <span className="auth-required-mark" aria-hidden="true">
@@ -49,8 +48,8 @@ export default function Register() {
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [modalTab, setModalTab] = useState(null); // null | "privacy" | "terms"
-  const [registeredEmail, setRegisteredEmail] = useState(""); // qeydiyyat uğurlu olduqda dolur
+  const [modalTab, setModalTab] = useState(null); 
+  const [registeredEmail, setRegisteredEmail] = useState(""); 
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -100,13 +99,8 @@ export default function Register() {
     setIsSubmitting(true);
     try {
       await register(formData);
-      // Qeydiyyatdan sonra birbaşa "/" -ə yönləndirmirik —
-      // istifadəçi əvvəlcə e-mailini təsdiqləməlidir.
       setRegisteredEmail(formData.email);
     } catch (err) {
-      // Backend validasiya xətaları adətən 400 + { message } və ya
-      // field-based xəta obyekti qaytarır. Konkret formatı backend-dən
-      // görəndən sonra bura field-səviyyəli mapping əlavə edilə bilər.
       const message =
         err?.response?.data?.message ||
         (err?.response?.status === 409
@@ -118,7 +112,6 @@ export default function Register() {
     }
   };
 
-  // Qeydiyyat uğurlu olubsa, forma yerinə e-mail təsdiq ekranını göstər.
   if (registeredEmail) {
     return (
       <div className="auth-page">
@@ -146,10 +139,6 @@ export default function Register() {
         <h1 className="auth-title">{t("auth_register_title")}</h1>
         <p className="auth-subtitle">{t("auth_register_subtitle")}</p>
 
-        {/* Real Google OAuth - backend-i doğrulayır, hesab yoxdursa
-            avtomatik yaradır və birbaşa daxil edir. Əlavə profil
-            sahələrini (universitet, telefon və s.) istifadəçi sonradan
-            Profil > Parametrlər bölməsindən doldura bilər. */}
         <GoogleLoginButton onSuccess={() => navigate("/")} />
 
         <div className="auth-divider">

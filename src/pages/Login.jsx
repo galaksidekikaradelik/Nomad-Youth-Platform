@@ -29,7 +29,6 @@ export default function Login() {
       await login(email, password);
       navigate("/");
     } catch (err) {
-      // Backend 401/400 qaytarır e-poçt/şifrə səhv olanda.
       const message =
         err?.response?.status === 401 || err?.response?.status === 400
           ? t("auth_error_invalid_credentials")
@@ -52,8 +51,6 @@ export default function Login() {
 
         {error && <p className="auth-error">{error}</p>}
 
-        {/* Real Google OAuth - backend-i doğrulayır, hesab varsa daxil
-            edir, yoxdursa avtomatik yaradıb daxil edir. */}
         <GoogleLoginButton onSuccess={() => navigate("/")} />
 
         <div className="auth-divider">

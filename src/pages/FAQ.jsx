@@ -48,14 +48,12 @@ export default function FAQ() {
   const [searchParams] = useSearchParams()
   const itemRefs = useRef([])
 
-  // Footer/xarici linkdən ?q=3 kimi gələndə müvafiq sualı aç və ora scroll et
   useEffect(() => {
     const qParam = searchParams.get('q')
     if (qParam) {
       const idx = parseInt(qParam, 10) - 1
       if (idx >= 0 && idx < FAQ_KEYS.length) {
         setOpenIndex(idx)
-        // DOM render olunduqdan sonra scroll etmək üçün kiçik gecikmə
         setTimeout(() => {
           itemRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
         }, 100)

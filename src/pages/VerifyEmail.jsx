@@ -8,8 +8,6 @@ const STATUS = {
   ERROR: "error",
 };
 
-// Backend-dən gələn RuntimeException mesajlarını istifadəçi dostu mətnə çeviririk.
-// Uyğunluq tapılmasa, backend-dən gələn mesaj olduğu kimi göstərilir.
 const ERROR_MESSAGES = {
   "Token tapılmadı": "Token etibarsızdır.",
   "Token müddəti bitib": "Tokenin müddəti bitib.",

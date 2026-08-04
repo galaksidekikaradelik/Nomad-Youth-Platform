@@ -20,8 +20,6 @@ export default function AppRoutes() {
 
       <Route path="/verify-email" element={<VerifyEmail />} />
 
-
-      
       <Route element={<ProfileCompletionGate />}>
         <Route path="/" element={<Home />} />
         <Route path="/opportunities" element={<Opportunities />} />
@@ -32,7 +30,6 @@ export default function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile-setup" element={<ProfileSetup />} />
-
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>

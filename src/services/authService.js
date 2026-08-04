@@ -33,7 +33,7 @@ function buildRegisterPayload(formData) {
     password: formData.password,
     confirmPassword: formData.confirmPassword,
     phoneNumber: formData.phone,
-    birthDate: formData.birthDate, // <input type="date"> "YYYY-MM-DD" formatını verir
+    birthDate: formData.birthDate, 
     university: formData.university,
     major: formData.major,
     educationLevel: mapEducationLevel(formData.educationLevel),

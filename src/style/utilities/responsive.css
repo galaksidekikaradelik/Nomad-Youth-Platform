@@ -187,7 +187,6 @@
     padding-bottom: 2px;
     min-width: 0;
     flex: 1;
-    /* Kənarlarda kəsilən son chip-in görünüşünü yumşaltmaq üçün kiçik fade effekti */
     -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
     mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
   }
@@ -239,9 +238,6 @@
     display: none;
   }
 
-  /* .profile-page prefiksi Profile.css-dəki bazadakı .profile-sidebar__nav
-     qaydasından yüksək specificity almaq üçündür — import sırasından
-     asılı qalmasın deyə */
   .profile-page .profile-sidebar__nav {
     flex-direction: row;
     flex: 1;

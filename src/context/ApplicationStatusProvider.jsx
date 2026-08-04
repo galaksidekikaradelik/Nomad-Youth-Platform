@@ -23,7 +23,6 @@ export function ApplicationStatusProvider({ children }) {
 
     const list = await applicationStatusService.fetchMyProjects(userId);
     const safeList = list || [];
-
     const map = {};
     const items = [];
 
@@ -47,7 +46,6 @@ export function ApplicationStatusProvider({ children }) {
 
   useEffect(() => {
     if (!user?.id) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setState((prev) => (prev === INITIAL_STATE ? prev : INITIAL_STATE));
       return;
     }

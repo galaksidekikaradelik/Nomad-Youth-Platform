@@ -46,7 +46,7 @@ export function LikeProvider({ children }) {
           await likeService.removeLike(user.id, projectId);
         } catch (err) {
           console.error("Like silinmədi:", err);
-          setLikedOpportunities(previous); // rollback
+          setLikedOpportunities(previous); 
         }
       } else {
         setLikedOpportunities((prev) => [...prev, opportunity]);
@@ -61,7 +61,7 @@ export function LikeProvider({ children }) {
           );
         } catch (err) {
           console.error("Like əlavə olunmadı:", err);
-          setLikedOpportunities(previous); // rollback
+          setLikedOpportunities(previous); 
         }
       }
     },

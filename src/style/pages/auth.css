@@ -103,7 +103,6 @@
   text-decoration:underline;
 }
 
-/* ===== Register.jsx-in yeni sahələri üçün əlavə class-lar ===== */
 
 .auth-row {
   display: flex;
@@ -227,23 +226,17 @@
   flex-shrink: 0;
 }
 
-/* ===== Məcburi sahə işarəsi (*) ===== */
-
 .auth-required-mark {
   color: var(--status-error);
   margin-left: 3px;
   font-weight: 700;
 }
 
-/* ===== Şifrə qaydası kimi qısa köməkçi mətnlər ===== */
-
 .auth-hint {
   margin: 6px 0 0;
   font-size: 12.5px;
   color: var(--text-secondary);
 }
-
-/* ===== Checkbox mətni içindəki "Məxfilik Siyasəti" / "İstifadə Şərtləri" linkləri ===== */
 
 .auth-inline-link {
   background: none;
@@ -260,8 +253,6 @@
 .auth-inline-link:hover {
   color: var(--brand-800);
 }
-
-/* ===== Məxfilik Siyasəti / İstifadə Şərtləri Modal ===== */
 
 .auth-modal-overlay {
   position: fixed;
@@ -372,8 +363,6 @@
   background: var(--accent-400);
   color: var(--brand-900);
 }
-
-/* ===== Email Verification Banner ===== */
 
 .verification-banner {
   margin-top: 28px;

@@ -19,12 +19,6 @@
   color: var(--accent-400);
 }
 
-/* ===================================================================
-   Profile avatar upload — hover overlay, kamera ikonu, spinner
-   Mövcud .profile-header__avatar-wrap sinifinə əlavə stillər.
-   Layout dəyişmir, yalnız görünüş qatı əlavə olunur.
-   =================================================================== */
-
 .profile-header__avatar-wrap {
   position: relative;
   display: inline-block;
@@ -43,9 +37,6 @@
   outline-offset: 3px;
 }
 
-/* Dairəvi olduğundan əmin olmaq üçün (mövcud Avatar komponentində
-   artıq border-radius: 50% var, amma overlay ilə üst-üstə düşməsi
-   üçün burda da təkrar təhlükəsizlik məqsədilə saxlanılır) */
 .profile-header__avatar-wrap img,
 .profile-header__avatar-wrap .avatar {
   border-radius: 50%;
@@ -62,7 +53,7 @@
   color: #fff;
   opacity: 0;
   transition: opacity 0.2s ease;
-  pointer-events: none; /* klik həmişə wrap-a düşsün, overlay-ə yox */
+  pointer-events: none; 
 }
 
 .profile-header__avatar-wrap:hover .profile-header__avatar-overlay,
@@ -88,7 +79,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* Yüklənmə zamanı pencil/remove düymələri disabled görünsün */
+
 .profile-header__avatar-edit:disabled,
 .profile-header__avatar-remove:disabled {
   opacity: 0.5;
