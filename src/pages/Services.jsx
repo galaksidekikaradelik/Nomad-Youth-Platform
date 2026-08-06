@@ -9,7 +9,7 @@ import {
   CheckCircle2,
   Compass,
   Globe,
-  Languages,
+  ScrollText,
   MessageCircle,
   GraduationCap,
   UsersRound,
@@ -33,7 +33,7 @@ const SERVICES = [
   { id: 'recommendation',     icon: ClipboardCheck, titleKey: 'service_recommendation_title',     descKey: 'service_recommendation_desc' },
   { id: 'application',        icon: Send,           titleKey: 'service_application_title',        descKey: 'service_application_desc' },
   { id: 'application-review', icon: CheckCircle2,   titleKey: 'service_application_review_title', descKey: 'service_application_review_desc' },
-  { id: 'translation',        icon: Languages,      titleKey: 'service_translation_title',        descKey: 'service_translation_desc' },
+  { id: "un-certificates",    icon: ScrollText,          titleKey: "service_un_certificates_title",    descKey: "service_un_certificates_desc" },  
   { id: 'other',              icon: MessageCircle,  titleKey: 'service_other_title',              descKey: 'service_other_desc' },
   
 ]
