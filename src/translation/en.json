@@ -310,7 +310,13 @@
   "service_other_desc": "Share your need with us and let's identify the right kind of support together.",
   "service_study_abroad_title": "Study Abroad Consulting",
   "service_study_abroad_desc": "Document preparation and advice for bachelor's, master's and other study programs abroad.",
+  "service_erasmus_mentorship_title": "Erasmus Mentorship",
+  "service_erasmus_mentorship_desc": "One month of personalized mentoring and guidance throughout the Erasmus application and participation process.",
+  "service_visa_support_title": "Visa Support",
+  "service_visa_support_desc": "Assistance with preparing the required visa documents and completing the application process.",
 
+  "service_erasmus_mundus_title": "Erasmus Mundus",
+  "service_erasmus_mundus_desc": "Support with programme selection, application, and documentation for Erasmus Mundus Master's programmes.",
   "modal_close_aria": "Close",
   "modal_close_btn": "Close",
   "modal_whatsapp_desc": "We accept requests for this service via WhatsApp. Click the button to reach out to a team member.",

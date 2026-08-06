@@ -311,6 +311,13 @@
   "service_other_desc": "Ehtiyacınızı bizimlə paylaşın, sizə uyğun dəstək istiqamətini birlikdə müəyyənləşdirək.",
   "service_study_abroad_title": "Xaricdə Təhsil Konsultasiyası",
   "service_study_abroad_desc": "Xaricdə bakalavr, magistratura və digər təhsil proqramlarına sənəd hazırlığı və məsləhət xidməti.",
+  "service_erasmus_mentorship_title": "Erasmus Mentorluğu",
+  "service_erasmus_mentorship_desc": "Erasmus proqramına müraciət və iştirak prosesi boyunca 1 aylıq fərdi mentorluq və istiqamətləndirmə.",
+  "service_visa_support_title": "Viza Dəstəyi",
+  "service_visa_support_desc": "Viza müraciəti üçün tələb olunan sənədlərin hazırlanması və proses üzrə dəstək.",
+
+  "service_erasmus_mundus_title": "Erasmus Mundus",
+  "service_erasmus_mundus_desc": "Erasmus Mundus magistr proqramları üçün seçim, müraciət və sənədləşmə üzrə dəstək.",
 
   "modal_close_aria": "Bağla",
   "modal_close_btn": "Bağla",

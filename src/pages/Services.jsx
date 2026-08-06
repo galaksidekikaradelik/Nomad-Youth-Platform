@@ -12,7 +12,9 @@ import {
   Languages,
   MessageCircle,
   GraduationCap,
-} from 'lucide-react'
+  UsersRound,
+  ShieldCheck,
+} from "lucide-react";
 import { useLanguage } from '../hooks/useLanguage'
 import ServicePopupModal from '../components/ServicePopupModal'
 
@@ -21,6 +23,9 @@ const SERVICES = [
   { id: 'erasmus-consulting', icon: Globe,          titleKey: 'service_erasmus_consulting_title', descKey: 'service_erasmus_consulting_desc' },
   { id: 'project-consulting', icon: Compass,        titleKey: 'service_project_consulting_title', descKey: 'service_project_consulting_desc' },
   { id: 'cv',                 icon: FileText,       titleKey: 'service_cv_title',                 descKey: 'service_cv_desc' },
+  { id: "erasmus-mentorship", icon: UsersRound,     titleKey: "service_erasmus_mentorship_title", descKey: "service_erasmus_mentorship_desc"},
+  { id: "visa-support",        icon: ShieldCheck,       titleKey: "service_visa_support_title",       descKey: "service_visa_support_desc" },
+  { id: "erasmus-mundus",     icon: GraduationCap,  titleKey: "service_erasmus_mundus_title",     descKey: "service_erasmus_mundus_desc" },
   { id: 'europass',           icon: BadgeCheck,     titleKey: 'service_europass_title',           descKey: 'service_europass_desc' },
   { id: 'study-abroad',       icon: GraduationCap,  titleKey: 'service_study_abroad_title',       descKey: 'service_study_abroad_desc' },
   { id: 'cv-review',          icon: Search,         titleKey: 'service_cv_review_title',          descKey: 'service_cv_review_desc' },
@@ -28,9 +33,9 @@ const SERVICES = [
   { id: 'recommendation',     icon: ClipboardCheck, titleKey: 'service_recommendation_title',     descKey: 'service_recommendation_desc' },
   { id: 'application',        icon: Send,           titleKey: 'service_application_title',        descKey: 'service_application_desc' },
   { id: 'application-review', icon: CheckCircle2,   titleKey: 'service_application_review_title', descKey: 'service_application_review_desc' },
-  
   { id: 'translation',        icon: Languages,      titleKey: 'service_translation_title',        descKey: 'service_translation_desc' },
   { id: 'other',              icon: MessageCircle,  titleKey: 'service_other_title',              descKey: 'service_other_desc' },
+  
 ]
 
 export default function Services() {
