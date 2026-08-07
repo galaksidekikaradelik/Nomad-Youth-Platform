@@ -573,7 +573,23 @@
 
   "duration_short": "Краткосрочный",
   "duration_long": "Долгосрочный",
-  "add": "Добавить"
+  "add": "Добавить",
 
+  "verify_email_loading_title": "Подтверждение email",
+  "verify_email_loading_description": "Пожалуйста, подождите несколько секунд.",
+  "verify_email_success_title": "Email подтверждён",
+  "verify_email_success_description": "Ваш адрес электронной почты успешно подтверждён. Теперь вы можете пользоваться своим аккаунтом.",
+  "verify_email_error_title": "Не удалось подтвердить email",
+  "verify_email_error_description": "Ссылка для подтверждения недействительна или срок её действия истёк. Вы можете перейти в Dashboard и запросить новое письмо с подтверждением.",
+  "verify_email_dashboard_button": "Вернуться в Dashboard",
 
+  "auth_prompt_title": "Зарегистрируйтесь",
+  "auth_prompt_description": "Для использования этой функции необходимо иметь аккаунт. Зарегистрируйтесь, чтобы отслеживать понравившиеся и сохранённые возможности.",
+  "auth_prompt_register": "Зарегистрироваться",
+  "auth_prompt_close": "Закрыть",
+
+  "event_online": "Онлайн",
+  "event_offline": "Офлайн",
+  "event_free": "Бесплатно",
+  "event_register": "Регистрация"
 }

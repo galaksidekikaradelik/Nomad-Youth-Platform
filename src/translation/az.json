@@ -306,7 +306,7 @@
   "service_erasmus_consulting_title": "Erasmus Konsultasiyası",
   "service_erasmus_consulting_desc": "Erasmus+, Youth Exchange, ESC və uyğun imkanlar barədə fərdi konsultasiya.",
   "service_un_certificates_title": "BMT Sertifikatlarının Seçilməsi üçün Dəstək",
-"service_un_certificates_desc": "Maraq dairənizə və məqsədlərinizə uyğun BMT sertifikat proqramlarının seçilməsi üzrə məsləhət və istiqamətləndirmə.",
+  "service_un_certificates_desc": "Maraq dairənizə və məqsədlərinizə uyğun BMT sertifikat proqramlarının seçilməsi üzrə məsləhət və istiqamətləndirmə.",
   "service_other_title": "Digər Sorğular",
   "service_other_desc": "Ehtiyacınızı bizimlə paylaşın, sizə uyğun dəstək istiqamətini birlikdə müəyyənləşdirək.",
   "service_study_abroad_title": "Xaricdə Təhsil Konsultasiyası",
@@ -556,7 +556,23 @@
 
   "duration_short": "Qısamüddətli",
   "duration_long": "Uzunmüddətli",
+  "add": "Əlavə et",
 
-  "add": "Əlavə et"
+  "verify_email_loading_title": "Email təsdiqlənir",
+  "verify_email_loading_description": "Zəhmət olmasa, bir neçə saniyə gözləyin.",
+  "verify_email_success_title": "Email təsdiqləndi",
+  "verify_email_success_description": "Email ünvanınız uğurla təsdiqləndi. Artıq hesabınızdan istifadə edə bilərsiniz.",
+  "verify_email_error_title": "Email təsdiqlənmədi",
+  "verify_email_error_description": "Təsdiq linki etibarsızdır və ya müddəti bitib. Dashboard-a daxil olaraq təsdiq emailini yenidən göndərə bilərsiniz.",
+  "verify_email_dashboard_button": "Dashboard-a qayıt",
 
+  "auth_prompt_title": "Qeydiyyatdan keç",
+  "auth_prompt_description": "Bu funksiyadan istifadə etmək üçün hesabınız olmalıdır. Qeydiyyatdan keçərək bəyəndiyiniz və yadda saxladığınız imkanları izləyə bilərsiniz.",
+  "auth_prompt_register": "Qeydiyyatdan keç",
+  "auth_prompt_close": "Bağla",
+
+  "event_online": "Onlayn",
+  "event_offline": "Əyani",
+  "event_free": "Pulsuz",
+  "event_register": "Qeydiyyat"
 }

@@ -145,7 +145,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
   function toggleLike(e) {
     e.stopPropagation()
     if (!user) { setShowAuthPrompt(true); return }
-    if (!opportunity.id) return // like üçün real backend id lazımdır
+    if (!opportunity.id) return 
     toggleLikeRemote(opportunity)
   }
 
@@ -306,14 +306,12 @@ const volunteeringModifier =
             </span>
           ))}
 
-          {/* YENİ: ESC/SALTO badge — yalnız məlumat mövcud olduqda göstərilir */}
           {escSaltoModifier && (
             <span className={`opportunity-card__tag opportunity-card__tag--${escSaltoModifier}`}>
               {escSaltoLabel}
             </span>
           )}
 
-          {/* YENİ: Individual/Team badge — yalnız məlumat mövcud olduqda göstərilir */}
           {volunteeringModifier && (
             <span className={`opportunity-card__tag opportunity-card__tag--${volunteeringModifier}`}>
               {volunteeringLabel}

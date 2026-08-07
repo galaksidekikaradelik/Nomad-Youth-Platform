@@ -5,6 +5,10 @@ import { useApplicationStatus } from '../hooks/useApplicationStatus'
 import { useLanguage } from '../hooks/useLanguage'
 import { isExpired } from '../utils/opportunityStatus'
 import { STATUS_CONFIG } from '../utils/applicationStatus'
+import { 
+  Inbox,
+  LockKeyhole
+ } from 'lucide-react'
 
 function DashboardItem({ item, isOpen, onToggle, t, locale }) {
   const config = STATUS_CONFIG[item.status]
@@ -72,7 +76,9 @@ export default function Dashboard() {
       <div className="section">
         <div className="container" style={{ maxWidth: 640 }}>
           <div className="empty-state">
-            <div className="empty-state__icon">🔒</div>
+            <div className="empty-state__icon">
+              <LockKeyhole size={42} strokeWidth={1.8} />
+            </div>
             <div className="empty-state__title">{t('dashboard_auth_required_title')}</div>
             <p className="empty-state__desc">{t('dashboard_auth_required_desc')}</p>
             <Link to="/login" className="btn-primary" style={{ marginTop: 'var(--space-md)', display: 'inline-flex' }}>
@@ -96,7 +102,9 @@ export default function Dashboard() {
 
         {applications.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state__icon">📭</div>
+            <div className="empty-state__icon">
+              <Inbox size={42} strokeWidth={1.8} />
+            </div>
             <div className="empty-state__title">{t('dashboard_empty_title')}</div>
             <p className="empty-state__desc">{t('dashboard_empty_desc')}</p>
             <Link to="/opportunities" className="btn-primary" style={{ marginTop: 'var(--space-md)', display: 'inline-flex' }}>

@@ -11,7 +11,7 @@ export default function ProfileHeader({ user, name }) {
   const fileInputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
-  const [pendingFile, setPendingFile] = useState(null); // seçilib, hələ düzəliş modalında olan fayl
+  const [pendingFile, setPendingFile] = useState(null); 
 
   const openFilePicker = () => {
     if (uploading) return;
@@ -48,7 +48,7 @@ export default function ProfileHeader({ user, name }) {
   };
 
   const handleRemove = async (e) => {
-    e.stopPropagation(); // wrap-ın öz onClick-i tətiklənməsin (fayl seçici açılmasın)
+    e.stopPropagation(); 
     setError('');
     setUploading(true);
     try {
@@ -73,7 +73,6 @@ export default function ProfileHeader({ user, name }) {
       >
         <Avatar user={user} size={88} className="profile-header__avatar" />
 
-        {/* Hover overlay + kamera ikonu / yüklənmə zamanı spinner */}
         <div className="profile-header__avatar-overlay" aria-hidden="true">
           {uploading ? (
             <span className="profile-header__avatar-spinner" />

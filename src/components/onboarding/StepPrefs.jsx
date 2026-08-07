@@ -72,7 +72,6 @@ export default function StepPrefs({
       <h1 className="ny-title">{t("s2_title")}</h1>
       <p className="ny-subtitle">{t("s2_sub")}</p>
 
-      {/* 1. Ölkə seçimi */}
      <section className="ny-section">
         <h2 className="ny-section-title">{t("country_selection")}</h2>
 
@@ -129,7 +128,6 @@ export default function StepPrefs({
         </div>
     </section>
 
-      {/* 2. Növ seçimi */}
       <section className="ny-section">
         <h2 className="ny-section-title">{t("type_selection")}</h2>
         <div className="ny-chip-row">
@@ -150,7 +148,6 @@ export default function StepPrefs({
         </div>
       </section>
 
-      {/* Format (Onlayn / Əyani) */}
       <section className="ny-section">
         <h2 className="ny-section-title">{t("format_selection")}</h2>
         <div className="ny-chip-row">
@@ -171,7 +168,6 @@ export default function StepPrefs({
         </div>
       </section>
 
-      {/* 3. Mövzu seçimi */}
       <section className="ny-section">
         <h2 className="ny-section-title">{t("topic_selection")}</h2>
         <div className="ny-chip-row">
@@ -213,7 +209,6 @@ export default function StepPrefs({
         </div>
       </section>
 
-      {/* 4. Deadline bildirişi */}
       <section className="ny-section">
         <h2 className="ny-section-title">{t("deadline_notification")}</h2>
         <div className="ny-check-list">

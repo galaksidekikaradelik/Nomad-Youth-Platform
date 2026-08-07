@@ -575,6 +575,23 @@
 
   "duration_short": "Short-term",
   "duration_long": "Long-term",
-  "add": "Add"
+  "add": "Add",
 
+  "verify_email_loading_title": "Verifying your email",
+  "verify_email_loading_description": "Please wait a few seconds.",
+  "verify_email_success_title": "Email verified",
+  "verify_email_success_description": "Your email address has been successfully verified. You can now use your account.",
+  "verify_email_error_title": "Email verification failed",
+  "verify_email_error_description": "The verification link is invalid or has expired. You can go to the dashboard and request a new verification email.",
+  "verify_email_dashboard_button": "Back to Dashboard",
+
+  "auth_prompt_title": "Create an account",
+  "auth_prompt_description": "You need an account to use this feature. Sign up to keep track of opportunities you like and save.",
+  "auth_prompt_register": "Create an account",
+  "auth_prompt_close": "Close",
+
+  "event_online": "Online",
+  "event_offline": "Offline",
+  "event_free": "Free",
+  "event_register": "Registration"
 }

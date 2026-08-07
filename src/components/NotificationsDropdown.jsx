@@ -70,8 +70,6 @@ export default function NotificationsDropdown() {
     try {
       const list = await notificationService.fetchMyNotifications()
       setNotifications(list || [])
-      // DİQQƏT: dropdown açılanda bildirişlər artıq avtomatik "read" edilmir.
-      // Read statusu yalnız istifadəçi konkret notification-a klik edəndə dəyişir.
     } catch (err) {
       console.error('Bildirişlər yüklənmədi:', err)
     } finally {
@@ -83,7 +81,6 @@ export default function NotificationsDropdown() {
     setOpen(false)
 
     if (!n.read) {
-      // optimistic update
       setNotifications((prev) =>
         prev.map((item) => (item.id === n.id ? { ...item, read: true } : item))
       )
@@ -93,7 +90,6 @@ export default function NotificationsDropdown() {
         await notificationService.markAsRead(n.id)
       } catch (err) {
         console.error('Bildiriş oxunmuş kimi işarələnmədi:', err)
-        // rollback
         setNotifications((prev) =>
           prev.map((item) => (item.id === n.id ? { ...item, read: false } : item))
         )

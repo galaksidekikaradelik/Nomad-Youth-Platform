@@ -294,9 +294,6 @@ export default function Opportunities() {
             )}
           </>
         )}
-
-        
-
       </div>
     </div>
   )

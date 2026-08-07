@@ -37,7 +37,6 @@ export default function NotificationsView({ onBack }) {
   const handleItemClick = async (n) => {
     if (n.read) return;
 
-    // optimistic update
     setNotifications((prev) =>
       prev.map((item) => (item.id === n.id ? { ...item, read: true } : item))
     );
@@ -46,7 +45,6 @@ export default function NotificationsView({ onBack }) {
       await notificationService.markAsRead(n.id);
     } catch (err) {
       console.error('Bildiriş oxunmuş kimi işarələnmədi:', err);
-      // rollback
       setNotifications((prev) =>
         prev.map((item) => (item.id === n.id ? { ...item, read: false } : item))
       );

@@ -1,7 +1,6 @@
 import apiClient from "./axios";
 
 export async function login(credentials) {
-  // Login
   const { data } = await apiClient.post("/auth/login", credentials);
 
   if (!data.token) {
