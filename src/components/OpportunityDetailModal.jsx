@@ -2,6 +2,12 @@ import { createPortal } from 'react-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
+import {
+  translateOpportunityValue,
+  translateFinancialSupport,
+  translateDuration,
+  translateLanguageField,
+} from '../data/opportunityValueTranslations'
 
 const HeartIcon = ({ active }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -82,7 +88,7 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
 
   const {
     title, format, category, location, deadline, applyLink,
-    description, descriptionTranslations, 
+    description, descriptionTranslations,
     duration, language, eventDateRange, financialSupport,
   } = opportunity
 
@@ -99,13 +105,18 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
   const showingFallback = !translatedDescription && lang !== 'az'
   const descriptionToShow = translatedDescription || fallbackDescription
 
+  const translatedLocation = translateOpportunityValue(location, lang)
+  const translatedLanguage = translateLanguageField(language, lang)
+  const translatedFinancialSupport = translateFinancialSupport(financialSupport, lang)
+  const translatedDuration = translateDuration(duration, lang)
+
   return createPortal(
     <div className="detail-modal-overlay" onClick={onClose}>
       <div className="detail-modal" onClick={(e) => e.stopPropagation()}>
         <button className="detail-modal__close" onClick={onClose} aria-label="Bağla">×</button>
 
         <div className="detail-modal__header">
-          <span className="detail-modal__location">{location}</span>
+          <span className="detail-modal__location">{translatedLocation}</span>
           <h2 className="detail-modal__title">{title}</h2>
 
           <div className="detail-modal__tags">
@@ -142,11 +153,11 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
 
         <div className="detail-modal__info-grid">
           <InfoItem icon={<CalendarIcon />} label={t('card_deadline')} value={formattedDeadline} />
-          <InfoItem icon={<PinIcon />} label={t('card_location')} value={location} />
-          <InfoItem icon={<ClockIcon />} label={t('card_duration')} value={duration} />
-          <InfoItem icon={<GlobeIcon />} label={t('card_language')} value={language} />
+          <InfoItem icon={<PinIcon />} label={t('card_location')} value={translatedLocation} />
+          <InfoItem icon={<ClockIcon />} label={t('card_duration')} value={translatedDuration} />
+          <InfoItem icon={<GlobeIcon />} label={t('card_language')} value={translatedLanguage} />
           <InfoItem icon={<DateRangeIcon />} label={t('card_event_date_range')} value={eventDateRange} />
-          <InfoItem icon={<CoinIcon />} label={t('card_financial_support')} value={financialSupport} />
+          <InfoItem icon={<CoinIcon />} label={t('card_financial_support')} value={translatedFinancialSupport} />
         </div>
 
         <div className="detail-modal__divider" />
