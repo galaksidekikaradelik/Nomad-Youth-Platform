@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useLanguage } from '..//hooks/useLanguage'
+import { useLanguage } from '../hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
@@ -10,102 +10,22 @@ import StatusSelector from './StatusSelector'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
 import ApplyConfirmModal from './ApplyConfirmModal'
-
-const HeartIcon = ({ active }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" />
-  </svg>
-)
-
-const BookmarkIcon = ({ active }) => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-  </svg>
-)
-
-const ArrowIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-)
-
-const WarningIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
-  </svg>
-)
-
-function getDaysLeft(deadline) {
-  if (!deadline) return null
-  const diff = new Date(deadline) - new Date()
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24))
-  return days > 0 ? days : 0
-}
-
-const COUNTRY_CODES = {
-  'Gürcüstan': 'ge',
-  'İtaliya': 'it',
-  'Macarıstan': 'hu',
-  'Polşa': 'pl',
-  'İspaniya': 'es',
-  'Çexiya': 'cz',
-  'İsveç': 'se',
-  'Livan': 'lb',
-  'Yunanistan': 'gr',
-  'Finlandiya': 'fi',
-  'Belçika': 'be',
-  'Xorvatiya': 'hr',
-  'Azərbaycan': 'az',
-  'Türkiyə': 'tr',
-  'Almaniya': 'de',
-  'Fransa': 'fr',
-  'Portuqaliya': 'pt',
-  'Rumıniya': 'ro',
-  'Bolqarıstan': 'bg',
-  'Estoniya': 'ee',
-  'Latviya': 'lv',
-  'Litvanya': 'lt',
-  'Litva': 'lt',
-  'Sloveniya': 'si',
-  'Slovakiya': 'sk',
-  'Niderland': 'nl',
-  'Avstriya': 'at',
-  'Malta': 'mt',
-  'Kipr': 'cy',
-  'Serbiya': 'rs',
-  'Şimali Makedoniya': 'mk',
-  'Albaniya': 'al',
-  'Çernoqoriya': 'me',
-  'Bosniya və Herseqovina': 'ba',
-  'Ukrayna': 'ua',
-  'Moldova': 'md',
-}
-
-function FlagIcon({ location }) {
-  const code = COUNTRY_CODES[location]
-  if (!code) return <span className="opportunity-card__flag-fallback">🌍</span>
-  return <span className={`fi fi-${code} opportunity-card__flag`} title={location} />
-}
-
-const URGENT_THRESHOLD_DAYS = 3
-
-const TYPE_LABEL_KEYS = {
-  'Seminar':   'type_seminar',
-  'Kurs':      'type_course',
-  'Konfrans':  'type_conference',
-  'Vebinar':   'type_webinar',
-  'Fəaliyyət': 'type_activity',
-}
-
-const ESC_SALTO_LABEL_KEYS = {
-  'ESC': 'badge_esc',
-  'SALTO': 'badge_salto',
-}
-
-const VOLUNTEERING_TYPE_LABEL_KEYS = {
-  'Individual': 'badge_individual',
-  'Team': 'badge_team',
-}
+import { 
+  HeartIcon, 
+  BookmarkIcon, 
+  ArrowIcon, 
+  WarningIcon, 
+  FlagIcon 
+} from './OpportunityCardIcons'
+import { 
+  TYPE_LABEL_KEYS, 
+  ESC_SALTO_LABEL_KEYS, 
+  VOLUNTEERING_TYPE_LABEL_KEYS 
+} from '../data/opportunityCardLabels'
+import { 
+  getDaysLeft, 
+  URGENT_THRESHOLD_DAYS 
+} from '../utils/dateHelpers'
 
 export default function OpportunityCard({ opportunity, autoOpenDetail = false }) {
 
@@ -383,4 +303,3 @@ const volunteeringModifier =
     </div>
   )
 }
-

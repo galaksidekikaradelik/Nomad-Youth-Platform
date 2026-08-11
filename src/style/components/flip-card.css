@@ -1,0 +1,95 @@
+/* Team bölməsi — uşaqlıq/indiki şəkil flip kartları
+   Bunu App.css (və ya hansı qlobal CSS faylınız varsa) içinə əlavə edin. */
+
+.flip-card {
+  background: transparent;
+  perspective: 1200px;
+  cursor: pointer;
+  height: 410px;
+  outline: none;
+}
+
+.flip-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: var(--radius-lg);
+}
+
+/* Desktop: mouse aparanda flip */
+@media (hover: hover) {
+  .flip-card:hover .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+}
+
+/* Mobil: tap ilə flip (React state-dən gələn class) */
+.flip-card.is-flipped .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card:focus-visible .flip-card__inner {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.flip-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-base);
+}
+
+.flip-card:hover .flip-card__face,
+.flip-card.is-flipped .flip-card__face {
+  border-color: var(--color-border-hover);
+}
+
+.flip-card__back {
+  transform: rotateY(180deg);
+  justify-content: flex-end;
+}
+
+.flip-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.flip-card__back .flip-card__img {
+  flex: 1;
+  min-height: 0;
+}
+
+.flip-card__info {
+  padding: var(--space-md);
+  text-align: center;
+  background: var(--color-surface);
+}
+
+.flip-card__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.flip-card__role {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .grid-4 { grid-template-columns: 1fr; }
+}

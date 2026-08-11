@@ -1,0 +1,96 @@
+.opportunity-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.opportunity-card__dates {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.opportunity-card__date-row {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.opportunity-card__date-row--muted {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.opportunity-card__days-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+}
+
+.opportunity-card__days-left--urgent {
+  color: #B91C1C;
+  font-weight: 700;
+  background: rgba(239, 68, 68, 0.12);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  margin-left: var(--space-xs);
+}
+
+[data-theme="dark"] .opportunity-card__days-left--urgent {
+  background: rgba(239, 68, 68, 0.20);
+  color: #F87171;
+}
+
+.opportunity-card__apply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--brand-900);
+  color: var(--accent-400);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.opportunity-card__apply-btn:hover {
+  background: var(--brand-700);
+  transform: translateY(-2px);
+}
+
+.opportunity-card__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.opportunity-card__detail-btn {
+  background: var(--accent-400);
+  border: 1px solid var(--accent-400);
+  color: var(--brand-900);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  gap: var(--space-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.opportunity-card__detail-btn:hover {
+  background: var(--accent-100);
+  border-color: var(--accent-100);
+  transform: translateY(-2px);
+}
+
+.opportunity-card__footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}

@@ -1,0 +1,85 @@
+.opportunity-card__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.opportunity-card__status-badge--preparing { color: #b8860b; }
+.opportunity-card__status-badge--preparing .opportunity-card__status-dot { background: #f5a623; }
+
+.opportunity-card__status-badge--applied { color: #4a6cf7; }
+.opportunity-card__status-badge--applied .opportunity-card__status-dot { background: #4a6cf7; }
+
+.opportunity-card__status-badge--accepted { color: #1d9e50; }
+.opportunity-card__status-badge--accepted .opportunity-card__status-dot { background: #34c759; }
+
+.opportunity-card__status-badge--rejected { color: #d93025; }
+.opportunity-card__status-badge--rejected .opportunity-card__status-dot { background: #ff3b30; }
+
+.opportunity-card__status-selector {
+  position: relative;
+}
+
+.opportunity-card__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.opportunity-card__status-badge--empty {
+  color: var(--text-muted);
+}
+.opportunity-card__status-badge--empty .opportunity-card__status-dot {
+  background: var(--neutral-200);
+}
+
+.opportunity-card__status-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  min-width: 160px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.opportunity-card__status-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text-secondary);
+}
+
+.opportunity-card__status-option:hover {
+  background: var(--color-primary-light);
+}
+
+.opportunity-card__status-option--preparing .opportunity-card__status-dot { background: #f5a623; }
+.opportunity-card__status-option--applied .opportunity-card__status-dot { background: #4a6cf7; }
+.opportunity-card__status-option--accepted .opportunity-card__status-dot { background: #34c759; }
+.opportunity-card__status-option--rejected .opportunity-card__status-dot { background: #ff3b30; }

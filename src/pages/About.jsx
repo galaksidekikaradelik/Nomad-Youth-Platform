@@ -1,16 +1,77 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
+import raulChild from '../assets/images/team/raul-child.webp'
+import raul from '../assets/images/team/raul.webp'
+
+import gumushChild from '../assets/images/team/gumush-child.webp'
+import gumush from '../assets/images/team/gumush.webp'
+
+import shabnamChild from '../assets/images/team/shabnam-child.webp'
+import shabnam from '../assets/images/team/shabnam.webp'
+
+import aminaChild from '../assets/images/team/amina-child.webp'
+import amina from '../assets/images/team/amina.webp'
+
+import nezrinChild from '../assets/images/team/nezrin-child.webp'
+import nezrin from '../assets/images/team/nezrin.webp'
+
+import ulkerChild from '../assets/images/team/ulker-child.webp'
+import ulker from '../assets/images/team/ulker.webp'
+
+import fatimeChild from '../assets/images/team/fatime-child.webp'
+import fatime from '../assets/images/team/fatime.webp'
+
 const team = [
-  { name: 'Raul Israfilov',   roleKey: 'about_role_ceo',         emoji: '👨‍💼' },
-  { name: 'Gümüş Hüseynova',  roleKey: 'about_role_dev1',     emoji: '👩‍💻' },
-  { name: 'Şəbnəm Osmanova',  roleKey: 'about_role_dev2',       emoji: '👩‍💻' },
-  { name: 'Əminə Qocayeva', roleKey: 'about_role_comms', emoji: '👨‍🎨' },
-  { name: 'Nəzrin Xankişiyeva', roleKey: 'about_role_partnership', emoji: '👨‍🎨' }
+  {
+    name: 'Raul Israfilov',
+    roleKey: 'about_role_ceo',
+    childhood: raulChild,
+    current: raul,
+  },
+  {
+    name: 'Gümüş Hüseynova',
+    roleKey: 'about_role_dev2',
+    childhood: gumushChild,
+    current: gumush,
+  },
+  {
+    name: 'Şəbnəm Osmanova',
+    roleKey: 'about_role_dev1',
+    childhood: shabnamChild,
+    current: shabnam,
+  },
+  {
+    name: 'Əminə Qocayeva',
+    roleKey: 'about_role_comms',
+    childhood: aminaChild,
+    current: amina,
+  },
+  {
+    name: 'Nəzrin Xankişiyeva',
+    roleKey: 'about_role_partnership',
+    childhood: nezrinChild,
+    current: nezrin,
+  },
+  {
+    name: 'Ülkər Hüseynova',
+    roleKey: 'about_role_op2',
+    childhood: ulkerChild,
+    current: ulker,
+  },
+
+    {
+    name: 'Fatimə Əkbərova',
+    roleKey: 'about_role_op1',
+    childhood: fatimeChild,
+    current: fatime,
+  },
 ]
 
 export default function About() {
   const { t } = useLanguage()
+  const [flippedIndex, setFlippedIndex] = useState(null) 
 
   const howItWorks = [
     { num: '01', titleKey: 'about_step1_title', descKey: 'about_step1_desc' },
@@ -91,21 +152,37 @@ export default function About() {
             <h2 className="section-heading__title">{t('about_team_title')}</h2>
           </div>
           <div className="grid-4">
-            {team.map(m => (
-              <div key={m.name} style={{
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'var(--space-xl)',
-                textAlign: 'center',
-                transition: 'border-color var(--transition-base), transform var(--transition-base)',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--color-border-hover)'; e.currentTarget.style.transform = 'translateY(-4px)' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.transform = 'translateY(0)' }}
+            {team.map((m, i) => (
+              <div
+                key={m.name}
+                className={`flip-card ${flippedIndex === i ? 'is-flipped' : ''}`}
+                onClick={() => setFlippedIndex(flippedIndex === i ? null : i)}
+                tabIndex={0}
+                role="button"
+                aria-pressed={flippedIndex === i}
+                aria-label={m.name}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    setFlippedIndex(flippedIndex === i ? null : i)
+                  }
+                }}
               >
-                <div style={{ fontSize: '3rem', marginBottom: 'var(--space-md)' }}>{m.emoji}</div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, marginBottom: 4 }}>{m.name}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{t(m.roleKey)}</div>
+                <div className="flip-card__inner">
+
+                  <div className="flip-card__face flip-card__front">
+                    <img src={m.childhood} alt={m.name} className="flip-card__img" />
+                  </div>
+
+                  <div className="flip-card__face flip-card__back">
+                    <img src={m.current} alt={m.name} className="flip-card__img" />
+                    <div className="flip-card__info">
+                      <div className="flip-card__name">{m.name}</div>
+                      <div className="flip-card__role">{t(m.roleKey)}</div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             ))}
           </div>

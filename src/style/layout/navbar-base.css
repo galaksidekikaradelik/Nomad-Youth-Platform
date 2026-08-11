@@ -1,0 +1,100 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--navbar-h);
+  display: flex;
+  align-items: center;
+  background: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.navbar.scrolled {
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar__logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: var(--brand-900);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.navbar__logo-mark {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--brand-900);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.navbar__logo-mark span {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent-400);
+  animation: pulse-accent 2.5s ease-in-out infinite;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.navbar__link {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+  transition: width var(--transition-base);
+}
+
+.navbar__link:hover,
+.navbar__link.active {
+  color: var(--brand-900);
+}
+
+.navbar__link:hover::after,
+.navbar__link.active::after {
+  width: 100%;
+}
+
+.navbar__cta {
+  background: var(--brand-900);
+  color: var(--accent-400);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.navbar__cta:hover {
+  background: var(--brand-800);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}

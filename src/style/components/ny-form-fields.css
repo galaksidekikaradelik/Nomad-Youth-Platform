@@ -1,0 +1,71 @@
+.ny-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+}
+
+.ny-span-2 {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 560px) {
+  .ny-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ny-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ny-field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.ny-req {
+  color: var(--status-error);
+}
+
+.ny-hint {
+  font-weight: 500;
+  color: var(--color-text-faint);
+}
+
+.ny-error {
+  font-size: 12px;
+  color: var(--status-error);
+  font-weight: 600;
+}
+
+.ny-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.ny-input:hover {
+  border-color: var(--color-border-hover);
+}
+
+.ny-input:focus {
+  outline: none;
+  border-color: var(--accent-400);
+  box-shadow: 0 0 0 4px var(--color-accent-glow);
+}
+
+.ny-textarea {
+  resize: vertical;
+  min-height: 84px;
+}

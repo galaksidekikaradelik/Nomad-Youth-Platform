@@ -3,7 +3,11 @@
 
 @import 'layout/page-layout.css';
 @import 'layout/grid.css';
-@import 'layout/navbar.css';
+@import 'layout/navbar-base.css';
+@import 'layout/navbar-actions.css';
+@import 'layout/navbar-profile.css';
+@import 'layout/navbar-lang-dropdown.css';
+@import 'layout/navbar-mobile.css';
 @import 'layout/footer.css';
 
 @import 'components/buttons.css';
@@ -11,7 +15,10 @@
 @import 'components/info-card.css';
 @import 'components/search-bar.css';
 @import 'components/category-card.css';
-@import 'components/opportunity-card.css';
+@import 'components/opportunity-card-base.css';
+@import 'components/opportunity-card-tags.css';
+@import 'components/opportunity-card-status.css';
+@import 'components/opportunity-card-footer.css';
 @import 'components/event-card.css';
 @import 'components/page-header.css';
 @import 'components/section-heading.css';
@@ -29,13 +36,33 @@
 @import 'components/opportunity-skeleton.css';
 @import 'components/avatar.css';
 @import 'components/avatar-adjust-modal.css';
-@import 'components/profile-setup.css';
 @import 'components/verify-email.css';
+@import 'components/flip-card.css';
+@import 'components/ny-layout.css';
+@import 'components/ny-progress.css';
+@import 'components/ny-typography.css';
+@import 'components/ny-form-fields.css';
+@import 'components/ny-chips-checks.css';
+@import 'components/ny-actions-success.css';
+@import 'components/detail-modal.css';
+@import 'components/auth-page.css';
+@import 'components/auth-form.css';
+@import 'components/auth-social.css';
+@import 'components/auth-footer-links.css';
+@import 'components/auth-banner-checks.css';
+@import 'components/auth-modal.css';
+@import 'components/verification-banner.css';
+@import 'components/profile-header.css';
+@import 'components/profile-stats-bar.css';
+@import 'components/profile-sidebar.css';
+@import 'components/profile-content-panels.css';
+@import 'components/delete-modal.css';
+@import 'components/settings-form.css';
+@import 'components/chips-and-filters.css';
 
 
 @import 'pages/about.css';
 @import 'pages/contact.css';
-@import 'pages/profil.css';
 
 @import 'utilities/helpers.css';
 @import 'utilities/animations.css';

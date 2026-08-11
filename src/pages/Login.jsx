@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import GoogleLoginButton from "../components/GoogleLoginButton";
-import "../style/pages/auth.css";
+import "../style/index.css";
 
 export default function Login() {
   const { t } = useLanguage();

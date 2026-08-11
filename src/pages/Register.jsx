@@ -4,7 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import EmailVerificationBanner from "../components/EmailVerificationBanner";
-import "../style/pages/auth.css";
+import "../style/index.css";
 
 const EDUCATION_LEVELS = [
   "Orta təhsil",

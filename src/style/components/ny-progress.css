@@ -1,0 +1,28 @@
+.ny-progress-wrap {
+  margin-bottom: 28px;
+}
+
+.ny-progress-track {
+  height: 6px;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.ny-progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--accent-400),
+    var(--accent-300)
+  );
+  border-radius: var(--radius-full);
+  transition: width var(--transition-slow);
+}
+
+.ny-progress-label {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}

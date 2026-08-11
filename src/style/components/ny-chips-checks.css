@@ -1,0 +1,58 @@
+.ny-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ny-chip {
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.ny-chip:hover {
+  border-color: var(--color-border-hover);
+}
+
+.ny-chip-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--neutral-0);
+}
+
+.ny-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ny-check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.ny-check-row input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.ny-check-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ny-check-disabled input {
+  cursor: not-allowed;
+}
