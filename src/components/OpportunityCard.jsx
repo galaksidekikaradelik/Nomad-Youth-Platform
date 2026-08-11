@@ -119,10 +119,10 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     country: location, 
     deadline, 
     applyLink, 
-    publishedAt,
+    eventDateRange,
     escOrSalto,        
     volunteeringType,  
-} = opportunity
+  } = opportunity
   const [showAuthPrompt, setShowAuthPrompt] = useState(false)
   const [showDetail, setShowDetail] = useState(autoOpenDetail)
   const [showApplyConfirm, setShowApplyConfirm] = useState(false)
@@ -221,10 +221,7 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
 
   const daysLeft = getDaysLeft(deadline)
   const isUrgent = daysLeft !== null && daysLeft <= URGENT_THRESHOLD_DAYS
-  const formattedPublished = publishedAt
-    ? new Date(publishedAt).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
-    : dateNotSpecified
-
+  
   const formatLabel = typeDetail === 'Online' ? t('type_online') : typeDetail === 'Offline' ? t('type_offline') : typeDetail
   const formatModifier = typeDetail === 'Online' ? 'online' : typeDetail === 'Offline' ? 'offline' : null
 
@@ -334,7 +331,7 @@ const volunteeringModifier =
               )}
             </div>
             <div className="opportunity-card__date-row opportunity-card__date-row--muted">
-              {t('card_published')} {formattedPublished}
+              {t('card_event_date')} {eventDateRange || dateNotSpecified}
             </div>
           </div>
 
