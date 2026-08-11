@@ -57,6 +57,7 @@
   "card_language": "Язык",
   "card_event_date_range": "Дата проведения",
   "card_financial_support": "Финансовая поддержка",
+  "card_event_date": "Дата проведения:",
 
   "type_online": "Онлайн",
   "type_offline": "Очно",
@@ -111,6 +112,8 @@
   "about_role_dev2": "Full-stack разработчик",
   "about_role_comms": "Специалист по связям с общественностью",
   "about_role_partnership": "Специалист по социальным сетям и сообществу",
+  "about_role_op1": "",
+  "about_role_op2": "",
   "about_cta_title": "Станьте нашим партнёром",
   "about_cta_desc": "Свяжитесь с нами, чтобы поделиться своими возможностями на платформе Nomad Youth.",
   "about_cta_contact": "Связаться с нами",

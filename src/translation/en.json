@@ -57,6 +57,7 @@
   "card_language": "Language",
   "card_event_date_range": "Event Date",
   "card_financial_support": "Financial Support",
+  "card_event_date": "Event date:",
 
   "type_online": "Online",
   "type_offline": "In-person",
@@ -111,6 +112,8 @@
   "about_role_dev2": "Full-stack Developer",
   "about_role_comms": "Public Relations Specialist",
   "about_role_partnership": "Social Media and Community Specialist",
+  "about_role_op1": "",
+  "about_role_op2": "",
   "about_cta_title": "Partner With Us",
   "about_cta_desc": "Contact us to share your opportunities on the Nomad Youth platform.",
   "about_cta_contact": "Contact Us",
