@@ -21,22 +21,21 @@ import { trackServiceView, trackServiceClick } from '../services/analytics'
 
 
 const SERVICES = [
-  { id: 'erasmus-consulting', icon: Globe,          titleKey: 'service_erasmus_consulting_title', descKey: 'service_erasmus_consulting_desc' },
-  { id: 'project-consulting', icon: Compass,        titleKey: 'service_project_consulting_title', descKey: 'service_project_consulting_desc' },
-  { id: 'cv',                 icon: FileText,       titleKey: 'service_cv_title',                 descKey: 'service_cv_desc' },
-  { id: "erasmus-mentorship", icon: UsersRound,     titleKey: "service_erasmus_mentorship_title", descKey: "service_erasmus_mentorship_desc"},
-  { id: "visa-support",        icon: ShieldCheck,       titleKey: "service_visa_support_title",       descKey: "service_visa_support_desc" },
-  { id: "erasmus-mundus",     icon: GraduationCap,  titleKey: "service_erasmus_mundus_title",     descKey: "service_erasmus_mundus_desc" },
-  { id: 'europass',           icon: BadgeCheck,     titleKey: 'service_europass_title',           descKey: 'service_europass_desc' },
-  { id: 'study-abroad',       icon: GraduationCap,  titleKey: 'service_study_abroad_title',       descKey: 'service_study_abroad_desc' },
-  { id: 'cv-review',          icon: Search,         titleKey: 'service_cv_review_title',          descKey: 'service_cv_review_desc' },
-  { id: 'motivation',         icon: PenTool,        titleKey: 'service_motivation_title',         descKey: 'service_motivation_desc' },
-  { id: 'recommendation',     icon: ClipboardCheck, titleKey: 'service_recommendation_title',     descKey: 'service_recommendation_desc' },
-  { id: 'application',        icon: Send,           titleKey: 'service_application_title',        descKey: 'service_application_desc' },
-  { id: 'application-review', icon: CheckCircle2,   titleKey: 'service_application_review_title', descKey: 'service_application_review_desc' },
-  { id: "un-certificates",    icon: ScrollText,          titleKey: "service_un_certificates_title",    descKey: "service_un_certificates_desc" },  
-  { id: 'other',              icon: MessageCircle,  titleKey: 'service_other_title',              descKey: 'service_other_desc' },
-  
+  { id: 'erasmus-consulting', icon: Globe,          titleKey: 'service_erasmus_consulting_title', descKey: 'service_erasmus_consulting_desc', featuresKey: 'service_erasmus_consulting_features' },
+  { id: 'project-consulting', icon: Compass,        titleKey: 'service_project_consulting_title', descKey: 'service_project_consulting_desc', featuresKey: 'service_project_consulting_features' },
+  { id: 'cv',                 icon: FileText,       titleKey: 'service_cv_title',                 descKey: 'service_cv_desc',                 featuresKey: 'service_cv_features' },
+  { id: "erasmus-mentorship", icon: UsersRound,     titleKey: "service_erasmus_mentorship_title", descKey: "service_erasmus_mentorship_desc", featuresKey: 'service_erasmus_mentorship_features' },
+  { id: "visa-support",       icon: ShieldCheck,    titleKey: "service_visa_support_title",       descKey: "service_visa_support_desc",       featuresKey: 'service_visa_support_features' },
+  { id: "erasmus-mundus",     icon: GraduationCap,  titleKey: "service_erasmus_mundus_title",     descKey: "service_erasmus_mundus_desc",     featuresKey: 'service_erasmus_mundus_features' },
+  { id: 'europass',           icon: BadgeCheck,     titleKey: 'service_europass_title',           descKey: 'service_europass_desc',           featuresKey: 'service_europass_features' },
+  { id: 'study-abroad',       icon: GraduationCap,  titleKey: 'service_study_abroad_title',       descKey: 'service_study_abroad_desc',       featuresKey: 'service_study_abroad_features' },
+  { id: 'cv-review',          icon: Search,         titleKey: 'service_cv_review_title',          descKey: 'service_cv_review_desc',          featuresKey: 'service_cv_review_features' },
+  { id: 'motivation',         icon: PenTool,        titleKey: 'service_motivation_title',         descKey: 'service_motivation_desc',         featuresKey: 'service_motivation_features' },
+  { id: 'recommendation',     icon: ClipboardCheck, titleKey: 'service_recommendation_title',     descKey: 'service_recommendation_desc',     featuresKey: 'service_recommendation_features' },
+  { id: 'application',        icon: Send,           titleKey: 'service_application_title',        descKey: 'service_application_desc',        featuresKey: 'service_application_features' },
+  { id: 'application-review', icon: CheckCircle2,   titleKey: 'service_application_review_title', descKey: 'service_application_review_desc', featuresKey: 'service_application_review_features' },
+  { id: "un-certificates",    icon: ScrollText,     titleKey: "service_un_certificates_title",    descKey: "service_un_certificates_desc",    featuresKey: 'service_un_certificates_features' },
+  { id: 'other',              icon: MessageCircle,  titleKey: 'service_other_title',              descKey: 'service_other_desc',              featuresKey: 'service_other_features' },
 ]
 
 export default function Services() {
@@ -45,13 +44,15 @@ export default function Services() {
 
   const raw = SERVICES.find(s => s.id === selected)
   const selectedService = raw
-    ? { ...raw, title: t(raw.titleKey), desc: t(raw.descKey) }
+    ? { ...raw, title: t(raw.titleKey), desc: t(raw.descKey), features: t(raw.featuresKey) }
     : null
 
   useEffect(() => {
+    // popup həqiqətən açılanda "baxış" kimi izlənir
     if (selectedService) {
       trackServiceView(selectedService)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected])
 
   return (

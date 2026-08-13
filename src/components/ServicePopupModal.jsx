@@ -9,6 +9,7 @@ export default function ServicePopupModal({ service, onClose }) {
   if (!service) return null
 
   const Icon = service.icon
+  const features = service.features || []
 
   const buildWhatsAppLink = (serviceTitle) => {
     const message = t('modal_whatsapp_greeting').replace('{service}', serviceTitle)
@@ -42,7 +43,7 @@ export default function ServicePopupModal({ service, onClose }) {
           background: 'var(--color-surface)',
           borderRadius: 'var(--radius-xl)',
           padding: 'var(--space-2xl)',
-          maxWidth: 440,
+          maxWidth: 600,
           width: '100%',
           position: 'relative',
           textAlign: 'center',
@@ -79,9 +80,44 @@ export default function ServicePopupModal({ service, onClose }) {
           {service.title}
         </h2>
 
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: 'var(--space-lg)' }}>
-          {t('modal_whatsapp_desc')}
-        </p>
+        {service.desc && (
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: 'var(--space-md)' }}>
+            {service.desc}
+          </p>
+        )}
+
+        {features.length > 0 && (
+          <ul
+            style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: '0 0 var(--space-lg)',
+              textAlign: 'left',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-xs, 8px)',
+            }}
+          >
+            {features.map((feature, i) => (
+              <li
+                key={i}
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: 8,
+                  fontSize: '0.92rem',
+                  color: 'var(--text-body, var(--text-muted))',
+                  lineHeight: 1.4,
+                }}
+              >
+                <span style={{ color: 'var(--color-primary, #16a34a)', flexShrink: 0 }}>✓</span>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+
 
         <a
           href={whatsappLink}

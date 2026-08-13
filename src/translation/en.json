@@ -317,8 +317,86 @@
   "service_visa_support_title": "Visa Support",
   "service_visa_support_desc": "Assistance with preparing the required visa documents and completing the application process.",
 
+
+  "service_cv_features": [
+    "Professional CV preparation",
+    "Adaptation to international standards",
+    "Optimization of the CV according to your goals"
+  ],
+  "service_europass_features": [
+    "CV preparation in Europass format",
+    "Proper structuring of information",
+    "Adaptation for international applications"
+  ],
+  "service_cv_review_features": [
+    "Review of the CV structure and content",
+    "Identification of errors and areas for improvement",
+    "Personalized recommendations for improvement"
+  ],
+  "service_motivation_features": [
+    "Structuring the motivation letter",
+    "Adapting the content to the program",
+    "Language and content revisions"
+  ],
+  "service_recommendation_features": [
+    "Determining the structure of the letter",
+    "Preparing content according to your goals",
+    "Adapting to academic and professional standards"
+  ],
+  "service_application_features": [
+    "Support with completing application forms",
+    "Document preparation and review",
+    "Step-by-step guidance throughout the application process"
+  ],
+  "service_application_review_features": [
+    "Complete review of the application form",
+    "Identification of errors and missing information",
+    "Recommendations for improvement"
+  ],
+  "service_project_consulting_features": [
+    "Selection of projects suitable for your profile",
+    "Explanation of project requirements",
+    "Guidance throughout the selection process"
+  ],
+  "service_erasmus_consulting_features": [
+    "Identification of programs suitable for you",
+    "Guidance throughout the application process",
+    "Personalized advice and answers to your questions"
+  ],
+  "service_un_certificates_features": [
+    "Identification of certificates suitable for your interests",
+    "Explanation of program objectives and requirements",
+    "Personalized guidance during the selection process"
+  ],
+  "service_other_title": "Other Requests",
+  "service_other_features": [
+    "Understanding your questions and needs",
+    "Identifying opportunities suitable for you",
+    "Personalized guidance and consultation"
+  ],
+  "service_study_abroad_features": [
+    "Support with country and program selection",
+    "Identification of suitable study opportunities",
+    "Guidance throughout the application process"
+  ],
+  "service_erasmus_mentorship_features": [
+    "Personalized support throughout the application process",
+    "Guidance on document preparation",
+    "Mentorship throughout the process"
+  ],
+  "service_visa_support_features": [
+    "Identification of required documents",
+    "Document review",
+    "General guidance throughout the visa application process"
+  ],
+
+  "service_erasmus_mundus_desc": "Support with program selection, applications, and documentation for Erasmus Mundus master's programs.",
+  "service_erasmus_mundus_features": [
+    "Selection of suitable master's programs",
+    "Explanation of application requirements",
+    "Support with document preparation"
+  ],
   "service_erasmus_mundus_title": "Erasmus Mundus",
-  "service_erasmus_mundus_desc": "Support with programme selection, application, and documentation for Erasmus Mundus Master's programmes.",
   "modal_close_aria": "Close",
   "modal_close_btn": "Close",
   "modal_whatsapp_desc": "We accept requests for this service via WhatsApp. Click the button to reach out to a team member.",

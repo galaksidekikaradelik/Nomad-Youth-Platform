@@ -15,11 +15,9 @@
   "nav_dashboard": "Panel",
   "nav_settings": "Parametrlər",
   "nav_notifications_aria": "Bildirişlər",
-
   "search_placeholder": "Layihə, ölkə və ya təşkilat axtar...",
   "search_all_categories": "Bütün kateqoriyalar",
   "search_btn": "Axtar",
-
   "opportunities_eyebrow": "İmkanlar",
   "opportunities_title": "Bütün Elanlar",
   "opportunities_desc": "Sizə uyğun imkanı tapın, müraciət edin, inkişaf edin.",
@@ -28,7 +26,6 @@
   "opportunities_empty_desc": "Axtarış sözünü dəyişib yenidən cəhd edin.",
   "opp_error": "Elanları yükləmək mümkün olmadı.",
   "opp_loading": "Yüklənir...",
-
   "hero_title_line1": "Gələcəyinizi",
   "hero_title_em": "İndi",
   "hero_title_line2": "Qurun",
@@ -38,11 +35,9 @@
   "hero_stat_opportunities": "Aktiv İmkan",
   "hero_stat_services": "Xidmət",
   "hero_stat_category": "Tərəfdaş",
-
   "info_about": "Haqqımızda",
   "info_services": "Xidmətlər",
   "info_partnership": "Tərəfdaşlıq",
-
   "card_topic": "Mövzu:",
   "card_paid": "Ödənişli",
   "card_free": "Pulsuz",
@@ -59,37 +54,30 @@
   "card_language": "Dil",
   "card_event_date_range": "Keçirilmə tarixi",
   "card_financial_support": "Maliyyə dəstəyi",
-
   "type_online": "Onlayn",
   "type_offline": "Əyani",
-
   "opp_eyebrow": "Kəşf Et",
   "opp_title": "İmkanlar",
   "opp_desc": "Maraqlarınıza uyğun imkanları filterləyin və özünüzə ən uyğun layihəni tapın.",
   "opp_search_placeholder": "İmkan, təşkilat və ya açar söz axtarın...",
-
   "filter_scope_label": "Layihənin növü",
   "scope_all": "Hamısı",
   "scope_international": "🌍 Beynəlxalq",
   "scope_local": "🇦🇿 Yerli",
   "filter_category_label": "Kateqoriya",
   "category_all": "Hamısı",
-
   "filter_format_label": "Format",
   "format_all": "Hamısı",
   "format_online": "Onlayn",
   "format_onsite": "Əyani",
   "filter_sort_label": "Sırala",
-
   "sort_deadline": "Son tarix (yaxın)",
   "sort_newest": "Əlavə olunma tarixi (yeni)",
   "sort_country": "Şəhərə görə (A-Z)",
-
   "opp_results_prefix": "Sizin üçün",
   "opp_results_suffix": "imkan tapıldı",
   "opp_empty_title": "Nəticə tapılmadı",
   "opp_empty_desc": "Filtri dəyişdirərək yenidən cəhd edin.",
-
   "about_eyebrow": "Haqqımızda",
   "about_title": "Gənclərin Platforması",
   "about_desc": "Nomad Youth Azərbaycandakı gənclərin beynəlxalq və yerli inkişaf imkanlarını daha rahat tapması üçün yaradılmış rəqəmsal platformadır. Platformamız Erasmus+, European Solidarity Corps (ESC), könüllülük, təcrübə, qrant, təlim, yay məktəbləri və digər inkişaf imkanlarını bir mərkəzdə toplayır. Məqsədimiz gənclərin etibarlı imkanlara daha sürətli çıxışını təmin etmək və müraciət prosesini onlar üçün daha sadə etməkdir. Bununla yanaşı, CV hazırlanması, motivasiya məktubu, layihə seçimi və müraciət dəstəyi kimi xidmətlərlə istifadəçilərin qəbul şansını artırmağa kömək edirik.",
@@ -118,7 +106,6 @@
   "about_cta_desc": "Yeni imkanlarınızı Nomad Youth platformasında paylaşmaq üçün bizimlə əlaqə saxlayın.",
   "about_cta_contact": "Əlaqə Saxla",
   "about_cta_opportunities": "İmkanlara Bax",
-
   "contact_eyebrow": "Əlaqə",
   "contact_title": "Bizimlə əlaqə saxla",
   "contact_desc": "Layihənizi paylaşmaq, tərəfdaşlıq etmək və ya hər hansı sualınızı bizimlə bölüşmək üçün əlaqə saxlayın.",
@@ -147,7 +134,6 @@
   "contact_error_email_required": "E-poçt daxil edilməlidir",
   "contact_error_email_invalid": "E-poçt formatı düzgün deyil",
   "contact_error_message_required": "Mesaj daxil edilməlidir",
-
   "footer_col_platform": "Platform",
   "footer_col_category": "Kateqoriya",
   "footer_col_faq": "FAQ",
@@ -159,7 +145,6 @@
   "footer_disclaimer": "Nomad Youth imkanları təqdim edən rəqəmsal platformadır. Müraciət və seçim prosesləri müvafiq təşkilatlar tərəfindən həyata keçirilir.",
   "footer_disclaimer_em": "Avropada görüşək.",
   "footer_rights": "Bütün hüquqlar qorunur.",
-
   "filter_type_label": "Növ",
   "type_all": "Hamısı",
   "type_seminar": "Seminar",
@@ -167,7 +152,6 @@
   "type_conference": "Konfrans",
   "type_webinar": "Vebinar",
   "type_activity": "Fəaliyyət",
-
   "auth_register_title": "Hesab yarat",
   "auth_register_subtitle": "Nomad Youth Platformuna bu gün qoşul.",
   "auth_google_signup": "Google ilə qeydiyyatdan keçin",
@@ -233,7 +217,6 @@
   "status_accepted": "Qəbul olunub",
   "status_rejected": "Qəbul olunmayıb",
   "status_select": "Status yoxdur",
-
   "faq_eyebrow": "Kömək",
   "faq_title": "Tez-tez verilən suallar",
   "faq_desc": "Erasmus+, müraciət prosesi və platformadan istifadə haqqında ən çox soruşulan suallar.",
@@ -269,7 +252,6 @@
   "faq_a15": "Gənclər üçün imkan yaradan təşkilat və ya təşəbbüssünüzsə, layihənizi Nomad Youth platformasında paylaşmaq üçün bizimlə əlaqə saxlaya bilərsiniz. Layihənizin daha çox gəncə çatması və əməkdaşlıq imkanlarını müzakirə etmək üçün sizə məmnuniyyətlə cavab verəcəyik.",
   "faq_q16": "Nomad Youth ilə necə tərəfdaş ola bilərəm?",
   "faq_a16": "Nomad Youth gənclər üçün imkan yaradan təşkilatlar, təşəbbüslər və şirkətlərlə əməkdaşlığa açıqdır. Layihələrinizi daha geniş auditoriyaya çatdırmaq, birgə fəaliyyətlər və qarşılıqlı görünürlük imkanlarını müzakirə etmək üçün bizimlə əlaqə saxlaya bilərsiniz.",
-
   "contact_request_general": "Ümumi sual / Təklif",
   "contact_request_partnership": "Tərəfdaşlıq təklifi",
   "contact_request_project": "Layihə / imkan paylaşımı",
@@ -286,51 +268,123 @@
   "contact_whatsapp_message_label": "Mesaj:",
   "contact_submitting": "Göndərilir...",
   "contact_error_generic": "Mesaj göndərilərkən xəta baş verdi, yenidən cəhd edin.",
-
   "services_eyebrow": "Dəstək",
   "services_title": "Xidmətlərimiz",
   "services_desc": "CV-dən müsahibə hazırlığına qədər — sənin inkişaf yolunda lazım olan dəstəyi seç, komandamız səninlə əlaqə saxlasın.",
   "service_cv_title": "CV Hazırlanması",
   "service_cv_desc": "Peşəkar və hədəflərinizə uyğun CV hazırlanması.",
+  "service_cv_features": [
+    "Peşəkar CV-nin hazırlanması",
+    "Beynəlxalq standartlara uyğunlaşdırma",
+    "CV-nin məqsədə uyğun optimallaşdırılması"
+  ],
   "service_europass_title": "Europass CV",
   "service_europass_desc": "Erasmus+ və beynəlxalq müraciətlər üçün Europass formatında CV hazırlanması.",
+  "service_europass_features": [
+    "Europass formatında CV hazırlanması",
+    "Məlumatların düzgün strukturlaşdırılması",
+    "Beynəlxalq müraciətlərə uyğunlaşdırma"
+  ],
   "service_cv_review_title": "CV Yoxlanışı",
   "service_cv_review_desc": "Mövcud CV-nizin yoxlanılması, düzəlişlər və inkişaf təklifləri.",
+  "service_cv_review_features": [
+    "CV-nin struktur və məzmun baxımından yoxlanılması",
+    "Səhvlərin və çatışmazlıqların müəyyənləşdirilməsi",
+    "Təkmilləşdirmə üzrə fərdi tövsiyələr"
+  ],
   "service_motivation_title": "Motivasiya Məktubu Dəstəyi",
   "service_motivation_desc": "Layihə, təcrübə və ya təhsil müraciəti üçün motivasiya məktubunun hazırlanması.",
+  "service_motivation_features": [
+    "Məktubun strukturunun hazırlanması",
+    "Məzmunun proqrama uyğunlaşdırılması",
+    "Dil və məzmun üzrə düzəlişlər"
+  ],
   "service_recommendation_title": "Tövsiyə Məktubu Dəstəyi",
   "service_recommendation_desc": "Tövsiyə məktubunun strukturu və məzmunu üzrə dəstək.",
+  "service_recommendation_features": [
+    "Məktubun strukturunun müəyyənləşdirilməsi",
+    "Məzmunun məqsədə uyğun hazırlanması",
+    "Akademik və peşəkar standartlara uyğunlaşdırma"
+  ],
   "service_application_title": "Müraciət Dəstəyi",
   "service_application_desc": "Layihə seçimi, müraciət forması və sənədlərin hazırlanması prosesində dəstək.",
+  "service_application_features": [
+    "Müraciət formasının doldurulması üzrə dəstək",
+    "Sənədlərin hazırlanması və yoxlanılması",
+    "Müraciət prosesində addım-addım istiqamətləndirmə"
+  ],
   "service_application_review_title": "Müraciət Formasının Yoxlanışı",
   "service_application_review_desc": "Hazırladığınız müraciət formasının yoxlanılması və təkmilləşdirmə təklifləri.",
+  "service_application_review_features": [
+    "Müraciət formasının tam yoxlanılması",
+    "Səhvlərin və çatışmazlıqların müəyyənləşdirilməsi",
+    "Təkmilləşdirmə üzrə tövsiyələr"
+  ],
   "service_project_consulting_title": "Layihə Seçimi Konsultasiyası",
   "service_project_consulting_desc": "Maraqlarınıza, təcrübənizə və hədəflərinizə uyğun layihələrin müəyyənləşdirilməsi.",
+  "service_project_consulting_features": [
+    "Profilinə uyğun layihələrin seçilməsi",
+    "Layihə tələblərinin izahı",
+    "Seçim prosesində istiqamətləndirmə"
+  ],
   "service_erasmus_consulting_title": "Erasmus Konsultasiyası",
   "service_erasmus_consulting_desc": "Erasmus+, Youth Exchange, ESC və uyğun imkanlar barədə fərdi konsultasiya.",
+  "service_erasmus_consulting_features": [
+    "Sənə uyğun proqramların müəyyənləşdirilməsi",
+    "Müraciət prosesi üzrə istiqamətləndirmə",
+    "Fərdi məsləhət və sualların cavablandırılması"
+  ],
   "service_un_certificates_title": "BMT Sertifikatlarının Seçilməsi üçün Dəstək",
   "service_un_certificates_desc": "Maraq dairənizə və məqsədlərinizə uyğun BMT sertifikat proqramlarının seçilməsi üzrə məsləhət və istiqamətləndirmə.",
+  "service_un_certificates_features": [
+    "Maraqlarına uyğun sertifikatların müəyyənləşdirilməsi",
+    "Proqramların məqsəd və tələblərinin izahı",
+    "Seçim prosesində fərdi istiqamətləndirmə"
+  ],
   "service_other_title": "Digər Sorğular",
   "service_other_desc": "Ehtiyacınızı bizimlə paylaşın, sizə uyğun dəstək istiqamətini birlikdə müəyyənləşdirək.",
+  "service_other_features": [
+    "Sual və ehtiyaclarının dinlənilməsi",
+    "Sənə uyğun imkanların müəyyənləşdirilməsi",
+    "Fərdi istiqamətləndirmə və məsləhət"
+  ],
   "service_study_abroad_title": "Xaricdə Təhsil Konsultasiyası",
   "service_study_abroad_desc": "Xaricdə bakalavr, magistratura və digər təhsil proqramlarına sənəd hazırlığı və məsləhət xidməti.",
+  "service_study_abroad_features": [
+    "Ölkə və proqram seçimində dəstək",
+    "Uyğun təhsil imkanlarının müəyyənləşdirilməsi",
+    "Müraciət prosesi üzrə istiqamətləndirmə"
+  ],
   "service_erasmus_mentorship_title": "Erasmus Mentorluğu",
   "service_erasmus_mentorship_desc": "Erasmus proqramına müraciət və iştirak prosesi boyunca 1 aylıq fərdi mentorluq və istiqamətləndirmə.",
+  "service_erasmus_mentorship_features": [
+    "Müraciət prosesində fərdi dəstək",
+    "Sənədlərin hazırlanması üzrə istiqamətləndirmə",
+    "Proses boyunca mentor dəstəyi"
+  ],
   "service_visa_support_title": "Viza Dəstəyi",
   "service_visa_support_desc": "Viza müraciəti üçün tələb olunan sənədlərin hazırlanması və proses üzrə dəstək.",
+  "service_visa_support_features": [
+    "Tələb olunan sənədlərin müəyyənləşdirilməsi",
+    "Sənədlərin yoxlanılması",
+    "Viza müraciəti üzrə ümumi istiqamətləndirmə"
+  ],
   "service_erasmus_mundus_title": "Erasmus Mundus",
   "service_erasmus_mundus_desc": "Erasmus Mundus magistr proqramları üçün seçim, müraciət və sənədləşmə üzrə dəstək.",
-
+  "service_erasmus_mundus_features": [
+    "Uyğun magistr proqramlarının seçilməsi",
+    "Müraciət tələblərinin izahı",
+    "Sənədlərin hazırlanması üzrə dəstək"
+  ],
   "modal_close_aria": "Bağla",
   "modal_close_btn": "Bağla",
   "modal_whatsapp_desc": "Bu xidmətlə bağlı müraciətinizi WhatsApp üzərindən qəbul edirik. Düyməyə klikləyərək komanda üzvümüzlə əlaqə saxlaya bilərsiniz.",
-  "modal_whatsapp_btn": "WhatsApp-da davam et",
+  "modal_whatsapp_btn": "WhatsApp-da müraciət edin",
   "modal_whatsapp_greeting": "Salam! Nomad Youth vasitəsilə {service} xidməti ilə bağlı məlumat almaq istəyirəm.",
   "modal_privacy_title": "Məxfilik Siyasəti",
   "modal_privacy_content": "Son yenilənmə tarixi: iyul 2026\n\nNomad Youth gənclərin Erasmus+, könüllülük, təcrübə, qrant, təlim və digər inkişaf imkanlarını daha rahat tapmasına kömək edən rəqəmsal platformadır. Bu sənəd Nomad Youth platformasından istifadə zamanı məlumatlarınızın necə toplandığını, istifadə edildiyini və platformadan istifadə qaydalarını izah edir.\nNomad Youth hazırda müstəqil təşəbbüs kimi fəaliyyət göstərir.\n\n1. Topladığımız məlumatlar\nQeydiyyat zamanı aşağıdakı məlumatları toplaya bilərik:\nAd və soyad\nE-mail ünvanı\nŞifrə\nƏlaqə nömrəsi\nDoğum tarixi\nMaraq sahələri\nUniversitet\nTəhsil səviyyəsi\nİxtisas\nGoogle ilə qeydiyyat etdikdə, Google hesabınızdan paylaşmağa razı olduğunuz əsas profil məlumatları da əldə oluna bilər.\nPlatformadan istifadə zamanı seçdiyiniz, yadda saxladığınız və “müraciət etdim” kimi işarələdiyiniz imkanlarla bağlı məlumatlar da hesabınızda saxlanıla bilər.\n\n2. Məlumatlardan necə istifadə edirik?\nTopladığımız məlumatlardan aşağıdakı məqsədlərlə istifadə edə bilərik:\nHesabınızı yaratmaq və idarə etmək;\nSizə uyğun imkanları göstərmək;\nYadda saxladığınız və müraciət etdiyiniz layihələri izləməyinizə kömək etmək;\nPlatformanın işləməsini, təhlükəsizliyini və istifadəçi təcrübəsini yaxşılaşdırmaq;\nSorğu və müraciətlərinizə cavab vermək;\nAyrı razılıq verdiyiniz halda, sizə Erasmus+, könüllülük, təcrübə və digər imkanlar barədə e-mail göndərmək.\n\n3. E-mail bildirişləri\nE-mail bildirişləri yalnız ayrıca razılıq verdiyiniz halda göndərilir. İstənilən vaxt e-mail bildirişlərindən imtina edə bilərsiniz.\n\n4. Məlumatların paylaşılması\nNomad Youth şəxsi məlumatlarınızı satmır və üçüncü tərəflərlə kommersiya məqsədilə paylaşmır.\nMəlumatlar yalnız platformanın işləməsi, texniki xidmət, təhlükəsizlik və qanuni öhdəliklərin yerinə yetirilməsi üçün zəruri olduqda istifadə oluna bilər.\nNomad Youth platformasında yerləşdirilən layihələrə müraciət etdikdə, həmin layihənin rəsmi müraciət səhifəsinə və ya təşkilatçının formasına yönləndirilirsiniz. Bu mərhələdən sonra təqdim etdiyiniz məlumatlar həmin təşkilatın öz qaydalarına və məxfilik siyasətinə tabedir.\n\n5. Məlumatların saxlanılması və təhlükəsizliyi\nMəlumatlarınız platformanın işləməsi üçün istifadə olunan database sistemində saxlanılır. Məlumatların qorunması üçün uyğun texniki və təşkilati tədbirlər görməyə çalışırıq.\nBununla belə, internet üzərindən ötürülən məlumatların tam təhlükəsizliyinə zəmanət vermək mümkün deyil.\n\n6. Hesabın silinməsi və məlumatlara çıxış\nİstifadəçilər hesablarını platforma üzərindən silə bilərlər. Hesab silindikdə, hesabla əlaqəli şəxsi məlumatlar mümkün olan hallarda sistemdən silinir və ya anonimləşdirilir.\nMəlumatlarınızla bağlı sual, düzəliş və ya silinmə tələbiniz olarsa, bizimlə əlaqə saxlaya bilərsiniz:\nE-mail: nomadyouthplatform@gmail.com\n\n7. Çərəzlər və analitika\nNomad Youth platformanın işləməsi, istifadəçi təcrübəsinin yaxşılaşdırılması və trafik analitikası üçün çərəzlərdən və oxşar texnologiyalardan istifadə edə bilər.\nGələcəkdə Google AdSense və ya digər reklam xidmətlərindən istifadə olunduqda, həmin xidmətlər öz çərəz və məxfilik qaydalarını tətbiq edə bilər.",
   "modal_terms_title": "İstifadə Şərtləri",
   "modal_terms_content": "Son yenilənmə tarixi: iyul 2026\n\n8. Platformadan istifadə qaydaları\nNomad Youth platformasından istifadə edərkən:\nDoğru və aktual məlumat təqdim etməlisiniz;\nBaşqa şəxsin hesabından icazəsiz istifadə etməməlisiniz;\nPlatformanın işləməsinə mane olacaq, təhlükəsizliyini pozacaq və ya zərər verəcək hərəkətlər etməməlisiniz;\nPlatformadakı məlumatları icazəsiz şəkildə kütləvi şəkildə kopyalamamalı, yaymamalı və ya kommersiya məqsədilə istifadə etməməlisiniz.\n\n9. Layihələr və nəticələr üzrə məsuliyyət\nNomad Youth layihələri birbaşa təşkil etmir və yalnız imkanları bir platformada təqdim edir. Müraciətin qiymətləndirilməsi, qəbul və ya imtina qərarı, layihənin keçirilməsi, ödənişlər, səyahət, viza, təhlükəsizlik və digər proseslər birbaşa layihəni təşkil edən qurumun məsuliyyətindədir.\nNomad Youth hər hansı layihəyə qəbul, viza alınması, maliyyə dəstəyi və ya müəyyən nəticə ilə bağlı zəmanət vermir.\n\n10. Xidmətlər üzrə məsuliyyət\nNomad Youth CV, Europass CV, motivasiya məktubu, müraciət dəstəyi, Erasmus konsultasiyası və digər dəstək xidmətləri təqdim edə bilər.\nBu xidmətlər istifadəçiyə müraciət prosesində dəstək məqsədi daşıyır və hər hansı layihəyə qəbul, viza alınması və ya digər nəticələr üçün zəmanət vermir.\nXidmətlə bağlı şərtlər, qiymət və ödəniş üsulu istifadəçi ilə əlaqə saxlanıldıqdan sonra ayrıca razılaşdırılır.\n\n11. Dəyişikliklər\nNomad Youth bu Məxfilik Siyasəti və İstifadə Şərtlərini zaman-zaman yeniləyə bilər. Yenilənmiş versiya bu səhifədə paylaşılacaq və son yenilənmə tarixi qeyd olunacaq.\n\n12. Əlaqə\nBu sənədlə bağlı sualınız, təklifiniz və ya müraciətiniz varsa, bizimlə əlaqə saxlaya bilərsiniz:\nE-mail: nomadyouthplatform@gmail.com",
-
   "dashboard_eyebrow": "Hesab",
   "dashboard_title": "Müraciətlərim",
   "dashboard_desc": "Status işarələdiyiniz layihələrin siyahısı. Üzərinə klikləyərək detallarına baxa bilərsiniz.",
@@ -344,7 +398,6 @@
   "dashboard_field_listing_status": "Elanın vəziyyəti",
   "dashboard_status_closed": "Bağlanıb",
   "dashboard_status_active": "Aktivdir (açıqdır)",
-
   "settings_title": "İdarə paneli",
   "settings_desc": "Hesab məlumatlarınızı idarə edin.",
   "settings_profile_section_title": "Məlumatları dəyiş",
@@ -367,7 +420,6 @@
   "settings_delete_modal_desc": "Bu əməliyyat geri qaytarıla bilməz. Hesabınız və ona bağlı bütün məlumatlar silinəcək.",
   "settings_delete_modal_cancel": "Ləğv et",
   "settings_delete_modal_confirm": "Bəli, sil",
-
   "profile_nav_overview": "Ümumi baxış",
   "profile_nav_applications": "Müraciətlərim",
   "profile_nav_saved": "Yadda saxlananlar",
@@ -396,13 +448,10 @@
   "profile_saved_empty": "Yadda saxlanılan imkan yoxdur",
   "profile_applications_title": "Müraciətlərim",
   "profile_applications_empty": "Hələ heç bir imkana müraciət statusu qoymamısınız",
-
   "apply_confirm_title": "Nomad Youth platformasını tərk edirsiniz",
   "apply_confirm_desc": "Siz Nomad Youth platformasından çıxaraq layihənin rəsmi müraciət səhifəsinə yönləndiriləcəksiniz.",
   "apply_confirm_cancel": "Ləğv et",
   "apply_confirm_continue": "Davam et",
-
-  
   "avatar_adjust_title": "Şəkli düzəliş edin",
   "avatar_adjust_hint": "Düzgün mövqe üçün şəkli yuxarı/aşağı sürüşdürün",
   "avatar_adjust_saving": "Yaddaşa verilir...",
@@ -410,13 +459,10 @@
   "profile_avatar_remove_aria": "Şəkli sil",
   "profile_avatar_upload_error": "Şəkil yüklənmədi, yenidən cəhd edin.",
   "profile_avatar_remove_error": "Şəkil silinmədi, yenidən cəhd edin.",
-
   "badge_esc": "ESC",
   "badge_salto": "SALTO",
   "badge_individual": "Fərdi",
   "badge_team": "Komanda",
-
-
   "lang_name": "Azərbaycanca",
   "s1_title": "Profilinizi Tamamlayın",
   "s1_sub": "Nomad Youth-da təcrübənizi fərdiləşdirmək üçün profilinizi tamamlayın.",
@@ -451,18 +497,14 @@
   "push_notifications_soon": "Push bildirişləri — tezliklə",
   "saving_preferences": "Seçimləriniz yadda saxlanılır…",
   "redirecting_dashboard": "Hazırdır! İdarə panelinizə yönləndirilirsiniz…",
-
   "submit_error": "Xəta baş verdi, yenidən cəhd edin.",
-
   "onboarding_step1": "1-ci Addım",
   "onboarding_step2": "2-ci Addım",
-
   "edu_high_school": "Orta məktəb",
   "edu_bachelor": "Bakalavr",
   "edu_master": "Magistr",
   "edu_phd": "Doktorantura",
   "edu_vocational": "Peşə təhsili",
-
   "cat_volunteering": "Könüllülük",
   "cat_internship": "Təcrübə",
   "cat_training": "Təlim",
@@ -474,21 +516,16 @@
   "cat_fellowship": "Fellowship",
   "cat_solidarity_project": "Həmrəylik Layihəsi",
   "cat_job": "İş",
-
   "fmt_online": "Onlayn",
   "fmt_offline": "Əyani",
   "fmt_hybrid": "Hibrid",
-
   "dl_1_day": "1 gün qalanda",
   "dl_3_days": "3 gün qalanda",
   "dl_1_week": "1 həftə qalanda",
-
   "profile_complete_card_title": "Profilinizi tamamlayın",
   "profile_complete_card_btn": "İndi tamamla",
-
   "phone_placeholder": "+994 50 000 00 00",
   "profile_saved": "Profiliniz uğurla tamamlandı. Profil səhifəsinə yönləndirilirsiniz...",
-
   "country_azerbaijan": "Azərbaycan",
   "country_germany": "Almaniya",
   "country_italy": "İtaliya",
@@ -509,7 +546,6 @@
   "country_slovakia": "Slovakiya",
   "country_hungary": "Macarıstan",
   "country_belgium": "Belçika",
-
   "notificationSettings": "Bildiriş Ayarları",
   "emailNotifications": "E-poçt bildirişləri",
   "inAppNotifications": "Tətbiq daxili bildirişlər",
@@ -523,27 +559,21 @@
   "notificationSettingsSaved": "Ayarlar yadda saxlanıldı",
   "notificationSettingsSaveError": "Ayarlar yadda saxlanmadı. Yenidən cəhd edin.",
   "remove": "Sil",
-
-
   "country_selection": "Maraqlandığınız ölkələr",
   "type_selection": "Layihə növləri",
   "format_selection": "Format",
   "topic_selection": "Maraq mövzuları",
   "duration_selection": "Müddət",
   "deadline_notification": "Deadline xatırlatması",
-
   "all": "Hamısı",
-
   "deadline_1_day": "1 gün əvvəl",
   "deadline_3_days": "3 gün əvvəl",
   "deadline_1_week": "1 həftə əvvəl",
-
   "type_esc": "ESC",
   "type_salto": "SALTO",
   "type_international": "Beynəlxalq",
   "type_local": "Yerli",
   "format_offline": "Əyani",
-
   "cat_education": "Təhsil",
   "cat_technology": "Texnologiya",
   "cat_entrepreneurship": "Sahibkarlıq",
@@ -556,11 +586,9 @@
   "cat_law": "Hüquq",
   "cat_peace": "Sülh",
   "cat_youth": "Gənclər",
-
   "duration_short": "Qısamüddətli",
   "duration_long": "Uzunmüddətli",
   "add": "Əlavə et",
-
   "verify_email_loading_title": "Email təsdiqlənir",
   "verify_email_loading_description": "Zəhmət olmasa, bir neçə saniyə gözləyin.",
   "verify_email_success_title": "Email təsdiqləndi",
@@ -568,12 +596,10 @@
   "verify_email_error_title": "Email təsdiqlənmədi",
   "verify_email_error_description": "Təsdiq linki etibarsızdır və ya müddəti bitib. Dashboard-a daxil olaraq təsdiq emailini yenidən göndərə bilərsiniz.",
   "verify_email_dashboard_button": "Dashboard-a qayıt",
-
   "auth_prompt_title": "Qeydiyyatdan keç",
   "auth_prompt_description": "Bu funksiyadan istifadə etmək üçün hesabınız olmalıdır. Qeydiyyatdan keçərək bəyəndiyiniz və yadda saxladığınız imkanları izləyə bilərsiniz.",
   "auth_prompt_register": "Qeydiyyatdan keç",
   "auth_prompt_close": "Bağla",
-
   "event_online": "Onlayn",
   "event_offline": "Əyani",
   "event_free": "Pulsuz",
