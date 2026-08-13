@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   FileText,
   BadgeCheck,
@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from '../hooks/useLanguage'
 import ServicePopupModal from '../components/ServicePopupModal'
+import { trackServiceView, trackServiceClick } from '../services/analytics'
 
 
 const SERVICES = [
@@ -47,6 +48,12 @@ export default function Services() {
     ? { ...raw, title: t(raw.titleKey), desc: t(raw.descKey) }
     : null
 
+  useEffect(() => {
+    if (selectedService) {
+      trackServiceView(selectedService)
+    }
+  }, [selected])
+
   return (
     <div className="section">
       <div className="container">
@@ -64,7 +71,10 @@ export default function Services() {
               <button
                 key={s.id}
                 className="category-card"
-                onClick={() => setSelected(s.id)}
+                onClick={() => {
+                  trackServiceClick({ id: s.id, title: t(s.titleKey) })
+                  setSelected(s.id)
+                }}
                 style={{ width: '100%', cursor: 'pointer' }}
               >
                 <div className="category-card__icon service-icon-badge service-icon-badge--card">

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import GoogleLoginButton from "../components/GoogleLoginButton";
+import { trackLoginSuccess } from "../services/analytics";
 import "../style/index.css";
 
 export default function Login() {
@@ -27,6 +28,7 @@ export default function Login() {
     setIsSubmitting(true);
     try {
       await login(email, password);
+      trackLoginSuccess("email");
       navigate("/");
     } catch (err) {
       const message =
@@ -51,7 +53,12 @@ export default function Login() {
 
         {error && <p className="auth-error">{error}</p>}
 
-        <GoogleLoginButton onSuccess={() => navigate("/")} />
+        <GoogleLoginButton
+          onSuccess={() => {
+            trackLoginSuccess("google");
+            navigate("/");
+          }}
+        />
 
         <div className="auth-divider">
           <span>{t("auth_or")}</span>

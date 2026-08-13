@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { translateCategory } from '../data/categoryTranslation'
 import { getCategoryStyle } from '../utils/categoryStyle'
+import { trackOpportunityView, trackOpportunityApply } from '../services/analytics'
 import {
   translateOpportunityValue,
   translateFinancialSupport,
@@ -84,6 +86,13 @@ function InfoItem({ icon, label, value }) {
 
 export default function OpportunityDetailModal({ opportunity, open, onClose, onRequireAuth }) {
   const { t, lang } = useLanguage()
+
+  useEffect(() => {
+    if (open && opportunity) {
+      trackOpportunityView(opportunity)
+    }
+  }, [open, opportunity?.id])
+
   if (!open || !opportunity) return null
 
   const {
@@ -186,6 +195,7 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
               target="_blank"
               rel="noopener noreferrer"
               className="opportunity-card__apply-btn"
+              onClick={() => trackOpportunityApply(opportunity)}
             >
               {t('card_apply')} <ArrowIcon />
             </a>

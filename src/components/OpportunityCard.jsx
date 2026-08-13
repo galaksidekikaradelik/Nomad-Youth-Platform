@@ -6,6 +6,12 @@ import { getCategoryStyle } from '../utils/categoryStyle'
 import { useWishlist } from '../hooks/useWishlist'
 import { useLike } from '../hooks/useLike'
 import apiClient from '../services/apiClient'
+import {
+  trackOpportunityClick,
+  trackOpportunitySave,
+  trackOpportunityUnsave,
+  trackOpportunityApply,
+} from '../services/analytics'
 import StatusSelector from './StatusSelector'
 import AuthPromptModal from './AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
@@ -76,6 +82,13 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     e.stopPropagation()
     if (!user) { setShowAuthPrompt(true); return }
     if (!opportunity.id) return 
+
+    if (saved) {
+      trackOpportunityUnsave(opportunity)
+    } else {
+      trackOpportunitySave(opportunity)
+    }
+
     toggleWishlist(opportunity)
   }
 
@@ -87,12 +100,14 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
   }
 
   function confirmApply() {
+    trackOpportunityApply(opportunity)
     setShowApplyConfirm(false)
     window.open(applyLink, '_blank', 'noopener,noreferrer')
   }
 
   async function openDetail(e) {
     e.stopPropagation()
+    trackOpportunityClick(opportunity)
     setShowDetail(true)
 
     if (!opportunity.id) return 

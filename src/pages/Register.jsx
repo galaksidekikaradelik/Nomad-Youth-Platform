@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import EmailVerificationBanner from "../components/EmailVerificationBanner";
+import { trackRegisterStart, trackRegisterSuccess } from "../services/analytics";
 import "../style/index.css";
 
 const EDUCATION_LEVELS = [
@@ -53,7 +54,14 @@ export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
 
+  const hasStartedRegisterRef = useRef(false);
+
   const handleChange = (e) => {
+    if (!hasStartedRegisterRef.current) {
+      hasStartedRegisterRef.current = true;
+      trackRegisterStart();
+    }
+
     const { name, type, checked, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -99,6 +107,7 @@ export default function Register() {
     setIsSubmitting(true);
     try {
       await register(formData);
+      trackRegisterSuccess("email");
       setRegisteredEmail(formData.email);
     } catch (err) {
       const message =
@@ -139,7 +148,12 @@ export default function Register() {
         <h1 className="auth-title">{t("auth_register_title")}</h1>
         <p className="auth-subtitle">{t("auth_register_subtitle")}</p>
 
-        <GoogleLoginButton onSuccess={() => navigate("/")} />
+        <GoogleLoginButton
+          onSuccess={() => {
+            trackRegisterSuccess("google");
+            navigate("/");
+          }}
+        />
 
         <div className="auth-divider">
           <span>{t("auth_or")}</span>

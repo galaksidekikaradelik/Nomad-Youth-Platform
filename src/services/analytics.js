@@ -30,3 +30,57 @@ export function trackPageView(path) {
     page_path: path,
   });
 }
+
+export const trackEvent = (eventName, parameters = {}) => {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", eventName, parameters);
+  }
+};
+
+function opportunityParams(opportunity) {
+  return {
+    opportunity_id: opportunity?.id,
+    opportunity_name: opportunity?.title,
+    country: opportunity?.country,
+    category: Array.isArray(opportunity?.category)
+      ? opportunity.category.join(", ")
+      : opportunity?.category,
+  };
+}
+
+export const trackOpportunityClick = (opportunity) =>
+  trackEvent("opportunity_click", opportunityParams(opportunity));
+
+export const trackOpportunityView = (opportunity) =>
+  trackEvent("opportunity_view", opportunityParams(opportunity));
+
+export const trackOpportunitySave = (opportunity) =>
+  trackEvent("opportunity_save", opportunityParams(opportunity));
+
+export const trackOpportunityUnsave = (opportunity) =>
+  trackEvent("opportunity_unsave", opportunityParams(opportunity));
+
+export const trackOpportunityApply = (opportunity) =>
+  trackEvent("opportunity_apply", opportunityParams(opportunity));
+
+
+export const trackRegisterStart = () => trackEvent("register_start");
+
+export const trackRegisterSuccess = (method) =>
+  trackEvent("register_success", { method });
+
+export const trackLoginSuccess = (method) =>
+  trackEvent("login_success", { method });
+
+
+export const trackServiceView = (service) =>
+  trackEvent("service_view", {
+    service_id: service?.id,
+    service_name: service?.title,
+  });
+
+export const trackServiceClick = (service) =>
+  trackEvent("service_click", {
+    service_id: service?.id,
+    service_name: service?.title,
+  });
