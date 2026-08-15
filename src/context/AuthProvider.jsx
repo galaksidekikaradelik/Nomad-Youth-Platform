@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 import * as authService from "../services/authService";
 import * as avatarService from "../services/avatarService";
@@ -7,6 +8,8 @@ import * as profileService from "../services/profileService";
 const AUTH_TOKEN_KEY = "authToken";
 
 export function AuthProvider({ children }) {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
@@ -58,6 +61,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     await authService.logout();
     setUser(null);
+    navigate("/");
   };
 
   const updateUser = async (updates) => {

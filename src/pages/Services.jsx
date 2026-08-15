@@ -48,7 +48,6 @@ export default function Services() {
     : null
 
   useEffect(() => {
-    // popup həqiqətən açılanda "baxış" kimi izlənir
     if (selectedService) {
       trackServiceView(selectedService)
     }
