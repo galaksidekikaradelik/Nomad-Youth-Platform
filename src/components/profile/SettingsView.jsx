@@ -103,8 +103,9 @@ export default function SettingsView({ onBack }) {
     }
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
   };
 
   const handleDeleteConfirm = async () => {
