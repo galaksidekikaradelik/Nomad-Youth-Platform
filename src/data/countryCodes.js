@@ -24,6 +24,7 @@ export const COUNTRY_CODES = {
   'Litvaniya': 'lt',
   'Sloveniya': 'si',
   'Slovakiya': 'sk',
+  'Slovakia': 'sk',
   'Niderland': 'nl',
   'Avstriya': 'at',
   'Malta': 'mt',
@@ -33,6 +34,7 @@ export const COUNTRY_CODES = {
   'Albaniya': 'al',
   'Çernoqoriya': 'me',
   'Bosniya və Herseqovina': 'ba',
+  'Bosniya': 'ba',
   'Ukrayna': 'ua',
   'Moldova': 'md',
 }
