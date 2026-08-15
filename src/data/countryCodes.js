@@ -21,7 +21,7 @@ export const COUNTRY_CODES = {
   'Estoniya': 'ee',
   'Latviya': 'lv',
   'Litvanya': 'lt',
-  'Litva': 'lt',
+  'Litvaniya': 'lt',
   'Sloveniya': 'si',
   'Slovakiya': 'sk',
   'Niderland': 'nl',
