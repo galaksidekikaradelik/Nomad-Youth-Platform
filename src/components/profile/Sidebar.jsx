@@ -9,6 +9,16 @@ export default function Sidebar({ activeView, onNavigate, collapsed, onToggleCol
   const { t } = useLanguage();
   const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      navigate('/');
+    }
+  };
+
   return (
     <aside className={`profile-sidebar${collapsed ? ' profile-sidebar--collapsed' : ''}`}>
       <button
@@ -63,7 +73,7 @@ export default function Sidebar({ activeView, onNavigate, collapsed, onToggleCol
 
       <button
         className="profile-sidebar__item profile-sidebar__item--logout"
-        onClick={logout}
+        onClick={handleLogout}
         title={collapsed ? t('nav_logout') : undefined}
       >
         <LogOut size={18} />

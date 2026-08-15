@@ -253,10 +253,7 @@ export default function Navbar() {
 
             <button
               className="navbar__cta"
-              onClick={() => {
-                logout();
-                handleLinkClick();
-              }}
+              onClick={handleLogout}
             >
               {t('nav_logout')}
             </button>
