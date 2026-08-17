@@ -84,7 +84,7 @@ const getDurationType = (duration) => {
 
     if (days === null) return null
 
-    return days <= 42 ? 'SHORT_TERM' : 'LONG_TERM'
+    return days < 60 ? 'SHORT_TERM' : 'LONG_TERM'
   }
 
 const FilterChip = ({ label, active, onClick }) => (
