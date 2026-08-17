@@ -60,32 +60,6 @@ const SORT_OPTIONS = [
 
 const PAGE_SIZE = 12
 
-const getDurationType = (duration) => {
-    if (!duration) return null
-
-    const value = duration.toLocaleLowerCase('az')
-
-    let days = null
-
-    const dayMatch = value.match(/(\d+)\s*gün/)
-    const weekMatch = value.match(/(\d+)\s*həftə/)
-    const monthMatch = value.match(/(\d+)\s*ay/)
-    const yearMatch = value.match(/(\d+)\s*(il|il)/)
-
-    if (dayMatch) {
-      days = Number(dayMatch[1])
-    } else if (weekMatch) {
-      days = Number(weekMatch[1]) * 7
-    } else if (monthMatch) {
-      days = Number(monthMatch[1]) * 30
-    } else if (yearMatch) {
-      days = Number(yearMatch[1]) * 365
-    }
-
-    if (days === null) return null
-
-    return days < 60 ? 'SHORT_TERM' : 'LONG_TERM'
-  }
 
 const FilterChip = ({ label, active, onClick }) => (
   <button className={`filter-btn${active ? ' active' : ''}`} onClick={onClick}>{label}</button>
@@ -154,8 +128,7 @@ export default function Opportunities() {
     const matchFormat = format === 'Hamısı' || op.typeDetail === format
     const matchDuration =
       durations.length === 0 ||
-      durations.includes(getDurationType(op.duration))
-
+      durations.includes(op.durationType)
     const matchVisa =
       !visaType ||
       op.visaType === visaType

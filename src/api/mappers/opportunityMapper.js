@@ -1,4 +1,3 @@
-import { getVisaType } from '../../data/visaRules'
 export function mapOpportunity(raw) {
   if (!raw) return null;
 
@@ -7,18 +6,27 @@ export function mapOpportunity(raw) {
     title: raw.title,
     deadline: raw.deadline,
     applyLink: raw.applyLink,
-    location: raw.city ? `${raw.city}, ${raw.country ?? ""}` : (raw.country ?? ""),
+
+    location: raw.city
+      ? `${raw.city}, ${raw.country ?? ""}`
+      : (raw.country ?? ""),
+
     city: raw.city ?? "",
     country: raw.country ?? "",
+
     type: raw.type ?? "",
     typeDetail: raw.typeDetail ?? "Hamısı",
+
     category: raw.category ?? null,
     categoryGroups: raw.category ? [raw.category] : [],
     tags: raw.category ? [raw.category] : [],
+
     openingDate: raw.openingDate ?? null,
     publishedAt: raw.publishedAt ?? null,
     sortOrder: 0,
+
     description: raw.sumAz ?? "",
+
     descriptionTranslations: {
       az: raw.sumAz ?? "",
       en: raw.sumEn ?? "",
@@ -26,7 +34,10 @@ export function mapOpportunity(raw) {
     },
 
     duration: raw.duration ?? null,
-    visaType: getVisaType(raw.country),
+    durationType: raw.durationType ?? null,
+
+    visaType: raw.visaType ?? null,
+
     language: raw.language ?? null,
     eventDateRange: raw.eventDateRange ?? null,
     participantCount: raw.participantCount ?? null,
