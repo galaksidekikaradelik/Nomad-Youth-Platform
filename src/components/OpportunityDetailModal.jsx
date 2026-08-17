@@ -11,6 +11,11 @@ import {
   translateLanguageField,
 } from '../data/opportunityValueTranslations'
 
+import {
+  translateCity,
+  translateCountry,
+} from '../data/locationTranslation'
+
 const HeartIcon = ({ active }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" />
@@ -96,10 +101,20 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
   if (!open || !opportunity) return null
 
   const {
-    title, format, category, location, deadline, applyLink,
-    description, descriptionTranslations,
-    duration, language, eventDateRange, financialSupport,
-  } = opportunity
+  title,
+  format,
+  category,
+  city,
+  country,
+  deadline,
+  applyLink,
+  description,
+  descriptionTranslations,
+  duration,
+  language,
+  eventDateRange,
+  financialSupport,
+} = opportunity
 
   const locale = lang === 'en' ? 'en-GB' : lang === 'ru' ? 'ru-RU' : 'az-AZ'
   const formattedDeadline = deadline
@@ -114,8 +129,14 @@ export default function OpportunityDetailModal({ opportunity, open, onClose, onR
   const showingFallback = !translatedDescription && lang !== 'az'
   const descriptionToShow = translatedDescription || fallbackDescription
 
-  const translatedLocation = translateOpportunityValue(location, lang)
-  const translatedLanguage = translateLanguageField(language, lang)
+  const translatedCity = translateCity(city, lang)
+  const translatedCountry = translateCountry(country, lang)
+
+  const translatedLocation =
+    translatedCity && translatedCountry
+      ? `${translatedCity}, ${translatedCountry}`
+      : translatedCity || translatedCountry
+   const translatedLanguage = translateLanguageField(language, lang)
   const translatedFinancialSupport = translateFinancialSupport(financialSupport, lang)
   const translatedDuration = translateDuration(duration, lang)
 
