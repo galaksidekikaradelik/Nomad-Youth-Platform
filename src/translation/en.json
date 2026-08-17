@@ -678,5 +678,6 @@
   "event_online": "Online",
   "event_offline": "Offline",
   "event_free": "Free",
-  "event_register": "Registration"
+  "event_register": "Registration",
+  "filter_duration_visa_label": "Duration and visa"
 }

@@ -673,5 +673,6 @@
   "event_online": "Онлайн",
   "event_offline": "Офлайн",
   "event_free": "Бесплатно",
-  "event_register": "Регистрация"
+  "event_register": "Регистрация",
+  "filter_duration_visa_label": "Продолжительность и виза"
 }

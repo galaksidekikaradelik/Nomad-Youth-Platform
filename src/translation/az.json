@@ -607,5 +607,6 @@
   "event_online": "Onlayn",
   "event_offline": "Əyani",
   "event_free": "Pulsuz",
-  "event_register": "Qeydiyyat"
+  "event_register": "Qeydiyyat",
+  "filter_duration_visa_label": "Müddət və viza"
 }
