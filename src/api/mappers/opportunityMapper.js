@@ -1,3 +1,4 @@
+import { getVisaType } from '../../data/visaRules'
 export function mapOpportunity(raw) {
   if (!raw) return null;
 
@@ -25,6 +26,7 @@ export function mapOpportunity(raw) {
     },
 
     duration: raw.duration ?? null,
+    visaType: getVisaType(raw.country),
     language: raw.language ?? null,
     eventDateRange: raw.eventDateRange ?? null,
     participantCount: raw.participantCount ?? null,

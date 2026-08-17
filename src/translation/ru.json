@@ -80,6 +80,10 @@
   "format_online": "Онлайн",
   "format_onsite": "Очно",
   "filter_sort_label": "Сортировка",
+  "format_short_term": "Краткосрочные",
+  "format_long_term": "Долгосрочные",
+  "format_visa_required": "С визой",
+  "format_visa_free": "Без визы",
 
   "sort_deadline": "По сроку (ближайшие)",
   "sort_newest": "По дате добавления (новые)",

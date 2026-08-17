@@ -47,8 +47,8 @@ const TYPES = [
 ]
 
 const FORMATS = [
-  { id: 'Hamısı',  labelKey: 'format_all' },
-  { id: 'Online',  labelKey: 'format_online' },
+  { id: 'Hamısı', labelKey: 'format_all' },
+  { id: 'Online', labelKey: 'format_online' },
   { id: 'Offline', labelKey: 'format_onsite' },
 ]
 
@@ -59,6 +59,33 @@ const SORT_OPTIONS = [
 ]
 
 const PAGE_SIZE = 12
+
+const getDurationType = (duration) => {
+    if (!duration) return null
+
+    const value = duration.toLocaleLowerCase('az')
+
+    let days = null
+
+    const dayMatch = value.match(/(\d+)\s*gün/)
+    const weekMatch = value.match(/(\d+)\s*həftə/)
+    const monthMatch = value.match(/(\d+)\s*ay/)
+    const yearMatch = value.match(/(\d+)\s*(il|il)/)
+
+    if (dayMatch) {
+      days = Number(dayMatch[1])
+    } else if (weekMatch) {
+      days = Number(weekMatch[1]) * 7
+    } else if (monthMatch) {
+      days = Number(monthMatch[1]) * 30
+    } else if (yearMatch) {
+      days = Number(yearMatch[1]) * 365
+    }
+
+    if (days === null) return null
+
+    return days <= 42 ? 'SHORT_TERM' : 'LONG_TERM'
+  }
 
 const FilterChip = ({ label, active, onClick }) => (
   <button className={`filter-btn${active ? ' active' : ''}`} onClick={onClick}>{label}</button>
@@ -78,7 +105,9 @@ export default function Opportunities() {
   const [categories, setCategories] = useState(initialCategory ? [initialCategory] : [])
   const [types,      setTypes]      = useState([])
   const [scope,      setScope]      = useState(initialScope)
-  const [typeDetail,     setFormat]     = useState('Hamısı')
+  const [format, setFormat] = useState('Hamısı')
+  const [durations, setDurations] = useState([])
+  const [visaType, setVisaType] = useState('')
   const [sort,       setSort]       = useState('deadline')
   const [tab]        = useState('opportunities')
 
@@ -104,6 +133,12 @@ export default function Opportunities() {
     )
   }
 
+  const toggleFormat = (id) => {
+    setFormat(id)
+  }
+
+  
+
   const enriched = useMemo(() => (
     filterActiveOpportunities(opportunities).map(op => ({
       ...op,
@@ -116,15 +151,22 @@ export default function Opportunities() {
       (Array.isArray(op.categoryGroups) && categories.some(cat => op.categoryGroups.includes(cat)))
     const matchType   = types.length === 0 || types.includes(op.type)
     const matchScope  = scope === 'hamisi' || op.scope === scope
-    const matchFormat = typeDetail === 'Hamısı' || op.typeDetail === typeDetail
+    const matchFormat = format === 'Hamısı' || op.typeDetail === format
+    const matchDuration =
+      durations.length === 0 ||
+      durations.includes(getDurationType(op.duration))
+
+    const matchVisa =
+      !visaType ||
+      op.visaType === visaType
     const q = search.toLocaleLowerCase('az')
     const matchSearch = !search ||
       op.title.toLocaleLowerCase('az').includes(q) ||
       op.location?.toLocaleLowerCase('az').includes(q) ||
       op.organization?.toLocaleLowerCase('az').includes(q) ||
       op.tags.some(tag => tag.toLocaleLowerCase('az').includes(q))
-    return matchCat && matchType && matchScope && matchFormat && matchSearch
-  }), [enriched, search, categories, types, scope, typeDetail])
+  return (matchCat && matchType && matchScope && matchFormat && matchDuration && matchVisa && matchSearch
+  )}), [enriched, search, categories, types, scope, format, durations, visaType])
 
   const sorted = useMemo(() => {
     const arr = [...filtered]
@@ -147,7 +189,7 @@ export default function Opportunities() {
 
   useEffect(() => {
     setPage(0)
-  }, [search, categories, types, scope, typeDetail, sort])
+  },  [search, categories, types, scope, format, durations, visaType, sort])
 
   const totalPages = Math.ceil(sorted.length / PAGE_SIZE)
 
@@ -160,6 +202,8 @@ export default function Opportunities() {
     setPage(p)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  
 
   return (
     <div className="section">
@@ -226,8 +270,77 @@ export default function Opportunities() {
                 <span className="filter-group__label">{t('filter_format_label')}</span>
                 <div className="filter-group__chips">
                   {FORMATS.map(f => (
-                    <FilterChip key={f.id} label={t(f.labelKey)} active={typeDetail === f.id} onClick={() => setFormat(f.id)} />
+                    <FilterChip
+                      key={f.id}
+                      label={t(f.labelKey)}
+                      active={format === f.id}
+                      onClick={() => toggleFormat(f.id)}
+                    />
                   ))}
+                </div>
+              </div>
+
+              <div className="filter-group__row">
+                <span className="filter-group__label">
+                  {t('filter_duration_visa_label')}
+                </span>
+
+                <div className="filter-group__chips">
+
+                  <FilterChip
+                    label={t('format_all')}
+                    active={durations.length === 0 && !visaType}
+                    onClick={() => {
+                      setDurations([])
+                      setVisaType('')
+                    }}
+                  />
+
+                  <FilterChip
+                    label={t('format_short_term')}
+                    active={durations.includes('SHORT_TERM')}
+                    onClick={() =>
+                      setDurations(prev =>
+                        prev.includes('SHORT_TERM')
+                          ? []
+                          : ['SHORT_TERM']
+                      )
+                    }
+                  />
+
+                  <FilterChip
+                    label={t('format_long_term')}
+                    active={durations.includes('LONG_TERM')}
+                    onClick={() =>
+                      setDurations(prev =>
+                        prev.includes('LONG_TERM')
+                          ? []
+                          : ['LONG_TERM']
+                      )
+                    }
+                  />
+
+                  {/* Viza */}
+                  <FilterChip
+                    label={t('format_visa_required')}
+                    active={visaType === 'VISA_REQUIRED'}
+                    onClick={() =>
+                      setVisaType(prev =>
+                        prev === 'VISA_REQUIRED' ? '' : 'VISA_REQUIRED'
+                      )
+                    }
+                  />
+
+                  <FilterChip
+                    label={t('format_visa_free')}
+                    active={visaType === 'VISA_FREE'}
+                    onClick={() =>
+                      setVisaType(prev =>
+                        prev === 'VISA_FREE' ? '' : 'VISA_FREE'
+                      )
+                    }
+                  />
+
                 </div>
               </div>
 

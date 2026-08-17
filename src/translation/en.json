@@ -80,6 +80,10 @@
   "format_online": "Online",
   "format_onsite": "On-site",
   "filter_sort_label": "Sort by",
+  "format_short_term": "Short-term",
+  "format_long_term": "Long-term",
+  "format_visa_required": "Visa required",
+  "format_visa_free": "Visa-free",
 
   "sort_deadline": "Deadline (soonest)",
   "sort_newest": "Date added (newest)",
