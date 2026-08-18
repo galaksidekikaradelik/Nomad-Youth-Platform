@@ -152,8 +152,8 @@ export default function Opportunities() {
       });
     }
     else if (sort === 'newest') {
-      arr.sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0))
-    } 
+      arr.sort((a, b) => Number(b.id) - Number(a.id))
+    }
     else if (sort === 'country') {
       arr.sort((a, b) => a.location.localeCompare(b.location, 'az'))
     }

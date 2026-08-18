@@ -22,7 +22,7 @@ export function mapOpportunity(raw) {
     tags: raw.category ? [raw.category] : [],
 
     openingDate: raw.openingDate ?? null,
-    publishedAt: raw.publishedAt ?? null,
+    createdAt: raw.createdAt ?? null,
     sortOrder: 0,
 
     description: raw.sumAz ?? "",
