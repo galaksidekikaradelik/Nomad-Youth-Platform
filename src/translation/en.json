@@ -478,10 +478,10 @@
   "profile_applications_empty": "You haven't marked a status on any opportunity yet",
 
   
-  "apply_confirm_title": "You're leaving Nomad Youth",
-  "apply_confirm_desc": "You'll be redirected away from Nomad Youth to the project's official application page.",
+  "apply_confirm_title": "You are being redirected to the official application page",
+  "apply_confirm_desc": "You are leaving the Nomad Youth platform and are about to proceed to the official application form for the project.",
   "apply_confirm_cancel": "Cancel",
-  "apply_confirm_continue": "Continue",
+  "apply_confirm_continue": "Go to official site ↗",
 
   
   "avatar_adjust_title": "Adjust your photo",

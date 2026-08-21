@@ -476,10 +476,10 @@
   "profile_applications_title": "Мои заявки",
   "profile_applications_empty": "Вы пока не отметили статус ни для одной возможности",
 
-  "apply_confirm_title": "Вы покидаете Nomad Youth",
-  "apply_confirm_desc": "Вы будете перенаправлены с платформы Nomad Youth на официальную страницу подачи заявки проекта.",
+  "apply_confirm_title": "Вы перенаправляетесь на официальную страницу подачи заявки",
+  "apply_confirm_desc": "Вы покидаете платформу Nomad Youth и переходите к официальной форме заявки проекта.",
   "apply_confirm_cancel": "Отмена",
-  "apply_confirm_continue": "Продолжить",
+  "apply_confirm_continue": "Перейти на оф. сайт ↗",
 
   
   "avatar_adjust_title": "Настройте фото",
