@@ -13,6 +13,8 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import ProfileSetup from "../pages/ProfileSetup";
 import VerifyEmail from "../pages/VerifyEmail";
+import NotFound from "../pages/NotFound";
+
 
 export default function AppRoutes() {
   return (
@@ -34,6 +36,7 @@ export default function AppRoutes() {
         <Route path="/register" element={<Register />} />
       </Route>
 
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
