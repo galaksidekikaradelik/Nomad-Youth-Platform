@@ -608,5 +608,10 @@
   "event_offline": "Əyani",
   "event_free": "Pulsuz",
   "event_register": "Qeydiyyat",
-  "filter_duration_visa_label": "Müddət və viza"
+  "filter_duration_visa_label": "Müddət və viza",
+
+  "not_found_title": "Səhifə tapılmadı",
+  "not_found_desc": "Axtardığınız səhifə mövcud deyil və ya silinib.",
+  "back_home": "Ana səhifəyə qayıt"
+
 }

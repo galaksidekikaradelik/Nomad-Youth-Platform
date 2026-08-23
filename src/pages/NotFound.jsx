@@ -13,15 +13,15 @@ export default function NotFound() {
           </div>
 
           <h1 className="empty-state__title">
-            {t("not_found_title") || "Səhifə tapılmadı"}
+            {t("not_found_title")}
           </h1>
 
           <p className="empty-state__desc">
-            {t("not_found_desc") || "Axtardığınız səhifə mövcud deyil."}
+            {t("not_found_desc")}
           </p>
 
           <Link to="/" className="btn btn-primary">
-            {t("back_home") || "Ana səhifəyə qayıt"}
+            {t("back_home")}
           </Link>
         </div>
       </div>

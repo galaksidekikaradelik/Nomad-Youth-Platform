@@ -674,5 +674,9 @@
   "event_offline": "Офлайн",
   "event_free": "Бесплатно",
   "event_register": "Регистрация",
-  "filter_duration_visa_label": "Продолжительность и виза"
+  "filter_duration_visa_label": "Продолжительность и виза",
+
+  "not_found_title": "Страница не найдена",
+  "not_found_desc": "Страница, которую вы ищете, не существует или была удалена.",
+  "back_home": "Вернуться на главную"
 }
