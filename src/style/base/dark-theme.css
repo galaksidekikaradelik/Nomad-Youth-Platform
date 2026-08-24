@@ -34,6 +34,17 @@
 
 [data-theme="dark"] .btn-outline:hover {
   background: var(--text-primary);
+  color: var(--brand-900);
+}
+
+[data-theme="dark"] .ny-btn--secondary {
+  color: var(--text-primary);
+  border-color: var(--color-border);
+}
+
+[data-theme="dark"] .ny-btn--secondary:hover {
+  background: var(--text-primary);
+  color: var(--brand-900);
 }
 
 [data-theme="dark"] .opportunity-card__apply-btn,
@@ -88,9 +99,6 @@
   color: #FFFFFF;
 }
 
-[data-theme="dark"] .btn-outline:hover {
-    color: var(--brand-900);
-}
 
 [data-theme="dark"] .profile-page {
   --navy: var(--color-primary);

@@ -1,98 +1,585 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
-  FileText,
-  BadgeCheck,
-  Search,
-  PenTool,
-  ClipboardCheck,
-  Send,
-  CheckCircle2,
-  Compass,
-  Globe,
-  ScrollText,
-  MessageCircle,
-  GraduationCap,
-  UsersRound,
-  ShieldCheck,
-} from "lucide-react";
-import { useLanguage } from '../hooks/useLanguage'
-import ServicePopupModal from '../components/ServicePopupModal'
-import { trackServiceView, trackServiceClick } from '../services/analytics'
+  ArrowRight,
+  Check,
+  X,
+  
+} from 'lucide-react'
+import Navbar from '../components/Navbar'
+import {
+  SERVICE_CONTENT,
+  CATEGORIES,
+} from '../data/services'
+import { buildWhatsAppLink } from '../config/whatsapp'
 
 
-const SERVICES = [
-  { id: 'erasmus-consulting', icon: Globe,          titleKey: 'service_erasmus_consulting_title', descKey: 'service_erasmus_consulting_desc', featuresKey: 'service_erasmus_consulting_features' },
-  { id: 'project-consulting', icon: Compass,        titleKey: 'service_project_consulting_title', descKey: 'service_project_consulting_desc', featuresKey: 'service_project_consulting_features' },
-  { id: 'cv',                 icon: FileText,       titleKey: 'service_cv_title',                 descKey: 'service_cv_desc',                 featuresKey: 'service_cv_features' },
-  { id: "erasmus-mentorship", icon: UsersRound,     titleKey: "service_erasmus_mentorship_title", descKey: "service_erasmus_mentorship_desc", featuresKey: 'service_erasmus_mentorship_features' },
-  { id: "visa-support",       icon: ShieldCheck,    titleKey: "service_visa_support_title",       descKey: "service_visa_support_desc",       featuresKey: 'service_visa_support_features' },
-  { id: "erasmus-mundus",     icon: GraduationCap,  titleKey: "service_erasmus_mundus_title",     descKey: "service_erasmus_mundus_desc",     featuresKey: 'service_erasmus_mundus_features' },
-  { id: 'europass',           icon: BadgeCheck,     titleKey: 'service_europass_title',           descKey: 'service_europass_desc',           featuresKey: 'service_europass_features' },
-  { id: 'study-abroad',       icon: GraduationCap,  titleKey: 'service_study_abroad_title',       descKey: 'service_study_abroad_desc',       featuresKey: 'service_study_abroad_features' },
-  { id: 'cv-review',          icon: Search,         titleKey: 'service_cv_review_title',          descKey: 'service_cv_review_desc',          featuresKey: 'service_cv_review_features' },
-  { id: 'motivation',         icon: PenTool,        titleKey: 'service_motivation_title',         descKey: 'service_motivation_desc',         featuresKey: 'service_motivation_features' },
-  { id: 'recommendation',     icon: ClipboardCheck, titleKey: 'service_recommendation_title',     descKey: 'service_recommendation_desc',     featuresKey: 'service_recommendation_features' },
-  { id: 'application',        icon: Send,           titleKey: 'service_application_title',        descKey: 'service_application_desc',        featuresKey: 'service_application_features' },
-  { id: 'application-review', icon: CheckCircle2,   titleKey: 'service_application_review_title', descKey: 'service_application_review_desc', featuresKey: 'service_application_review_features' },
-  { id: "un-certificates",    icon: ScrollText,     titleKey: "service_un_certificates_title",    descKey: "service_un_certificates_desc",    featuresKey: 'service_un_certificates_features' },
-  { id: 'other',              icon: MessageCircle,  titleKey: 'service_other_title',              descKey: 'service_other_desc',              featuresKey: 'service_other_features' },
-]
 
-export default function Services() {
-  const { t } = useLanguage()
-  const [selected, setSelected] = useState(null)
 
-  const raw = SERVICES.find(s => s.id === selected)
-  const selectedService = raw
-    ? { ...raw, title: t(raw.titleKey), desc: t(raw.descKey), features: t(raw.featuresKey) }
-    : null
+function ServiceModal({ service, onClose }) {
+  if (!service) return null
 
-  useEffect(() => {
-    if (selectedService) {
-      trackServiceView(selectedService)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected])
+  const Icon = service.icon
+
+  const handleWhatsApp = () => {
+    const message =
+      `Salam, Nomad Youth!\n\n` +
+      `“${service.title}” xidməti ilə maraqlanıram.\n` +
+      `Xidmət barədə daha ətraflı məlumat və müraciət etmək istəyirəm.`
+
+    window.open(
+      buildWhatsAppLink(message),
+      '_blank',
+      'noopener,noreferrer'
+    )
+  }
 
   return (
-    <div className="section">
-      <div className="container">
+    <div
+      className="ny-overlay"
+      onClick={onClose}
+    >
+      <div
+        className="ny-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
 
-        <div className="page-header">
-          <div className="page-header__eyebrow">{t('services_eyebrow')}</div>
-          <h1 className="page-header__title">{t('services_title')}</h1>
-          <p className="page-header__desc">{t('services_desc')}</p>
+        {/* CLOSE */}
+        <button
+          className="ny-close"
+          onClick={onClose}
+          aria-label="Bağla"
+        >
+          <X size={18} />
+        </button>
+
+
+        {/* HEADER */}
+        <div className="ny-modal-head">
+
+          <div className="ny-modal-icon">
+            <Icon
+              size={26}
+              strokeWidth={1.8}
+            />
+          </div>
+
+          <div>
+            <h2 className="ny-modal-title">
+              {service.title}
+            </h2>
+
+            <p className="ny-modal-desc">
+              {service.shortDesc}
+            </p>
+          </div>
+
         </div>
 
-        <div className="grid-3" style={{ marginBottom: 'var(--space-2xl)' }}>
-          {SERVICES.map(s => {
-            const Icon = s.icon
-            return (
-              <button
-                key={s.id}
-                className="category-card"
-                onClick={() => {
-                  trackServiceClick({ id: s.id, title: t(s.titleKey) })
-                  setSelected(s.id)
-                }}
-                style={{ width: '100%', cursor: 'pointer' }}
-              >
-                <div className="category-card__icon service-icon-badge service-icon-badge--card">
-                  <Icon size={22} strokeWidth={1.75} />
-                </div>
-                <div className="category-card__name">{t(s.titleKey)}</div>
-                <div className="category-card__count">{t(s.descKey)}</div>
-              </button>
-            )
-          })}
+
+        <div className="ny-tags">
+          <span className="ny-tag ny-tag--duration">
+            {service.duration}
+          </span>
+
+          <span className="ny-tag ny-tag--format">
+            {service.format}
+          </span>
+
+          <span className="ny-tag ny-tag--result">
+            {service.result}
+          </span>
         </div>
 
-        <ServicePopupModal
-          service={selectedService}
-          onClose={() => setSelected(null)}
-        />
+
+        {/* COLUMNS */}
+        <div className="ny-cols">
+
+          {/* AUDIENCE */}
+          <div>
+
+            <h3 className="ny-col-title">
+              Bu xidmət kimə uyğundur?
+            </h3>
+
+            <ul className="ny-list">
+
+              {service.audience.map((item) => (
+                <li key={item}>
+
+                  <span className="ny-dot" />
+
+                  {item}
+
+                </li>
+              ))}
+
+            </ul>
+
+          </div>
+
+
+          {/* INCLUDES */}
+          <div>
+
+            <h3 className="ny-col-title">
+              Nə əldə edəcəksən?
+            </h3>
+
+            <ul className="ny-list">
+
+              {service.includes.map((item) => (
+                <li key={item}>
+
+                  <Check
+                    size={15}
+                    className="ny-check"
+                  />
+
+                  {item}
+
+                </li>
+              ))}
+
+            </ul>
+
+          </div>
+
+        </div>
+
+
+        
+
+
+        {/* NOTE */}
+        {service.note && (
+          <p className="ny-note">
+            {service.note}
+          </p>
+        )}
+
+
+        {/* ACTIONS */}
+        <div className="ny-actions">
+
+          <button
+            className="ny-btn ny-btn--primary ny-modal-btn"
+            onClick={handleWhatsApp}
+          >
+            {service.primaryCta}
+          </button>
+
+
+          
+
+        </div>
+
+
+        <p className="ny-fineprint">
+          Sorğu qəbul edildikdən sonra 24 saat ərzində
+          əlaqə saxlanılır.
+        </p>
 
       </div>
     </div>
+  )
+}
+
+
+export default function NomadYouthServices() {
+
+  /*
+   * Erasmus ilk açılışda aktivdir
+   */
+  const [activeCategory, setActiveCategory] =
+    useState('erasmus')
+
+  const [selectedId, setSelectedId] =
+    useState(null)
+
+
+  const servicesRef = useRef(null)
+
+
+  const selected = selectedId
+    ? SERVICE_CONTENT[selectedId]
+    : null
+
+
+  const category = CATEGORIES.find(
+    (c) => c.id === activeCategory
+  )
+
+
+  /*
+   * Kateqoriyalar hissəsinə scroll
+   */
+  const scrollToCategories = () => {
+
+    document
+      .querySelector('.ny-cat-grid')
+      ?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+
+  }
+
+
+  /*
+   * Kateqoriya seçilməsi
+   */
+  const handleCategoryClick = (categoryId) => {
+
+    /*
+     * Eyni kateqoriyaya yenidən basılıbsa
+     * bağla
+     */
+    if (activeCategory === categoryId) {
+
+      setActiveCategory(null)
+
+      return
+    }
+
+
+    /*
+     * Yeni kateqoriyanı aç
+     */
+    setActiveCategory(categoryId)
+  }
+
+
+  /*
+   * Kateqoriya dəyişəndə xidmətlərə scroll
+   */
+  useEffect(() => {
+
+    if (
+      !activeCategory ||
+      !servicesRef.current
+    ) {
+      return
+    }
+
+
+    const timer = setTimeout(() => {
+
+      servicesRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+
+    }, 100)
+
+
+    return () => clearTimeout(timer)
+
+  }, [activeCategory])
+
+
+  return (
+    <>
+      <Navbar />
+
+
+      <div className="ny-page">
+
+
+        {/* =====================================================
+            HERO
+        ====================================================== */}
+
+        <section className="ny-hero">
+
+          <div className="ny-hero-inner">
+
+            <div>
+
+              <span className="ny-pill">
+                Hədəfinə uyğun dəstək
+              </span>
+
+
+              <h1 className="ny-hero-title">
+
+                Doğru fürsəti seç,
+                <br />
+                güclü müraciətlə fərqlən.
+
+              </h1>
+
+
+              <p className="ny-hero-desc">
+
+                Erasmus+, ESC, CV və xaricdə təhsil üçün
+                ehtiyacına uyğun xidməti seç, prosesə daha
+                hazırlıqlı başla.
+
+              </p>
+
+
+              <div className="ny-hero-actions">
+
+                <button
+                  className="ny-btn ny-btn--primary"
+                  onClick={scrollToCategories}
+                >
+                  Xidmətləri kəşf et →
+                </button>
+
+              </div>
+
+            </div>
+
+
+            {/* STATS */}
+
+            <div className="ny-stats-banner">
+
+              <ul className="ny-side-list">
+
+                <li>
+
+                  <span className="ny-side-dot-title">
+                    100+
+                  </span>
+
+                  <span className="ny-side-dot">
+                    gəncin inkişaf yolunda yanında
+                  </span>
+
+                </li>
+
+
+                <li>
+
+                  <span className="ny-side-dot-title">
+                    4 istiqamət
+                  </span>
+
+                  <span className="ny-side-dot">
+                    Hədəfinə uyğun seçim
+                  </span>
+
+                </li>
+
+
+                <li>
+
+                  <span className="ny-side-dot-title">
+                    15 xidmət
+                  </span>
+
+                  <span className="ny-side-dot">
+                    Praktik dəstək formatı
+                  </span>
+
+                </li>
+
+
+                <li>
+
+                  <span className="ny-side-dot-title">
+                    24 saat
+                  </span>
+
+                  <span className="ny-side-dot">
+                    Sorğulara geri dönüş müddəti
+                  </span>
+
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+
+        {/* =====================================================
+            CATEGORIES
+        ====================================================== */}
+
+        <section className="ny-container">
+
+          <div className="ny-cat-grid">
+
+            {CATEGORIES.map((c) => {
+
+              const Icon = c.icon
+
+              const isActive =
+                activeCategory === c.id
+
+
+              return (
+
+                <button
+                  key={c.id}
+                  className={`ny-card ${
+                    isActive
+                      ? 'ny-card--active'
+                      : ''
+                  }`}
+                  onClick={() =>
+                    handleCategoryClick(c.id)
+                  }
+                >
+
+                  <div className="ny-icon-badge">
+
+                    {Icon ? (
+                      <Icon
+                        size={22}
+                        strokeWidth={1.8}
+                      />
+                    ) : null}
+
+                  </div>
+
+
+                  <div className="ny-card-title">
+                    {c.title}
+                  </div>
+
+
+                  <div className="ny-card-desc">
+                    {c.services.length} xidmət
+                  </div>
+
+
+                  <span className="ny-card-link">
+
+                    {isActive
+                      ? 'Xidmətləri bağla'
+                      : 'Xidmətlərə bax'}
+
+                    <ArrowRight size={14} />
+
+                  </span>
+
+                </button>
+
+              )
+            })}
+
+          </div>
+
+        </section>
+
+
+
+        {/* =====================================================
+            SERVICES
+        ====================================================== */}
+
+        {activeCategory && category && (
+
+          <section
+            ref={servicesRef}
+            className="ny-container ny-services-section"
+          >
+
+            <h2 className="ny-section-title">
+              {category.title}
+            </h2>
+
+
+            <p className="ny-section-sub">
+              {category.services.length} xidmət
+            </p>
+
+
+            <div className="ny-grid">
+
+              {category.services.map((id) => {
+
+                const service =
+                  SERVICE_CONTENT[id]
+
+                if (!service) return null
+
+                const Icon = service.icon
+
+
+                return (
+
+                  <button
+                    key={id}
+                    className="ny-card"
+                    onClick={() =>
+                      setSelectedId(id)
+                    }
+                  >
+
+                    {/* SERVICE ICON */}
+
+                    <div className="ny-icon-badge">
+
+                      <Icon
+                        size={22}
+                        strokeWidth={1.8}
+                      />
+
+                    </div>
+
+
+                    {/* TITLE */}
+
+                    <div className="ny-card-title">
+
+                      {service.title}
+
+                    </div>
+
+
+                    {/* DESCRIPTION */}
+
+                    <div className="ny-card-desc">
+
+                      {service.shortDesc}
+
+                    </div>
+
+
+                    {/* LINK */}
+
+                    <span className="ny-card-link">
+
+                      Ətraflı bax
+
+                      <ArrowRight size={14} />
+
+                    </span>
+
+                  </button>
+
+                )
+              })}
+
+            </div>
+
+          </section>
+
+        )}
+
+
+
+        {/* =====================================================
+            MODAL
+        ====================================================== */}
+
+        <ServiceModal
+          service={selected}
+          onClose={() =>
+            setSelectedId(null)
+          }
+        />
+
+      </div>
+    </>
   )
 }
