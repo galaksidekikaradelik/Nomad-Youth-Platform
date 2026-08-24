@@ -594,3 +594,24 @@
 .ny-card--active {
   border-color: #f5c542;
 }
+
+
+@media (max-width: 768px) {
+  .ny-side-list {
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    border-radius: 20px;
+  }
+
+  .ny-side-list li {
+    padding: 0;
+    text-align: center;
+  }
+
+  .ny-side-list li:not(:last-child) {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 20px;
+  }
+}
