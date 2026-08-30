@@ -69,4 +69,14 @@ export const COUNTRY_CODES = {
   'Misir': 'eg',
   'Mərakeş': 'ma',
   'Tunis': 'tn',
+
+  'Avstraliya': 'au',
+  'Çin': 'cn',
+  'Kanada': 'ca',
+  'Cənubi Koreya': 'kr',
+  'Amerika Birləşmiş Ştatları': 'us',
+  'Yaponiya': 'jp',
+  'Cənubi Afrika': 'za',
+  'Ispaniya': 'es',
+  
 }
