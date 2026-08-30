@@ -114,3 +114,288 @@
   align-items: center;
   justify-content: space-between;
 }
+
+/* =========================================================
+   OPPORTUNITIES TABS
+   ========================================================= */
+
+.opportunities-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  margin-bottom: var(--space-lg);
+  padding: 5px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.opportunities-tab {
+  position: relative;
+
+  min-height: 54px;
+  padding: 0 var(--space-md);
+
+  border: none;
+  border-radius: var(--radius-md);
+
+  background: transparent;
+  color: var(--color-text);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition-base),
+    color var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.opportunities-tab:hover {
+  background: var(--color-surface-2);
+}
+
+.opportunities-tab.active {
+  background: var(--color-primary);
+  color: var(--neutral-0);
+
+  box-shadow: var(--shadow-sm);
+}
+
+/* Sarı xətt */
+.opportunities-tab.active::after {
+  content: '';
+
+  position: absolute;
+  left: var(--space-md);
+  right: var(--space-md);
+  bottom: 0;
+
+  height: 3px;
+
+  background: var(--color-accent);
+  border-radius: 3px 3px 0 0;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.opportunities-searchbar-wrap {
+  margin-bottom: var(--space-lg);
+}
+
+
+/* =========================================================
+   FILTER GROUP
+   ========================================================= */
+
+.filter-group {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+
+  padding: var(--space-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   FILTER ROW
+   ========================================================= */
+
+.filter-group__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
+
+  margin-bottom: var(--space-md);
+}
+
+.filter-group__row:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   FILTER LABEL
+   ========================================================= */
+
+.filter-group__label {
+  flex: 0 0 115px;
+
+  padding-top: 9px;
+
+  color: var(--color-text-muted);
+
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   FILTER CHIPS
+   ========================================================= */
+
+.filter-group__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+
+  flex: 1;
+}
+
+.filter-btn {
+  min-height: 32px;
+  padding: 6px 14px;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.filter-btn:hover {
+  border-color: var(--color-border-hover);
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}
+
+.filter-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--neutral-0);
+}
+
+
+/* =========================================================
+   SORT
+   ========================================================= */
+
+.filter-group__sort-select {
+  width: 205px;
+  min-height: 34px;
+
+  padding: 6px 12px;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  font-family: var(--font-body);
+  font-size: 12px;
+
+  outline: none;
+  cursor: pointer;
+
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.filter-group__sort-select:hover {
+  border-color: var(--color-border-hover);
+}
+
+.filter-group__sort-select:focus {
+  border-color: var(--color-primary-mid);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+
+/* =========================================================
+   RESULTS COUNT
+   ========================================================= */
+
+.opportunities-results-count {
+  margin: var(--space-lg) 0 var(--space-md);
+
+  color: var(--color-text-muted);
+
+  font-size: 13px;
+}
+
+.opportunities-results-count__number {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .opportunities-tabs {
+    grid-template-columns: 1fr;
+    gap: 3px;
+
+    padding: 4px;
+
+    border-radius: var(--radius-md);
+  }
+
+  .opportunities-tab {
+    min-height: 48px;
+  }
+
+  .opportunities-tab.active::after {
+    left: 20%;
+    right: 20%;
+  }
+
+
+  .filter-group {
+    padding: var(--space-md);
+  }
+
+  .filter-group__row {
+    display: block;
+  }
+
+  .filter-group__label {
+    display: block;
+
+    padding-top: 0;
+    margin-bottom: var(--space-sm);
+  }
+
+  .filter-group__chips {
+    gap: 6px;
+  }
+
+  .filter-btn {
+    padding: 6px 11px;
+  }
+
+  .filter-group__sort-select {
+    width: 100%;
+  }
+}
