@@ -78,5 +78,6 @@ export const COUNTRY_CODES = {
   'Yaponiya': 'jp',
   'Cənubi Afrika': 'za',
   'Ispaniya': 'es',
-  
+  'Keniya': 'ke',
+
 }
