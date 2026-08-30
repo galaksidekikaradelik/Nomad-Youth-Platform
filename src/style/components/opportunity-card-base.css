@@ -346,11 +346,6 @@
   font-weight: 700;
 }
 
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
 @media (max-width: 768px) {
 
   .opportunities-tabs {
@@ -397,5 +392,23 @@
 
   .filter-group__sort-select {
     width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .opportunities-tabs {
+    display: flex;
+    overflow-x: auto;
+
+    scrollbar-width: none;
+  }
+
+  .opportunities-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .opportunities-tab {
+    flex: 0 0 auto;
+    min-width: 145px;
   }
 }
