@@ -89,8 +89,8 @@
   "sort_newest": "Date added (newest)",
   "sort_country": "By city (A-Z)",
 
-  "opp_results_prefix": "We found",
-  "opp_results_suffix": "opportunities for you",
+  "opp_results_prefix": "We found ",
+  "opp_results_suffix": " opportunities for you",
   "opp_empty_title": "No results found",
   "opp_empty_desc": "Try changing the filters and search again.",
 

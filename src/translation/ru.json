@@ -89,8 +89,8 @@
   "sort_newest": "По дате добавления (новые)",
   "sort_country": "По городу (А–Я)",
 
-  "opp_results_prefix": "Для вас найдено",
-  "opp_results_suffix": "возможностей",
+  "opp_results_prefix": "Для вас найдено ",
+  "opp_results_suffix": " возможностей",
   "opp_empty_title": "Результатов не найдено",
   "opp_empty_desc": "Измените фильтры и попробуйте снова.",
 
