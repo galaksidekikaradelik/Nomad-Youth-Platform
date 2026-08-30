@@ -44,6 +44,11 @@ const SearchIcon = () => (
   </svg>
 )
 
+
+// ============================================================
+// ƏSAS TABLAR
+// ============================================================
+
 const PROJECT_TABS = [
   {
     id: 'erasmus',
@@ -59,6 +64,11 @@ const PROJECT_TABS = [
   },
 ]
 
+
+// ============================================================
+// CATEGORIES
+// ============================================================
+
 const CATEGORIES = [
   { id: '', labelKey: 'category_all' },
   ...CANONICAL_CATEGORIES.map(id => ({
@@ -66,6 +76,11 @@ const CATEGORIES = [
     labelKey: null,
   })),
 ]
+
+
+// ============================================================
+// TYPES
+// ============================================================
 
 const TYPES = [
   { id: '', labelKey: 'type_all' },
@@ -76,11 +91,21 @@ const TYPES = [
   { id: 'Fəaliyyət', labelKey: 'type_activity' },
 ]
 
+
+// ============================================================
+// FORMATS
+// ============================================================
+
 const FORMATS = [
   { id: 'Hamısı', labelKey: 'format_all' },
   { id: 'Online', labelKey: 'format_online' },
   { id: 'Offline', labelKey: 'format_onsite' },
 ]
+
+
+// ============================================================
+// SORT
+// ============================================================
 
 const SORT_OPTIONS = [
   { id: 'deadline', labelKey: 'sort_deadline' },
@@ -88,13 +113,19 @@ const SORT_OPTIONS = [
   { id: 'country', labelKey: 'sort_country' },
 ]
 
+
 const PAGE_SIZE = 12
 
+
+// ============================================================
+// FILTER CHIP
+// ============================================================
 
 const FilterChip = ({ label, active, onClick }) => (
   <button
     className={`filter-btn${active ? ' active' : ''}`}
     onClick={onClick}
+    type="button"
   >
     {label}
   </button>
@@ -105,58 +136,45 @@ const FilterChip = ({ label, active, onClick }) => (
 // OPPORTUNITY GROUP
 // ============================================================
 //
-// Erasmus layihələrini müəyyənləşdiririk.
-// Əgər opportunity-nin tags/category/title hissəsində
-// Erasmus+, ESC və ya SALTO varsa -> Erasmus layihəsi.
+// Mövcud sistemdə:
+// - Azərbaycan -> yerli
+// - Xarici -> beynəlxalq
 //
+// İndi isə ESC və SALTO xarici imkanlardan çıxarılır
+// və ayrıca Erasmus layihələri kimi göstərilir.
+//
+// Yəni:
+//
+// ESC       -> Erasmus
+// SALTO     -> Erasmus
+// digər xarici imkan -> Beynəlxalq
 // Azərbaycan -> Yerli
-// Xarici + Erasmus deyil -> Beynəlxalq
 //
+// Yerli məntiqinə toxunmuruq.
+// ============================================================
 
 const getOpportunityGroup = (op) => {
-  const title = String(op.title || '').toLocaleLowerCase('az')
-  const organization = String(op.organization || '').toLocaleLowerCase('az')
-  const location = String(op.location || '').toLocaleLowerCase('az')
+  const escOrSalto = String(op.escOrSalto || '')
+    .trim()
+    .toUpperCase()
 
-  const tags = Array.isArray(op.tags)
-    ? op.tags.map(tag => String(tag).toLocaleLowerCase('az'))
-    : []
-
-  const categoryGroups = Array.isArray(op.categoryGroups)
-    ? op.categoryGroups.map(category =>
-        String(category).toLocaleLowerCase('az')
-      )
-    : []
-
-  const allText = [
-    title,
-    organization,
-    ...tags,
-    ...categoryGroups,
-  ].join(' ')
-
-  // Erasmus proqramları
-  const isErasmus =
-    allText.includes('erasmus+') ||
-    allText.includes('erasmus') ||
-    allText.includes('esc') ||
-    allText.includes('salto') ||
-    allText.includes('youth exchange') ||
-    allText.includes('gənclər mübadiləsi')
-
-  if (isErasmus) {
+  // ESC və SALTO -> Erasmus layihələri
+  if (
+    escOrSalto === 'ESC' ||
+    escOrSalto === 'SALTO'
+  ) {
     return 'erasmus'
   }
 
-  // Yerli imkanlar
-  if (
-    location === 'azərbaycan' ||
-    location === 'azerbaijan'
-  ) {
+  // Əvvəlki yerli/beynəlxalq məntiqi
+  const location = String(op.location || '')
+    .trim()
+    .toLocaleLowerCase('az')
+
+  if (location === 'azərbaycan') {
     return 'local'
   }
 
-  // Qalan xarici imkanlar
   return 'international'
 }
 
@@ -165,37 +183,63 @@ export default function Opportunities() {
   const { t, lang } = useLanguage()
   const [searchParams] = useSearchParams()
 
-  const initialQuery = searchParams.get('query') || ''
-  const initialCategory = searchParams.get('category') || ''
-  const highlightOppKey = searchParams.get('show') || null
+  const initialQuery =
+    searchParams.get('query') || ''
 
-  const { opportunities, loading, error } = useOpportunities()
+  const initialCategory =
+    searchParams.get('category') || ''
 
-  const [search, setSearch] = useState(initialQuery)
-
-  const [categories, setCategories] = useState(
-    initialCategory ? [initialCategory] : []
-  )
-
-  const [types, setTypes] = useState([])
-
-  const [format, setFormat] = useState('Hamısı')
-
-  const [durations, setDurations] = useState([])
-
-  const [visaType, setVisaType] = useState('')
-
-  const [sort, setSort] = useState('deadline')
-
-  // Yeni əsas tab
-  const [activeTab, setActiveTab] = useState('erasmus')
-
-  const [page, setPage] = useState(0)
+  const highlightOppKey =
+    searchParams.get('show') || null
 
 
-  // ============================================================
-  // CATEGORY
-  // ============================================================
+  const {
+    opportunities,
+    loading,
+    error,
+  } = useOpportunities()
+
+
+  // ==========================================================
+  // STATES
+  // ==========================================================
+
+  const [search, setSearch] =
+    useState(initialQuery)
+
+  const [categories, setCategories] =
+    useState(
+      initialCategory
+        ? [initialCategory]
+        : []
+    )
+
+  const [types, setTypes] =
+    useState([])
+
+  const [format, setFormat] =
+    useState('Hamısı')
+
+  const [durations, setDurations] =
+    useState([])
+
+  const [visaType, setVisaType] =
+    useState('')
+
+  const [sort, setSort] =
+    useState('deadline')
+
+  // İlk açılışda Erasmus layihələri
+  const [activeTab, setActiveTab] =
+    useState('erasmus')
+
+  const [page, setPage] =
+    useState(0)
+
+
+  // ==========================================================
+  // CATEGORY TOGGLE
+  // ==========================================================
 
   const toggleCategory = (id) => {
     if (id === '') {
@@ -211,9 +255,9 @@ export default function Opportunities() {
   }
 
 
-  // ============================================================
-  // TYPE
-  // ============================================================
+  // ==========================================================
+  // TYPE TOGGLE
+  // ==========================================================
 
   const toggleType = (id) => {
     if (id === '') {
@@ -229,40 +273,49 @@ export default function Opportunities() {
   }
 
 
-  // ============================================================
+  // ==========================================================
   // FORMAT
-  // ============================================================
+  // ==========================================================
 
   const toggleFormat = (id) => {
     setFormat(id)
   }
 
 
-  // ============================================================
-  // ENRICH OPPORTUNITIES
-  // ============================================================
+  // ==========================================================
+  // ENRICHED DATA
+  // ==========================================================
 
   const enriched = useMemo(() => {
-    return filterActiveOpportunities(opportunities).map(op => ({
+    return filterActiveOpportunities(
+      opportunities
+    ).map(op => ({
       ...op,
-      opportunityGroup: getOpportunityGroup(op),
+      opportunityGroup:
+        getOpportunityGroup(op),
     }))
   }, [opportunities])
 
 
-  // ============================================================
-  // FILTER
-  // ============================================================
+  // ==========================================================
+  // FILTERED
+  // ==========================================================
 
   const filtered = useMemo(() => {
     return enriched.filter(op => {
 
-      // Əsas tab
+      // ------------------------------------------------------
+      // TAB
+      // ------------------------------------------------------
+
       const matchTab =
         op.opportunityGroup === activeTab
 
 
-      // Kateqoriya
+      // ------------------------------------------------------
+      // CATEGORY
+      // ------------------------------------------------------
+
       const matchCat =
         categories.length === 0 ||
         (
@@ -273,44 +326,67 @@ export default function Opportunities() {
         )
 
 
-      // Növ
+      // ------------------------------------------------------
+      // TYPE
+      // ------------------------------------------------------
+
       const matchType =
         types.length === 0 ||
         types.includes(op.type)
 
 
-      // Format
+      // ------------------------------------------------------
+      // FORMAT
+      // ------------------------------------------------------
+
       const matchFormat =
         format === 'Hamısı' ||
         op.typeDetail === format
 
 
-      // Müddət
+      // ------------------------------------------------------
+      // DURATION
+      // ------------------------------------------------------
+
       const matchDuration =
         durations.length === 0 ||
-        durations.includes(op.durationType)
+        durations.includes(
+          op.durationType
+        )
 
 
-      // Viza
+      // ------------------------------------------------------
+      // VISA
+      // ------------------------------------------------------
+
       const matchVisa =
         !visaType ||
         op.visaType === visaType
 
 
-      // Search
-      const q = search.toLocaleLowerCase('az')
+      // ------------------------------------------------------
+      // SEARCH
+      // ------------------------------------------------------
+
+      const q =
+        search.toLocaleLowerCase('az')
+
 
       const matchSearch =
         !search ||
+
         op.title
           ?.toLocaleLowerCase('az')
           .includes(q) ||
+
         op.location
           ?.toLocaleLowerCase('az')
           .includes(q) ||
+
         op.organization
           ?.toLocaleLowerCase('az')
           .includes(q) ||
+
         (
           Array.isArray(op.tags) &&
           op.tags.some(tag =>
@@ -343,40 +419,54 @@ export default function Opportunities() {
   ])
 
 
-  // ============================================================
+  // ==========================================================
   // SORT
-  // ============================================================
+  // ==========================================================
 
   const sorted = useMemo(() => {
     const arr = [...filtered]
+
 
     if (sort === 'deadline') {
       arr.sort((a, b) => {
         if (!a.deadline) return 1
         if (!b.deadline) return -1
 
-        return new Date(a.deadline) - new Date(b.deadline)
+        return (
+          new Date(a.deadline) -
+          new Date(b.deadline)
+        )
       })
     }
+
 
     else if (sort === 'newest') {
       arr.sort(
         (a, b) =>
-          Number(b.id) - Number(a.id)
+          Number(b.id) -
+          Number(a.id)
       )
     }
+
 
     else if (sort === 'country') {
       arr.sort((a, b) =>
-        String(a.location || '').localeCompare(
-          String(b.location || ''),
-          'az'
-        )
+        String(a.location || '')
+          .localeCompare(
+            String(b.location || ''),
+            'az'
+          )
       )
     }
 
+
     return arr
   }, [filtered, sort])
+
+
+  // ==========================================================
+  // RESET PAGE
+  // ==========================================================
 
   useEffect(() => {
     setPage(0)
@@ -391,12 +481,20 @@ export default function Opportunities() {
     sort,
   ])
 
-  const totalPages = Math.ceil(
-    sorted.length / PAGE_SIZE
-  )
+
+  // ==========================================================
+  // PAGINATION
+  // ==========================================================
+
+  const totalPages =
+    Math.ceil(
+      sorted.length / PAGE_SIZE
+    )
+
 
   const paginated = useMemo(() => {
-    const start = page * PAGE_SIZE
+    const start =
+      page * PAGE_SIZE
 
     return sorted.slice(
       start,
@@ -414,25 +512,44 @@ export default function Opportunities() {
     })
   }
 
+
+  // ==========================================================
+  // RENDER
+  // ==========================================================
+
   return (
     <div className="section">
       <div className="container">
 
+        {/* ==================================================
+            PAGE HEADER
+        ================================================== */}
+
         <div className="page-header">
+
           <div className="page-header__eyebrow">
             {t('opp_eyebrow')}
           </div>
+
           <h1 className="page-header__title">
             {t('opp_title')}
           </h1>
+
           <p className="page-header__desc">
             {t('opp_desc')}
           </p>
+
         </div>
+
+
+        {/* ==================================================
+            PROJECT TABS
+        ================================================== */}
 
         <div className="opportunities-tabs">
 
           {PROJECT_TABS.map(tab => (
+
             <button
               key={tab.id}
               type="button"
@@ -448,17 +565,29 @@ export default function Opportunities() {
             >
               {tab.label}
             </button>
+
           ))}
 
         </div>
 
+
+        {/* ==================================================
+            SEARCH
+        ================================================== */}
+
         <div className="opportunities-searchbar-wrap">
 
           <SearchBar
-            placeholder={t('opp_search_placeholder')}
+            placeholder={
+              t('opp_search_placeholder')
+            }
             query={search}
-            category={categories[0] || ''}
-            onQueryChange={setSearch}
+            category={
+              categories[0] || ''
+            }
+            onQueryChange={
+              setSearch
+            }
             onCategoryChange={(id) =>
               setCategories(
                 id ? [id] : []
@@ -468,11 +597,22 @@ export default function Opportunities() {
 
         </div>
 
+
+        {/* ==================================================
+            FILTERS
+        ================================================== */}
+
         <div className="filter-group">
+
+
+          {/* CATEGORY */}
+
           <div className="filter-group__row">
+
             <span className="filter-group__label">
               {t('filter_category_label')}
             </span>
+
             <div className="filter-group__chips">
 
               {CATEGORIES.map(c => (
@@ -496,9 +636,15 @@ export default function Opportunities() {
                     toggleCategory(c.id)
                   }
                 />
+
               ))}
+
             </div>
+
           </div>
+
+
+          {/* TYPE */}
 
           <div className="filter-group__row">
 
@@ -529,6 +675,9 @@ export default function Opportunities() {
 
           </div>
 
+
+          {/* FORMAT */}
+
           <div className="filter-group__row">
 
             <span className="filter-group__label">
@@ -556,13 +705,19 @@ export default function Opportunities() {
 
           </div>
 
+
+          {/* DURATION + VISA */}
+
           <div className="filter-group__row">
 
             <span className="filter-group__label">
-              {t('filter_duration_visa_label')}
+              {t(
+                'filter_duration_visa_label'
+              )}
             </span>
 
             <div className="filter-group__chips">
+
 
               <FilterChip
                 label={t('format_all')}
@@ -578,7 +733,9 @@ export default function Opportunities() {
 
 
               <FilterChip
-                label={t('format_short_term')}
+                label={t(
+                  'format_short_term'
+                )}
                 active={
                   durations.includes(
                     'SHORT_TERM'
@@ -597,7 +754,9 @@ export default function Opportunities() {
 
 
               <FilterChip
-                label={t('format_long_term')}
+                label={t(
+                  'format_long_term'
+                )}
                 active={
                   durations.includes(
                     'LONG_TERM'
@@ -613,6 +772,7 @@ export default function Opportunities() {
                   )
                 }
               />
+
 
               <FilterChip
                 label={t(
@@ -654,6 +814,10 @@ export default function Opportunities() {
             </div>
 
           </div>
+
+
+          {/* SORT */}
+
           <div className="filter-group__row">
 
             <label
@@ -692,6 +856,11 @@ export default function Opportunities() {
 
         </div>
 
+
+        {/* ==================================================
+            LOADING
+        ================================================== */}
+
         {loading ? (
 
           <OpportunitySkeletonGrid
@@ -700,6 +869,10 @@ export default function Opportunities() {
           />
 
         ) : error ? (
+
+          /* ==================================================
+             ERROR
+          ================================================== */
 
           <div className="empty-state">
 
@@ -729,7 +902,10 @@ export default function Opportunities() {
 
           <>
 
-            {/* RESULTS COUNT */}
+
+            {/* ==================================================
+                RESULTS COUNT
+            ================================================== */}
 
             <div className="opportunities-results-count">
 
@@ -744,7 +920,9 @@ export default function Opportunities() {
             </div>
 
 
-            {/* RESULTS */}
+            {/* ==================================================
+                RESULTS
+            ================================================== */}
 
             {sorted.length > 0 ? (
 
