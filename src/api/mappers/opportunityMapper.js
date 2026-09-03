@@ -15,6 +15,7 @@ export function mapOpportunity(raw) {
     country: raw.country ?? "",
 
     type: raw.type ?? "",
+    scope: raw.scope ?? "",
     typeDetail: raw.typeDetail ?? "Hamısı",
 
     category: raw.category ?? null,
