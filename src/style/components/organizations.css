@@ -1,0 +1,140 @@
+/* ==========================================================================
+   Yerli imkanlar (təşkilatlar) bölməsi — mövcud stylesheet-ə əlavə edin.
+   Rənglər/dəyişənlər layihənizdəki --color-* dəyişənlərinə uyğunlaşdırılıb;
+   uyğun gəlmirsə sadəcə HEX dəyərlərinə dəyişin.
+   ========================================================================== */
+
+.org-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .org-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .org-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tək kart */
+.org-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--color-surface, #ffffff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.org-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.org-card__identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.org-card__avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.org-card__name {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-text, #111827);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.org-card__rating-block {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.org-card__rating {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-text, #111827);
+}
+
+.org-card__rating-count {
+  font-size: 12px;
+  color: var(--color-text-muted, #94a3b8);
+  margin-top: 2px;
+}
+
+.org-card__badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted, #6b7280);
+  background: var(--color-bg-muted, #f1f5f9);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.org-card__tagline {
+  font-size: 14px;
+  color: var(--color-text-muted, #6b7280);
+  margin: 0;
+}
+
+.org-card__divider {
+  height: 1px;
+  background: var(--color-border, #e5e7eb);
+}
+
+.org-card__tags {
+  font-size: 13px;
+  color: var(--color-text-muted, #6b7280);
+}
+
+.org-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.org-card__count {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text, #374151);
+}
+
+.org-card__link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary, #1f2937);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.org-card__link:hover {
+  text-decoration: underline;
+}
