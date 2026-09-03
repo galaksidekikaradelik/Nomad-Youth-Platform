@@ -1,21 +1,21 @@
-export const getOpportunityGroup = (op) => {
-  const escOrSalto = String(op.escOrSalto || '')
-    .trim()
-    .toUpperCase()
+export function getOpportunityGroup(op) {
+  if (!op) return 'international'
 
-  if (
-    escOrSalto === 'ESC' ||
-    escOrSalto === 'SALTO'
-  ) {
-    return 'erasmus'
-  }
-  const location = String(op.location || '')
-    .trim()
-    .toLocaleLowerCase('az')
+  const scope = String(op.scope || '').trim().toUpperCase()
 
-  if (location === 'azərbaycan') {
+  if (scope === 'LOCAL') {
     return 'local'
   }
 
+  if (scope === 'ERASMUS') {
+    return 'erasmus'
+  }
+
+  if (scope === 'INTERNATIONAL') {
+    return 'international'
+  }
+
+  // Köhnə datalarda scope yoxdursa,
+  // mövcud məntiqə uyğun fallback burada saxlanıla bilər.
   return 'international'
 }
