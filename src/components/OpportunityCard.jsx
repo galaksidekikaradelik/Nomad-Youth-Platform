@@ -66,7 +66,12 @@ export default function OpportunityCard({
     eventDateRange,
     escOrSalto,
     volunteeringType,
+    sumAz,
+    sumEn,
+    sumRus,
+
   } = opportunity
+
 
   const [showAuthPrompt, setShowAuthPrompt] =
     useState(false)
@@ -84,11 +89,7 @@ export default function OpportunityCard({
     useState(false)
 
   const cardRef = useRef(null)
-
-
-  // =====================================================
-  // OPEN DETAIL FROM URL
-  // =====================================================
+  const detailRequestRef = useRef(false)
 
   useEffect(() => {
 
@@ -101,6 +102,7 @@ export default function OpportunityCard({
     ) {
       return
     }
+    if (detailRequestRef.current) return
 
     openDetailFromUrl()
 
@@ -111,12 +113,13 @@ export default function OpportunityCard({
     lang
   ])
 
-
   async function openDetailFromUrl() {
 
-    setShowDetail(true)
-
     if (!opportunity?.id) return
+    if (detailRequestRef.current) return
+
+    detailRequestRef.current = true
+    setShowDetail(true)
 
     setDetailLoading(true)
 
@@ -181,11 +184,6 @@ export default function OpportunityCard({
     toggleLikeRemote(opportunity)
   }
 
-
-  // =====================================================
-  // SAVE
-  // =====================================================
-
   const {
     savedIds,
     toggleSave: toggleWishlist
@@ -216,11 +214,6 @@ export default function OpportunityCard({
     toggleWishlist(opportunity)
   }
 
-
-  // =====================================================
-  // APPLY
-  // =====================================================
-
   function handleApplyClick(e) {
 
     e.stopPropagation()
@@ -245,11 +238,6 @@ export default function OpportunityCard({
     )
   }
 
-
-  // =====================================================
-  // OPEN DETAIL
-  // =====================================================
-
   function openDetail(e) {
 
     e.stopPropagation()
@@ -258,25 +246,18 @@ export default function OpportunityCard({
 
     trackOpportunityClick(opportunity)
 
+    setShowDetail(true)
+
     navigate(
       `/opportunities/${opportunity.id}`
     )
   }
 
-
-  // =====================================================
-  // CLOSE DETAIL
-  // =====================================================
-
   function closeDetail() {
 
     setShowDetail(false)
     setDetailData(null)
-
-    /*
-     * URL-dən detail açılıbsa,
-     * bağlayanda /opportunities səhifəsinə qayıdırıq.
-     */
+    detailRequestRef.current = false
 
     if (opportunityId) {
 
@@ -290,55 +271,71 @@ export default function OpportunityCard({
     }
   }
 
+  const initialSummary =
+    lang === 'en'
+      ? sumEn
+      : lang === 'ru'
+        ? sumRus
+        : sumAz
 
-  // =====================================================
-  // MERGE DETAIL DATA
-  // =====================================================
+  const mergedDetailOpportunity = {
 
-  const mergedDetailOpportunity =
-    detailData
-      ? {
-          ...opportunity,
+    ...opportunity,
+    deadline:
+      detailData?.deadline ??
+      opportunity.deadline,
 
-          deadline:
-            detailData.deadline ??
-            opportunity.deadline,
+    applyLink:
+      detailData?.applyLink ??
+      opportunity.applyLink,
 
-          applyLink:
-            detailData.applyLink ??
-            opportunity.applyLink,
+    description:
+      detailData?.description ??
+      initialSummary ??
+      opportunity.description,
 
-          description:
-            detailData.description ??
-            opportunity.description,
+    descriptionTranslations: {
 
-          descriptionTranslations: {
-            ...opportunity.descriptionTranslations,
+      ...opportunity.descriptionTranslations,
 
-            [lang]:
-              detailData.description ??
-              opportunity
-                .descriptionTranslations?.[lang],
-          },
+      az:
+        opportunity.descriptionTranslations?.az ??
+        sumAz,
 
-          duration:
-            detailData.duration ?? null,
+      en:
+        opportunity.descriptionTranslations?.en ??
+        sumEn,
 
-          language:
-            detailData.language ?? null,
+      ru:
+        opportunity.descriptionTranslations?.ru ??
+        sumRus,
+      ...(detailData?.description
+        ? {
+            [lang]: detailData.description,
+          }
+        : {}),
+    },
 
-          eventDateRange:
-            detailData.eventDateRange ?? null,
+    duration:
+      detailData?.duration ??
+      opportunity.duration ??
+      null,
 
-          financialSupport:
-            detailData.financialSupport ?? null,
-        }
-      : opportunity
+    language:
+      detailData?.language ??
+      opportunity.language ??
+      null,
 
+    eventDateRange:
+      detailData?.eventDateRange ??
+      opportunity.eventDateRange ??
+      null,
 
-  // =====================================================
-  // DATE
-  // =====================================================
+    financialSupport:
+      detailData?.financialSupport ??
+      opportunity.financialSupport ??
+      null,
+  }
 
   const locale =
     lang === 'en'
@@ -374,11 +371,6 @@ export default function OpportunityCard({
     daysLeft !== null &&
     daysLeft <= URGENT_THRESHOLD_DAYS
 
-
-  // =====================================================
-  // FORMAT
-  // =====================================================
-
   const formatLabel =
     typeDetail === 'Online'
       ? t('type_online')
@@ -394,11 +386,6 @@ export default function OpportunityCard({
         ? 'offline'
         : null
 
-
-  // =====================================================
-  // TYPE
-  // =====================================================
-
   const typeLabelKey =
     type
       ? TYPE_LABEL_KEYS[type]
@@ -410,22 +397,12 @@ export default function OpportunityCard({
       ? t(typeLabelKey)
       : type
 
-
-  // =====================================================
-  // CATEGORY
-  // =====================================================
-
   const categories =
     Array.isArray(category)
       ? category
       : category
         ? [category]
         : []
-
-
-  // =====================================================
-  // ESC / SALTO
-  // =====================================================
 
   const escSaltoLabelKey =
     escOrSalto
@@ -445,11 +422,6 @@ export default function OpportunityCard({
       : escOrSalto === 'SALTO'
         ? 'salto'
         : null
-
-
-  // =====================================================
-  // VOLUNTEERING TYPE
-  // =====================================================
 
   const normalizedVolunteeringType =
     volunteeringType?.replace('İ', 'I')
@@ -476,18 +448,11 @@ export default function OpportunityCard({
         ? 'team'
         : null
 
-
-  // =====================================================
-  // RENDER
-  // =====================================================
-
   return (
     <div
       className="opportunity-card"
       ref={cardRef}
     >
-
-      {/* TOP */}
 
       <div className="opportunity-card__top">
 
@@ -497,9 +462,8 @@ export default function OpportunityCard({
             <FlagIcon location={location} />
           </span>
 
-          <div className="opportunity-card__icons">
 
-            {/* LIKE */}
+          <div className="opportunity-card__icons">
 
             <button
               className={`opportunity-card__icon-btn opportunity-card__icon-btn--heart${
@@ -510,10 +474,6 @@ export default function OpportunityCard({
             >
               <HeartIcon active={liked} />
             </button>
-
-
-            {/* SAVE */}
-
             <button
               className={`opportunity-card__icon-btn opportunity-card__icon-btn--bookmark${
                 saved ? ' is-active' : ''
@@ -538,14 +498,12 @@ export default function OpportunityCard({
 
       </div>
 
-
-      {/* TAGS */}
-
       <div className="opportunity-card__topic">
 
         <div className="opportunity-card__tags">
 
           {formatLabel && (
+
             <span
               className={`opportunity-card__tag opportunity-card__tag--type${
                 formatModifier
@@ -555,16 +513,19 @@ export default function OpportunityCard({
             >
               {formatLabel}
             </span>
+
           )}
 
 
           {typeLabel && (
+
             <span
               className="opportunity-card__tag opportunity-card__category-badge"
               style={getCategoryStyle(type)}
             >
               {typeLabel}
             </span>
+
           )}
 
 
@@ -582,20 +543,24 @@ export default function OpportunityCard({
 
 
           {escSaltoModifier && (
+
             <span
               className={`opportunity-card__tag opportunity-card__tag--${escSaltoModifier}`}
             >
               {escSaltoLabel}
             </span>
+
           )}
 
 
           {volunteeringModifier && (
+
             <span
               className={`opportunity-card__tag opportunity-card__tag--${volunteeringModifier}`}
             >
               {volunteeringLabel}
             </span>
+
           )}
 
         </div>
@@ -604,9 +569,6 @@ export default function OpportunityCard({
 
 
       <div className="opportunity-card__divider" />
-
-
-      {/* FOOTER */}
 
       <div className="opportunity-card__footer">
 
@@ -617,7 +579,9 @@ export default function OpportunityCard({
             <div className="opportunity-card__date-row">
 
               {t('card_deadline')}{' '}
+
               {formattedDeadline}{' '}
+
 
               {daysLeft !== null && (
 
@@ -663,9 +627,6 @@ export default function OpportunityCard({
 
         </div>
 
-
-        {/* ACTIONS */}
-
         <div className="opportunity-card__footer-actions">
 
           <button
@@ -709,13 +670,11 @@ export default function OpportunityCard({
 
       </div>
 
-
-      {/* DETAIL MODAL */}
-
       <OpportunityDetailModal
         opportunity={mergedDetailOpportunity}
         loading={detailLoading}
         open={showDetail}
+
         onClose={closeDetail}
 
         onRequireAuth={() => {
@@ -730,19 +689,12 @@ export default function OpportunityCard({
         saved={saved}
       />
 
-
-      {/* AUTH */}
-
       <AuthPromptModal
         open={showAuthPrompt}
         onClose={() =>
           setShowAuthPrompt(false)
         }
       />
-
-
-      {/* APPLY CONFIRM */}
-
       <ApplyConfirmModal
         open={showApplyConfirm}
         onCancel={() =>
