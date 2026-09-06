@@ -6,6 +6,8 @@ import SearchBar from '../components/SearchBar'
 import OpportunityFilters from '../components/OpportunityFilters'
 import OpportunityResults from '../components/OpportunityResults'
 import { PROJECT_TABS } from '../utils/opportunityFilters.constants'
+import { useEffect } from 'react'
+import { getOpportunityGroup } from '../utils/getOpportunityGroup'
 
 export default function Opportunities() {
   const { t, lang } = useLanguage()
@@ -47,6 +49,23 @@ export default function Opportunities() {
     initialQuery,
     initialCategory,
   })
+
+  useEffect(() => {
+  if (!highlightOppKey) return
+  if (!opportunities?.length) return
+
+  const target = opportunities.find(
+    op => String(op.id) === String(highlightOppKey)
+  )
+
+  if (!target) return
+
+  setActiveTab(getOpportunityGroup(target))
+}, [
+  highlightOppKey,
+  opportunities,
+  setActiveTab,
+])
 
   return (
     <div className="section">

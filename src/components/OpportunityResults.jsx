@@ -57,8 +57,8 @@ export default function OpportunityResults({
                 key={op.id}
                 opportunity={op}
                 autoOpenDetail={
-                  highlightOppKey !== null &&
-                  String(op.id || op.title) === String(highlightOppKey)
+                  Boolean(highlightOppKey) &&
+                  String(op.id) === String(highlightOppKey)
                 }
               />
             ))}

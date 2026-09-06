@@ -62,15 +62,44 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
   useEffect(() => {
     if (!autoOpenDetail) return
 
-    const timer = setTimeout(() => {
-      cardRef.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      })
-    }, 100)
+    async function openAutomatically() {
+      setShowDetail(true)
 
-    return () => clearTimeout(timer)
-  }, [])
+      if (!opportunity.id) return
+
+      setDetailLoading(true)
+
+      try {
+        const res = await apiClient.get(
+          `/opportunities/${opportunity.id}/details`,
+          {
+            params: {
+              userId: user?.id,
+              lang,
+            },
+          }
+        )
+
+        setDetailData(res.data)
+
+        setTimeout(() => {
+          cardRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          })
+        }, 100)
+      } catch (err) {
+        console.error(
+          'Opportunity detail fetch failed:',
+          err
+        )
+      } finally {
+        setDetailLoading(false)
+      }
+    }
+
+    openAutomatically()
+  }, [autoOpenDetail, opportunity.id, user?.id, lang])
 
   // =========================
   // LIKE

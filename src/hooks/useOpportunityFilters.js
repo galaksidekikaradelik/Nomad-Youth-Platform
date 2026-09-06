@@ -7,6 +7,7 @@ export function useOpportunityFilters({
   opportunities,
   initialQuery,
   initialCategory,
+  highlightOppKey,
 }) {
   const [search, setSearch] = useState(initialQuery)
   const [categories, setCategories] = useState(
@@ -150,6 +151,51 @@ export function useOpportunityFilters({
 
     return arr
   }, [filtered, sort])
+
+    // =========================
+  // OPEN OPPORTUNITY FROM URL
+  // =========================
+
+  useEffect(() => {
+    if (!highlightOppKey) return
+    if (!enriched.length) return
+
+    const target = enriched.find(
+      op => String(op.id) === String(highlightOppKey)
+    )
+
+    if (!target) return
+
+    const targetGroup = target.opportunityGroup
+
+    // Elanın olduğu tabı aç
+    if (activeTab !== targetGroup) {
+      setActiveTab(targetGroup)
+      return
+    }
+
+    // Cari filterlər içində elanı tap
+    const targetIndex = sorted.findIndex(
+      op => String(op.id) === String(highlightOppKey)
+    )
+
+    if (targetIndex === -1) return
+
+    // Elanın hansı səhifədə olduğunu tap
+    const targetPage = Math.floor(
+      targetIndex / PAGE_SIZE
+    )
+
+    if (page !== targetPage) {
+      setPage(targetPage)
+    }
+  }, [
+    highlightOppKey,
+    enriched,
+    sorted,
+    activeTab,
+    page,
+  ])
 
   useEffect(() => {
     setPage(0)
