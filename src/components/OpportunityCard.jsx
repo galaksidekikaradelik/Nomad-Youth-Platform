@@ -1,44 +1,58 @@
-import { useState, useEffect, useRef } from 'react'
-import { useLanguage } from '../hooks/useLanguage'
-import { useAuth } from '../hooks/useAuth'
-import { translateCategory } from '../data/categoryTranslation'
-import { getCategoryStyle } from '../utils/categoryStyle'
-import { useWishlist } from '../hooks/useWishlist'
-import { useLike } from '../hooks/useLike'
-import apiClient from '../services/apiClient'
-import {
-  trackOpportunityClick,
-  trackOpportunitySave,
-  trackOpportunityUnsave,
-  trackOpportunityApply,
-} from '../services/analytics'
-import StatusSelector from './StatusSelector'
-import AuthPromptModal from './AuthPromptModal'
-import OpportunityDetailModal from './OpportunityDetailModal'
-import ApplyConfirmModal from './ApplyConfirmModal'
-import {
-  HeartIcon,
-  BookmarkIcon,
-  ArrowIcon,
-  WarningIcon,
-  FlagIcon
-} from './OpportunityCardIcons'
-import {
-  TYPE_LABEL_KEYS,
-  ESC_SALTO_LABEL_KEYS,
-  VOLUNTEERING_TYPE_LABEL_KEYS
-} from '../data/opportunityCardLabels'
-import {
-  getDaysLeft,
-  URGENT_THRESHOLD_DAYS
-} from '../utils/dateHelpers'
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function OpportunityCard({ opportunity, autoOpenDetail = false }) {
+import { useLanguage } from "../context/LanguageContext";
+import { useAuth } from "../context/AuthContext";
 
-  const { t, lang } = useLanguage()
-  const { user } = useAuth()
+import { translateCategory } from "../data/categoryTranslation";
+import { translateCountry } from "../data/locationTranslation";
+
+import { useWishlist } from "../hooks/useWishlist";
+import { useLike } from "../hooks/useLike";
+
+import apiClient from "../api/apiClient";
+
+import ApplyConfirmModal from "./ApplyConfirmModal";
+import AuthPromptModal from "./AuthPromptModal";
+
+import {
+  Heart,
+  Bookmark,
+  MapPin,
+  CalendarDays,
+  ExternalLink,
+} from "lucide-react";
+
+export default function OpportunityCard({
+  opportunity,
+  autoOpenDetail = false,
+}) {
+  const navigate = useNavigate();
+
+  const { lang, t } = useLanguage();
+  const { user } = useAuth();
+
+  const cardRef = useRef(null);
+
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+  const [showApplyConfirm, setShowApplyConfirm] = useState(false);
 
   const {
+    liked,
+    toggleLike,
+  } = useLike(opportunity?.id);
+
+  const {
+    saved,
+    toggleSave,
+  } = useWishlist(opportunity?.id);
+
+  if (!opportunity) {
+    return null;
+  }
+
+  const {
+    id,
     title,
     typeDetail,
     category,
@@ -49,600 +63,278 @@ export default function OpportunityCard({ opportunity, autoOpenDetail = false })
     eventDateRange,
     escOrSalto,
     volunteeringType,
-  } = opportunity
+  } = opportunity;
 
-  const [showAuthPrompt, setShowAuthPrompt] = useState(false)
-  const [showDetail, setShowDetail] = useState(autoOpenDetail)
-  const [showApplyConfirm, setShowApplyConfirm] = useState(false)
-  const [detailData, setDetailData] = useState(null)
-  const [detailLoading, setDetailLoading] = useState(false)
+  /* =========================================================
+     TRANSLATIONS
+  ========================================================= */
 
-  const cardRef = useRef(null)
+  const translatedCategory =
+    translateCategory(category, lang) || category;
+
+  const translatedLocation =
+    translateCountry(location, lang) || location;
+
+  /* =========================================================
+     AUTO OPEN
+     
+     Əgər köhnə sistemdən hansısa yerdə
+     autoOpenDetail istifadə olunursa, artıq modal yox,
+     detail page-ə redirect edirik.
+  ========================================================= */
 
   useEffect(() => {
-    if (!autoOpenDetail) return
+    if (!autoOpenDetail || !id) return;
 
-    async function openAutomatically() {
-      setShowDetail(true)
+    navigate(`/opportunities/${id}`, {
+      replace: true,
+    });
+  }, [autoOpenDetail, id, navigate]);
 
-      if (!opportunity.id) return
+  /* =========================================================
+     DETAILS
+  ========================================================= */
 
-      setDetailLoading(true)
+  const openDetail = (e) => {
+    e?.stopPropagation();
 
-      try {
-        const res = await apiClient.get(
-          `/opportunities/${opportunity.id}/details`,
-          {
-            params: {
-              userId: user?.id,
-              lang,
-            },
-          }
-        )
+    if (!id) return;
 
-        setDetailData(res.data)
+    navigate(`/opportunities/${id}`);
+  };
 
-        setTimeout(() => {
-          cardRef.current?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-          })
-        }, 100)
-      } catch (err) {
-        console.error(
-          'Opportunity detail fetch failed:',
-          err
-        )
-      } finally {
-        setDetailLoading(false)
-      }
-    }
+  /* =========================================================
+     LIKE
+  ========================================================= */
 
-    openAutomatically()
-  }, [autoOpenDetail, opportunity.id, user?.id, lang])
-
-  // =========================
-  // LIKE
-  // =========================
-
-  const {
-    likedIds,
-    toggleLike: toggleLikeRemote
-  } = useLike()
-
-  const liked = opportunity.id
-    ? likedIds.has(opportunity.id)
-    : false
-
-  function toggleLike(e) {
-    e.stopPropagation()
+  const handleLike = async (e) => {
+    e.stopPropagation();
 
     if (!user) {
-      setShowAuthPrompt(true)
-      return
+      setShowAuthPrompt(true);
+      return;
     }
 
-    if (!opportunity.id) return
+    try {
+      await toggleLike();
+    } catch (error) {
+      console.error("Like error:", error);
+    }
+  };
 
-    toggleLikeRemote(opportunity)
-  }
+  /* =========================================================
+     SAVE
+  ========================================================= */
 
-  // =========================
-  // SAVE / WISHLIST
-  // =========================
-
-  const {
-    savedIds,
-    toggleSave: toggleWishlist
-  } = useWishlist()
-
-  const saved = opportunity.id
-    ? savedIds.has(opportunity.id)
-    : false
-
-  function toggleSave(e) {
-    e.stopPropagation()
+  const handleSave = async (e) => {
+    e.stopPropagation();
 
     if (!user) {
-      setShowAuthPrompt(true)
-      return
+      setShowAuthPrompt(true);
+      return;
     }
 
-    if (!opportunity.id) return
+    try {
+      await toggleSave();
+    } catch (error) {
+      console.error("Save error:", error);
+    }
+  };
 
-    if (saved) {
-      trackOpportunityUnsave(opportunity)
-    } else {
-      trackOpportunitySave(opportunity)
+  /* =========================================================
+     APPLY
+  ========================================================= */
+
+  const handleApplyClick = (e) => {
+    e.stopPropagation();
+
+    if (!applyLink) {
+      return;
     }
 
-    toggleWishlist(opportunity)
-  }
+    if (!user) {
+      setShowAuthPrompt(true);
+      return;
+    }
 
-  // =========================
-  // APPLY
-  // =========================
+    setShowApplyConfirm(true);
+  };
 
-  function handleApplyClick(e) {
-    e.stopPropagation()
-    e.preventDefault()
+  const confirmApply = () => {
+    setShowApplyConfirm(false);
 
-    if (!applyLink) return
-
-    setShowApplyConfirm(true)
-  }
-
-  function confirmApply() {
-    trackOpportunityApply(opportunity)
-
-    setShowApplyConfirm(false)
+    if (!applyLink) return;
 
     window.open(
       applyLink,
-      '_blank',
-      'noopener,noreferrer'
-    )
-  }
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
 
-  // =========================
-  // OPEN DETAIL
-  // =========================
-
-  async function openDetail(e) {
-    e.stopPropagation()
-
-    trackOpportunityClick(opportunity)
-
-    setShowDetail(true)
-
-    if (!opportunity.id) return
-
-    setDetailLoading(true)
-
-    try {
-      const res = await apiClient.get(
-        `/opportunities/${opportunity.id}/details`,
-        {
-          params: {
-            userId: user?.id,
-            lang
-          },
-        }
-      )
-
-      setDetailData(res.data)
-
-    } catch (err) {
-      console.error(
-        'Opportunity detail fetch failed:',
-        err
-      )
-
-    } finally {
-      setDetailLoading(false)
-    }
-  }
-
-  // =========================
-  // CLOSE DETAIL
-  // =========================
-
-  function closeDetail() {
-    setShowDetail(false)
-    setDetailData(null)
-  }
-
-  // =========================
-  // MERGE DETAIL DATA
-  // =========================
-
-  const mergedDetailOpportunity = detailData
-    ? {
-        ...opportunity,
-
-        deadline:
-          detailData.deadline ??
-          opportunity.deadline,
-
-        applyLink:
-          detailData.applyLink ??
-          opportunity.applyLink,
-
-        description:
-          detailData.description ??
-          opportunity.description,
-
-        descriptionTranslations: {
-          ...opportunity.descriptionTranslations,
-
-          [lang]:
-            detailData.description ??
-            opportunity.descriptionTranslations?.[lang],
-        },
-
-        duration:
-          detailData.duration ?? null,
-
-        language:
-          detailData.language ?? null,
-
-        eventDateRange:
-          detailData.eventDateRange ?? null,
-
-        financialSupport:
-          detailData.financialSupport ?? null,
-      }
-    : opportunity
-
-  // =========================
-  // DATE
-  // =========================
-
-  const locale =
-    lang === 'en'
-      ? 'en-GB'
-      : lang === 'ru'
-        ? 'ru-RU'
-        : 'az-AZ'
-
-  const dateNotSpecified =
-    t('date_not_specified') ||
-    'Müəyyən olunmayıb'
-
-  const formattedDeadline = deadline
-    ? new Date(deadline).toLocaleDateString(
-        locale,
-        {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric'
-        }
-      )
-    : dateNotSpecified
-
-  const daysLeft = getDaysLeft(deadline)
-
-  const isUrgent =
-    daysLeft !== null &&
-    daysLeft <= URGENT_THRESHOLD_DAYS
-
-  // =========================
-  // FORMAT
-  // =========================
-
-  const formatLabel =
-    typeDetail === 'Online'
-      ? t('type_online')
-      : typeDetail === 'Offline'
-        ? t('type_offline')
-        : typeDetail
-
-  const formatModifier =
-    typeDetail === 'Online'
-      ? 'online'
-      : typeDetail === 'Offline'
-        ? 'offline'
-        : null
-
-  // =========================
-  // TYPE
-  // =========================
-
-  const typeLabelKey =
-    type
-      ? TYPE_LABEL_KEYS[type]
-      : null
-
-  const typeLabel =
-    typeLabelKey
-      ? t(typeLabelKey)
-      : type
-
-  // =========================
-  // CATEGORY
-  // =========================
-
-  const categories =
-    Array.isArray(category)
-      ? category
-      : category
-        ? [category]
-        : []
-
-  // =========================
-  // ESC / SALTO
-  // =========================
-
-  const escSaltoLabelKey =
-    escOrSalto
-      ? ESC_SALTO_LABEL_KEYS[escOrSalto]
-      : null
-
-  const escSaltoLabel =
-    escSaltoLabelKey
-      ? t(escSaltoLabelKey)
-      : escOrSalto
-
-  const escSaltoModifier =
-    escOrSalto === 'ESC'
-      ? 'esc'
-      : escOrSalto === 'SALTO'
-        ? 'salto'
-        : null
-
-  // =========================
-  // VOLUNTEERING TYPE
-  // =========================
-
-  const normalizedVolunteeringType =
-    volunteeringType?.replace('İ', 'I')
-
-  const volunteeringLabelKey =
-    normalizedVolunteeringType
-      ? VOLUNTEERING_TYPE_LABEL_KEYS[
-          normalizedVolunteeringType
-        ]
-      : null
-
-  const volunteeringLabel =
-    volunteeringLabelKey
-      ? t(volunteeringLabelKey)
-      : normalizedVolunteeringType
-
-  const volunteeringModifier =
-    normalizedVolunteeringType === 'Individual'
-      ? 'individual'
-      : normalizedVolunteeringType === 'Team'
-        ? 'team'
-        : null
-
-  // =========================
-  // RENDER
-  // =========================
+  /* =========================================================
+     CARD
+  ========================================================= */
 
   return (
-    <div
-      className="opportunity-card"
-      ref={cardRef}
-    >
+    <>
+      <article
+        ref={cardRef}
+        className="opportunity-card"
+        onClick={openDetail}
+      >
+        {/* =================================================
+            TOP
+        ================================================= */}
 
-      {/* TOP */}
+        <div className="opportunity-card__top">
+          <div className="opportunity-card__category">
+            {translatedCategory ||
+              typeDetail ||
+              type ||
+              "Opportunity"}
+          </div>
 
-      <div className="opportunity-card__top">
-
-        <div className="opportunity-card__top-row">
-
-          <span className="opportunity-card__tag opportunity-card__tag--flag opportunity-card__tag--flag-top">
-            <FlagIcon location={location} />
-          </span>
-
-          <div className="opportunity-card__icons">
-
-            {/* LIKE */}
-
+          <div className="opportunity-card__actions">
             <button
-              className={`opportunity-card__icon-btn opportunity-card__icon-btn--heart${
-                liked ? ' is-active' : ''
+              type="button"
+              className={`opportunity-card__icon-btn ${
+                liked
+                  ? "opportunity-card__icon-btn--active"
+                  : ""
               }`}
-              onClick={toggleLike}
-              aria-label="Bəyən"
+              onClick={handleLike}
+              aria-label={t("like") || "Like"}
             >
-              <HeartIcon active={liked} />
+              <Heart
+                size={18}
+                fill={liked ? "currentColor" : "none"}
+              />
             </button>
 
-            {/* SAVE */}
-
             <button
-              className={`opportunity-card__icon-btn opportunity-card__icon-btn--bookmark${
-                saved ? ' is-active' : ''
+              type="button"
+              className={`opportunity-card__icon-btn ${
+                saved
+                  ? "opportunity-card__icon-btn--active"
+                  : ""
               }`}
-              onClick={toggleSave}
-              aria-label="Yadda saxla"
+              onClick={handleSave}
+              aria-label={t("save") || "Save"}
             >
-              <BookmarkIcon active={saved} />
+              <Bookmark
+                size={18}
+                fill={saved ? "currentColor" : "none"}
+              />
             </button>
-
           </div>
         </div>
 
-        <h3
-          className="opportunity-card__title"
-          data-tooltip={title}
-        >
+        {/* =================================================
+            TITLE
+        ================================================= */}
+
+        <h3 className="opportunity-card__title">
           {title}
         </h3>
 
-      </div>
+        {/* =================================================
+            META
+        ================================================= */}
 
-      {/* TOPICS / TAGS */}
-
-      <div className="opportunity-card__topic">
-
-        <div className="opportunity-card__tags">
-
-          {formatLabel && (
-            <span
-              className={`opportunity-card__tag opportunity-card__tag--type${
-                formatModifier
-                  ? ` opportunity-card__tag--${formatModifier}`
-                  : ''
-              }`}
-            >
-              {formatLabel}
-            </span>
+        <div className="opportunity-card__meta">
+          {translatedLocation && (
+            <div className="opportunity-card__meta-item">
+              <MapPin size={15} />
+              <span>{translatedLocation}</span>
+            </div>
           )}
 
-          {typeLabel && (
-            <span
-              className="opportunity-card__tag opportunity-card__category-badge"
-              style={getCategoryStyle(type)}
-            >
-              {typeLabel}
-            </span>
+          {deadline && (
+            <div className="opportunity-card__meta-item">
+              <CalendarDays size={15} />
+              <span>{deadline}</span>
+            </div>
           )}
-
-          {categories.map(cat => (
-            <span
-              key={cat}
-              className="opportunity-card__tag opportunity-card__category-badge"
-              style={getCategoryStyle(cat)}
-            >
-              {translateCategory(cat, lang)}
-            </span>
-          ))}
-
-          {escSaltoModifier && (
-            <span
-              className={`opportunity-card__tag opportunity-card__tag--${escSaltoModifier}`}
-            >
-              {escSaltoLabel}
-            </span>
-          )}
-
-          {volunteeringModifier && (
-            <span
-              className={`opportunity-card__tag opportunity-card__tag--${volunteeringModifier}`}
-            >
-              {volunteeringLabel}
-            </span>
-          )}
-
         </div>
 
-      </div>
+        {/* =================================================
+            EVENT DATE
+        ================================================= */}
 
-      <div className="opportunity-card__divider" />
-
-      {/* FOOTER */}
-
-      <div className="opportunity-card__footer">
-
-        <div className="opportunity-card__footer-top">
-
-          <div className="opportunity-card__dates">
-
-            <div className="opportunity-card__date-row">
-
-              {t('card_deadline')} {formattedDeadline}{' '}
-
-              {daysLeft !== null && (
-                <span
-                  className={`opportunity-card__days-left${
-                    isUrgent
-                      ? ' opportunity-card__days-left--urgent'
-                      : ''
-                  }`}
-                >
-                  {isUrgent && <WarningIcon />}
-
-                  {daysLeft}{' '}
-
-                  {t('card_days_left')}
-                </span>
-              )}
-
-            </div>
-
-            <div className="opportunity-card__date-row opportunity-card__date-row--muted">
-
-              {t('card_event_date')}{' '}
-
-              {eventDateRange || dateNotSpecified}
-
-            </div>
-
+        {eventDateRange && (
+          <div className="opportunity-card__date">
+            <CalendarDays size={15} />
+            <span>{eventDateRange}</span>
           </div>
+        )}
 
-          <StatusSelector
-            opportunity={opportunity}
-            t={t}
-          />
+        {/* =================================================
+            EXTRA INFO
+        ================================================= */}
 
-        </div>
+        {(escOrSalto || volunteeringType) && (
+          <div className="opportunity-card__tags">
+            {escOrSalto && (
+              <span className="opportunity-card__tag">
+                {escOrSalto}
+              </span>
+            )}
 
-        {/* ACTIONS */}
+            {volunteeringType && (
+              <span className="opportunity-card__tag">
+                {volunteeringType}
+              </span>
+            )}
+          </div>
+        )}
 
-        <div className="opportunity-card__footer-actions">
+        {/* =================================================
+            FOOTER
+        ================================================= */}
 
+        <div className="opportunity-card__footer">
           <button
             type="button"
             className="opportunity-card__detail-btn"
             onClick={openDetail}
           >
-            {t('card_view_details') ||
-              'Ətraflı bax'}
+            {t("card_view_details") || "Ətraflı bax"}
           </button>
 
-          {applyLink ? (
-
-            <a
-              href={applyLink}
-              target="_blank"
-              rel="noopener noreferrer"
+          {applyLink && (
+            <button
+              type="button"
               className="opportunity-card__apply-btn"
               onClick={handleApplyClick}
             >
-              {t('card_apply')}
+              {t("apply") || "Müraciət et"}
 
-              <ArrowIcon />
-
-            </a>
-
-          ) : (
-
-            <span className="opportunity-card__apply-btn opportunity-card__apply-btn--disabled">
-
-              {t('card_apply')}
-
-              <ArrowIcon />
-
-            </span>
-
+              <ExternalLink size={15} />
+            </button>
           )}
-
         </div>
+      </article>
 
-      </div>
-
-      {/* DETAIL MODAL */}
-
-      <OpportunityDetailModal
-        opportunity={mergedDetailOpportunity}
-        loading={detailLoading}
-        open={showDetail}
-        onClose={closeDetail}
-
-        onRequireAuth={() => {
-          closeDetail()
-          setShowAuthPrompt(true)
-        }}
-
-        onToggleLike={toggleLike}
-        onToggleSave={toggleSave}
-
-        liked={liked}
-        saved={saved}
-      />
-
-      {/* AUTH MODAL */}
+      {/* =====================================================
+          AUTH PROMPT
+      ===================================================== */}
 
       <AuthPromptModal
         open={showAuthPrompt}
-        onClose={() =>
-          setShowAuthPrompt(false)
-        }
+        onClose={() => setShowAuthPrompt(false)}
       />
 
-      {/* APPLY CONFIRM MODAL */}
+      {/* =====================================================
+          APPLY CONFIRM
+      ===================================================== */}
 
       <ApplyConfirmModal
         open={showApplyConfirm}
-        onCancel={() =>
-          setShowApplyConfirm(false)
-        }
+        onClose={() => setShowApplyConfirm(false)}
         onConfirm={confirmApply}
+        opportunity={opportunity}
       />
-
-    </div>
-  )
+    </>
+  );
 }
