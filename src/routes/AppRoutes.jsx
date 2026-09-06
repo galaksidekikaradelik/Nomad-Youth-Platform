@@ -3,7 +3,6 @@ import ProfileCompletionGate from "../layouts/ProfileCompletionGate";
 
 import Home from "../pages/Home";
 import Opportunities from "../pages/Opportunities";
-import OpportunityDetailsPage from "../pages/OpportunityDetailsPage";
 
 import About from "../pages/About";
 import Contact from "../pages/Contact";
@@ -20,20 +19,15 @@ import NotFound from "../pages/NotFound";
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Email verification */}
       <Route path="/verify-email" element={<VerifyEmail />} />
 
       <Route element={<ProfileCompletionGate />}>
-        {/* Main pages */}
         <Route path="/" element={<Home />} />
 
-        {/* Opportunities list */}
         <Route path="/opportunities" element={<Opportunities />} />
-
-        {/* Single opportunity */}
         <Route
           path="/opportunities/:opportunityId"
-          element={<OpportunityDetailsPage />}
+          element={<Opportunities />}
         />
 
         <Route path="/about" element={<About />} />
@@ -48,8 +42,6 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
-
-      {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

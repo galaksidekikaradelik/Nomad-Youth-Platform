@@ -1,641 +1,428 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-
-import { useLanguage } from "../context/LanguageContext";
-import { useAuth } from "../context/AuthContext";
-
-import apiClient from "../api/apiClient";
+import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import { useLanguage } from '../hooks/useLanguage'
+import { translateCategory } from '../data/categoryTranslation'
+import { getCategoryStyle } from '../utils/categoryStyle'
+import { trackOpportunityView, trackOpportunityApply } from '../services/analytics'
+import {
+  translateFinancialSupport,
+  translateDuration,
+  translateLanguageField,
+} from '../data/opportunityValueTranslations'
 
 import {
-  ArrowLeft,
-  Heart,
-  Bookmark,
-  MapPin,
-  CalendarDays,
-  Clock,
-  Languages,
-  Wallet,
-  ExternalLink,
-  Loader2,
-} from "lucide-react";
+  translateCity,
+  translateCountry,
+} from '../data/locationTranslation'
 
-import { translateCategory } from "../data/categoryTranslation";
-import { translateCountry } from "../data/locationTranslation";
+const HeartIcon = ({ active }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill={active ? 'currentColor' : 'none'}
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z" />
+  </svg>
+)
 
-export default function OpportunityDetailsPage() {
-  const { opportunityId } = useParams();
-  const navigate = useNavigate();
+const BookmarkIcon = ({ active }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill={active ? 'currentColor' : 'none'}
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+  </svg>
+)
 
-  const { lang, t } = useLanguage();
-  const { user } = useAuth();
+const ArrowIcon = () => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+)
 
-  const [opportunity, setOpportunity] = useState(null);
+const CalendarIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M16 2v4M8 2v4M3 10h18" />
+  </svg>
+)
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+const PinIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+    <circle cx="12" cy="10" r="3" />
+  </svg>
+)
 
-  const [liked, setLiked] = useState(false);
-  const [saved, setSaved] = useState(false);
+const ClockIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+)
 
-  /* =========================================================
-     FETCH OPPORTUNITY
-  ========================================================= */
+const GlobeIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z" />
+  </svg>
+)
+
+const DateRangeIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect x="3" y="4" width="18" height="18" rx="2" />
+    <path d="M16 2v4M8 2v4M3 10h18M8 14h2M14 14h2" />
+  </svg>
+)
+
+const CoinIcon = () => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v10M9 9.5c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5-1.3 2.5-3 2.5-3 1-3 2.5 1.3 2.5 3 2.5 3-1 3-2.5" />
+  </svg>
+)
+
+function InfoItem({ icon, label, value }) {
+  if (!value) return null
+
+  return (
+    <div className="detail-modal__info-item">
+      <div className="detail-modal__info-icon">
+        {icon}
+      </div>
+
+      <div className="detail-modal__info-text">
+        <span className="detail-modal__info-label">
+          {label}
+        </span>
+
+        <span className="detail-modal__info-value">
+          {value}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export default function OpportunityDetailModal({
+  opportunity,
+  open,
+  onClose,
+  onToggleLike,
+  onToggleSave,
+  liked,
+  saved,
+}) {
+  const { t, lang } = useLanguage()
 
   useEffect(() => {
-    let cancelled = false;
-
-    const fetchOpportunity = async () => {
-      if (!opportunityId) {
-        setError("Opportunity ID tapılmadı.");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        setError("");
-
-        const response = await apiClient.get(
-          `/opportunities/${opportunityId}/details`,
-          {
-            params: {
-              userId: user?.id,
-              lang,
-            },
-          }
-        );
-
-        if (cancelled) return;
-
-        const data =
-          response?.data?.data ??
-          response?.data ??
-          null;
-
-        if (!data) {
-          setError(
-            t("opportunity_not_found") ||
-              "İmkan tapılmadı."
-          );
-          return;
-        }
-
-        setOpportunity(data);
-
-        /*
-         * Backend detail response-da bunlardan biri varsa
-         * initial state kimi götürürük.
-         */
-        setLiked(
-          Boolean(
-            data.liked ??
-            data.isLiked ??
-            data.userLiked ??
-            false
-          )
-        );
-
-        setSaved(
-          Boolean(
-            data.saved ??
-            data.isSaved ??
-            data.userSaved ??
-            false
-          )
-        );
-      } catch (err) {
-        console.error(
-          "Failed to load opportunity:",
-          err
-        );
-
-        if (!cancelled) {
-          setError(
-            err?.response?.status === 404
-              ? t("opportunity_not_found") ||
-                  "İmkan tapılmadı."
-              : t("opportunity_load_error") ||
-                  "İmkanı yükləmək mümkün olmadı."
-          );
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchOpportunity();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [opportunityId, user?.id, lang, t]);
-
-  /* =========================================================
-     LIKE
-  ========================================================= */
-
-  const handleLike = async () => {
-    if (!user) {
-      return;
+    if (open && opportunity) {
+      trackOpportunityView(opportunity)
     }
+  }, [open, opportunity?.id])
 
-    try {
-      /*
-       * Sənin mövcud like endpoint-in fərqlidirsə,
-       * burada həmin endpoint-i istifadə etmək lazımdır.
-       *
-       * Hazırda kartdakı useLike hook-un davranışına
-       * toxunmamaq üçün sadə UI state saxlayırıq.
-       */
-
-      setLiked((prev) => !prev);
-    } catch (err) {
-      console.error("Like error:", err);
-    }
-  };
-
-  /* =========================================================
-     SAVE
-  ========================================================= */
-
-  const handleSave = async () => {
-    if (!user) {
-      return;
-    }
-
-    try {
-      setSaved((prev) => !prev);
-    } catch (err) {
-      console.error("Save error:", err);
-    }
-  };
-
-  /* =========================================================
-     APPLY
-  ========================================================= */
-
-  const handleApply = () => {
-    if (!opportunity?.applyLink) {
-      return;
-    }
-
-    window.open(
-      opportunity.applyLink,
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
-
-  /* =========================================================
-     LOADING
-  ========================================================= */
-
-  if (loading) {
-    return (
-      <main className="opportunity-details-page">
-        <div className="opportunity-details-page__loading">
-          <Loader2
-            size={32}
-            className="opportunity-details-page__spinner"
-          />
-
-          <p>
-            {t("loading") || "Yüklənir..."}
-          </p>
-        </div>
-      </main>
-    );
-  }
-
-  /* =========================================================
-     ERROR
-  ========================================================= */
-
-  if (error || !opportunity) {
-    return (
-      <main className="opportunity-details-page">
-        <div className="opportunity-details-page__error">
-          <h1>
-            {t("opportunity_not_found") ||
-              "İmkan tapılmadı"}
-          </h1>
-
-          <p>
-            {error ||
-              t("opportunity_load_error") ||
-              "İmkanı yükləmək mümkün olmadı."}
-          </p>
-
-          <button
-            type="button"
-            onClick={() =>
-              navigate("/opportunities")
-            }
-          >
-            <ArrowLeft size={17} />
-            {t("back_to_opportunities") ||
-              "İmkanlara qayıt"}
-          </button>
-        </div>
-      </main>
-    );
-  }
-
-  /* =========================================================
-     DATA
-  ========================================================= */
+  if (!open || !opportunity) return null
 
   const {
     title,
+    format,
     category,
-    type,
-    typeDetail,
-
+    city,
     country,
-    location,
-
     deadline,
     applyLink,
-
     description,
     descriptionTranslations,
-
     duration,
     language,
-
     eventDateRange,
     financialSupport,
+  } = opportunity
 
-    organization,
-    organizer,
-    organizationName,
+  const locale =
+    lang === 'en'
+      ? 'en-GB'
+      : lang === 'ru'
+        ? 'ru-RU'
+        : 'az-AZ'
 
-    visaType,
-    durationType,
+  const formattedDeadline = deadline
+    ? new Date(deadline).toLocaleDateString(locale, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      })
+    : null
 
-    escOrSalto,
-    volunteeringType,
-  } = opportunity;
+  const typeLabel =
+    format === 'Online'
+      ? t('type_online')
+      : format === 'Offline'
+        ? t('type_offline')
+        : format
+
+  const categories = Array.isArray(category)
+    ? category
+    : category
+      ? [category]
+      : []
 
   const translatedDescription =
-    descriptionTranslations?.[lang] ||
-    description ||
-    "";
+    descriptionTranslations?.[lang]
 
-  const translatedCategory =
-    translateCategory(category, lang) ||
-    category ||
-    typeDetail ||
-    type ||
-    "";
+  const fallbackDescription =
+    descriptionTranslations?.az || description
+
+  const showingFallback =
+    !translatedDescription && lang !== 'az'
+
+  const descriptionToShow =
+    translatedDescription || fallbackDescription
+
+  const translatedCity =
+    translateCity(city, lang)
+
+  const translatedCountry =
+    translateCountry(country, lang)
 
   const translatedLocation =
-    translateCountry(
-      country || location,
-      lang
-    ) ||
-    country ||
-    location ||
-    "";
+    translatedCity && translatedCountry
+      ? `${translatedCity}, ${translatedCountry}`
+      : translatedCity || translatedCountry
 
-  const displayOrganization =
-    organization?.name ||
-    organizationName ||
-    organizer?.name ||
-    "";
+  const translatedLanguage =
+    translateLanguageField(language, lang)
 
-  /* =========================================================
-     PAGE
-  ========================================================= */
+  const translatedFinancialSupport =
+    translateFinancialSupport(financialSupport, lang)
 
-  return (
-    <main className="opportunity-details-page">
-      <div className="opportunity-details-page__container">
+  const translatedDuration =
+    translateDuration(duration, lang)
 
-        {/* ===================================================
-            BACK
-        =================================================== */}
-
+  return createPortal(
+    <div
+      className="detail-modal-overlay"
+      onClick={onClose}
+    >
+      <div
+        className="detail-modal"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
-          type="button"
-          className="opportunity-details-page__back"
-          onClick={() =>
-            navigate("/opportunities")
-          }
+          className="detail-modal__close"
+          onClick={onClose}
+          aria-label="Bağla"
         >
-          <ArrowLeft size={18} />
-
-          {t("back_to_opportunities") ||
-            "İmkanlara qayıt"}
+          ×
         </button>
 
-        {/* ===================================================
-            HEADER
-        =================================================== */}
+        <div className="detail-modal__header">
+          <span className="detail-modal__location">
+            {translatedLocation}
+          </span>
 
-        <header className="opportunity-details-page__header">
-
-          <div className="opportunity-details-page__category">
-            {translatedCategory}
-          </div>
-
-          <h1 className="opportunity-details-page__title">
+          <h2 className="detail-modal__title">
             {title}
-          </h1>
+          </h2>
 
-          {displayOrganization && (
-            <div className="opportunity-details-page__organization">
-              {displayOrganization}
-            </div>
-          )}
-
-          <div className="opportunity-details-page__actions">
-
-            <button
-              type="button"
-              className={`opportunity-details-page__action ${
-                liked
-                  ? "opportunity-details-page__action--active"
-                  : ""
-              }`}
-              onClick={handleLike}
-              title={
-                t("like") || "Bəyən"
-              }
-            >
-              <Heart
-                size={19}
-                fill={
-                  liked
-                    ? "currentColor"
-                    : "none"
-                }
-              />
-
-              <span>
-                {liked
-                  ? t("liked") || "Bəyənildi"
-                  : t("like") || "Bəyən"}
+          <div className="detail-modal__tags">
+            {typeLabel && (
+              <span className="opportunity-card__tag opportunity-card__tag--type">
+                {typeLabel}
               </span>
-            </button>
-
-            <button
-              type="button"
-              className={`opportunity-details-page__action ${
-                saved
-                  ? "opportunity-details-page__action--active"
-                  : ""
-              }`}
-              onClick={handleSave}
-              title={
-                t("save") || "Yadda saxla"
-              }
-            >
-              <Bookmark
-                size={19}
-                fill={
-                  saved
-                    ? "currentColor"
-                    : "none"
-                }
-              />
-
-              <span>
-                {saved
-                  ? t("saved") || "Saxlanıldı"
-                  : t("save") || "Yadda saxla"}
-              </span>
-            </button>
-
-          </div>
-        </header>
-
-        {/* ===================================================
-            INFO GRID
-        =================================================== */}
-
-        <section className="opportunity-details-page__info">
-
-          {deadline && (
-            <div className="opportunity-details-page__info-item">
-              <CalendarDays size={19} />
-
-              <div>
-                <span>
-                  {t("deadline") || "Son tarix"}
-                </span>
-
-                <strong>
-                  {deadline}
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {translatedLocation && (
-            <div className="opportunity-details-page__info-item">
-              <MapPin size={19} />
-
-              <div>
-                <span>
-                  {t("location") || "Məkan"}
-                </span>
-
-                <strong>
-                  {translatedLocation}
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {duration && (
-            <div className="opportunity-details-page__info-item">
-              <Clock size={19} />
-
-              <div>
-                <span>
-                  {t("duration") || "Müddət"}
-                </span>
-
-                <strong>
-                  {duration}
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {language && (
-            <div className="opportunity-details-page__info-item">
-              <Languages size={19} />
-
-              <div>
-                <span>
-                  {t("language") || "Dil"}
-                </span>
-
-                <strong>
-                  {language}
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {eventDateRange && (
-            <div className="opportunity-details-page__info-item">
-              <CalendarDays size={19} />
-
-              <div>
-                <span>
-                  {t("event_date") ||
-                    "Tədbir tarixi"}
-                </span>
-
-                <strong>
-                  {eventDateRange}
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {financialSupport && (
-            <div className="opportunity-details-page__info-item">
-              <Wallet size={19} />
-
-              <div>
-                <span>
-                  {t("financial_support") ||
-                    "Maliyyə dəstəyi"}
-                </span>
-
-                <strong>
-                  {financialSupport}
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {visaType && (
-            <div className="opportunity-details-page__info-item">
-              <div>
-                <span>
-                  {t("visa") || "Viza"}
-                </span>
-
-                <strong>
-                  {visaType}
-                </strong>
-              </div>
-            </div>
-          )}
-
-          {durationType && (
-            <div className="opportunity-details-page__info-item">
-              <div>
-                <span>
-                  {t("duration_type") ||
-                    "Müddət tipi"}
-                </span>
-
-                <strong>
-                  {durationType}
-                </strong>
-              </div>
-            </div>
-          )}
-
-        </section>
-
-        {/* ===================================================
-            DESCRIPTION
-        =================================================== */}
-
-        <section className="opportunity-details-page__content">
-
-          <div className="opportunity-details-page__description">
-
-            <h2>
-              {t("description") ||
-                "Təsvir"}
-            </h2>
-
-            {translatedDescription ? (
-              <div
-                className="opportunity-details-page__description-text"
-                dangerouslySetInnerHTML={{
-                  __html:
-                    translatedDescription,
-                }}
-              />
-            ) : (
-              <p>
-                {t("no_description") ||
-                  "Bu imkan üçün təsvir mövcud deyil."}
-              </p>
             )}
 
-          </div>
-
-          {/* =================================================
-              SIDEBAR
-          ================================================= */}
-
-          <aside className="opportunity-details-page__sidebar">
-
-            <div className="opportunity-details-page__apply-card">
-
-              <h3>
-                {t("interested") ||
-                  "Maraqlanırsınız?"}
-              </h3>
-
-              <p>
-                {t("apply_description") ||
-                  "Bu imkan üçün müraciət etmək istəyirsinizsə, aşağıdakı düymədən istifadə edin."}
-              </p>
-
-              <button
-                type="button"
-                className="opportunity-details-page__apply-btn"
-                onClick={handleApply}
-                disabled={!applyLink}
+            {categories.map((cat) => (
+              <span
+                key={cat}
+                className="opportunity-card__tag opportunity-card__category-badge"
+                style={getCategoryStyle(cat)}
               >
-                {t("apply") ||
-                  "Müraciət et"}
-
-                <ExternalLink size={17} />
-              </button>
-
-            </div>
-
-          </aside>
-
-        </section>
-
-        {/* ===================================================
-            EXTRA TAGS
-        =================================================== */}
-
-        {(escOrSalto || volunteeringType) && (
-          <section className="opportunity-details-page__tags">
-
-            {escOrSalto && (
-              <span>
-                {escOrSalto}
+                {translateCategory(cat, lang)}
               </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="detail-modal__divider" />
+
+        {descriptionToShow && (
+          <div className="detail-modal__section">
+            <h4 className="detail-modal__section-title">
+              {t('card_description') || 'Açıqlama'}
+            </h4>
+
+            {showingFallback && (
+              <p className="detail-modal__translation-note">
+                {t('card_description_untranslated')}
+              </p>
             )}
 
-            {volunteeringType && (
-              <span>
-                {volunteeringType}
-              </span>
-            )}
-
-          </section>
+            <p className="detail-modal__description">
+              {descriptionToShow}
+            </p>
+          </div>
         )}
 
+        <div className="detail-modal__info-grid">
+          <InfoItem
+            icon={<CalendarIcon />}
+            label={t('card_deadline')}
+            value={formattedDeadline}
+          />
+
+          <InfoItem
+            icon={<PinIcon />}
+            label={t('card_location')}
+            value={translatedLocation}
+          />
+
+          <InfoItem
+            icon={<ClockIcon />}
+            label={t('card_duration')}
+            value={translatedDuration}
+          />
+
+          <InfoItem
+            icon={<GlobeIcon />}
+            label={t('card_language')}
+            value={translatedLanguage}
+          />
+
+          <InfoItem
+            icon={<DateRangeIcon />}
+            label={t('card_event_date_range')}
+            value={eventDateRange}
+          />
+
+          <InfoItem
+            icon={<CoinIcon />}
+            label={t('card_financial_support')}
+            value={translatedFinancialSupport}
+          />
+        </div>
+
+        <div className="detail-modal__divider" />
+
+        <div className="detail-modal__actions">
+
+          <div className="detail-modal__icons">
+
+            {/* LIKE */}
+            <button
+              className={`opportunity-card__icon-btn${liked ? ' is-active' : ''}`}
+              onClick={onToggleLike}
+              aria-label="Bəyən"
+            >
+              <HeartIcon active={liked} />
+            </button>
+
+            {/* SAVE */}
+            <button
+              className={`opportunity-card__icon-btn${saved ? ' is-active' : ''}`}
+              onClick={onToggleSave}
+              aria-label="Yadda saxla"
+            >
+              <BookmarkIcon active={saved} />
+            </button>
+
+          </div>
+
+          {applyLink ? (
+            <a
+              href={applyLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opportunity-card__apply-btn"
+              onClick={() =>
+                trackOpportunityApply(opportunity)
+              }
+            >
+              {t('card_apply')} <ArrowIcon />
+            </a>
+          ) : (
+            <span className="opportunity-card__apply-btn opportunity-card__apply-btn--disabled">
+              {t('card_apply')} <ArrowIcon />
+            </span>
+          )}
+
+        </div>
       </div>
-    </main>
-  );
+    </div>,
+    document.body
+  )
 }

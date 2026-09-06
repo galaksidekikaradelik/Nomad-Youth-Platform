@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 import { useOpportunities } from '../hooks/useOpportunities'
 import { useOpportunityFilters } from '../hooks/useOpportunityFilters'
@@ -13,9 +13,15 @@ export default function Opportunities() {
   const { t, lang } = useLanguage()
   const [searchParams] = useSearchParams()
 
+  // Path-based: /opportunities/:opportunityId (kartdakı navigate(`/opportunities/${id}`) buradan gəlir)
+  const { opportunityId: routeOpportunityId } = useParams()
+
   const initialQuery = searchParams.get('query') || ''
   const initialCategory = searchParams.get('category') || ''
-  const highlightOppKey = searchParams.get('show') || null
+
+  // Əvvəlcə path param-a baxırıq, sonra köhnə ?show= dəstəyini saxlayırıq (sınmasın deyə)
+  const highlightOppKey =
+    routeOpportunityId || searchParams.get('show') || null
 
   const { opportunities, loading, error } = useOpportunities()
 

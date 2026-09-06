@@ -1,58 +1,61 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from 'react'
+import {
+  useNavigate,
+  useParams
+} from 'react-router-dom'
 
-import { useLanguage } from "../context/LanguageContext";
-import { useAuth } from "../context/AuthContext";
-
-import { translateCategory } from "../data/categoryTranslation";
-import { translateCountry } from "../data/locationTranslation";
-
-import { useWishlist } from "../hooks/useWishlist";
-import { useLike } from "../hooks/useLike";
-
-import apiClient from "../api/apiClient";
-
-import ApplyConfirmModal from "./ApplyConfirmModal";
-import AuthPromptModal from "./AuthPromptModal";
+import { useLanguage } from '../hooks/useLanguage'
+import { useAuth } from '../hooks/useAuth'
+import { translateCategory } from '../data/categoryTranslation'
+import { getCategoryStyle } from '../utils/categoryStyle'
+import { useWishlist } from '../hooks/useWishlist'
+import { useLike } from '../hooks/useLike'
+import apiClient from '../services/apiClient'
 
 import {
-  Heart,
-  Bookmark,
-  MapPin,
-  CalendarDays,
-  ExternalLink,
-} from "lucide-react";
+  trackOpportunityClick,
+  trackOpportunitySave,
+  trackOpportunityUnsave,
+  trackOpportunityApply,
+} from '../services/analytics'
+
+import StatusSelector from './StatusSelector'
+import AuthPromptModal from './AuthPromptModal'
+import OpportunityDetailModal from './OpportunityDetailModal'
+import ApplyConfirmModal from './ApplyConfirmModal'
+
+import {
+  HeartIcon,
+  BookmarkIcon,
+  ArrowIcon,
+  WarningIcon,
+  FlagIcon
+} from './OpportunityCardIcons'
+
+import {
+  TYPE_LABEL_KEYS,
+  ESC_SALTO_LABEL_KEYS,
+  VOLUNTEERING_TYPE_LABEL_KEYS
+} from '../data/opportunityCardLabels'
+
+import {
+  getDaysLeft,
+  URGENT_THRESHOLD_DAYS
+} from '../utils/dateHelpers'
+
 
 export default function OpportunityCard({
   opportunity,
-  autoOpenDetail = false,
+  autoOpenDetail = false
 }) {
-  const navigate = useNavigate();
 
-  const { lang, t } = useLanguage();
-  const { user } = useAuth();
+  const navigate = useNavigate()
+  const { opportunityId } = useParams()
 
-  const cardRef = useRef(null);
-
-  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
-  const [showApplyConfirm, setShowApplyConfirm] = useState(false);
+  const { t, lang } = useLanguage()
+  const { user } = useAuth()
 
   const {
-    liked,
-    toggleLike,
-  } = useLike(opportunity?.id);
-
-  const {
-    saved,
-    toggleSave,
-  } = useWishlist(opportunity?.id);
-
-  if (!opportunity) {
-    return null;
-  }
-
-  const {
-    id,
     title,
     typeDetail,
     category,
@@ -63,278 +66,691 @@ export default function OpportunityCard({
     eventDateRange,
     escOrSalto,
     volunteeringType,
-  } = opportunity;
+  } = opportunity
 
-  /* =========================================================
-     TRANSLATIONS
-  ========================================================= */
+  const [showAuthPrompt, setShowAuthPrompt] =
+    useState(false)
 
-  const translatedCategory =
-    translateCategory(category, lang) || category;
+  const [showDetail, setShowDetail] =
+    useState(autoOpenDetail)
 
-  const translatedLocation =
-    translateCountry(location, lang) || location;
+  const [showApplyConfirm, setShowApplyConfirm] =
+    useState(false)
 
-  /* =========================================================
-     AUTO OPEN
-     
-     Əgər köhnə sistemdən hansısa yerdə
-     autoOpenDetail istifadə olunursa, artıq modal yox,
-     detail page-ə redirect edirik.
-  ========================================================= */
+  const [detailData, setDetailData] =
+    useState(null)
+
+  const [detailLoading, setDetailLoading] =
+    useState(false)
+
+  const cardRef = useRef(null)
+
+
+  // =====================================================
+  // OPEN DETAIL FROM URL
+  // =====================================================
 
   useEffect(() => {
-    if (!autoOpenDetail || !id) return;
 
-    navigate(`/opportunities/${id}`, {
-      replace: true,
-    });
-  }, [autoOpenDetail, id, navigate]);
+    if (!opportunityId) return
+    if (!opportunity?.id) return
 
-  /* =========================================================
-     DETAILS
-  ========================================================= */
-
-  const openDetail = (e) => {
-    e?.stopPropagation();
-
-    if (!id) return;
-
-    navigate(`/opportunities/${id}`);
-  };
-
-  /* =========================================================
-     LIKE
-  ========================================================= */
-
-  const handleLike = async (e) => {
-    e.stopPropagation();
-
-    if (!user) {
-      setShowAuthPrompt(true);
-      return;
+    if (
+      String(opportunity.id) !==
+      String(opportunityId)
+    ) {
+      return
     }
+
+    openDetailFromUrl()
+
+  }, [
+    opportunityId,
+    opportunity?.id,
+    user?.id,
+    lang
+  ])
+
+
+  async function openDetailFromUrl() {
+
+    setShowDetail(true)
+
+    if (!opportunity?.id) return
+
+    setDetailLoading(true)
 
     try {
-      await toggleLike();
-    } catch (error) {
-      console.error("Like error:", error);
+
+      const res = await apiClient.get(
+        `/opportunities/${opportunity.id}/details`,
+        {
+          params: {
+            userId: user?.id,
+            lang,
+          },
+        }
+      )
+
+      setDetailData(res.data)
+
+      setTimeout(() => {
+
+        cardRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        })
+
+      }, 100)
+
+    } catch (err) {
+
+      console.error(
+        'Opportunity detail fetch failed:',
+        err
+      )
+
+    } finally {
+
+      setDetailLoading(false)
+
     }
-  };
+  }
 
-  /* =========================================================
-     SAVE
-  ========================================================= */
+  const {
+    likedIds,
+    toggleLike: toggleLikeRemote
+  } = useLike()
 
-  const handleSave = async (e) => {
-    e.stopPropagation();
+  const liked = opportunity.id
+    ? likedIds.has(opportunity.id)
+    : false
+
+
+  function toggleLike(e) {
+
+    e?.stopPropagation()
 
     if (!user) {
-      setShowAuthPrompt(true);
-      return;
+      setShowAuthPrompt(true)
+      return
     }
 
-    try {
-      await toggleSave();
-    } catch (error) {
-      console.error("Save error:", error);
-    }
-  };
+    if (!opportunity.id) return
 
-  /* =========================================================
-     APPLY
-  ========================================================= */
+    toggleLikeRemote(opportunity)
+  }
 
-  const handleApplyClick = (e) => {
-    e.stopPropagation();
 
-    if (!applyLink) {
-      return;
-    }
+  // =====================================================
+  // SAVE
+  // =====================================================
+
+  const {
+    savedIds,
+    toggleSave: toggleWishlist
+  } = useWishlist()
+
+  const saved = opportunity.id
+    ? savedIds.has(opportunity.id)
+    : false
+
+
+  function toggleSave(e) {
+
+    e?.stopPropagation()
 
     if (!user) {
-      setShowAuthPrompt(true);
-      return;
+      setShowAuthPrompt(true)
+      return
     }
 
-    setShowApplyConfirm(true);
-  };
+    if (!opportunity.id) return
 
-  const confirmApply = () => {
-    setShowApplyConfirm(false);
+    if (saved) {
+      trackOpportunityUnsave(opportunity)
+    } else {
+      trackOpportunitySave(opportunity)
+    }
 
-    if (!applyLink) return;
+    toggleWishlist(opportunity)
+  }
+
+
+  // =====================================================
+  // APPLY
+  // =====================================================
+
+  function handleApplyClick(e) {
+
+    e.stopPropagation()
+    e.preventDefault()
+
+    if (!applyLink) return
+
+    setShowApplyConfirm(true)
+  }
+
+
+  function confirmApply() {
+
+    trackOpportunityApply(opportunity)
+
+    setShowApplyConfirm(false)
 
     window.open(
       applyLink,
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
+      '_blank',
+      'noopener,noreferrer'
+    )
+  }
 
-  /* =========================================================
-     CARD
-  ========================================================= */
+
+  // =====================================================
+  // OPEN DETAIL
+  // =====================================================
+
+  function openDetail(e) {
+
+    e.stopPropagation()
+
+    if (!opportunity?.id) return
+
+    trackOpportunityClick(opportunity)
+
+    navigate(
+      `/opportunities/${opportunity.id}`
+    )
+  }
+
+
+  // =====================================================
+  // CLOSE DETAIL
+  // =====================================================
+
+  function closeDetail() {
+
+    setShowDetail(false)
+    setDetailData(null)
+
+    /*
+     * URL-dən detail açılıbsa,
+     * bağlayanda /opportunities səhifəsinə qayıdırıq.
+     */
+
+    if (opportunityId) {
+
+      navigate(
+        '/opportunities',
+        {
+          replace: true
+        }
+      )
+
+    }
+  }
+
+
+  // =====================================================
+  // MERGE DETAIL DATA
+  // =====================================================
+
+  const mergedDetailOpportunity =
+    detailData
+      ? {
+          ...opportunity,
+
+          deadline:
+            detailData.deadline ??
+            opportunity.deadline,
+
+          applyLink:
+            detailData.applyLink ??
+            opportunity.applyLink,
+
+          description:
+            detailData.description ??
+            opportunity.description,
+
+          descriptionTranslations: {
+            ...opportunity.descriptionTranslations,
+
+            [lang]:
+              detailData.description ??
+              opportunity
+                .descriptionTranslations?.[lang],
+          },
+
+          duration:
+            detailData.duration ?? null,
+
+          language:
+            detailData.language ?? null,
+
+          eventDateRange:
+            detailData.eventDateRange ?? null,
+
+          financialSupport:
+            detailData.financialSupport ?? null,
+        }
+      : opportunity
+
+
+  // =====================================================
+  // DATE
+  // =====================================================
+
+  const locale =
+    lang === 'en'
+      ? 'en-GB'
+      : lang === 'ru'
+        ? 'ru-RU'
+        : 'az-AZ'
+
+
+  const dateNotSpecified =
+    t('date_not_specified') ||
+    'Müəyyən olunmayıb'
+
+
+  const formattedDeadline =
+    deadline
+      ? new Date(deadline).toLocaleDateString(
+          locale,
+          {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          }
+        )
+      : dateNotSpecified
+
+
+  const daysLeft =
+    getDaysLeft(deadline)
+
+
+  const isUrgent =
+    daysLeft !== null &&
+    daysLeft <= URGENT_THRESHOLD_DAYS
+
+
+  // =====================================================
+  // FORMAT
+  // =====================================================
+
+  const formatLabel =
+    typeDetail === 'Online'
+      ? t('type_online')
+      : typeDetail === 'Offline'
+        ? t('type_offline')
+        : typeDetail
+
+
+  const formatModifier =
+    typeDetail === 'Online'
+      ? 'online'
+      : typeDetail === 'Offline'
+        ? 'offline'
+        : null
+
+
+  // =====================================================
+  // TYPE
+  // =====================================================
+
+  const typeLabelKey =
+    type
+      ? TYPE_LABEL_KEYS[type]
+      : null
+
+
+  const typeLabel =
+    typeLabelKey
+      ? t(typeLabelKey)
+      : type
+
+
+  // =====================================================
+  // CATEGORY
+  // =====================================================
+
+  const categories =
+    Array.isArray(category)
+      ? category
+      : category
+        ? [category]
+        : []
+
+
+  // =====================================================
+  // ESC / SALTO
+  // =====================================================
+
+  const escSaltoLabelKey =
+    escOrSalto
+      ? ESC_SALTO_LABEL_KEYS[escOrSalto]
+      : null
+
+
+  const escSaltoLabel =
+    escSaltoLabelKey
+      ? t(escSaltoLabelKey)
+      : escOrSalto
+
+
+  const escSaltoModifier =
+    escOrSalto === 'ESC'
+      ? 'esc'
+      : escOrSalto === 'SALTO'
+        ? 'salto'
+        : null
+
+
+  // =====================================================
+  // VOLUNTEERING TYPE
+  // =====================================================
+
+  const normalizedVolunteeringType =
+    volunteeringType?.replace('İ', 'I')
+
+
+  const volunteeringLabelKey =
+    normalizedVolunteeringType
+      ? VOLUNTEERING_TYPE_LABEL_KEYS[
+          normalizedVolunteeringType
+        ]
+      : null
+
+
+  const volunteeringLabel =
+    volunteeringLabelKey
+      ? t(volunteeringLabelKey)
+      : normalizedVolunteeringType
+
+
+  const volunteeringModifier =
+    normalizedVolunteeringType === 'Individual'
+      ? 'individual'
+      : normalizedVolunteeringType === 'Team'
+        ? 'team'
+        : null
+
+
+  // =====================================================
+  // RENDER
+  // =====================================================
 
   return (
-    <>
-      <article
-        ref={cardRef}
-        className="opportunity-card"
-        onClick={openDetail}
-      >
-        {/* =================================================
-            TOP
-        ================================================= */}
+    <div
+      className="opportunity-card"
+      ref={cardRef}
+    >
 
-        <div className="opportunity-card__top">
-          <div className="opportunity-card__category">
-            {translatedCategory ||
-              typeDetail ||
-              type ||
-              "Opportunity"}
-          </div>
+      {/* TOP */}
 
-          <div className="opportunity-card__actions">
-            <button
-              type="button"
-              className={`opportunity-card__icon-btn ${
-                liked
-                  ? "opportunity-card__icon-btn--active"
-                  : ""
-              }`}
-              onClick={handleLike}
-              aria-label={t("like") || "Like"}
-            >
-              <Heart
-                size={18}
-                fill={liked ? "currentColor" : "none"}
-              />
-            </button>
+      <div className="opportunity-card__top">
+
+        <div className="opportunity-card__top-row">
+
+          <span className="opportunity-card__tag opportunity-card__tag--flag opportunity-card__tag--flag-top">
+            <FlagIcon location={location} />
+          </span>
+
+          <div className="opportunity-card__icons">
+
+            {/* LIKE */}
 
             <button
-              type="button"
-              className={`opportunity-card__icon-btn ${
-                saved
-                  ? "opportunity-card__icon-btn--active"
-                  : ""
+              className={`opportunity-card__icon-btn opportunity-card__icon-btn--heart${
+                liked ? ' is-active' : ''
               }`}
-              onClick={handleSave}
-              aria-label={t("save") || "Save"}
+              onClick={toggleLike}
+              aria-label="Bəyən"
             >
-              <Bookmark
-                size={18}
-                fill={saved ? "currentColor" : "none"}
-              />
+              <HeartIcon active={liked} />
             </button>
+
+
+            {/* SAVE */}
+
+            <button
+              className={`opportunity-card__icon-btn opportunity-card__icon-btn--bookmark${
+                saved ? ' is-active' : ''
+              }`}
+              onClick={toggleSave}
+              aria-label="Yadda saxla"
+            >
+              <BookmarkIcon active={saved} />
+            </button>
+
           </div>
+
         </div>
 
-        {/* =================================================
-            TITLE
-        ================================================= */}
 
-        <h3 className="opportunity-card__title">
+        <h3
+          className="opportunity-card__title"
+          data-tooltip={title}
+        >
           {title}
         </h3>
 
-        {/* =================================================
-            META
-        ================================================= */}
+      </div>
 
-        <div className="opportunity-card__meta">
-          {translatedLocation && (
-            <div className="opportunity-card__meta-item">
-              <MapPin size={15} />
-              <span>{translatedLocation}</span>
-            </div>
+
+      {/* TAGS */}
+
+      <div className="opportunity-card__topic">
+
+        <div className="opportunity-card__tags">
+
+          {formatLabel && (
+            <span
+              className={`opportunity-card__tag opportunity-card__tag--type${
+                formatModifier
+                  ? ` opportunity-card__tag--${formatModifier}`
+                  : ''
+              }`}
+            >
+              {formatLabel}
+            </span>
           )}
 
-          {deadline && (
-            <div className="opportunity-card__meta-item">
-              <CalendarDays size={15} />
-              <span>{deadline}</span>
-            </div>
+
+          {typeLabel && (
+            <span
+              className="opportunity-card__tag opportunity-card__category-badge"
+              style={getCategoryStyle(type)}
+            >
+              {typeLabel}
+            </span>
           )}
+
+
+          {categories.map(cat => (
+
+            <span
+              key={cat}
+              className="opportunity-card__tag opportunity-card__category-badge"
+              style={getCategoryStyle(cat)}
+            >
+              {translateCategory(cat, lang)}
+            </span>
+
+          ))}
+
+
+          {escSaltoModifier && (
+            <span
+              className={`opportunity-card__tag opportunity-card__tag--${escSaltoModifier}`}
+            >
+              {escSaltoLabel}
+            </span>
+          )}
+
+
+          {volunteeringModifier && (
+            <span
+              className={`opportunity-card__tag opportunity-card__tag--${volunteeringModifier}`}
+            >
+              {volunteeringLabel}
+            </span>
+          )}
+
         </div>
 
-        {/* =================================================
-            EVENT DATE
-        ================================================= */}
+      </div>
 
-        {eventDateRange && (
-          <div className="opportunity-card__date">
-            <CalendarDays size={15} />
-            <span>{eventDateRange}</span>
+
+      <div className="opportunity-card__divider" />
+
+
+      {/* FOOTER */}
+
+      <div className="opportunity-card__footer">
+
+        <div className="opportunity-card__footer-top">
+
+          <div className="opportunity-card__dates">
+
+            <div className="opportunity-card__date-row">
+
+              {t('card_deadline')}{' '}
+              {formattedDeadline}{' '}
+
+              {daysLeft !== null && (
+
+                <span
+                  className={`opportunity-card__days-left${
+                    isUrgent
+                      ? ' opportunity-card__days-left--urgent'
+                      : ''
+                  }`}
+                >
+
+                  {isUrgent && (
+                    <WarningIcon />
+                  )}
+
+                  {daysLeft}{' '}
+
+                  {t('card_days_left')}
+
+                </span>
+
+              )}
+
+            </div>
+
+
+            <div className="opportunity-card__date-row opportunity-card__date-row--muted">
+
+              {t('card_event_date')}{' '}
+
+              {eventDateRange ||
+                dateNotSpecified}
+
+            </div>
+
           </div>
-        )}
 
-        {/* =================================================
-            EXTRA INFO
-        ================================================= */}
 
-        {(escOrSalto || volunteeringType) && (
-          <div className="opportunity-card__tags">
-            {escOrSalto && (
-              <span className="opportunity-card__tag">
-                {escOrSalto}
-              </span>
-            )}
+          <StatusSelector
+            opportunity={opportunity}
+            t={t}
+          />
 
-            {volunteeringType && (
-              <span className="opportunity-card__tag">
-                {volunteeringType}
-              </span>
-            )}
-          </div>
-        )}
+        </div>
 
-        {/* =================================================
-            FOOTER
-        ================================================= */}
 
-        <div className="opportunity-card__footer">
+        {/* ACTIONS */}
+
+        <div className="opportunity-card__footer-actions">
+
           <button
             type="button"
             className="opportunity-card__detail-btn"
             onClick={openDetail}
           >
-            {t("card_view_details") || "Ətraflı bax"}
+            {t('card_view_details') ||
+              'Ətraflı bax'}
           </button>
 
-          {applyLink && (
-            <button
-              type="button"
+
+          {applyLink ? (
+
+            <a
+              href={applyLink}
+              target="_blank"
+              rel="noopener noreferrer"
               className="opportunity-card__apply-btn"
               onClick={handleApplyClick}
             >
-              {t("apply") || "Müraciət et"}
+              {t('card_apply')}
 
-              <ExternalLink size={15} />
-            </button>
+              <ArrowIcon />
+
+            </a>
+
+          ) : (
+
+            <span className="opportunity-card__apply-btn opportunity-card__apply-btn--disabled">
+
+              {t('card_apply')}
+
+              <ArrowIcon />
+
+            </span>
+
           )}
-        </div>
-      </article>
 
-      {/* =====================================================
-          AUTH PROMPT
-      ===================================================== */}
+        </div>
+
+      </div>
+
+
+      {/* DETAIL MODAL */}
+
+      <OpportunityDetailModal
+        opportunity={mergedDetailOpportunity}
+        loading={detailLoading}
+        open={showDetail}
+        onClose={closeDetail}
+
+        onRequireAuth={() => {
+          closeDetail()
+          setShowAuthPrompt(true)
+        }}
+
+        onToggleLike={toggleLike}
+        onToggleSave={toggleSave}
+
+        liked={liked}
+        saved={saved}
+      />
+
+
+      {/* AUTH */}
 
       <AuthPromptModal
         open={showAuthPrompt}
-        onClose={() => setShowAuthPrompt(false)}
+        onClose={() =>
+          setShowAuthPrompt(false)
+        }
       />
 
-      {/* =====================================================
-          APPLY CONFIRM
-      ===================================================== */}
+
+      {/* APPLY CONFIRM */}
 
       <ApplyConfirmModal
         open={showApplyConfirm}
-        onClose={() => setShowApplyConfirm(false)}
+        onCancel={() =>
+          setShowApplyConfirm(false)
+        }
         onConfirm={confirmApply}
-        opportunity={opportunity}
       />
-    </>
-  );
+
+    </div>
+  )
 }
