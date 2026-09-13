@@ -1,37 +1,36 @@
 import { Link } from 'react-router-dom'
-import { translateCategory } from '../data/categoryTranslation'
 
 export default function OrganizationCard({
   organization,
   t,
-  lang,
 }) {
   const {
     name,
+    slug,
     tagline,
-    description,
     categories = [],
     location,
     logo,
-    slug,
-
-    // Rating gələcəkdə backend-dən gələcək
     rating = null,
     reviewCount = 0,
-
-    // Gələcəkdə opportunity-lərdən hesablanacaq
     activeOpportunities = 0,
-  } = organization
+  } = organization || {}
 
-  const categoryLabels = categories
-    .map((category) =>
-      translateCategory(category, lang) || category
-    )
+  const categoryLabel = category => {
+    const key = `org_category_${category}`
+
+    const translated = t(key)
+
+    return translated !== key
+      ? translated
+      : category
+  }
 
   return (
     <article className="org-card">
 
-      {/* Header */}
+      {/* TOP */}
+
       <div className="org-card__top">
 
         <div className="org-card__identity">
@@ -40,92 +39,120 @@ export default function OrganizationCard({
             {logo ? (
               <img
                 src={logo}
-                alt={`${name} logo`}
+                alt={name}
                 className="org-card__logo"
               />
             ) : (
               <span>
-                {name?.charAt(0)?.toUpperCase() || 'O'}
+                {name?.charAt(0)?.toUpperCase()}
               </span>
             )}
           </div>
 
-          <div className="org-card__name">
-            {name}
+          <div className="org-card__name-wrap">
+            <h3 className="org-card__name">
+              {name}
+            </h3>
           </div>
 
         </div>
 
-        {/* Rating */}
-        <div className="org-card__rating-block">
-          {rating != null && reviewCount >= 5 ? (
-            <>
-              <div className="org-card__rating">
-                {Number(rating).toFixed(1)} / 10
-              </div>
+        {/* RATING */}
 
-              <div className="org-card__rating-count">
-                {reviewCount}{' '}
-                {t('org_reviews_suffix') ||
-                  'qiymətləndirmə'}
-              </div>
+        <div className="org-card__rating">
+
+          {rating !== null &&
+          reviewCount >= 5 ? (
+            <>
+              <span className="org-card__rating-star">
+                ★
+              </span>
+
+              <span className="org-card__rating-value">
+                {Number(rating).toFixed(1)}
+              </span>
+
+              <span className="org-card__rating-count">
+                ({reviewCount})
+              </span>
             </>
           ) : (
-            <span className="org-card__badge">
-              {t('org_rating_pending') ||
-                'Rating formalaşır'}
+            <span className="org-card__rating-pending">
+              {t('org_rating_pending')}
             </span>
           )}
+
         </div>
 
       </div>
 
-      {/* Tagline */}
-      {tagline && (
+      {/* ABOUT */}
+
+      <div className="org-card__about">
+
+        <h4 className="org-card__section-title">
+          {t('org_about')}
+        </h4>
+
         <p className="org-card__tagline">
-          {tagline}
+          {tagline || '—'}
         </p>
-      )}
 
-      {/* Description */}
-      {description && (
-        <p className="org-card__description">
-          {description}
-        </p>
-      )}
+      </div>
 
-      <div className="org-card__divider" />
+      {/* CATEGORIES */}
 
-      {/* Categories */}
-      {categoryLabels.length > 0 && (
-        <div className="org-card__tags">
-          {categoryLabels.join(' · ')}
+      {categories.length > 0 && (
+        <div className="org-card__categories">
+
+          {categories.map(category => (
+            <span
+              key={category}
+              className="org-card__category"
+            >
+              {categoryLabel(category)}
+            </span>
+          ))}
+
         </div>
       )}
 
-      {/* Location */}
+      {/* LOCATION */}
+
       {location && (
         <div className="org-card__location">
-          📍 {location}
+          <span className="org-card__location-icon">
+            📍
+          </span>
+
+          <span>
+            {location}
+          </span>
         </div>
       )}
 
-      {/* Footer */}
-      <div className="org-card__footer">
+      {/* BOTTOM */}
 
-        <span className="org-card__count">
-          {activeOpportunities}{' '}
-          {t('org_active_opps_suffix') ||
-            'aktiv imkan'}
-        </span>
+      <div className="org-card__bottom">
+
+        <div className="org-card__active">
+
+          <strong>
+            {activeOpportunities}
+          </strong>
+
+          <span>
+            {t('org_active_opportunities')}
+          </span>
+
+        </div>
 
         <Link
-          className="org-card__link"
           to={`/teskilatlar/${slug}`}
+          className="org-card__link"
         >
-          {t('org_profile_link') ||
-            'Profilə keç'}{' '}
-          →
+          {t('org_view_profile')}
+          <span>→</span>
         </Link>
 
       </div>

@@ -718,5 +718,7 @@
   "org_field_technology": "Technology",
   "org_field_entrepreneurship": "Entrepreneurship",
   "org_field_international": "International",
-  "org_field_nonprofit": "Non-profit"
+  "org_field_nonprofit": "Non-profit",
+  "org_rating_pending": "Rating is forming"
+
 }

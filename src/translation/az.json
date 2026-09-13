@@ -602,7 +602,7 @@
   "not_found_title": "Səhifə tapılmadı",
   "not_found_desc": "Axtardığınız səhifə mövcud deyil və ya silinib.",
   "back_home": "Ana səhifəyə qayıt",
-  
+
   "org_loading": "Yüklənir...",
   "org_load_error": "Təşkilatları yükləmək mümkün olmadı",
   "org_empty_title": "Təşkilat tapılmadı",
@@ -648,6 +648,8 @@
   "org_field_technology": "Texnologiya",
   "org_field_entrepreneurship": "Sahibkarlıq",
   "org_field_international": "Beynəlxalq",
-  "org_field_nonprofit": "Qeyri-kommersiya"
+  "org_field_nonprofit": "Qeyri-kommersiya",
+  "org_rating_pending": "Reytinq formalaşır"
+
 
 }

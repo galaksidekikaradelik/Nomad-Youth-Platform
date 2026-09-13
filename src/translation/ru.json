@@ -713,5 +713,7 @@
   "org_field_technology": "Технологии",
   "org_field_entrepreneurship": "Предпринимательство",
   "org_field_international": "Международные",
-  "org_field_nonprofit": "Некоммерческие организации"
+  "org_field_nonprofit": "Некоммерческие организации",
+  "org_rating_pending": "Рейтинг формируется"
+
 }
