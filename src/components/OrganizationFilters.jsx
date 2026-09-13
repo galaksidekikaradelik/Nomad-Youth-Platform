@@ -4,15 +4,21 @@ import {
   ORG_SORT_OPTIONS,
 } from '../utils/organizationFilters.constants'
 
-const FilterChip = ({ label, active, onClick }) => (
-  <button
-    className={`filter-btn${active ? ' active' : ''}`}
-    onClick={onClick}
-    type="button"
-  >
-    {label}
-  </button>
-)
+function FilterChip({
+  label,
+  active,
+  onClick,
+}) {
+  return (
+    <button
+      type="button"
+      className={`filter-btn${active ? ' active' : ''}`}
+      onClick={onClick}
+    >
+      {label}
+    </button>
+  )
+}
 
 export default function OrganizationFilters({
   t,
@@ -26,24 +32,30 @@ export default function OrganizationFilters({
     <div className="filter-group">
       <div className="filter-group__row">
         <span className="filter-group__label">
-          {t('org_field_label') || 'Fəaliyyət sahəsi'}
+          {t('org_field_label') ||
+            'Fəaliyyət sahəsi'}
         </span>
 
         <div className="filter-group__chips">
-          {ORG_CATEGORIES.map(c => (
+          {ORG_CATEGORIES.map(category => (
             <FilterChip
-              key={c.id}
+              key={category.id}
               label={
-                c.labelKey
-                  ? t(c.labelKey)
-                  : translateCategory(c.id, lang)
+                category.labelKey
+                  ? t(category.labelKey)
+                  : translateCategory(
+                      category.id,
+                      lang
+                    )
               }
               active={
-                c.id === ''
+                category.id === ''
                   ? categories.length === 0
-                  : categories.includes(c.id)
+                  : categories.includes(category.id)
               }
-              onClick={() => toggleCategory(c.id)}
+              onClick={() =>
+                toggleCategory(category.id)
+              }
             />
           ))}
         </div>
@@ -61,12 +73,19 @@ export default function OrganizationFilters({
           id="org-sort-select"
           className="search-bar__select filter-group__sort-select"
           value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          aria-label={t('org_sort_label') || 'Sıralama'}
+          onChange={event =>
+            setSort(event.target.value)
+          }
+          aria-label={
+            t('org_sort_label') || 'Sıralama'
+          }
         >
-          {ORG_SORT_OPTIONS.map(o => (
-            <option key={o.id} value={o.id}>
-              {t(o.labelKey)}
+          {ORG_SORT_OPTIONS.map(option => (
+            <option
+              key={option.id}
+              value={option.id}
+            >
+              {t(option.labelKey)}
             </option>
           ))}
         </select>

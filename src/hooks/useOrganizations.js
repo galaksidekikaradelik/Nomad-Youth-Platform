@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-const ORGANIZATIONS_ENDPOINT = '/api/organizations'
+import { useEffect, useState } from 'react'
 
-
+const API_URL =
+  import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
 
 export function useOrganizations() {
   const [organizations, setOrganizations] = useState([])
@@ -11,30 +11,29 @@ export function useOrganizations() {
   useEffect(() => {
     let cancelled = false
 
-    async function load() {
-      setLoading(true)
-      setError(null)
-
+    const fetchOrganizations = async () => {
       try {
-        const res = await fetch(ORGANIZATIONS_ENDPOINT)
+        setLoading(true)
+        setError(null)
 
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`)
+        const response = await fetch(`${API_URL}/organizations`)
+
+        if (!response.ok) {
+          throw new Error(
+            `Organizations request failed: ${response.status}`
+          )
         }
 
-        const data = await res.json()
+        const data = await response.json()
 
         if (!cancelled) {
           setOrganizations(Array.isArray(data) ? data : [])
         }
       } catch (err) {
-        // Backend hələ hazır deyil / xəta var -> mock data ilə davam edirik.
         if (!cancelled) {
-          console.warn(
-            'useOrganizations: API-dan alınmadı, mock data istifadə olunur.',
-            err
-          )
-          setError(null)
+          console.error('Failed to fetch organizations:', err)
+          setError(err)
+          setOrganizations([])
         }
       } finally {
         if (!cancelled) {
@@ -43,12 +42,16 @@ export function useOrganizations() {
       }
     }
 
-    load()
+    fetchOrganizations()
 
     return () => {
       cancelled = true
     }
   }, [])
 
-  return { organizations, loading, error }
+  return {
+    organizations,
+    loading,
+    error,
+  }
 }

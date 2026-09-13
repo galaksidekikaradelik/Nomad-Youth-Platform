@@ -1,115 +1,98 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ORG_PAGE_SIZE } from '../utils/organizationFilters.constants'
 
 export function useOrganizationFilters({
-  organizations,
+  organizations = [],
   initialQuery = '',
-  initialCategory = '',
 }) {
   const [search, setSearch] = useState(initialQuery)
-
-  const [categories, setCategories] = useState(
-    initialCategory ? [initialCategory] : []
-  )
-
-  const [sort, setSort] = useState('rating')
-
+  const [categories, setCategories] = useState([])
+  const [sort, setSort] = useState('rating_desc')
   const [page, setPage] = useState(0)
 
-  const toggleCategory = (id) => {
+  const toggleCategory = id => {
     if (id === '') {
       setCategories([])
+      setPage(0)
       return
     }
 
-    setCategories(prev =>
-      prev.includes(id)
-        ? prev.filter(c => c !== id)
-        : [...prev, id]
-    )
+    setCategories(prev => {
+      if (prev.includes(id)) {
+        return prev.filter(category => category !== id)
+      }
+
+      return [...prev, id]
+    })
+
+    setPage(0)
   }
 
   const filtered = useMemo(() => {
-    const q = search.toLocaleLowerCase('az')
+    const query = search.trim().toLowerCase()
 
     return organizations.filter(org => {
-      const matchCategory =
+      const matchesSearch =
+        !query ||
+        org.name?.toLowerCase().includes(query) ||
+        org.tagline?.toLowerCase().includes(query)
+
+      const matchesCategory =
         categories.length === 0 ||
-        (
-          Array.isArray(org.categories) &&
-          categories.some(cat =>
-            org.categories.includes(cat)
-          )
+        categories.some(category =>
+          org.categories?.includes(category)
         )
 
-      const matchSearch =
-        !search ||
-
-        org.name
-          ?.toLocaleLowerCase('az')
-          .includes(q) ||
-
-        org.tagline
-          ?.toLocaleLowerCase('az')
-          .includes(q) ||
-
-        (
-          Array.isArray(org.categories) &&
-          org.categories.some(cat =>
-            String(cat)
-              .toLocaleLowerCase('az')
-              .includes(q)
-          )
-        )
-
-      return matchCategory && matchSearch
+      return matchesSearch && matchesCategory
     })
   }, [organizations, search, categories])
 
   const sorted = useMemo(() => {
-    const arr = [...filtered]
+    const result = [...filtered]
 
-    if (sort === 'rating') {
-      arr.sort(
-        (a, b) => (b.rating ?? -1) - (a.rating ?? -1)
-      )
-    } else if (sort === 'active') {
-      arr.sort(
-        (a, b) =>
-          (b.activeOpportunities || 0) -
-          (a.activeOpportunities || 0)
-      )
-    } else if (sort === 'name') {
-      arr.sort((a, b) =>
-        String(a.name || '').localeCompare(
-          String(b.name || ''),
-          'az'
+    switch (sort) {
+      case 'rating_desc':
+        result.sort(
+          (a, b) => (b.rating ?? -1) - (a.rating ?? -1)
         )
-      )
+        break
+
+      case 'reviews_desc':
+        result.sort(
+          (a, b) => (b.reviewCount ?? 0) - (a.reviewCount ?? 0)
+        )
+        break
+
+      case 'name_asc':
+        result.sort((a, b) =>
+          (a.name || '').localeCompare(b.name || '')
+        )
+        break
+
+      default:
+        break
     }
 
-    return arr
+    return result
   }, [filtered, sort])
 
-  useEffect(() => {
-    setPage(0)
-  }, [search, categories, sort])
+  const totalPages = Math.max(
+    1,
+    Math.ceil(sorted.length / ORG_PAGE_SIZE)
+  )
 
-  const totalPages = Math.ceil(sorted.length / ORG_PAGE_SIZE)
+  useEffect(() => {
+    if (page >= totalPages) {
+      setPage(0)
+    }
+  }, [page, totalPages])
 
   const paginated = useMemo(() => {
     const start = page * ORG_PAGE_SIZE
-    return sorted.slice(start, start + ORG_PAGE_SIZE)
+    const end = start + ORG_PAGE_SIZE
+
+    return sorted.slice(start, end)
   }, [sorted, page])
-
-  const handlePageChange = (p) => {
-    setPage(p)
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  }
 
   return {
     search,
@@ -119,11 +102,13 @@ export function useOrganizationFilters({
     sorted,
     paginated,
     totalPages,
+
     setSearch,
-    setCategories,
     setSort,
-    toggleCategory,
-    handlePageChange,
     setPage,
+
+    toggleCategory,
+
+    handlePageChange: setPage,
   }
 }

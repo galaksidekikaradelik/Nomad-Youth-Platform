@@ -15,6 +15,7 @@ import Profile from "../pages/Profile";
 import ProfileSetup from "../pages/ProfileSetup";
 import VerifyEmail from "../pages/VerifyEmail";
 import NotFound from "../pages/NotFound";
+import OrganizationDetails from "../pages/OrganizationDetails";
 
 export default function AppRoutes() {
   return (
@@ -28,6 +29,11 @@ export default function AppRoutes() {
         <Route
           path="/opportunities/:opportunityId"
           element={<Opportunities />}
+        />
+
+        <Route
+          path="/teskilatlar/:slug"
+          element={<OrganizationDetails />}
         />
 
         <Route path="/about" element={<About />} />

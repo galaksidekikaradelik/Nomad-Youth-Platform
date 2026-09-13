@@ -1,94 +1,78 @@
 import OrganizationCard from './OrganizationCard'
-import { OpportunitySkeletonGrid } from './OpportunitySkeleton'
 import Pagination from './Pagination'
-import { OrgWarningTriangleIcon, OrgSearchIcon } from './OrganizationIcons'
 
 export default function OrganizationResults({
-  t,
-  lang,
+  organizations,
   loading,
   error,
-  sorted,
-  paginated,
   page,
   totalPages,
   onPageChange,
+  t,
+  lang,
 }) {
   if (loading) {
     return (
-      <OpportunitySkeletonGrid count={6} gridClassName="org-grid" />
+      <div className="organization-results__message">
+        <p>{t('org_loading')}</p>
+      </div>
     )
   }
 
   if (error) {
     return (
-      <div className="empty-state">
-        <div
-          className="empty-state__icon"
-          style={{ color: 'var(--color-warning, #f59e0b)' }}
-        >
-          <OrgWarningTriangleIcon />
-        </div>
+      <div className="organization-results__message">
+        <h3>
+          {t('org_load_error') ||
+            'Təşkilatları yükləmək mümkün olmadı'}
+        </h3>
 
-        <div className="empty-state__title">
-          {t('org_error') || 'Təşkilatları yükləmək mümkün olmadı.'}
-        </div>
+        <p>
+          {t('try_again_later') ||
+            'Zəhmət olmasa bir az sonra yenidən cəhd edin.'}
+        </p>
+      </div>
+    )
+  }
 
-        <p className="empty-state__desc">
-          Zəhmət olmasa bir az sonra yenidən cəhd edin.
+  if (!organizations?.length) {
+    return (
+      <div className="organization-results__message">
+        <h3>
+          {t('org_empty_title') ||
+            'Təşkilat tapılmadı'}
+        </h3>
+
+        <p>
+          {t('org_empty_description') ||
+            'Axtarışınıza uyğun təşkilat yoxdur.'}
         </p>
       </div>
     )
   }
 
   return (
-    <>
-      <div className="opportunities-results-count">
-        {t('org_count_prefix') || 'Azərbaycanda '}
-        <span className="opportunities-results-count__number">
-          {sorted.length}
-        </span>{' '}
-        {t('org_count_suffix') || 'təşkilat'}
+    <div className="organization-results">
+
+      <div className="org-grid">
+        {organizations.map((organization) => (
+          <OrganizationCard
+            key={organization.id}
+            organization={organization}
+            t={t}
+            lang={lang}
+          />
+        ))}
       </div>
 
-      {sorted.length > 0 ? (
-        <>
-          <div className="org-grid">
-            {paginated.map(org => (
-              <OrganizationCard
-                key={org.id}
-                organization={org}
-                t={t}
-                lang={lang}
-              />
-            ))}
-          </div>
-
-          <Pagination
-            currentPage={page}
-            totalPages={totalPages}
-            onPageChange={onPageChange}
-          />
-        </>
-      ) : (
-        <div className="empty-state">
-          <div
-            className="empty-state__icon"
-            style={{ color: 'var(--color-text-muted, #94a3b8)' }}
-          >
-            <OrgSearchIcon />
-          </div>
-
-          <div className="empty-state__title">
-            {t('org_empty_title') || 'Təşkilat tapılmadı'}
-          </div>
-
-          <p className="empty-state__desc">
-            {t('org_empty_desc') ||
-              'Axtarışı və ya filtrləri dəyişməyi cəhd edin.'}
-          </p>
-        </div>
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       )}
-    </>
+
+    </div>
   )
 }
