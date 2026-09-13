@@ -263,7 +263,9 @@
 
 .org-card__categories {
   display: flex;
+  flex-direction: row !important;
   flex-wrap: wrap;
+  align-items: center;
   gap: 6px;
   margin-top: 18px;
   padding-top: 16px;
