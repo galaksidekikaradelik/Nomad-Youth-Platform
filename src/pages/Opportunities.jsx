@@ -93,12 +93,6 @@ export default function Opportunities() {
     initialCategory,
   })
 
-  /*
-   * ==========================
-   * ORGANIZATIONS
-   * ==========================
-   */
-
   const {
     organizations,
     loading: orgLoading,
@@ -120,27 +114,14 @@ export default function Opportunities() {
 
     toggleCategory: orgToggleCategory,
 
-    handlePageChange:
-      orgHandlePageChange,
+    handlePageChange: orgHandlePageChange,
   } = useOrganizationFilters({
     organizations,
     initialQuery,
   })
 
-  /*
-   * ==========================
-   * ACTIVE TAB
-   * ==========================
-   */
-
   const isLocalTab =
     activeTab === LOCAL_TAB_ID
-
-  /*
-   * ==========================
-   * OPENED OPPORTUNITY
-   * ==========================
-   */
 
   useEffect(() => {
     if (!highlightOppKey) return
@@ -163,12 +144,6 @@ export default function Opportunities() {
     setActiveTab,
   ])
 
-  /*
-   * ==========================
-   * SEARCH
-   * ==========================
-   */
-
   const currentSearch = isLocalTab
     ? orgSearch
     : search
@@ -181,17 +156,9 @@ export default function Opportunities() {
     }
   }
 
-  /*
-   * ==========================
-   * RENDER
-   * ==========================
-   */
-
   return (
     <div className="section">
       <div className="container">
-
-        {/* HEADER */}
 
         <div className="page-header">
           <div className="page-header__eyebrow">
@@ -207,7 +174,6 @@ export default function Opportunities() {
           </p>
         </div>
 
-        {/* TABS */}
 
         <div className="opportunities-tabs">
           {PROJECT_TABS.map(tab => (
@@ -243,23 +209,14 @@ export default function Opportunities() {
               'opp_search_placeholder'
             )}
             query={currentSearch}
-
-            /*
-             * Yerli imkanlar üçün SearchBar-ın
-             * category dropdown-unu boş saxlayırıq.
-             * Organization kateqoriyaları aşağıdakı
-             * OrganizationFilters-də idarə olunur.
-             */
             category={
               isLocalTab
                 ? ''
                 : categories[0] || ''
             }
-
             onQueryChange={
               handleSearchChange
             }
-
             onCategoryChange={id => {
               if (isLocalTab) return
 
@@ -269,10 +226,6 @@ export default function Opportunities() {
             }}
           />
         </div>
-
-        {/* ==========================
-            LOCAL ORGANIZATIONS
-           ========================== */}
 
         {isLocalTab ? (
           <>
@@ -290,10 +243,9 @@ export default function Opportunities() {
             <OrganizationResults
               t={t}
               lang={lang}
+              organizations={orgPaginated}
               loading={orgLoading}
               error={orgError}
-              sorted={orgSorted}
-              paginated={orgPaginated}
               page={orgPage}
               totalPages={orgTotalPages}
               onPageChange={
@@ -302,10 +254,6 @@ export default function Opportunities() {
             />
           </>
         ) : (
-
-          /* ==========================
-             NORMAL OPPORTUNITIES
-             ========================== */
 
           <>
             <OpportunityFilters
@@ -353,6 +301,7 @@ export default function Opportunities() {
             />
           </>
         )}
+
       </div>
     </div>
   )
