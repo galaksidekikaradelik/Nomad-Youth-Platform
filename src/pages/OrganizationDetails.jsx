@@ -128,7 +128,6 @@ export default function OrganizationDetails() {
 
   const {
     name,
-    slug: organizationSlug,
     tagline,
     description,
     categories = [],
