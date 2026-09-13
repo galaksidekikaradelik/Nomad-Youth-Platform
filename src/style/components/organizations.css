@@ -273,14 +273,89 @@
 .org-card__category {
   display: inline-flex;
   align-items: center;
-  padding: 6px 10px;
-  border: 1px solid #e1e6ed;
+  padding: 7px 11px;
   border-radius: 999px;
-  background: #f7f9fb;
-  color: #465267;
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
+  border: 1px solid transparent;
+}
+
+/* Environment */
+.org-card__category--environment {
+  background: #e9f7ef;
+  color: #218c55;
+  border-color: #ccebd9;
+}
+
+/* Youth */
+.org-card__category--youth {
+  background: #eaf2ff;
+  color: #3973c8;
+  border-color: #d2e2fb;
+}
+
+/* Education */
+.org-card__category--education {
+  background: #f1ebff;
+  color: #7651b8;
+  border-color: #e1d5fa;
+}
+
+/* Volunteering */
+.org-card__category--volunteering {
+  background: #fff2e5;
+  color: #c87524;
+  border-color: #f6dcc0;
+}
+
+/* Social */
+.org-card__category--social {
+  background: #ffecef;
+  color: #c34c6a;
+  border-color: #f6d2db;
+}
+
+/* Culture */
+.org-card__category--culture {
+  background: #f2eafa;
+  color: #8153a8;
+  border-color: #e0d0f0;
+}
+
+/* Sport */
+.org-card__category--sport {
+  background: #e8f7f8;
+  color: #25858a;
+  border-color: #cce9eb;
+}
+
+/* Technology */
+.org-card__category--technology {
+  background: #e8f5ff;
+  color: #2679ad;
+  border-color: #cce6f7;
+}
+
+/* Entrepreneurship */
+.org-card__category--entrepreneurship {
+  background: #fff7df;
+  color: #a47718;
+  border-color: #f2e5b8;
+}
+
+/* International */
+.org-card__category--international {
+  background: #eeeaff;
+  color: #6352b5;
+  border-color: #dcd5fa;
+}
+
+/* Non-profit */
+.org-card__category--nonprofit {
+  background: #eef1f4;
+  color: #596575;
+  border-color: #dce1e6;
 }
 
 .org-card__location {

@@ -102,20 +102,14 @@ export default function OrganizationCard({
 
       {/* CATEGORIES */}
 
-      {categories.length > 0 && (
-        <div className="org-card__categories">
-
-          {categories.map(category => (
-            <span
-              key={category}
-              className="org-card__category"
-            >
-              {categoryLabel(category)}
-            </span>
-          ))}
-
-        </div>
-      )}
+      {categories.map(category => (
+        <span
+          key={category}
+          className={`org-card__category org-card__category--${category}`}
+        >
+          {categoryLabel(category)}
+        </span>
+      ))}
 
       {/* LOCATION */}
 
