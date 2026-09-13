@@ -276,6 +276,7 @@
   display: inline-flex;
   align-items: center;
   width: fit-content;
+  flex: 0 0 auto;
   min-height: 24px;
   padding: 4px 10px;
   border-radius: var(--radius-full, 999px);
