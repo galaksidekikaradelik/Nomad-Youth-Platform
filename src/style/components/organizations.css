@@ -264,18 +264,25 @@
 .org-card__categories {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 6px;
   margin-top: 18px;
   padding-top: 16px;
   border-top: 1px solid #e4e8ee;
 }
 
 .org-card__category {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 24px;
+  padding: 4px 10px;
   border-radius: var(--radius-full, 999px);
   white-space: nowrap;
-  padding: 4px 10px;
-  font-size: .7rem;
+
+  font-size: 0.7rem;
   font-weight: 600;
+  line-height: 1;
+  border: 1px solid transparent;
 }
 
 /* Environment */
@@ -353,6 +360,73 @@
   background: #eef1f4;
   color: #596575;
   border-color: #dce1e6;
+}
+
+/* Dark mode */
+[data-theme="dark"] .org-card__category--environment {
+  background: rgba(34, 197, 94, 0.14);
+  color: #6ee7a0;
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--youth {
+  background: rgba(59, 130, 246, 0.14);
+  color: #7db3ff;
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--education {
+  background: rgba(139, 92, 246, 0.14);
+  color: #b99aff;
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--volunteering {
+  background: rgba(249, 115, 22, 0.14);
+  color: #ffb477;
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--social {
+  background: rgba(236, 72, 153, 0.14);
+  color: #ff91ba;
+  border-color: rgba(236, 72, 153, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--culture {
+  background: rgba(168, 85, 247, 0.14);
+  color: #c99aff;
+  border-color: rgba(168, 85, 247, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--sport {
+  background: rgba(20, 184, 166, 0.14);
+  color: #68ddd2;
+  border-color: rgba(20, 184, 166, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--technology {
+  background: rgba(14, 165, 233, 0.14);
+  color: #72caff;
+  border-color: rgba(14, 165, 233, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--entrepreneurship {
+  background: rgba(234, 179, 8, 0.14);
+  color: #f5d56a;
+  border-color: rgba(234, 179, 8, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--international {
+  background: rgba(99, 82, 181, 0.18);
+  color: #b7adff;
+  border-color: rgba(99, 82, 181, 0.3);
+}
+
+[data-theme="dark"] .org-card__category--nonprofit {
+  background: rgba(148, 163, 184, 0.14);
+  color: #b7c1ce;
+  border-color: rgba(148, 163, 184, 0.25);
 }
 
 .org-card__location {
