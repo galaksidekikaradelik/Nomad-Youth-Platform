@@ -1,5 +1,7 @@
 import OrganizationCard from './OrganizationCard'
 import Pagination from './Pagination'
+import { SearchIcon } from './OpportunityIcons'
+
 
 export default function OrganizationResults({
   organizations,
@@ -38,15 +40,18 @@ export default function OrganizationResults({
   if (!organizations?.length) {
     return (
       <div className="organization-results__message">
-        <h3>
-          {t('org_empty_title') ||
-            'Təşkilat tapılmadı'}
-        </h3>
-
-        <p>
-          {t('org_empty_description') ||
-            'Axtarışınıza uyğun təşkilat yoxdur.'}
-        </p>
+        <div className="empty-state">
+                  <div
+                    className="empty-state__icon"
+                    style={{ color: 'var(--color-text-muted, #94a3b8)' }}
+                  >
+                    <SearchIcon />
+                  </div>
+        
+                  <div className="empty-state__title">{t('opp_empty_title')}</div>
+        
+                  <p className="empty-state__desc">{t('opp_empty_desc')}</p>
+                </div>
       </div>
     )
   }
