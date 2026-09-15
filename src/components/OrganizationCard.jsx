@@ -9,10 +9,7 @@ export default function OrganizationCard({
     slug,
     tagline,
     categories = [],
-    location,
     logo,
-    rating = null,
-    reviewCount = 0,
     activeOpportunities = 0,
   } = organization || {}
 
@@ -57,36 +54,10 @@ export default function OrganizationCard({
 
         </div>
 
-        {/* RATING */}
-
-        <div className="org-card__rating">
-
-          {rating !== null &&
-          reviewCount >= 5 ? (
-            <>
-              <span className="org-card__rating-star">
-                ★
-              </span>
-
-              <span className="org-card__rating-value">
-                {Number(rating).toFixed(1)}
-              </span>
-
-              <span className="org-card__rating-count">
-                ({reviewCount})
-              </span>
-            </>
-          ) : (
-            <span className="org-card__rating-pending">
-              {t('org_rating_pending')}
-            </span>
-          )}
-
-        </div>
+        
 
       </div>
 
-      {/* ABOUT */}
 
       <div className="org-card__about">
 
@@ -99,8 +70,6 @@ export default function OrganizationCard({
         </p>
 
       </div>
-
-      {/* CATEGORIES */}
 
       {categories.length > 0 && (
         <div className="org-card__categories">
@@ -115,21 +84,8 @@ export default function OrganizationCard({
         </div>
       )}
 
-      {/* LOCATION */}
 
-      {location && (
-        <div className="org-card__location">
-          <span className="org-card__location-icon">
-            📍
-          </span>
 
-          <span>
-            {location}
-          </span>
-        </div>
-      )}
-
-      {/* BOTTOM */}
 
       <div className="org-card__bottom">
 
