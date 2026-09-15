@@ -1,23 +1,21 @@
-import OrganizationCard from './OrganizationCard'
+import OpportunityCard from './OpportunityCard'
+import { OpportunitySkeletonGrid } from './OpportunitySkeleton'
 import Pagination from './Pagination'
-import { SearchIcon } from './OpportunityIcons'
+import { WarningTriangleIcon, SearchIcon } from './OpportunityIcons'
 
-export default function OrganizationResults({
-  organizations,
+export default function OpportunityResults({
+  t,
   loading,
   error,
+  sorted,
+  paginated,
   page,
   totalPages,
   onPageChange,
-  t,
-  lang,
+  highlightOppKey,
 }) {
   if (loading) {
-    return (
-      <div className="organization-results__message">
-        <p>{t('org_loading')}</p>
-      </div>
-    )
+    return <OpportunitySkeletonGrid count={8} gridClassName="grid-3" />
   }
 
   if (error) {
@@ -27,67 +25,65 @@ export default function OrganizationResults({
           className="empty-state__icon"
           style={{ color: 'var(--color-warning, #f59e0b)' }}
         >
-          <SearchIcon />
+          <WarningTriangleIcon />
         </div>
 
         <div className="empty-state__title">
-          {t('org_load_error') ||
-            'Təşkilatları yükləmək mümkün olmadı'}
+          {t('opp_error') || 'Elanları yükləmək mümkün olmadı.'}
         </div>
 
         <p className="empty-state__desc">
-          {t('try_again_later') ||
-            'Zəhmət olmasa bir az sonra yenidən cəhd edin.'}
-        </p>
-      </div>
-    )
-  }
-
-  if (!organizations?.length) {
-    return (
-      <div className="empty-state">
-        <div
-          className="empty-state__icon"
-          style={{ color: 'var(--color-text-muted, #94a3b8)' }}
-        >
-          <SearchIcon />
-        </div>
-
-        <div className="empty-state__title">
-          {t('org_empty_title') || 'Təşkilat tapılmadı'}
-        </div>
-
-        <p className="empty-state__desc">
-          {t('org_empty_description') ||
-            'Axtarışınıza uyğun təşkilat yoxdur.'}
+          Zəhmət olmasa bir az sonra yenidən cəhd edin.
         </p>
       </div>
     )
   }
 
   return (
-    <div className="organization-results">
-      <div className="org-grid">
-        {organizations.map((organization) => (
-          <OrganizationCard
-            key={organization.id}
-            organization={organization}
-            t={t}
-            lang={lang}
-          />
-        ))}
+    <>
+      <div className="opportunities-results-count">
+        {t('opp_results_prefix')}
+        <span className="opportunities-results-count__number">
+          {sorted.length}
+        </span>
+        {t('opp_results_suffix')}
       </div>
 
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={onPageChange}
-        />
+      {sorted.length > 0 ? (
+        <>
+          <div className="grid-3">
+            {paginated.map(op => (
+              <OpportunityCard
+                key={op.id}
+                opportunity={op}
+                autoOpenDetail={
+                  Boolean(highlightOppKey) &&
+                  String(op.id) === String(highlightOppKey)
+                }
+              />
+            ))}
+          </div>
+
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
+        </>
+      ) : (
+        <div className="empty-state">
+          <div
+            className="empty-state__icon"
+            style={{ color: 'var(--color-text-muted, #94a3b8)' }}
+          >
+            <SearchIcon />
+          </div>
+
+          <div className="empty-state__title">{t('opp_empty_title')}</div>
+
+          <p className="empty-state__desc">{t('opp_empty_desc')}</p>
+        </div>
       )}
-    </div>
+    </>
   )
 }
-
-
-
