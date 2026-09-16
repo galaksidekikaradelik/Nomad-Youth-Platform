@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 
-import ecohubLogo from '../assets/logo/ecohub.png'
-import nomadYouthLogo from '../assets/logo/nomad-youth.png'
-import Bhos from '../assets/logo/bhos.jpeg'
-import greenprint from '../assets/logo/greenprint.png'
-import sosfera from '../assets/logo/sosfera.jpeg'
-import youthsy from '../assets/logo/youthsy.jpeg'
-import ysp from '../assets/logo/ysp.jpeg'
+import ecohubLogo from '../assets/images/logo/ecohub.png'
+import nomadYouthLogo from '../assets/images/logo/nomad-youth.png'
+import Bhos from '../assets/images/logo/bhos.jpeg'
+import greenprint from '../assets/images/logo/greenprint.png'
+import sosfera from '../assets/images/logo/sosfera.jpeg'
+import youthsy from '../assets/images/logo/youthsy.jpeg'
+import ysp from '../assets/images/logo/ysp.jpeg'
 
 const organizationLogos = {
   'ecohub.png': ecohubLogo,
