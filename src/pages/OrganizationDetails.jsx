@@ -34,6 +34,7 @@ export default function OrganizationDetails() {
       org_contact_title: 'Əlaqə',
       org_no_active: 'Hazırda aktiv imkan yoxdur.',
       org_no_past: 'Hələ tamamlanmış layihə yoxdur.',
+      org_event_photos: 'Tədbir şəkilləri',
       org_see_more: 'Ətraflı bax',
       org_apply: 'Müraciət et',
       org_deadline: 'Son tarix',
@@ -422,9 +423,38 @@ export default function OrganizationDetails() {
               })}
             </div>
           ) : (
-            <div className="organization-details__empty">
-              <p>{t('org_no_past')}</p>
-            </div>
+            (() => {
+              // Backend hələ pastProjects qaytarmır. Bu təşkilatın local
+              // tedbirler qovluğunda şəkil varsa, sadə qalereya kimi göstər.
+              const generalImages = getEventImages(slug)
+
+              if (generalImages.length === 0) {
+                return (
+                  <div className="organization-details__empty">
+                    <p>{t('org_no_past')}</p>
+                  </div>
+                )
+              }
+
+              return (
+                <div className="organization-details__opportunity-card">
+                  <h3 className="organization-details__opportunity-title">
+                    {t('org_event_photos')}
+                  </h3>
+
+                  <div className="organization-details__project-gallery organization-details__project-gallery--wide">
+                    {generalImages.map((src, index) => (
+                      <div
+                        key={src}
+                        className="organization-details__project-gallery-item"
+                      >
+                        <img src={src} alt={`${name} ${index + 1}`} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })()
           ))}
 
         {/* About */}
