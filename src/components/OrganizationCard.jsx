@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 
-import ecohubLogo from '../assets/images/logo/ecohub.png'
-import nomadYouthLogo from '../assets/images/logo/nomad-youth.png'
-import Bhos from '../assets/images/logo/bhos.jpeg'
-import greenprint from '../assets/images/logo/greenprint.png'
-import sosfera from '../assets/images/logo/sosfera.jpeg'
-import youthsy from '../assets/images/logo/youthsy.jpeg'
-import ysp from '../assets/images/logo/YSP.jpeg'
+import ecohubLogo from '../assets/teskilatlar/logo/ecohub.png'
+import nomadYouthLogo from '../assets/teskilatlar/logo/nomad-youth.png'
+import Bhos from '../assets/teskilatlar/logo/bhos.jpeg'
+import greenprint from '../assets/teskilatlar/logo/greenprint.png'
+import sosfera from '../assets/teskilatlar/logo/sosfera.jpeg'
+import youthsy from '../assets/teskilatlar/logo/youthsy.jpeg'
+import ysp from '../assets/teskilatlar/logo/YSP.jpeg'
+import sdg from '../assets/teskilatlar/logo/sdg-logo-əsas-versiya.png'
 
 const organizationLogos = {
   'ecohub.png': ecohubLogo,
@@ -16,6 +17,7 @@ const organizationLogos = {
   'sosfera.jpeg': sosfera,
   'youthsy.jpeg': youthsy,
   'ysp.jpeg': ysp,
+  'sdg-logo-əsas-versiya.png':sdg
 }
 
 export default function OrganizationCard({

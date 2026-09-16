@@ -19,7 +19,6 @@ export default function OrganizationDetails() {
   const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState(TABS.ACTIVE)
 
-  // Hələlik AZ
   const lang = 'az'
 
   const t = (key) => {
@@ -149,7 +148,6 @@ export default function OrganizationDetails() {
     location,
     logo,
 
-    // gələcəkdə backend-dən gələcək
     opportunities = [],
     pastProjects = [],
     activityHistory = [],
@@ -160,12 +158,10 @@ export default function OrganizationDetails() {
   return (
     <main className="organization-details">
       <div className="organization-details__container">
-        {/* Back */}
         <Link to="/opportunities" className="organization-details__back">
           ← {t('back_to_opportunities')}
         </Link>
 
-        {/* Header */}
         <section className="organization-details__hero">
           <div className="organization-details__avatar">
             {logo ? (
@@ -240,7 +236,6 @@ export default function OrganizationDetails() {
           </div>
         </section>
 
-        {/* Categories */}
         {categories.length > 0 && (
           <div className="organization-details__categories">
             {categories.map((category) => (
@@ -254,7 +249,6 @@ export default function OrganizationDetails() {
           </div>
         )}
 
-        {/* Tabs */}
         <nav className="organization-details__tabs">
           <button
             type="button"
@@ -293,7 +287,6 @@ export default function OrganizationDetails() {
           </button>
         </nav>
 
-        {/* Active opportunities */}
         {activeTab === TABS.ACTIVE &&
           (activeOpportunities > 0 ? (
             <div className="organization-details__opportunities">
@@ -336,26 +329,75 @@ export default function OrganizationDetails() {
             </div>
           ))}
 
-        {/* Past projects */}
         {activeTab === TABS.PAST &&
           (pastProjects.length > 0 ? (
             <div className="organization-details__opportunities">
-              {pastProjects.map((project) => (
-                <div
-                  key={project.id ?? project.slug}
-                  className="organization-details__opportunity-card"
-                >
-                  <h3 className="organization-details__opportunity-title">
-                    {project.title}
-                  </h3>
+              {pastProjects.map((project) => {
 
-                  {project.date && (
-                    <div className="organization-details__opportunity-footer">
-                      <span>{project.date}</span>
-                    </div>
-                  )}
-                </div>
-              ))}
+                const images =
+                  project.images?.length > 0
+                    ? project.images
+                    : project.image
+                    ? [project.image]
+                    : []
+
+                const visibleImages = images.slice(0, 3)
+                const extraCount = images.length - visibleImages.length
+
+                return (
+                  <div
+                    key={project.id ?? project.slug}
+                    className="organization-details__opportunity-card"
+                  >
+                    {images.length > 0 ? (
+                      <div className="organization-details__project-gallery">
+                        {visibleImages.map((src, index) => (
+                          <div
+                            key={src}
+                            className="organization-details__project-gallery-item"
+                          >
+                            <img src={src} alt={`${project.title} ${index + 1}`} />
+
+                            {extraCount > 0 &&
+                              index === visibleImages.length - 1 && (
+                                <span className="organization-details__project-gallery-more">
+                                  +{extraCount}
+                                </span>
+                              )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="organization-details__project-gallery organization-details__project-gallery--empty">
+                        <span>📷</span>
+                      </div>
+                    )}
+
+                    <h3 className="organization-details__opportunity-title">
+                      {project.title}
+                    </h3>
+
+                    {project.summary && (
+                      <p className="organization-details__project-summary">
+                        {project.summary}
+                      </p>
+                    )}
+
+                    {(project.date || project.participantsCount != null) && (
+                      <div className="organization-details__opportunity-footer">
+                        {project.date && <span>{project.date}</span>}
+
+                        {project.participantsCount != null && (
+                          <span>
+                            {project.participantsCount}{' '}
+                            {t('org_participants_sub')}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
             </div>
           ) : (
             <div className="organization-details__empty">
@@ -363,7 +405,6 @@ export default function OrganizationDetails() {
             </div>
           ))}
 
-        {/* About */}
         {activeTab === TABS.ABOUT && (
           <section className="organization-details__section">
             <h2 className="organization-details__heading">
@@ -417,7 +458,6 @@ export default function OrganizationDetails() {
           </section>
         )}
 
-        {/* Activity history */}
         {activityHistory.length > 0 && (
           <section className="organization-details__history">
             {activityHistory.map((year) => (
