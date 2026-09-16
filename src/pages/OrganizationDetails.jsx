@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { translateCategory } from '../data/categoryTranslation'
+import { getEventImages } from '../data/organizationEventImages'
 
 const API_URL =
   import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
@@ -19,6 +20,7 @@ export default function OrganizationDetails() {
   const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState(TABS.ACTIVE)
 
+  // Hələlik AZ
   const lang = 'az'
 
   const t = (key) => {
@@ -33,6 +35,7 @@ export default function OrganizationDetails() {
       org_no_active: 'Hazırda aktiv imkan yoxdur.',
       org_no_past: 'Hələ tamamlanmış layihə yoxdur.',
       org_see_more: 'Ətraflı bax',
+      org_apply: 'Müraciət et',
       org_deadline: 'Son tarix',
       org_active_line: 'aktiv imkan',
       org_completed_sub: 'tamamlanmış layihə',
@@ -148,6 +151,7 @@ export default function OrganizationDetails() {
     location,
     logo,
 
+    // gələcəkdə backend-dən gələcək
     opportunities = [],
     pastProjects = [],
     activityHistory = [],
@@ -158,10 +162,12 @@ export default function OrganizationDetails() {
   return (
     <main className="organization-details">
       <div className="organization-details__container">
+        {/* Back */}
         <Link to="/opportunities" className="organization-details__back">
           ← {t('back_to_opportunities')}
         </Link>
 
+        {/* Header */}
         <section className="organization-details__hero">
           <div className="organization-details__avatar">
             {logo ? (
@@ -236,6 +242,7 @@ export default function OrganizationDetails() {
           </div>
         </section>
 
+        {/* Categories */}
         {categories.length > 0 && (
           <div className="organization-details__categories">
             {categories.map((category) => (
@@ -249,6 +256,7 @@ export default function OrganizationDetails() {
           </div>
         )}
 
+        {/* Tabs */}
         <nav className="organization-details__tabs">
           <button
             type="button"
@@ -287,6 +295,7 @@ export default function OrganizationDetails() {
           </button>
         </nav>
 
+        {/* Active opportunities */}
         {activeTab === TABS.ACTIVE &&
           (activeOpportunities > 0 ? (
             <div className="organization-details__opportunities">
@@ -313,12 +322,23 @@ export default function OrganizationDetails() {
                       </span>
                     )}
 
-                    <Link
-                      to={`/opportunities/${opp.slug}`}
-                      className="organization-details__opportunity-link"
-                    >
-                      {t('org_see_more')} →
-                    </Link>
+                    {opp.applicationUrl ? (
+                      <a
+                        href={opp.applicationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="organization-details__opportunity-link"
+                      >
+                        {t('org_apply')} →
+                      </a>
+                    ) : (
+                      <Link
+                        to={`/opportunities/${opp.slug}`}
+                        className="organization-details__opportunity-link"
+                      >
+                        {t('org_see_more')} →
+                      </Link>
+                    )}
                   </div>
                 </div>
               ))}
@@ -329,17 +349,19 @@ export default function OrganizationDetails() {
             </div>
           ))}
 
+        {/* Past projects */}
         {activeTab === TABS.PAST &&
           (pastProjects.length > 0 ? (
             <div className="organization-details__opportunities">
               {pastProjects.map((project) => {
-
+                // project.images: string[] (tədbirdən bir neçə şəkil)
+                // project.image: string (tək cover şəkil, images yoxdursa)
                 const images =
                   project.images?.length > 0
                     ? project.images
                     : project.image
                     ? [project.image]
-                    : []
+                    : getEventImages(slug, project.slug)
 
                 const visibleImages = images.slice(0, 3)
                 const extraCount = images.length - visibleImages.length
@@ -405,6 +427,7 @@ export default function OrganizationDetails() {
             </div>
           ))}
 
+        {/* About */}
         {activeTab === TABS.ABOUT && (
           <section className="organization-details__section">
             <h2 className="organization-details__heading">
@@ -458,6 +481,7 @@ export default function OrganizationDetails() {
           </section>
         )}
 
+        {/* Activity history */}
         {activityHistory.length > 0 && (
           <section className="organization-details__history">
             {activityHistory.map((year) => (
