@@ -1,5 +1,23 @@
 import { Link } from 'react-router-dom'
 
+import ecohubLogo from '../assets/logo/ecohub.png'
+import nomadYouthLogo from '../assets/logo/nomad-youth.png'
+import Bhos from '../assets/logo/bhos.jpeg'
+import greenprint from '../assets/logo/greenprint.png'
+import sosfera from '../assets/logo/sosfera.jpeg'
+import youthsy from '../assets/logo/youthsy.jpeg'
+import ysp from '../assets/logo/ysp.jpeg'
+
+const organizationLogos = {
+  'ecohub.png': ecohubLogo,
+  'nomad-youth.png': nomadYouthLogo,
+  'bhos.jpeg': Bhos,
+  'greenprint.png': greenprint,
+  'sosfera.jpeg': sosfera,
+  'youthsy.jpeg': youthsy,
+  'ysp.jpeg': ysp,
+}
+
 export default function OrganizationCard({
   organization,
   t,
@@ -23,6 +41,9 @@ export default function OrganizationCard({
       : category
   }
 
+  const logoSrc = organizationLogos[logo]
+
+
   return (
     <article className="org-card">
 
@@ -33,9 +54,9 @@ export default function OrganizationCard({
         <div className="org-card__identity">
 
           <div className="org-card__avatar">
-            {logo ? (
+            {logoSrc ? (
               <img
-                src={logo}
+                src={logoSrc}
                 alt={name}
                 className="org-card__logo"
               />
@@ -54,10 +75,7 @@ export default function OrganizationCard({
 
         </div>
 
-        
-
       </div>
-
 
       <div className="org-card__about">
 
@@ -83,9 +101,6 @@ export default function OrganizationCard({
           ))}
         </div>
       )}
-
-
-
 
       <div className="org-card__bottom">
 
@@ -114,3 +129,6 @@ export default function OrganizationCard({
     </article>
   )
 }
+
+
+

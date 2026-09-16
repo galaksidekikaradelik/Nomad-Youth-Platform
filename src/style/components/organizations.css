@@ -1,9 +1,3 @@
-/* ==========================================================================
-   Yerli imkanlar (təşkilatlar) bölməsi — mövcud stylesheet-ə əlavə edin.
-   Rənglər/dəyişənlər layihənizdəki --color-* dəyişənlərinə uyğunlaşdırılıb;
-   uyğun gəlmirsə sadəcə HEX dəyərlərinə dəyişin.
-   ========================================================================== */
-
 .org-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -516,9 +510,7 @@
   color: #202940;
 }
 
-/* ==========================================================================
-   Hero card
-   ========================================================================== */
+
 
 .organization-details__hero {
   display: flex;
