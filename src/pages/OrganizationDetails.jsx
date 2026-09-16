@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { translateCategory } from '../data/categoryTranslation'
 import { getEventImages } from '../data/organizationEventImages'
+import { organizationLogos } from '../data/organizationLogos'
 
 const API_URL =
   import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
@@ -19,6 +20,62 @@ export default function OrganizationDetails() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState(TABS.ACTIVE)
+
+  // Şəkil lightbox-u: hansı qalereyaya baxılır (images) və hansı indexdə
+  const [lightbox, setLightbox] = useState(null) // { images: string[], index: number } | null
+
+  const openLightbox = useCallback((images, index) => {
+    setLightbox({ images, index })
+  }, [])
+
+  const closeLightbox = useCallback(() => {
+    setLightbox(null)
+  }, [])
+
+  const showPrevImage = useCallback((e) => {
+    e.stopPropagation()
+
+    setLightbox((current) => {
+      if (!current) return current
+
+      const total = current.images.length
+
+      return {
+        ...current,
+        index: (current.index - 1 + total) % total,
+      }
+    })
+  }, [])
+
+  const showNextImage = useCallback((e) => {
+    e.stopPropagation()
+
+    setLightbox((current) => {
+      if (!current) return current
+
+
+      return {
+        ...current,
+        index: (current.index + 1) % current.images.length,
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!lightbox) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') closeLightbox()
+      if (e.key === 'ArrowLeft') showPrevImage(e)
+      if (e.key === 'ArrowRight') showNextImage(e)
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [lightbox, closeLightbox, showPrevImage, showNextImage])
 
   // Hələlik AZ
   const lang = 'az'
@@ -160,6 +217,14 @@ export default function OrganizationDetails() {
 
   const activeOpportunities = opportunities.length
 
+  // Backend logo sahəsini bəzən tam URL, bəzən sadəcə fayl adı
+  // (məs. 'ecohub.png') kimi qaytarır. organizationLogos map-i faylı
+  // tanıyırsa bundle olunmuş şəkli istifadə edir, tanımırsa (artıq
+  // tam URL-dirsə və ya map-də yoxdursa) olduğu kimi saxlayır.
+  const resolvedLogo = logo
+    ? organizationLogos[logo] || logo
+    : null
+
   return (
     <main className="organization-details">
       <div className="organization-details__container">
@@ -171,9 +236,9 @@ export default function OrganizationDetails() {
         {/* Header */}
         <section className="organization-details__hero">
           <div className="organization-details__avatar">
-            {logo ? (
+            {resolvedLogo ? (
               <img
-                src={logo}
+                src={resolvedLogo}
                 alt={`${name} logo`}
                 className="organization-details__logo"
               />
@@ -375,9 +440,11 @@ export default function OrganizationDetails() {
                     {images.length > 0 ? (
                       <div className="organization-details__project-gallery">
                         {visibleImages.map((src, index) => (
-                          <div
+                          <button
                             key={src}
+                            type="button"
                             className="organization-details__project-gallery-item"
+                            onClick={() => openLightbox(images, index)}
                           >
                             <img src={src} alt={`${project.title} ${index + 1}`} />
 
@@ -387,7 +454,7 @@ export default function OrganizationDetails() {
                                   +{extraCount}
                                 </span>
                               )}
-                          </div>
+                          </button>
                         ))}
                       </div>
                     ) : (
@@ -439,12 +506,14 @@ export default function OrganizationDetails() {
               return (
                 <div className="organization-details__photo-grid">
                   {generalImages.map((src, index) => (
-                    <div
+                    <button
                       key={src}
+                      type="button"
                       className="organization-details__photo-card"
+                      onClick={() => openLightbox(generalImages, index)}
                     >
                       <img src={src} alt={`${name} ${index + 1}`} />
-                    </div>
+                    </button>
                   ))}
                 </div>
               )
@@ -538,6 +607,58 @@ export default function OrganizationDetails() {
           </section>
         )}
       </div>
+
+      {/* Şəkil lightbox */}
+      {lightbox && (
+        <div
+          className="organization-details__lightbox"
+          onClick={closeLightbox}
+        >
+          <button
+            type="button"
+            className="organization-details__lightbox-close"
+            onClick={closeLightbox}
+            aria-label="Bağla"
+          >
+            ✕
+          </button>
+
+          {lightbox.images.length > 1 && (
+            <button
+              type="button"
+              className="organization-details__lightbox-nav organization-details__lightbox-nav--prev"
+              onClick={showPrevImage}
+              aria-label="Əvvəlki şəkil"
+            >
+              ‹
+            </button>
+          )}
+
+          <img
+            src={lightbox.images[lightbox.index]}
+            alt={`Şəkil ${lightbox.index + 1}`}
+            className="organization-details__lightbox-image"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {lightbox.images.length > 1 && (
+            <button
+              type="button"
+              className="organization-details__lightbox-nav organization-details__lightbox-nav--next"
+              onClick={showNextImage}
+              aria-label="Növbəti şəkil"
+            >
+              ›
+            </button>
+          )}
+
+          {lightbox.images.length > 1 && (
+            <span className="organization-details__lightbox-counter">
+              {lightbox.index + 1} / {lightbox.images.length}
+            </span>
+          )}
+        </div>
+      )}
     </main>
   )
 }
