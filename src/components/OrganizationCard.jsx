@@ -6,7 +6,7 @@ import Bhos from '../assets/images/logo/bhos.jpeg'
 import greenprint from '../assets/images/logo/greenprint.png'
 import sosfera from '../assets/images/logo/sosfera.jpeg'
 import youthsy from '../assets/images/logo/youthsy.jpeg'
-import ysp from '../assets/images/logo/ysp.jpeg'
+import ysp from '../assets/images/logo/YSP.jpeg'
 
 const organizationLogos = {
   'ecohub.png': ecohubLogo,
