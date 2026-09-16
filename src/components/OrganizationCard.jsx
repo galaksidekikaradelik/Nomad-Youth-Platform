@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { organizationLogos } from '../data/organizationLogos'
+import { getCategoryStyle } from '../utils/categoryStyle'
 
 export default function OrganizationCard({
   organization,
@@ -15,7 +16,7 @@ export default function OrganizationCard({
     activeOpportunities = 0,
   } = organization || {}
 
-  const categoryLabel = category => {
+  const categoryLabel = (category) => {
     const key = `org_category_${category}`
 
     const translated = t(key)
@@ -27,17 +28,15 @@ export default function OrganizationCard({
 
   const logoSrc = organizationLogos[logo]
 
-
   return (
     <article className="org-card">
-
-      {/* TOP */}
 
       <div className="org-card__top">
 
         <div className="org-card__identity">
 
           <div className="org-card__avatar">
+
             {logoSrc ? (
               <img
                 src={logoSrc}
@@ -49,12 +48,15 @@ export default function OrganizationCard({
                 {name?.charAt(0)?.toUpperCase()}
               </span>
             )}
+
           </div>
 
           <div className="org-card__name-wrap">
+
             <h3 className="org-card__name">
               {name}
             </h3>
+
           </div>
 
         </div>
@@ -75,14 +77,17 @@ export default function OrganizationCard({
 
       {categories.length > 0 && (
         <div className="org-card__categories">
-          {categories.map(category => (
+
+          {categories.map((category) => (
             <span
               key={category}
-              className={`org-card__category org-card__category--${category}`}
+              className="opportunity-card__tag opportunity-card__category-badge"
+              style={getCategoryStyle(category)}
             >
               {categoryLabel(category)}
             </span>
           ))}
+
         </div>
       )}
 
@@ -105,6 +110,7 @@ export default function OrganizationCard({
           className="org-card__link"
         >
           {t('org_view_profile')}
+
           <span>→</span>
         </Link>
 
