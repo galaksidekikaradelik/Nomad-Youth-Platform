@@ -425,7 +425,7 @@ export default function OrganizationDetails() {
           ) : (
             (() => {
               // Backend hələ pastProjects qaytarmır. Bu təşkilatın local
-              // tedbirler qovluğunda şəkil varsa, sadə qalereya kimi göstər.
+              // tedbirler qovluğunda şəkil varsa, kiçik kartlar kimi göstər.
               const generalImages = getEventImages(slug)
 
               if (generalImages.length === 0) {
@@ -437,21 +437,15 @@ export default function OrganizationDetails() {
               }
 
               return (
-                <div className="organization-details__opportunity-card">
-                  <h3 className="organization-details__opportunity-title">
-                    {t('org_event_photos')}
-                  </h3>
-
-                  <div className="organization-details__project-gallery organization-details__project-gallery--wide">
-                    {generalImages.map((src, index) => (
-                      <div
-                        key={src}
-                        className="organization-details__project-gallery-item"
-                      >
-                        <img src={src} alt={`${name} ${index + 1}`} />
-                      </div>
-                    ))}
-                  </div>
+                <div className="organization-details__photo-grid">
+                  {generalImages.map((src, index) => (
+                    <div
+                      key={src}
+                      className="organization-details__photo-card"
+                    >
+                      <img src={src} alt={`${name} ${index + 1}`} />
+                    </div>
+                  ))}
                 </div>
               )
             })()
