@@ -5,12 +5,19 @@ import { translateCategory } from '../data/categoryTranslation'
 const API_URL =
   import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
 
+const TABS = {
+  ACTIVE: 'active',
+  PAST: 'past',
+  ABOUT: 'about',
+}
+
 export default function OrganizationDetails() {
   const { slug } = useParams()
 
   const [organization, setOrganization] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [activeTab, setActiveTab] = useState(TABS.ACTIVE)
 
   // Hələlik AZ
   const lang = 'az'
@@ -19,12 +26,18 @@ export default function OrganizationDetails() {
     const translations = {
       org_not_found: 'Təşkilat tapılmadı',
       back_to_opportunities: 'İmkanlara qayıt',
-      org_reviews_suffix: 'qiymətləndirmə',
       org_active_opps_suffix: 'aktiv imkan',
       org_about_title: 'Haqqında',
-      org_opportunities_title: 'Aktiv imkanlar',
+      org_opportunities_tab: 'Aktiv imkanlar',
+      org_past_tab: 'Keçmiş layihələr',
       org_contact_title: 'Əlaqə',
-      org_rating_pending: 'Rating formalaşır',
+      org_no_active: 'Hazırda aktiv imkan yoxdur.',
+      org_no_past: 'Hələ tamamlanmış layihə yoxdur.',
+      org_see_more: 'Ətraflı bax',
+      org_deadline: 'Son tarix',
+      org_active_line: 'aktiv imkan',
+      org_completed_sub: 'tamamlanmış layihə',
+      org_participants_sub: 'iştirakçı',
     }
 
     return translations[key] || key
@@ -98,11 +111,9 @@ export default function OrganizationDetails() {
     return (
       <main className="organization-details">
         <div className="organization-details__container">
-          <h1>
-            Təşkilatı yükləmək mümkün olmadı
-          </h1>
+          <h1>Təşkilatı yükləmək mümkün olmadı</h1>
 
-          <Link to="/opportunities">
+          <Link to="/opportunities" className="organization-details__back">
             ← {t('back_to_opportunities')}
           </Link>
         </div>
@@ -114,11 +125,9 @@ export default function OrganizationDetails() {
     return (
       <main className="organization-details">
         <div className="organization-details__container">
-          <h1>
-            {t('org_not_found')}
-          </h1>
+          <h1>{t('org_not_found')}</h1>
 
-          <Link to="/opportunities">
+          <Link to="/opportunities" className="organization-details__back">
             ← {t('back_to_opportunities')}
           </Link>
         </div>
@@ -134,36 +143,31 @@ export default function OrganizationDetails() {
     website,
     instagram,
     facebook,
+    linkedin,
     email,
+    phone,
     location,
     logo,
 
-    // gələcək rating sistemi
-    rating = null,
-    reviewCount = 0,
-
     // gələcəkdə backend-dən gələcək
-    activeOpportunities = 0,
+    opportunities = [],
+    pastProjects = [],
+    activityHistory = [],
   } = organization
+
+  const activeOpportunities = opportunities.length
 
   return (
     <main className="organization-details">
-
       <div className="organization-details__container">
-
         {/* Back */}
-        <Link
-          to="/opportunities"
-          className="organization-details__back"
-        >
+        <Link to="/opportunities" className="organization-details__back">
           ← {t('back_to_opportunities')}
         </Link>
 
         {/* Header */}
         <section className="organization-details__hero">
-
           <div className="organization-details__avatar">
-
             {logo ? (
               <img
                 src={logo}
@@ -171,119 +175,205 @@ export default function OrganizationDetails() {
                 className="organization-details__logo"
               />
             ) : (
-              <span>
-                {name?.charAt(0)?.toUpperCase() || 'O'}
-              </span>
+              <span>{name?.charAt(0)?.toUpperCase() || 'O'}</span>
             )}
-
           </div>
 
           <div className="organization-details__identity">
-
             <h1>{name}</h1>
 
             {tagline && (
-              <p className="organization-details__tagline">
-                {tagline}
-              </p>
+              <p className="organization-details__tagline">{tagline}</p>
             )}
 
-            <div className="organization-details__meta">
-
-              {rating != null && reviewCount >= 5 && (
+            {activeOpportunities > 0 && (
+              <div className="organization-details__meta">
                 <span>
-                  ★ {Number(rating).toFixed(1)} / 10
+                  {activeOpportunities} {t('org_active_opps_suffix')}
                 </span>
-              )}
+              </div>
+            )}
 
-              {reviewCount > 0 && (
-                <span>
-                  {reviewCount}{' '}
-                  {t('org_reviews_suffix')}
-                </span>
-              )}
+            {(website || instagram || linkedin || facebook) && (
+              <div className="organization-details__meta">
+                {website && (
+                  <a href={website} target="_blank" rel="noopener noreferrer">
+                    {website.replace(/^https?:\/\//, '')}
+                  </a>
+                )}
+                {instagram && (
+                  <a
+                    href={instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Instagram
+                  </a>
+                )}
+                {linkedin && (
+                  <a
+                    href={linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    LinkedIn
+                  </a>
+                )}
+                {facebook && (
+                  <a
+                    href={facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Facebook
+                  </a>
+                )}
+              </div>
+            )}
 
-              {activeOpportunities > 0 && (
-                <span>
-                  {activeOpportunities}{' '}
-                  {t('org_active_opps_suffix')}
-                </span>
-              )}
-
-            </div>
-
+            {(email || phone) && (
+              <div className="organization-details__meta">
+                {email && <a href={`mailto:${email}`}>{email}</a>}
+                {phone && <a href={`tel:${phone}`}>{phone}</a>}
+              </div>
+            )}
           </div>
-
         </section>
 
         {/* Categories */}
         {categories.length > 0 && (
           <div className="organization-details__categories">
-
             {categories.map((category) => (
               <span
                 key={category}
                 className="organization-details__category"
               >
-                {translateCategory(category, lang) ||
-                  category}
+                {translateCategory(category, lang) || category}
               </span>
             ))}
-
           </div>
         )}
 
-        {/* Main */}
-        <div className="organization-details__layout">
+        {/* Tabs */}
+        <nav className="organization-details__tabs">
+          <button
+            type="button"
+            className={
+              activeTab === TABS.ACTIVE
+                ? 'organization-details__tab organization-details__tab--active'
+                : 'organization-details__tab'
+            }
+            onClick={() => setActiveTab(TABS.ACTIVE)}
+          >
+            {t('org_opportunities_tab')}
+          </button>
 
-          <div className="organization-details__main">
+          <button
+            type="button"
+            className={
+              activeTab === TABS.PAST
+                ? 'organization-details__tab organization-details__tab--active'
+                : 'organization-details__tab'
+            }
+            onClick={() => setActiveTab(TABS.PAST)}
+          >
+            {t('org_past_tab')}
+          </button>
 
-            {/* About */}
-            <section className="organization-details__section">
+          <button
+            type="button"
+            className={
+              activeTab === TABS.ABOUT
+                ? 'organization-details__tab organization-details__tab--active'
+                : 'organization-details__tab'
+            }
+            onClick={() => setActiveTab(TABS.ABOUT)}
+          >
+            {t('org_about_title')}
+          </button>
+        </nav>
 
-              <h2>
-                {t('org_about_title')}
-              </h2>
+        {/* Active opportunities */}
+        {activeTab === TABS.ACTIVE &&
+          (activeOpportunities > 0 ? (
+            <div className="organization-details__opportunities">
+              {opportunities.map((opp) => (
+                <div
+                  key={opp.id ?? opp.slug}
+                  className="organization-details__opportunity-card"
+                >
+                  {opp.category && (
+                    <span className="organization-details__opportunity-badge">
+                      {translateCategory(opp.category, lang) ||
+                        opp.category}
+                    </span>
+                  )}
 
-              <p>
-                {description ||
-                  'Bu təşkilat haqqında məlumat yoxdur.'}
-              </p>
+                  <h3 className="organization-details__opportunity-title">
+                    {opp.title}
+                  </h3>
 
-            </section>
+                  <div className="organization-details__opportunity-footer">
+                    {opp.deadline && (
+                      <span>
+                        {t('org_deadline')}: {opp.deadline}
+                      </span>
+                    )}
 
-            {/* Opportunities */}
-            <section className="organization-details__section">
-
-              <h2>
-                {t('org_opportunities_title')}
-              </h2>
-
-              {activeOpportunities > 0 ? (
-                <p>
-                  {activeOpportunities} aktiv imkan
-                  mövcuddur.
-                </p>
-              ) : (
-                <div className="organization-details__empty">
-                  <p>
-                    Hazırda aktiv imkan yoxdur.
-                  </p>
+                    <Link
+                      to={`/opportunities/${opp.slug}`}
+                      className="organization-details__opportunity-link"
+                    >
+                      {t('org_see_more')} →
+                    </Link>
+                  </div>
                 </div>
-              )}
+              ))}
+            </div>
+          ) : (
+            <div className="organization-details__empty">
+              <p>{t('org_no_active')}</p>
+            </div>
+          ))}
 
-            </section>
+        {/* Past projects */}
+        {activeTab === TABS.PAST &&
+          (pastProjects.length > 0 ? (
+            <div className="organization-details__opportunities">
+              {pastProjects.map((project) => (
+                <div
+                  key={project.id ?? project.slug}
+                  className="organization-details__opportunity-card"
+                >
+                  <h3 className="organization-details__opportunity-title">
+                    {project.title}
+                  </h3>
 
-          </div>
+                  {project.date && (
+                    <div className="organization-details__opportunity-footer">
+                      <span>{project.date}</span>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="organization-details__empty">
+              <p>{t('org_no_past')}</p>
+            </div>
+          ))}
 
-          {/* Contact */}
-          <aside className="organization-details__sidebar">
+        {/* About */}
+        {activeTab === TABS.ABOUT && (
+          <section className="organization-details__section">
+            <h2 className="organization-details__heading">
+              {t('org_about_title')}
+            </h2>
+
+            <p>{description || 'Bu təşkilat haqqında məlumat yoxdur.'}</p>
 
             <div className="organization-details__contact">
-
-              <h3>
-                {t('org_contact_title')}
-              </h3>
+              <h3>{t('org_contact_title')}</h3>
 
               {location && (
                 <div className="organization-details__contact-item">
@@ -302,6 +392,16 @@ export default function OrganizationDetails() {
                 </a>
               )}
 
+              {phone && (
+                <a
+                  href={`tel:${phone}`}
+                  className="organization-details__contact-item"
+                >
+                  <span>☎</span>
+                  <span>{phone}</span>
+                </a>
+              )}
+
               {website && (
                 <a
                   href={website}
@@ -313,39 +413,43 @@ export default function OrganizationDetails() {
                   <span>Website</span>
                 </a>
               )}
-
-              {instagram && (
-                <a
-                  href={instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="organization-details__contact-item"
-                >
-                  <span>◎</span>
-                  <span>Instagram</span>
-                </a>
-              )}
-
-              {facebook && (
-                <a
-                  href={facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="organization-details__contact-item"
-                >
-                  <span>f</span>
-                  <span>Facebook</span>
-                </a>
-              )}
-
             </div>
+          </section>
+        )}
 
-          </aside>
+        {/* Activity history */}
+        {activityHistory.length > 0 && (
+          <section className="organization-details__history">
+            {activityHistory.map((year) => (
+              <div
+                key={year.year}
+                className="organization-details__history-item"
+              >
+                <p className="organization-details__history-year">
+                  {year.year}
+                </p>
 
-        </div>
+                <p className="organization-details__history-line">
+                  {year.activeCount ?? year.projectsCount}{' '}
+                  {t('org_active_line')}
+                </p>
 
+                {year.completedCount != null && (
+                  <p className="organization-details__history-sub">
+                    {year.completedCount} {t('org_completed_sub')}
+                  </p>
+                )}
+
+                {year.participantsCount != null && (
+                  <p className="organization-details__history-sub">
+                    {year.participantsCount} {t('org_participants_sub')}
+                  </p>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
       </div>
-
     </main>
   )
 }
