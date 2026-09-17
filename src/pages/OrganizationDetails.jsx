@@ -14,7 +14,7 @@ import ProjectModal from '../components/ProjectModal'
 import { organizationLogos } from '../data/organizationLogos'
 import { t } from '../data/translations'
 import { useLightbox } from '../hooks/useLightbox'
-import { useOrganization } from '../hooks/useOrganization'
+import { useOrganization } from '../hooks/useOrganizations'
 
 // Hələlik AZ
 const lang = 'az'
@@ -50,10 +50,39 @@ export default function OrganizationDetails() {
     useLightbox()
 
   if (loading) {
+
     return (
       <main className="organization-details">
-        <div className="organization-details__container">
-          <p>Yüklənir...</p>
+        <div className="organization-details__container organization-details__skeleton">
+
+          <div className="organization-details__skeleton-back" />
+
+          <div className="organization-details__skeleton-header">
+            <div className="organization-details__skeleton-logo" />
+
+            <div className="organization-details__skeleton-info">
+              <div className="organization-details__skeleton-title" />
+              <div className="organization-details__skeleton-line" />
+              <div className="organization-details__skeleton-line organization-details__skeleton-line--short" />
+            </div>
+          </div>
+
+          <div className="organization-details__skeleton-section">
+            <div className="organization-details__skeleton-heading" />
+            <div className="organization-details__skeleton-text" />
+            <div className="organization-details__skeleton-text organization-details__skeleton-text--short" />
+          </div>
+
+          <div className="organization-details__skeleton-section">
+            <div className="organization-details__skeleton-heading" />
+
+            <div className="organization-details__skeleton-cards">
+              <div className="organization-details__skeleton-card" />
+              <div className="organization-details__skeleton-card" />
+              <div className="organization-details__skeleton-card" />
+            </div>
+          </div>
+
         </div>
       </main>
     )
