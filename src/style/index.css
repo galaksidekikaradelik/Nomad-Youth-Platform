@@ -59,7 +59,9 @@
 @import 'components/delete-modal.css';
 @import 'components/settings-form.css';
 @import 'components/chips-and-filters.css';
-@import 'components/organizations.css';
+@import 'components/organization-card.css';
+@import 'components/organization-details.css';
+@import 'components/organization-responsive.css';
 
 
 @import 'pages/about.css';

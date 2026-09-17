@@ -1,487 +1,3 @@
-.org-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-@media (max-width: 900px) {
-  .org-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .org-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Tək kart */
-.org-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  padding: 20px;
-}
-
-.org-card__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.org-card__identity {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.org-card__avatar {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 14px;
-  background-color: #fff;
-}
-
-.org-card__name {
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--color-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.org-card__rating-block {
-  flex-shrink: 0;
-  text-align: right;
-}
-
-.org-card__rating {
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--color-text);
-}
-
-.org-card__rating-count {
-  font-size: 12px;
-  color: var(--color-text-faint);
-  margin-top: 2px;
-}
-
-.org-card__badge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  background: var(--color-surface-2);
-  border-radius: 999px;
-  padding: 4px 10px;
-  white-space: nowrap;
-}
-
-.org-card__tagline {
-  font-size: 14px;
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
-.org-card__divider {
-  height: 1px;
-  background: var(--color-border);
-}
-
-.org-card__tags {
-  font-size: 13px;
-  color: var(--color-text-muted);
-}
-
-.org-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: auto;
-}
-
-.org-card__count {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text);
-}
-
-.org-card__link {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-primary);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.org-card__link:hover {
-  text-decoration: underline;
-}
-
-.org-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  padding: 24px;
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
-  background: var(--color-surface);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.org-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--color-border-hover);
-  box-shadow: var(--shadow-card);
-}
-
-
-.org-card__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.org-card__identity {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 0;
-}
-
-.org-card__avatar {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 14px;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.org-card__logo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.org-card__name-wrap {
-  min-width: 0;
-}
-
-.org-card__name {
-  margin: 0;
-  color: var(--color-text);
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-
-.org-card__rating {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  flex-shrink: 0;
-  padding: 7px 11px;
-  border-radius: 999px;
-  background: var(--color-surface-2);
-  color: var(--color-text-muted);
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.org-card__rating-star {
-  color: var(--color-accent);
-}
-
-.org-card__rating-value {
-  color: var(--color-text);
-}
-
-.org-card__rating-count {
-  color: var(--color-text-faint);
-}
-
-.org-card__rating-pending {
-  white-space: nowrap;
-}
-
-
-.org-card__about {
-  margin-top: 22px;
-}
-
-.org-card__section-title {
-  margin: 0 0 7px;
-  color: var(--color-text-faint);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.org-card__tagline {
-  margin: 0;
-  color: var(--color-text);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.5;
-}
-
-
-.org-card__categories {
-  display: flex;
-  flex-direction: row !important;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--color-border);
-}
-
-.org-card__category {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  flex: 0 0 auto;
-  min-height: 24px;
-  padding: 4px 10px;
-  border-radius: var(--radius-full, 999px);
-  white-space: nowrap;
-
-  font-size: 0.7rem;
-  font-weight: 600;
-  line-height: 1;
-  border: 1px solid transparent;
-}
-
-/* Environment */
-.org-card__category--environment {
-  background: #e9f7ef;
-  color: #218c55;
-  border-color: #ccebd9;
-}
-
-/* Youth */
-.org-card__category--youth {
-  background: #eaf2ff;
-  color: #3973c8;
-  border-color: #d2e2fb;
-}
-
-/* Education */
-.org-card__category--education {
-  background: #f1ebff;
-  color: #7651b8;
-  border-color: #e1d5fa;
-}
-
-/* Volunteering */
-.org-card__category--volunteering {
-  background: #fff2e5;
-  color: #c87524;
-  border-color: #f6dcc0;
-}
-
-/* Social */
-.org-card__category--social {
-  background: #ffecef;
-  color: #c34c6a;
-  border-color: #f6d2db;
-}
-
-/* Culture */
-.org-card__category--culture {
-  background: #f2eafa;
-  color: #8153a8;
-  border-color: #e0d0f0;
-}
-
-/* Sport */
-.org-card__category--sport {
-  background: #e8f7f8;
-  color: #25858a;
-  border-color: #cce9eb;
-}
-
-/* Technology */
-.org-card__category--technology {
-  background: #e8f5ff;
-  color: #2679ad;
-  border-color: #cce6f7;
-}
-
-/* Entrepreneurship */
-.org-card__category--entrepreneurship {
-  background: #fff7df;
-  color: #a47718;
-  border-color: #f2e5b8;
-}
-
-/* International */
-.org-card__category--international {
-  background: #eeeaff;
-  color: #6352b5;
-  border-color: #dcd5fa;
-}
-
-/* Non-profit */
-.org-card__category--nonprofit {
-  background: #eef1f4;
-  color: #596575;
-  border-color: #dce1e6;
-}
-
-/* Dark mode */
-[data-theme="dark"] .org-card__category--environment {
-  background: rgba(34, 197, 94, 0.14);
-  color: #6ee7a0;
-  border-color: rgba(34, 197, 94, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--youth {
-  background: rgba(59, 130, 246, 0.14);
-  color: #7db3ff;
-  border-color: rgba(59, 130, 246, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--education {
-  background: rgba(139, 92, 246, 0.14);
-  color: #b99aff;
-  border-color: rgba(139, 92, 246, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--volunteering {
-  background: rgba(249, 115, 22, 0.14);
-  color: #ffb477;
-  border-color: rgba(249, 115, 22, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--social {
-  background: rgba(236, 72, 153, 0.14);
-  color: #ff91ba;
-  border-color: rgba(236, 72, 153, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--culture {
-  background: rgba(168, 85, 247, 0.14);
-  color: #c99aff;
-  border-color: rgba(168, 85, 247, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--sport {
-  background: rgba(20, 184, 166, 0.14);
-  color: #68ddd2;
-  border-color: rgba(20, 184, 166, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--technology {
-  background: rgba(14, 165, 233, 0.14);
-  color: #72caff;
-  border-color: rgba(14, 165, 233, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--entrepreneurship {
-  background: rgba(234, 179, 8, 0.14);
-  color: #f5d56a;
-  border-color: rgba(234, 179, 8, 0.25);
-}
-
-[data-theme="dark"] .org-card__category--international {
-  background: rgba(99, 82, 181, 0.18);
-  color: #b7adff;
-  border-color: rgba(99, 82, 181, 0.3);
-}
-
-[data-theme="dark"] .org-card__category--nonprofit {
-  background: rgba(148, 163, 184, 0.14);
-  color: #b7c1ce;
-  border-color: rgba(148, 163, 184, 0.25);
-}
-
-.org-card__location {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 18px;
-  color: var(--color-text-muted);
-  font-size: 14px;
-}
-
-.org-card__location-icon {
-  font-size: 15px;
-}
-
-
-.org-card__bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 22px;
-  padding-top: 17px;
-  border-top: 1px solid var(--color-border);
-}
-
-.org-card__active {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  color: var(--color-text-muted);
-  font-size: 13px;
-}
-
-.org-card__active strong {
-  color: var(--color-text);
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.org-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--color-text);
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: gap 0.2s ease;
-}
-
-.org-card__link:hover {
-  gap: 10px;
-}
-
-/* ==========================================================================
-   Organization Details səhifəsi
-   ========================================================================== */
-
 .organization-details {
   background: var(--color-bg);
   min-height: 100vh;
@@ -493,7 +9,6 @@
   margin: 0 auto;
 }
 
-/* Back link */
 .organization-details__back {
   display: inline-flex;
   align-items: center;
@@ -508,7 +23,6 @@
 .organization-details__back:hover {
   color: var(--color-text);
 }
-
 
 
 .organization-details__hero {
@@ -583,12 +97,11 @@
 }
 
 .organization-details__meta span:not(:last-child)::after {
-  content: '·';
+  content: "·";
   margin-left: 8px;
   color: var(--color-border-hover);
 }
 
-/* Rating box (right side of hero) */
 .organization-details__rating-box {
   flex: 0 0 220px;
   background: var(--color-surface-2);
@@ -621,14 +134,6 @@
   font-weight: 600;
 }
 
-[data-theme="dark"] .organization-details__rating-badge {
-  background: rgba(34, 197, 94, 0.14);
-  color: #6ee7a0;
-}
-
-/* ==========================================================================
-   Categories
-   ========================================================================== */
 
 .organization-details__categories {
   display: flex;
@@ -651,15 +156,6 @@
   white-space: nowrap;
 }
 
-[data-theme="dark"] .organization-details__category {
-  background: rgba(59, 130, 246, 0.14);
-  color: #7db3ff;
-  border-color: rgba(59, 130, 246, 0.25);
-}
-
-/* ==========================================================================
-   Tabs (Aktiv imkanlar / Keçmiş layihələr / Qiymətləndirmələr / Haqqında)
-   ========================================================================== */
 
 .organization-details__tabs {
   display: flex;
@@ -699,9 +195,6 @@
   color: var(--color-surface);
 }
 
-/* ==========================================================================
-   Section headings
-   ========================================================================== */
 
 .organization-details__heading {
   margin: 0 0 16px;
@@ -710,27 +203,12 @@
   color: var(--color-text);
 }
 
-/* ==========================================================================
-   Opportunities grid
-   ========================================================================== */
 
 .organization-details__opportunities {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-bottom: 40px;
-}
-
-@media (max-width: 900px) {
-  .organization-details__opportunities {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .organization-details__opportunities {
-    grid-template-columns: 1fr;
-  }
 }
 
 .organization-details__opportunity-card {
@@ -741,7 +219,10 @@
   border: 1px solid var(--color-border);
   border-radius: 18px;
   padding: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .organization-details__opportunity-card:hover {
@@ -793,9 +274,7 @@
   text-decoration: underline;
 }
 
-/* ==========================================================================
-   Activity history (Fəaliyyət tarixçəsi)
-   ========================================================================== */
+
 
 .organization-details__history {
   background: var(--color-surface);
@@ -806,13 +285,6 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-@media (max-width: 640px) {
-  .organization-details__history {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
 .organization-details__history-item {
   padding: 0 24px;
   border-left: 1px solid var(--color-border);
@@ -821,20 +293,6 @@
 .organization-details__history-item:first-child {
   border-left: none;
   padding-left: 0;
-}
-
-@media (max-width: 640px) {
-  .organization-details__history-item {
-    border-left: none;
-    padding-left: 0;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .organization-details__history-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
 }
 
 .organization-details__history-year {
@@ -857,21 +315,12 @@
   color: var(--color-text-faint);
 }
 
-/* ==========================================================================
-   Main layout (About + Opportunities / Sidebar contact)
-   ========================================================================== */
 
 .organization-details__layout {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
   align-items: start;
-}
-
-@media (max-width: 800px) {
-  .organization-details__layout {
-    grid-template-columns: 1fr;
-  }
 }
 
 .organization-details__main {
@@ -912,7 +361,7 @@
   color: var(--color-text-faint);
 }
 
-/* Sidebar / contact */
+
 .organization-details__sidebar {
   position: sticky;
   top: 24px;
@@ -956,53 +405,10 @@ a.organization-details__contact-item:hover {
 }
 
 
-@media (max-width: 640px) {
-  .org-card {
-    padding: 20px;
-    border-radius: 18px;
-  }
-
-  .org-card__top {
-    align-items: flex-start;
-  }
-
-  .org-card__rating {
-    padding: 6px 9px;
-    font-size: 12px;
-  }
-
-  .org-card__name {
-    font-size: 18px;
-  }
-
-  .org-card__bottom {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .org-card__link {
-    align-self: flex-end;
-  }
-}
-
-
-/* Ümumi tədbir şəkilləri — pastProjects hələ boş olanda balaca kart grid-i */
 .organization-details__photo-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-}
-
-@media (max-width: 900px) {
-  .organization-details__photo-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .organization-details__photo-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .organization-details__photo-card {
@@ -1025,7 +431,6 @@ a.organization-details__contact-item:hover {
   transform: scale(1.04);
 }
 
-/* Şəkil qalereyası itemləri artıq <button> olduğu üçün default stil sıfırlanmalıdır */
 .organization-details__project-gallery-item,
 .organization-details__photo-card {
   border: none;
@@ -1034,7 +439,7 @@ a.organization-details__contact-item:hover {
   font: inherit;
 }
 
-/* Lightbox (həmişə tünd overlay — hər iki tema üçün dəyişmir) */
+
 .organization-details__lightbox {
   position: fixed;
   inset: 0;
@@ -1120,22 +525,6 @@ a.organization-details__contact-item:hover {
   border-radius: 999px;
 }
 
-@media (max-width: 640px) {
-  .organization-details__lightbox-nav {
-    width: 40px;
-    height: 40px;
-    font-size: 22px;
-  }
-
-  .organization-details__lightbox-nav--prev {
-    left: 8px;
-  }
-
-  .organization-details__lightbox-nav--next {
-    right: 8px;
-  }
-}
-
 
 .organization-details__projects {
   margin-top: 8px;
@@ -1193,12 +582,6 @@ a.organization-details__contact-item:hover {
   font-size: 11px;
   font-weight: 700;
   line-height: 1;
-}
-
-[data-theme="dark"] .organization-details__project-label {
-  background: rgba(34, 197, 94, 0.14);
-  color: #6ee7a0;
-  border-color: rgba(34, 197, 94, 0.25);
 }
 
 .organization-details__project-content h3 {
@@ -1287,9 +670,6 @@ a.organization-details__contact-item:hover {
   transform: translateY(-1px);
 }
 
-/* ==========================================================================
-   Aktiv layihə modalı
-   ========================================================================== */
 
 .organization-details__project-modal {
   position: fixed;
@@ -1399,52 +779,6 @@ a.organization-details__contact-item:hover {
   margin-top: 20px;
 }
 
-/* ==========================================================================
-   Aktiv layihələr — responsive
-   ========================================================================== */
-
-@media (max-width: 900px) {
-  .organization-details__projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .organization-details__projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .organization-details__project-content {
-    padding: 20px;
-  }
-
-  .organization-details__project-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .organization-details__project-details,
-  .organization-details__project-apply {
-    width: 100%;
-    flex: none;
-  }
-
-  .organization-details__project-modal {
-    align-items: flex-end;
-    padding: 12px;
-  }
-
-  .organization-details__project-modal-content {
-    max-height: 88vh;
-    padding: 24px 20px;
-    border-radius: 20px;
-  }
-
-  .organization-details__project-modal-content h2 {
-    margin-right: 35px;
-    font-size: 21px;
-  }
-}
 
 .organization-details__project-gallery {
   display: grid;
@@ -1502,6 +836,7 @@ a.organization-details__contact-item:hover {
   font-size: 14px;
   line-height: 1.5;
 }
+
 
 .organization-details__skeleton {
   animation: skeleton-pulse 1.5s ease-in-out infinite;
@@ -1598,29 +933,5 @@ a.organization-details__contact-item:hover {
 
   50% {
     opacity: 0.55;
-  }
-}
-
-@media (max-width: 768px) {
-  .organization-details__skeleton-header {
-    align-items: flex-start;
-  }
-
-  .organization-details__skeleton-logo {
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
-  }
-
-  .organization-details__skeleton-title {
-    width: 180px;
-  }
-
-  .organization-details__skeleton-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .organization-details__skeleton-card {
-    height: 150px;
   }
 }

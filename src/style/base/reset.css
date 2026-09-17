@@ -19,11 +19,55 @@ body {
   overflow-x: hidden;
 }
 
-a   { color: inherit; text-decoration: none; }
-img { max-width: 100%; height: auto; display: block; }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-400) transparent;
+}
 
-button   { font-family: var(--font-body); cursor: pointer; border: none; outline: none; }
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--accent-400);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-300);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
 input,
 select,
-textarea { font-family: var(--font-body); outline: none; }
-ul, ol   { list-style: none; }
+textarea {
+  font-family: var(--font-body);
+  outline: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}

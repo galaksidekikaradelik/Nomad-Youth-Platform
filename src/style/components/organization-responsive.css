@@ -1,0 +1,156 @@
+@media (max-width: 900px) {
+  .organization-details__projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .organization-details__photo-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .organization-details__opportunities {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .org-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .organization-details__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .organization-details__skeleton-header {
+    align-items: flex-start;
+  }
+
+  .organization-details__skeleton-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+  }
+
+  .organization-details__skeleton-title {
+    width: 180px;
+  }
+
+  .organization-details__skeleton-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .organization-details__skeleton-card {
+    height: 150px;
+  }
+}
+
+@media (max-width: 640px) {
+  .organization-details__projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .organization-details__project-content {
+    padding: 20px;
+  }
+
+  .organization-details__project-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .organization-details__project-details,
+  .organization-details__project-apply {
+    width: 100%;
+    flex: none;
+  }
+
+  .organization-details__project-modal {
+    align-items: flex-end;
+    padding: 12px;
+  }
+
+  .organization-details__project-modal-content {
+    max-height: 88vh;
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
+
+  .organization-details__project-modal-content h2 {
+    margin-right: 35px;
+    font-size: 21px;
+  }
+
+  .organization-details__lightbox-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+
+  .organization-details__lightbox-nav--prev {
+    left: 8px;
+  }
+
+  .organization-details__lightbox-nav--next {
+    right: 8px;
+  }
+
+  .organization-details__photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .org-card {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .org-card__top {
+    align-items: flex-start;
+  }
+
+  .org-card__rating {
+    padding: 6px 9px;
+    font-size: 12px;
+  }
+
+  .org-card__name {
+    font-size: 18px;
+  }
+
+  .org-card__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .org-card__link {
+    align-self: flex-end;
+  }
+
+  .organization-details__history-item {
+    border-left: none;
+    padding-left: 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .organization-details__history-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .organization-details__opportunities {
+    grid-template-columns: 1fr;
+  }
+
+  .organization-details__history {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .org-grid {
+    grid-template-columns: 1fr;
+  }
+}

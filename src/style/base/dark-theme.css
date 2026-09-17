@@ -12,6 +12,7 @@
   opacity: 0.12;
 }
 
+
 [data-theme="dark"] .section-heading__title,
 [data-theme="dark"] .page-header__title,
 [data-theme="dark"] .opportunity-card__title,
@@ -27,21 +28,15 @@
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .btn-outline {
-  color: var(--text-primary);
-  border-color: var(--color-border);
-}
 
-[data-theme="dark"] .btn-outline:hover {
-  background: var(--text-primary);
-  color: var(--brand-900);
-}
 
+[data-theme="dark"] .btn-outline,
 [data-theme="dark"] .ny-btn--secondary {
   color: var(--text-primary);
   border-color: var(--color-border);
 }
 
+[data-theme="dark"] .btn-outline:hover,
 [data-theme="dark"] .ny-btn--secondary:hover {
   background: var(--text-primary);
   color: var(--brand-900);
@@ -60,16 +55,13 @@
   background: var(--accent-300);
 }
 
+
 [data-theme="dark"] .search-bar__input,
 [data-theme="dark"] .search-bar__select,
 [data-theme="dark"] .search-bar__select option {
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .opportunity-card__tag {
-  background: var(--neutral-200);
-  color: var(--text-secondary);
-}
 
 [data-theme="dark"] .navbar__link.active,
 [data-theme="dark"] .navbar__link:hover {
@@ -90,60 +82,78 @@
   border: 1px solid var(--color-border-hover);
 }
 
-
 [data-theme="dark"] .category-card.active .category-card__name {
   color: var(--brand-900);
 }
 
-[data-theme="dark"] .filter-btn.active{
-  color: #FFFFFF;
+[data-theme="dark"] .filter-btn.active {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .opportunity-card__tag {
+  background: var(--neutral-200);
+  color: var(--text-secondary);
+}
+
+
+[data-theme="dark"] .opportunity-card__status-badge--preparing {
+  color: #fbbf24;
+}
+
+[data-theme="dark"] .opportunity-card__status-badge--applied {
+  color: #93c5fd;
+}
+
+[data-theme="dark"] .opportunity-card__status-badge--accepted {
+  color: #6ee7b7;
+}
+
+[data-theme="dark"] .opportunity-card__status-badge--rejected {
+  color: #fca5a5;
+}
+
+[data-theme="dark"] .opportunity-card__status-option:hover {
+  background: var(--neutral-100);
+  color: var(--text-primary);
+}
+
+
+[data-theme="dark"] .opportunity-card__tag--esc {
+  background-color: #e6f4ff;
+  color: #0958d9;
+  border: 1px solid #91caff;
+}
+
+[data-theme="dark"] .opportunity-card__tag--salto {
+  background-color: #fff2e8;
+  color: #d4380d;
+  border: 1px solid #ffbb96;
+}
+
+[data-theme="dark"] .opportunity-card__tag--individual {
+  background-color: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+}
+
+[data-theme="dark"] .opportunity-card__tag--team {
+  background-color: #f9f0ff;
+  color: #722ed1;
+  border: 1px solid #d3adf7;
+}
+
+
+[data-theme="dark"] .opportunities-tab.active {
+  background-color: var(--accent-100);
+}
+
+[data-theme="dark"] .opportunities-tab.active::after {
+  background: var(--brand-900);
 }
 
 
 [data-theme="dark"] .profile-page {
   --navy: var(--color-primary);
-}
- 
-[data-theme="dark"] .profile-stats-bar__item--accepted .profile-stats-bar__icon,
-[data-theme="dark"] .profile-status-badge--accepted,
-[data-theme="dark"] .profile-status-badge--approved {
-  background: rgba(16, 185, 129, 0.18);
-}
- 
-[data-theme="dark"] .profile-stats-bar__item--pending .profile-stats-bar__icon,
-[data-theme="dark"] .profile-status-badge--applied,
-[data-theme="dark"] .profile-status-badge--pending {
-  background: rgba(249, 115, 22, 0.18);
-}
- 
-[data-theme="dark"] .profile-stats-bar__item--preparing .profile-stats-bar__icon,
-[data-theme="dark"] .profile-status-badge--preparing,
-[data-theme="dark"] .profile-status-badge--in_progress,
-[data-theme="dark"] .profile-mini-row__tag {
-  background: rgba(59, 130, 246, 0.18);
-}
- 
-[data-theme="dark"] .profile-stats-bar__item--rejected .profile-stats-bar__icon,
-[data-theme="dark"] .profile-status-badge--rejected {
-  background: rgba(239, 68, 68, 0.18);
-}
- 
-[data-theme="dark"] .profile-header__avatar {
-  color: var(--brand-900);
-  background: var(--accent);
-}
- 
-[data-theme="dark"] .profile-quote-card__author,
-[data-theme="dark"] .profile-quote-card__mark {
-  color: var(--accent);
-}
- 
-[data-theme="dark"] .profile-quote-card__cta,
-[data-theme="dark"] .profile-notif-banner__icon {
-  color: var(--brand-900);
-}
-
-[data-theme="dark"] .profile-page {
   background: var(--color-background);
 }
 
@@ -181,57 +191,141 @@
   color: var(--brand-900);
 }
 
-[data-theme="dark"] .profile-sidebar__item--active{
+[data-theme="dark"] .profile-sidebar__item--active {
   background-color: var(--accent-200);
   color: var(--brand-900);
 }
 
-[data-theme = "dark"] .profile-stats-bar__count{
-  color: var(--accent-300);
-}
-
-[data-theme = "dark"] .profile-sidebar__item--logout{
+[data-theme="dark"] .profile-sidebar__item--logout {
   color: var(--status-error);
 }
 
-[data-theme="dark"] .opportunity-card__status-badge--preparing { color: #FBBF24; }
-[data-theme="dark"] .opportunity-card__status-badge--applied   { color: #93C5FD; }
-[data-theme="dark"] .opportunity-card__status-badge--accepted  { color: #6EE7B7; }
-[data-theme="dark"] .opportunity-card__status-badge--rejected  { color: #FCA5A5; }
-
-[data-theme="dark"] .opportunity-card__status-option:hover {
-  background: var(--neutral-100);
-  color: var(--text-primary);
+[data-theme="dark"] .profile-stats-bar__count {
+  color: var(--accent-300);
 }
 
-[data-theme="dark"] .opportunity-card__tag--esc {
-    background-color: #e6f4ff;
-    color: #0958d9;
-    border: 1px solid #91caff;
+
+[data-theme="dark"] .profile-stats-bar__item--accepted .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--accepted,
+[data-theme="dark"] .profile-status-badge--approved {
+  background: rgba(16, 185, 129, 0.18);
 }
 
-[data-theme="dark"] .opportunity-card__tag--salto {
-  background-color: #fff2e8;
-  color: #d4380d;
-  border: 1px solid #ffbb96;
+[data-theme="dark"] .profile-stats-bar__item--pending .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--applied,
+[data-theme="dark"] .profile-status-badge--pending {
+  background: rgba(249, 115, 22, 0.18);
 }
 
-[data-theme="dark"] .opportunity-card__tag--individual {
-  background-color: #f6ffed;
-  color: #389e0d;
-  border: 1px solid #b7eb8f;
+[data-theme="dark"] .profile-stats-bar__item--preparing .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--preparing,
+[data-theme="dark"] .profile-status-badge--in_progress,
+[data-theme="dark"] .profile-mini-row__tag {
+  background: rgba(59, 130, 246, 0.18);
 }
 
-[data-theme="dark"] .opportunity-card__tag--team {
-  background-color: #f9f0ff;
-  color: #722ed1;
-  border: 1px solid #d3adf7;
+[data-theme="dark"] .profile-stats-bar__item--rejected .profile-stats-bar__icon,
+[data-theme="dark"] .profile-status-badge--rejected {
+  background: rgba(239, 68, 68, 0.18);
 }
 
-[data-theme="dark"] .opportunities-tab.active{
-  background-color: var(--accent-100);
+
+[data-theme="dark"] .profile-header__avatar {
+  color: var(--brand-900);
+  background: var(--accent);
 }
 
-[data-theme="dark"] .opportunities-tab.active::after {
-  background: var(--brand-900);
+[data-theme="dark"] .profile-quote-card__author,
+[data-theme="dark"] .profile-quote-card__mark {
+  color: var(--accent);
+}
+
+[data-theme="dark"] .profile-quote-card__cta,
+[data-theme="dark"] .profile-notif-banner__icon {
+  color: var(--brand-900);
+}
+
+
+[data-theme="dark"] .org-card__category--environment {
+  background: rgba(34, 197, 94, 0.14);
+  color: #6ee7a0;
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--youth {
+  background: rgba(59, 130, 246, 0.14);
+  color: #7db3ff;
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--education {
+  background: rgba(139, 92, 246, 0.14);
+  color: #b99aff;
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--volunteering {
+  background: rgba(249, 115, 22, 0.14);
+  color: #ffb477;
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--social {
+  background: rgba(236, 72, 153, 0.14);
+  color: #ff91ba;
+  border-color: rgba(236, 72, 153, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--culture {
+  background: rgba(168, 85, 247, 0.14);
+  color: #c99aff;
+  border-color: rgba(168, 85, 247, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--sport {
+  background: rgba(20, 184, 166, 0.14);
+  color: #68ddd2;
+  border-color: rgba(20, 184, 166, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--technology {
+  background: rgba(14, 165, 233, 0.14);
+  color: #72caff;
+  border-color: rgba(14, 165, 233, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--entrepreneurship {
+  background: rgba(234, 179, 8, 0.14);
+  color: #f5d56a;
+  border-color: rgba(234, 179, 8, 0.25);
+}
+
+[data-theme="dark"] .org-card__category--international {
+  background: rgba(99, 82, 181, 0.18);
+  color: #b7adff;
+  border-color: rgba(99, 82, 181, 0.3);
+}
+
+[data-theme="dark"] .org-card__category--nonprofit {
+  background: rgba(148, 163, 184, 0.14);
+  color: #b7c1ce;
+  border-color: rgba(148, 163, 184, 0.25);
+}
+
+
+[data-theme="dark"] .organization-details__rating-badge {
+  background: rgba(34, 197, 94, 0.14);
+  color: #6ee7a0;
+}
+
+[data-theme="dark"] .organization-details__category {
+  background: rgba(59, 130, 246, 0.14);
+  color: #7db3ff;
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+[data-theme="dark"] .organization-details__project-label {
+  background: rgba(34, 197, 94, 0.14);
+  color: #6ee7a0;
+  border-color: rgba(34, 197, 94, 0.25);
 }
