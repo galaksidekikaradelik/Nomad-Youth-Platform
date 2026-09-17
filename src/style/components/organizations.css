@@ -1502,3 +1502,125 @@ a.organization-details__contact-item:hover {
   font-size: 14px;
   line-height: 1.5;
 }
+
+.organization-details__skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+.organization-details__skeleton-back {
+  width: 90px;
+  height: 18px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  margin-bottom: 32px;
+}
+
+.organization-details__skeleton-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.organization-details__skeleton-logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  background: #e5e7eb;
+  flex-shrink: 0;
+}
+
+.organization-details__skeleton-info {
+  flex: 1;
+}
+
+.organization-details__skeleton-title {
+  width: 240px;
+  height: 30px;
+  border-radius: 7px;
+  background: #e5e7eb;
+  margin-bottom: 14px;
+}
+
+.organization-details__skeleton-line {
+  width: 70%;
+  height: 14px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  margin-bottom: 9px;
+}
+
+.organization-details__skeleton-line--short {
+  width: 45%;
+}
+
+.organization-details__skeleton-section {
+  margin-bottom: 40px;
+}
+
+.organization-details__skeleton-heading {
+  width: 150px;
+  height: 22px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  margin-bottom: 18px;
+}
+
+.organization-details__skeleton-text {
+  width: 90%;
+  height: 14px;
+  border-radius: 6px;
+  background: #e5e7eb;
+  margin-bottom: 10px;
+}
+
+.organization-details__skeleton-text--short {
+  width: 65%;
+}
+
+.organization-details__skeleton-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.organization-details__skeleton-card {
+  height: 180px;
+  border-radius: 16px;
+  background: #e5e7eb;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (max-width: 768px) {
+  .organization-details__skeleton-header {
+    align-items: flex-start;
+  }
+
+  .organization-details__skeleton-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+  }
+
+  .organization-details__skeleton-title {
+    width: 180px;
+  }
+
+  .organization-details__skeleton-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .organization-details__skeleton-card {
+    height: 150px;
+  }
+}
