@@ -1,4 +1,4 @@
-import { t } from '../../data/translations'
+import { t } from '../data/translations'
 
 export default function ActiveProjects({ projects, onSelectProject }) {
   if (projects.length === 0) return null

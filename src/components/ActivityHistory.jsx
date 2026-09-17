@@ -1,4 +1,4 @@
-import { t } from '../../data/translations'
+import { t } from '../data/translations'
 
 export default function ActivityHistory({ activityHistory }) {
   if (activityHistory.length === 0) return null

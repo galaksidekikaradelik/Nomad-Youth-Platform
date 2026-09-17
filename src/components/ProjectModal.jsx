@@ -1,4 +1,4 @@
-import { t } from '../../data/translations'
+import { t } from '../data/translations'
 
 export default function ProjectModal({ project, onClose }) {
   if (!project) return null

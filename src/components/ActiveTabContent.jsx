@@ -1,4 +1,4 @@
-import { t } from '../../data/translations'
+import { t } from '../data/translations'
 import ActiveOpportunities from './ActiveOpportunities'
 import ActiveProjects from './ActiveProjects'
 

@@ -1,5 +1,5 @@
-import { translateCategory } from '../../data/categoryTranslation'
-import { t } from '../../data/translations'
+import { translateCategory } from '../data/categoryTranslation'
+import { t } from '../data/translations'
 
 export default function OrganizationHero({
   name,

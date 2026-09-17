@@ -1,4 +1,4 @@
-import { t } from '../../data/translations'
+import { t } from '../data/translations'
 
 export const TABS = {
   ACTIVE: 'active',

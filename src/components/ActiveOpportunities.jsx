@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
-import { translateCategory } from '../../data/categoryTranslation'
-import { t } from '../../data/translations'
+import { translateCategory } from '../data/categoryTranslation'
+import { t } from '../data/translations'
 
 export default function ActiveOpportunities({ opportunities, lang }) {
   if (opportunities.length === 0) return null

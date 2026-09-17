@@ -1,5 +1,5 @@
-import { getEventImages } from '../../data/organizationEventImages'
-import { t } from '../../data/translations'
+import { getEventImages } from '../data/organizationEventImages'
+import { t } from '../data/translations'
 
 function PastProjectCard({ project, images, onOpenLightbox }) {
   const visibleImages = images.slice(0, 3)
