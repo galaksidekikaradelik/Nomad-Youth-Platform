@@ -179,7 +179,7 @@
 
   height: 3px;
 
-  background: var(--color-accent);
+  background: var(--brand-900);
   border-radius: 3px 3px 0 0;
 }
 
@@ -329,9 +329,6 @@
 }
 
 
-/* =========================================================
-   RESULTS COUNT
-   ========================================================= */
 
 .opportunities-results-count {
   margin: var(--space-lg) 0 var(--space-md);
@@ -342,7 +339,7 @@
 }
 
 .opportunities-results-count__number {
-  color: var(--color-text);
+  color: var(--text-primary);
   font-weight: 700;
 }
 

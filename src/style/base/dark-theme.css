@@ -228,3 +228,6 @@
   border: 1px solid #d3adf7;
 }
 
+[data-theme="dark"] .opportunities-tab.active{
+  background-color: var(--accent-100);
+}

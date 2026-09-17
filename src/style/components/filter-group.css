@@ -48,7 +48,3 @@
   color: var(--text-muted);
 }
 
-.opportunities-results-count__number {
-  color: var(--brand-900);
-  font-weight: 700;
-}
