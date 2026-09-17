@@ -52,6 +52,7 @@
   color: #ffffff;
   font-weight: 700;
   font-size: 14px;
+  background-color: #fff;
 }
 
 .org-card__name {
@@ -692,7 +693,7 @@
 }
 
 .organization-details__tab:hover {
-  color: var(--color-text);
+  color: var(--accent-400);
 }
 
 .organization-details__tab--active {
