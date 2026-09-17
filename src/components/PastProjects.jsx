@@ -19,7 +19,12 @@ function PastProjectCard({ project, images, onOpenLightbox }) {
               className="organization-details__project-gallery-item"
               onClick={() => onOpenLightbox(images, index)}
             >
-              <img src={src} alt={`${project.title} ${index + 1}`} />
+              <img
+                src={src}
+                alt={`${project.title} ${index + 1}`}
+                loading="lazy"
+                decoding="async"
+              />
 
               {extraCount > 0 && index === visibleImages.length - 1 && (
                 <span className="organization-details__project-gallery-more">
@@ -78,7 +83,12 @@ function GeneralPhotoGrid({ name, images, onOpenLightbox }) {
           className="organization-details__photo-card"
           onClick={() => onOpenLightbox(images, index)}
         >
-          <img src={src} alt={`${name} ${index + 1}`} />
+          <img
+            src={src}
+            alt={`${name} ${index + 1}`}
+            loading="lazy"
+            decoding="async"
+          />
         </button>
       ))}
     </div>
@@ -117,7 +127,6 @@ export default function PastProjects({
           <PastProjectCard
             key={project.id ?? project.slug}
             project={project}
-            slug={slug}
             images={images}
             onOpenLightbox={onOpenLightbox}
           />
