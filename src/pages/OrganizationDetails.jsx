@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+
 import { translateCategory } from '../data/categoryTranslation'
 import { getEventImages } from '../data/organizationEventImages'
 import { organizationLogos } from '../data/organizationLogos'
@@ -21,8 +22,11 @@ export default function OrganizationDetails() {
   const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState(TABS.ACTIVE)
 
-  // Şəkil lightbox-u: hansı qalereyaya baxılır (images) və hansı indexdə
-  const [lightbox, setLightbox] = useState(null) // { images: string[], index: number } | null
+  // Layihə detail modalı
+  const [selectedProject, setSelectedProject] = useState(null)
+
+  // Şəkil lightbox-u
+  const [lightbox, setLightbox] = useState(null)
 
   const openLightbox = useCallback((images, index) => {
     setLightbox({ images, index })
@@ -52,7 +56,6 @@ export default function OrganizationDetails() {
 
     setLightbox((current) => {
       if (!current) return current
-
 
       return {
         ...current,
@@ -98,6 +101,11 @@ export default function OrganizationDetails() {
       org_active_line: 'aktiv imkan',
       org_completed_sub: 'tamamlanmış layihə',
       org_participants_sub: 'iştirakçı',
+      org_active_projects: 'Aktiv layihələr',
+      org_active_project: 'Aktiv layihə',
+      org_project_date: 'Tarix',
+      org_project_time: 'Saat',
+      org_project_transport: 'Nəqliyyat və qidalanma',
     }
 
     return translations[key] || key
@@ -119,7 +127,6 @@ export default function OrganizationDetails() {
           if (!cancelled) {
             setOrganization(null)
           }
-
           return
         }
 
@@ -136,11 +143,7 @@ export default function OrganizationDetails() {
         }
       } catch (err) {
         if (!cancelled) {
-          console.error(
-            'Failed to fetch organization:',
-            err
-          )
-
+          console.error('Failed to fetch organization:', err)
           setError(err)
         }
       } finally {
@@ -173,7 +176,10 @@ export default function OrganizationDetails() {
         <div className="organization-details__container">
           <h1>Təşkilatı yükləmək mümkün olmadı</h1>
 
-          <Link to="/opportunities" className="organization-details__back">
+          <Link
+            to="/opportunities"
+            className="organization-details__back"
+          >
             ← {t('back_to_opportunities')}
           </Link>
         </div>
@@ -187,7 +193,10 @@ export default function OrganizationDetails() {
         <div className="organization-details__container">
           <h1>{t('org_not_found')}</h1>
 
-          <Link to="/opportunities" className="organization-details__back">
+          <Link
+            to="/opportunities"
+            className="organization-details__back"
+          >
             ← {t('back_to_opportunities')}
           </Link>
         </div>
@@ -208,8 +217,6 @@ export default function OrganizationDetails() {
     phone,
     location,
     logo,
-
-    // gələcəkdə backend-dən gələcək
     opportunities = [],
     pastProjects = [],
     activityHistory = [],
@@ -217,10 +224,27 @@ export default function OrganizationDetails() {
 
   const activeOpportunities = opportunities.length
 
-  // Backend logo sahəsini bəzən tam URL, bəzən sadəcə fayl adı
-  // (məs. 'ecohub.png') kimi qaytarır. organizationLogos map-i faylı
-  // tanıyırsa bundle olunmuş şəkli istifadə edir, tanımırsa (artıq
-  // tam URL-dirsə və ya map-də yoxdursa) olduğu kimi saxlayır.
+  // EcoHub üçün frontend-də saxlanılan aktiv layihə
+  const activeProjects =
+    slug === 'ecohub'
+      ? [
+          {
+            id: 'xezeri-qoruyaq-2026',
+            title: 'Xəzəri Qoruyaq 2026',
+            description:
+              'Bu il də Xəzər dənizinin və sahil ərazilərinin qorunmasına töhfə vermək üçün “Xəzəri Qoruyaq” aksiyasında birlikdə oluruq.',
+            date: '19 sentyabr',
+            time: '09:00–13:00',
+            additionalInfo:
+              'Nəqliyyat və qidalanma təşkilat tərəfindən qarşılanacaq.',
+            applicationUrl:
+              'https://forms.gle/2Gf6pTq3gzxhbE4V9',
+          },
+        ]
+      : []
+
+  // Backend logo sahəsini bəzən tam URL,
+  // bəzən sadəcə fayl adı kimi qaytara bilər.
   const resolvedLogo = logo
     ? organizationLogos[logo] || logo
     : null
@@ -229,7 +253,10 @@ export default function OrganizationDetails() {
     <main className="organization-details">
       <div className="organization-details__container">
         {/* Back */}
-        <Link to="/opportunities" className="organization-details__back">
+        <Link
+          to="/opportunities"
+          className="organization-details__back"
+        >
           ← {t('back_to_opportunities')}
         </Link>
 
@@ -243,7 +270,9 @@ export default function OrganizationDetails() {
                 className="organization-details__logo"
               />
             ) : (
-              <span>{name?.charAt(0)?.toUpperCase() || 'O'}</span>
+              <span>
+                {name?.charAt(0)?.toUpperCase() || 'O'}
+              </span>
             )}
           </div>
 
@@ -251,24 +280,35 @@ export default function OrganizationDetails() {
             <h1>{name}</h1>
 
             {tagline && (
-              <p className="organization-details__tagline">{tagline}</p>
+              <p className="organization-details__tagline">
+                {tagline}
+              </p>
             )}
 
             {activeOpportunities > 0 && (
               <div className="organization-details__meta">
                 <span>
-                  {activeOpportunities} {t('org_active_opps_suffix')}
+                  {activeOpportunities}{' '}
+                  {t('org_active_opps_suffix')}
                 </span>
               </div>
             )}
 
-            {(website || instagram || linkedin || facebook) && (
+            {(website ||
+              instagram ||
+              linkedin ||
+              facebook) && (
               <div className="organization-details__meta">
                 {website && (
-                  <a href={website} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {website.replace(/^https?:\/\//, '')}
                   </a>
                 )}
+
                 {instagram && (
                   <a
                     href={instagram}
@@ -278,6 +318,7 @@ export default function OrganizationDetails() {
                     Instagram
                   </a>
                 )}
+
                 {linkedin && (
                   <a
                     href={linkedin}
@@ -287,6 +328,7 @@ export default function OrganizationDetails() {
                     LinkedIn
                   </a>
                 )}
+
                 {facebook && (
                   <a
                     href={facebook}
@@ -301,8 +343,17 @@ export default function OrganizationDetails() {
 
             {(email || phone) && (
               <div className="organization-details__meta">
-                {email && <a href={`mailto:${email}`}>{email}</a>}
-                {phone && <a href={`tel:${phone}`}>{phone}</a>}
+                {email && (
+                  <a href={`mailto:${email}`}>
+                    {email}
+                  </a>
+                )}
+
+                {phone && (
+                  <a href={`tel:${phone}`}>
+                    {phone}
+                  </a>
+                )}
               </div>
             )}
           </div>
@@ -316,7 +367,8 @@ export default function OrganizationDetails() {
                 key={category}
                 className="organization-details__category"
               >
-                {translateCategory(category, lang) || category}
+                {translateCategory(category, lang) ||
+                  category}
               </span>
             ))}
           </div>
@@ -361,101 +413,205 @@ export default function OrganizationDetails() {
           </button>
         </nav>
 
-        {/* Active opportunities */}
-        {activeTab === TABS.ACTIVE &&
-          (activeOpportunities > 0 ? (
-            <div className="organization-details__opportunities">
-              {opportunities.map((opp) => (
-                <div
-                  key={opp.id ?? opp.slug}
-                  className="organization-details__opportunity-card"
-                >
-                  {opp.category && (
-                    <span className="organization-details__opportunity-badge">
-                      {translateCategory(opp.category, lang) ||
-                        opp.category}
-                    </span>
-                  )}
-
-                  <h3 className="organization-details__opportunity-title">
-                    {opp.title}
-                  </h3>
-
-                  <div className="organization-details__opportunity-footer">
-                    {opp.deadline && (
-                      <span>
-                        {t('org_deadline')}: {opp.deadline}
+        {/* Active opportunities + active projects */}
+        {activeTab === TABS.ACTIVE && (
+          <>
+            {/* Active opportunities */}
+            {activeOpportunities > 0 && (
+              <div className="organization-details__opportunities">
+                {opportunities.map((opp) => (
+                  <div
+                    key={opp.id ?? opp.slug}
+                    className="organization-details__opportunity-card"
+                  >
+                    {opp.category && (
+                      <span className="organization-details__opportunity-badge">
+                        {translateCategory(
+                          opp.category,
+                          lang
+                        ) || opp.category}
                       </span>
                     )}
 
-                    {opp.applicationUrl ? (
-                      <a
-                        href={opp.applicationUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="organization-details__opportunity-link"
-                      >
-                        {t('org_apply')} →
-                      </a>
-                    ) : (
-                      <Link
-                        to={`/opportunities/${opp.slug}`}
-                        className="organization-details__opportunity-link"
-                      >
-                        {t('org_see_more')} →
-                      </Link>
-                    )}
+                    <h3 className="organization-details__opportunity-title">
+                      {opp.title}
+                    </h3>
+
+                    <div className="organization-details__opportunity-footer">
+                      {opp.deadline && (
+                        <span>
+                          {t('org_deadline')}:{' '}
+                          {opp.deadline}
+                        </span>
+                      )}
+
+                      {opp.applicationUrl ? (
+                        <a
+                          href={opp.applicationUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="organization-details__opportunity-link"
+                        >
+                          {t('org_apply')} →
+                        </a>
+                      ) : (
+                        <Link
+                          to={`/opportunities/${opp.slug}`}
+                          className="organization-details__opportunity-link"
+                        >
+                          {t('org_see_more')} →
+                        </Link>
+                      )}
+                    </div>
                   </div>
+                ))}
+              </div>
+            )}
+
+            {/* Active projects */}
+            {activeProjects.length > 0 && (
+              <section className="organization-details__projects">
+                <div className="organization-details__section-heading">
+                  <h2 className="organization-details__heading">
+                    {t('org_active_projects')}
+                  </h2>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="organization-details__empty">
-              <p>{t('org_no_active')}</p>
-            </div>
-          ))}
+
+                <div className="organization-details__projects-grid">
+                  {activeProjects.map((project) => (
+                    <article
+                      key={project.id}
+                      className="organization-details__project-card"
+                    >
+                      <div className="organization-details__project-content">
+                        <span className="organization-details__project-label">
+                          {t('org_active_project')}
+                        </span>
+
+                        <h3>
+                          {project.title}
+                        </h3>
+
+                        <p>
+                          {project.description}
+                        </p>
+
+                        <div className="organization-details__project-meta">
+                          <span>
+                            📅 {project.date}
+                          </span>
+
+                          <span>
+                            🕘 {project.time}
+                          </span>
+
+                          <span>
+                            🚌 {project.additionalInfo}
+                          </span>
+                        </div>
+
+                        <div className="organization-details__project-actions">
+                          <button
+                            type="button"
+                            className="organization-details__project-details"
+                            onClick={() =>
+                              setSelectedProject(
+                                project
+                              )
+                            }
+                          >
+                            {t('org_see_more')}
+                          </button>
+
+                          <a
+                            href={
+                              project.applicationUrl
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="organization-details__project-apply"
+                          >
+                            {t('org_apply')}
+                          </a>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Əgər nə aktiv imkan, nə də layihə varsa */}
+            {activeOpportunities === 0 &&
+              activeProjects.length === 0 && (
+                <div className="organization-details__empty">
+                  <p>{t('org_no_active')}</p>
+                </div>
+              )}
+          </>
+        )}
 
         {/* Past projects */}
         {activeTab === TABS.PAST &&
           (pastProjects.length > 0 ? (
             <div className="organization-details__opportunities">
               {pastProjects.map((project) => {
-                // project.images: string[] (tədbirdən bir neçə şəkil)
-                // project.image: string (tək cover şəkil, images yoxdursa)
                 const images =
                   project.images?.length > 0
                     ? project.images
                     : project.image
                     ? [project.image]
-                    : getEventImages(slug, project.slug)
+                    : getEventImages(
+                        slug,
+                        project.slug
+                      )
 
                 const visibleImages = images.slice(0, 3)
-                const extraCount = images.length - visibleImages.length
+                const extraCount =
+                  images.length -
+                  visibleImages.length
 
                 return (
                   <div
-                    key={project.id ?? project.slug}
+                    key={
+                      project.id ??
+                      project.slug
+                    }
                     className="organization-details__opportunity-card"
                   >
                     {images.length > 0 ? (
                       <div className="organization-details__project-gallery">
-                        {visibleImages.map((src, index) => (
-                          <button
-                            key={src}
-                            type="button"
-                            className="organization-details__project-gallery-item"
-                            onClick={() => openLightbox(images, index)}
-                          >
-                            <img src={src} alt={`${project.title} ${index + 1}`} />
+                        {visibleImages.map(
+                          (src, index) => (
+                            <button
+                              key={src}
+                              type="button"
+                              className="organization-details__project-gallery-item"
+                              onClick={() =>
+                                openLightbox(
+                                  images,
+                                  index
+                                )
+                              }
+                            >
+                              <img
+                                src={src}
+                                alt={`${project.title} ${
+                                  index + 1
+                                }`}
+                              />
 
-                            {extraCount > 0 &&
-                              index === visibleImages.length - 1 && (
-                                <span className="organization-details__project-gallery-more">
-                                  +{extraCount}
-                                </span>
-                              )}
-                          </button>
-                        ))}
+                              {extraCount > 0 &&
+                                index ===
+                                  visibleImages.length -
+                                    1 && (
+                                  <span className="organization-details__project-gallery-more">
+                                    +{extraCount}
+                                  </span>
+                                )}
+                            </button>
+                          )
+                        )}
                       </div>
                     ) : (
                       <div className="organization-details__project-gallery organization-details__project-gallery--empty">
@@ -473,14 +629,25 @@ export default function OrganizationDetails() {
                       </p>
                     )}
 
-                    {(project.date || project.participantsCount != null) && (
+                    {(project.date ||
+                      project.participantsCount !=
+                        null) && (
                       <div className="organization-details__opportunity-footer">
-                        {project.date && <span>{project.date}</span>}
-
-                        {project.participantsCount != null && (
+                        {project.date && (
                           <span>
-                            {project.participantsCount}{' '}
-                            {t('org_participants_sub')}
+                            {project.date}
+                          </span>
+                        )}
+
+                        {project.participantsCount !=
+                          null && (
+                          <span>
+                            {
+                              project.participantsCount
+                            }{' '}
+                            {t(
+                              'org_participants_sub'
+                            )}
                           </span>
                         )}
                       </div>
@@ -491,9 +658,8 @@ export default function OrganizationDetails() {
             </div>
           ) : (
             (() => {
-              // Backend hələ pastProjects qaytarmır. Bu təşkilatın local
-              // tedbirler qovluğunda şəkil varsa, kiçik kartlar kimi göstər.
-              const generalImages = getEventImages(slug)
+              const generalImages =
+                getEventImages(slug)
 
               if (generalImages.length === 0) {
                 return (
@@ -505,16 +671,28 @@ export default function OrganizationDetails() {
 
               return (
                 <div className="organization-details__photo-grid">
-                  {generalImages.map((src, index) => (
-                    <button
-                      key={src}
-                      type="button"
-                      className="organization-details__photo-card"
-                      onClick={() => openLightbox(generalImages, index)}
-                    >
-                      <img src={src} alt={`${name} ${index + 1}`} />
-                    </button>
-                  ))}
+                  {generalImages.map(
+                    (src, index) => (
+                      <button
+                        key={src}
+                        type="button"
+                        className="organization-details__photo-card"
+                        onClick={() =>
+                          openLightbox(
+                            generalImages,
+                            index
+                          )
+                        }
+                      >
+                        <img
+                          src={src}
+                          alt={`${name} ${
+                            index + 1
+                          }`}
+                        />
+                      </button>
+                    )
+                  )}
                 </div>
               )
             })()
@@ -527,7 +705,10 @@ export default function OrganizationDetails() {
               {t('org_about_title')}
             </h2>
 
-            <p>{description || 'Bu təşkilat haqqında məlumat yoxdur.'}</p>
+            <p>
+              {description ||
+                'Bu təşkilat haqqında məlumat yoxdur.'}
+            </p>
 
             <div className="organization-details__contact">
               <h3>{t('org_contact_title')}</h3>
@@ -587,19 +768,30 @@ export default function OrganizationDetails() {
                 </p>
 
                 <p className="organization-details__history-line">
-                  {year.activeCount ?? year.projectsCount}{' '}
+                  {year.activeCount ??
+                    year.projectsCount}{' '}
                   {t('org_active_line')}
                 </p>
 
-                {year.completedCount != null && (
+                {year.completedCount !=
+                  null && (
                   <p className="organization-details__history-sub">
-                    {year.completedCount} {t('org_completed_sub')}
+                    {year.completedCount}{' '}
+                    {t(
+                      'org_completed_sub'
+                    )}
                   </p>
                 )}
 
-                {year.participantsCount != null && (
+                {year.participantsCount !=
+                  null && (
                   <p className="organization-details__history-sub">
-                    {year.participantsCount} {t('org_participants_sub')}
+                    {
+                      year.participantsCount
+                    }{' '}
+                    {t(
+                      'org_participants_sub'
+                    )}
                   </p>
                 )}
               </div>
@@ -607,6 +799,84 @@ export default function OrganizationDetails() {
           </section>
         )}
       </div>
+
+      {/* Xəzəri Qoruyaq detail modal */}
+      {selectedProject && (
+        <div
+          className="organization-details__project-modal"
+          onClick={() => setSelectedProject(null)}
+        >
+          <div
+            className="organization-details__project-modal-content"
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+          >
+            <button
+              type="button"
+              className="organization-details__project-modal-close"
+              onClick={() =>
+                setSelectedProject(null)
+              }
+              aria-label="Bağla"
+            >
+              ×
+            </button>
+
+            <span className="organization-details__project-label">
+              {t('org_active_project')}
+            </span>
+
+            <h2>{selectedProject.title}</h2>
+
+            <p>
+              {selectedProject.description}
+            </p>
+
+            <div className="organization-details__project-modal-info">
+              <div>
+                <strong>
+                  {t('org_project_date')}
+                </strong>
+                <span>
+                  {selectedProject.date}
+                </span>
+              </div>
+
+              <div>
+                <strong>
+                  {t('org_project_time')}
+                </strong>
+                <span>
+                  {selectedProject.time}
+                </span>
+              </div>
+
+              <div>
+                <strong>
+                  {t(
+                    'org_project_transport'
+                  )}
+                </strong>
+                <span>
+                  {selectedProject.additionalInfo}
+                </span>
+              </div>
+            </div>
+
+            <a
+              href={
+                selectedProject.applicationUrl
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="organization-details__project-apply"
+            >
+              {t('org_apply')}
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* Şəkil lightbox */}
       {lightbox && (
@@ -636,9 +906,13 @@ export default function OrganizationDetails() {
 
           <img
             src={lightbox.images[lightbox.index]}
-            alt={`Şəkil ${lightbox.index + 1}`}
+            alt={`Şəkil ${
+              lightbox.index + 1
+            }`}
             className="organization-details__lightbox-image"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) =>
+              e.stopPropagation()
+            }
           />
 
           {lightbox.images.length > 1 && (
@@ -654,7 +928,8 @@ export default function OrganizationDetails() {
 
           {lightbox.images.length > 1 && (
             <span className="organization-details__lightbox-counter">
-              {lightbox.index + 1} / {lightbox.images.length}
+              {lightbox.index + 1} /{' '}
+              {lightbox.images.length}
             </span>
           )}
         </div>
