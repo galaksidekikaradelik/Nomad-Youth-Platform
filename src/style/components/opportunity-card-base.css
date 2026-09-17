@@ -179,7 +179,7 @@
 
   height: 3px;
 
-  background: var(--brand-900);
+  background: var(--color-accent);
   border-radius: 3px 3px 0 0;
 }
 

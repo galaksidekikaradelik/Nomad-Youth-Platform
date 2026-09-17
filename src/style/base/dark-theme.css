@@ -231,3 +231,7 @@
 [data-theme="dark"] .opportunities-tab.active{
   background-color: var(--accent-100);
 }
+
+[data-theme="dark"] .opportunities-tab.active::after {
+  background: var(--brand-900);
+}
