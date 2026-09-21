@@ -9,10 +9,9 @@ export const ORG_CATEGORIES = [
 ]
 
 export const ORG_SORT_OPTIONS = [
-  { id: 'rating', labelKey: 'org_sort_rating' },
   { id: 'active', labelKey: 'org_sort_active' },
   { id: 'name', labelKey: 'org_sort_name' },
 ]
 
-export const ORG_PAGE_SIZE = 6
+export const ORG_PAGE_SIZE = 15
 

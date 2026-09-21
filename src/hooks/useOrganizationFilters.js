@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ORG_PAGE_SIZE } from '../utils/organizationFilters.constants'
 
+const NOMAD_SLUG = 'nomad-youth'
+
 export function useOrganizationFilters({
   organizations = [],
   initialQuery = '',
 }) {
   const [search, setSearch] = useState(initialQuery)
   const [categories, setCategories] = useState([])
-  const [sort, setSort] = useState('rating_desc')
+  const [sort, setSort] = useState('name')
   const [page, setPage] = useState(0)
 
   const toggleCategory = id => {
@@ -50,30 +52,35 @@ export function useOrganizationFilters({
   const sorted = useMemo(() => {
     const result = [...filtered]
 
-    switch (sort) {
-      case 'rating_desc':
-        result.sort(
-          (a, b) => (b.rating ?? -1) - (a.rating ?? -1)
-        )
-        break
+    const nomad = result.find(
+      org =>
+        org.slug === NOMAD_SLUG ||
+        org.name?.trim().toLowerCase() === 'nomad youth'
+    )
 
-      case 'reviews_desc':
-        result.sort(
-          (a, b) => (b.reviewCount ?? 0) - (a.reviewCount ?? 0)
-        )
-        break
+    const others = result.filter(
+      org =>
+        org.slug !== NOMAD_SLUG &&
+        org.name?.trim().toLowerCase() !== 'nomad youth'
+    )
 
-      case 'name_asc':
-        result.sort((a, b) =>
-          (a.name || '').localeCompare(b.name || '')
+    if (sort === 'active') {
+      others.sort(
+        (a, b) =>
+          (b.activeOpportunities ?? 0) -
+          (a.activeOpportunities ?? 0)
+      )
+    } else {
+      others.sort((a, b) =>
+        (a.name || '').localeCompare(
+          b.name || '',
+          'az',
+          { sensitivity: 'base' }
         )
-        break
-
-      default:
-        break
+      )
     }
 
-    return result
+    return nomad ? [nomad, ...others] : others
   }, [filtered, sort])
 
   const totalPages = Math.max(
