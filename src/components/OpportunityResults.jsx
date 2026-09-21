@@ -39,19 +39,58 @@ export default function OpportunityResults({
     )
   }
 
+  /*
+   * URL-dən konkret elan gələndə:
+   * həmin elan pagination-da olmasa belə onu tapırıq.
+   */
+  const highlightedOpportunity = highlightOppKey
+    ? sorted.find(
+        op => String(op.id) === String(highlightOppKey)
+      )
+    : null
+
+  /*
+   * Əgər elan cari pagination səhifəsində yoxdursa,
+   * onu ayrıca render edəcəyik.
+   */
+  const isHighlightedInCurrentPage =
+    highlightedOpportunity &&
+    paginated.some(
+      op => String(op.id) === String(highlightOppKey)
+    )
+
+  const shouldRenderHighlightedSeparately =
+    highlightedOpportunity &&
+    !isHighlightedInCurrentPage
+
   return (
     <>
       <div className="opportunities-results-count">
         {t('opp_results_prefix')}
+
         <span className="opportunities-results-count__number">
           {sorted.length}
         </span>
+
         {t('opp_results_suffix')}
       </div>
 
       {sorted.length > 0 ? (
         <>
           <div className="grid-3">
+
+            {/* 
+             * URL ilə gələn elan cari səhifədə deyilsə,
+             * onu ayrıca render edirik.
+             */}
+            {shouldRenderHighlightedSeparately && (
+              <OpportunityCard
+                key={`highlight-${highlightedOpportunity.id}`}
+                opportunity={highlightedOpportunity}
+                autoOpenDetail={true}
+              />
+            )}
+
             {paginated.map(op => (
               <OpportunityCard
                 key={op.id}
@@ -62,6 +101,7 @@ export default function OpportunityResults({
                 }
               />
             ))}
+
           </div>
 
           <Pagination
@@ -71,18 +111,38 @@ export default function OpportunityResults({
           />
         </>
       ) : (
-        <div className="empty-state">
-          <div
-            className="empty-state__icon"
-            style={{ color: 'var(--color-text-muted, #94a3b8)' }}
-          >
-            <SearchIcon />
+        /*
+         * Əgər sorted boşdursa, amma URL konkret elan göstərirsə,
+         * onu yenə də göstərməyə çalışırıq.
+         */
+        highlightedOpportunity ? (
+          <div className="grid-3">
+            <OpportunityCard
+              key={`highlight-${highlightedOpportunity.id}`}
+              opportunity={highlightedOpportunity}
+              autoOpenDetail={true}
+            />
           </div>
+        ) : (
+          <div className="empty-state">
+            <div
+              className="empty-state__icon"
+              style={{
+                color: 'var(--color-text-muted, #94a3b8)',
+              }}
+            >
+              <SearchIcon />
+            </div>
 
-          <div className="empty-state__title">{t('opp_empty_title')}</div>
+            <div className="empty-state__title">
+              {t('opp_empty_title')}
+            </div>
 
-          <p className="empty-state__desc">{t('opp_empty_desc')}</p>
-        </div>
+            <p className="empty-state__desc">
+              {t('opp_empty_desc')}
+            </p>
+          </div>
+        )
       )}
     </>
   )
