@@ -250,16 +250,21 @@
 }
 
 .org-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--color-text);
-  font-size: 14px;
+  color: var(--brand-900);
+  cursor: pointer;
+  font-size: 0.9rem;
   font-weight: 700;
-  text-decoration: none;
-  transition: gap 0.2s ease;
+  background: var(--accent-400);
+  border: 1px solid var(--accent-400);
+  border-radius: var(--radius-full);
+  gap: var(--space-sm);
+  white-space: nowrap;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  padding: 12px 26px;
 }
 
 .org-card__link:hover {
-  gap: 10px;
+  background: var(--accent-100);
+  border-color: var(--accent-100);
+  transform: translateY(-2px);
 }
