@@ -1,0 +1,215 @@
+/* Register / Login split dizaynı. index.css-dən SONRA import olunmalıdır. */
+.auth-page.auth-split {
+  --nav-h: 88px; /* navbarın hündürlüyü; lazım olsa dəyiş */
+  --navy: #1c2541;
+  --orange: #f28a1e;
+  --amber: #ffc21a; /* navbardakı "Create account" mətninin rəngi */
+  --ink: #1c2541;
+  --muted: #6b7690;
+  --line: #dfe4ee;
+  --field: #ffffff;
+  --btn-bg: var(--navy);
+  --btn-fg: var(--amber);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  min-height: calc(100vh - var(--nav-h));
+  padding: 16px 24px 24px;
+  background: transparent;
+  align-items: stretch;
+  justify-content: stretch;
+  box-sizing: border-box;
+}
+
+/* Dark mode: toggle html/body-də hansı class/attribute qoyursa, seçicini ora uyğunlaşdır */
+:root[data-theme="dark"] .auth-page.auth-split {
+  --ink: #f1f4fb;
+  --muted: #a3adc4;
+  --line: #2d3757;
+  --field: #1a2340;
+  --btn-bg: var(--amber);
+  --btn-fg: #1c2541;
+}
+:root[data-theme="dark"] .auth-split .auth-link,
+:root[data-theme="dark"] .auth-split .auth-inline-link {
+  color: var(--amber);
+}
+
+/* Sol vizual kart */
+.auth-split .auth-visual {
+  position: sticky;
+  top: calc(var(--nav-h) + 8px);
+  height: calc(100vh - var(--nav-h) - 32px);
+  border-radius: 32px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  color: #fff;
+  background:
+    radial-gradient(90% 60% at 85% 10%, rgba(242, 138, 30, 0.55), transparent 60%),
+    linear-gradient(160deg, #24386a 0%, var(--navy) 55%, #101a30 100%);
+  background-size: cover;
+  background-position: center;
+}
+.auth-split .auth-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(16, 26, 48, 0.85), transparent 55%);
+  pointer-events: none;
+}
+.auth-split .auth-visual-arrow {
+  position: absolute;
+  top: 12%;
+  left: 8%;
+  width: 78%;
+  color: var(--orange);
+  opacity: 0.9;
+  z-index: 1;
+}
+.auth-split .auth-visual-text {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  max-width: 460px;
+}
+.auth-split .auth-visual-text h2 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+.auth-split .auth-visual-text p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+}
+
+/* Sağ panel */
+.auth-split .auth-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 8px 40px;
+}
+.auth-split .auth-panel-inner {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* Mövcud auth-card-ı sadələşdiririk */
+.auth-page.auth-split .auth-card {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+.auth-split .auth-title {
+  margin: 0 0 6px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: left;
+}
+.auth-split .auth-subtitle {
+  margin: 0 0 24px;
+  color: var(--muted);
+  text-align: left;
+}
+
+/* Inputlar */
+.auth-split .auth-group label {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.auth-split .auth-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--field);
+  color: var(--ink);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.auth-split .auth-input::placeholder {
+  color: #9aa3b8;
+}
+.auth-split .auth-input:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px rgba(255, 194, 26, 0.3);
+}
+.auth-split .auth-error {
+  color: #d63a3a;
+  font-size: 0.8125rem;
+}
+.auth-split .auth-hint {
+  color: var(--muted);
+}
+
+/* Əsas düymə */
+.auth-split .auth-button {
+  width: 100%;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--btn-fg);
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--btn-bg);
+  box-shadow: 0 8px 20px rgba(28, 37, 65, 0.25);
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+.auth-split .auth-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(28, 37, 65, 0.32);
+}
+.auth-split .auth-button:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+}
+.auth-split .auth-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Linklər və ayırıcı */
+.auth-split .auth-link,
+.auth-split .auth-inline-link {
+  color: var(--navy);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.auth-split .auth-footer {
+  margin-top: 24px;
+  text-align: center;
+  color: var(--muted);
+}
+.auth-split .auth-divider {
+  color: var(--muted);
+}
+
+/* Mobil: vizual gizlənir */
+@media (max-width: 900px) {
+  .auth-page.auth-split {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  .auth-split .auth-visual {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-split .auth-button,
+  .auth-split .auth-input {
+    transition: none;
+  }
+}

@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import EmailVerificationBanner from "../components/EmailVerificationBanner";
+import AuthLayout from "../components/AuthLayout";
 import { trackRegisterStart, trackRegisterSuccess } from "../services/analytics";
 import "../style/index.css";
 
@@ -49,8 +50,8 @@ export default function Register() {
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [modalTab, setModalTab] = useState(null); 
-  const [registeredEmail, setRegisteredEmail] = useState(""); 
+  const [modalTab, setModalTab] = useState(null);
+  const [registeredEmail, setRegisteredEmail] = useState("");
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -123,7 +124,7 @@ export default function Register() {
 
   if (registeredEmail) {
     return (
-      <div className="auth-page">
+      <AuthLayout>
         <div className="auth-card">
           <h1 className="auth-title">{t("auth_register_title")}</h1>
           <p className="auth-subtitle">
@@ -138,13 +139,13 @@ export default function Register() {
             </Link>
           </div>
         </div>
-      </div>
+      </AuthLayout>
     );
   }
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
+    <AuthLayout>
+      <div className="auth-card auth-card--wide">
         <h1 className="auth-title">{t("auth_register_title")}</h1>
         <p className="auth-subtitle">{t("auth_register_subtitle")}</p>
 
@@ -162,14 +163,16 @@ export default function Register() {
         <form onSubmit={handleSubmit} noValidate>
           <div className="auth-row">
             <div className="auth-group">
-              <label>
+              <label htmlFor="reg-first-name">
                 {t("auth_first_name")}
                 <RequiredMark />
               </label>
               <input
+                id="reg-first-name"
                 className="auth-input"
                 type="text"
                 name="firstName"
+                autoComplete="given-name"
                 value={formData.firstName}
                 onChange={handleChange}
                 placeholder={t("auth_first_name_placeholder")}
@@ -178,14 +181,16 @@ export default function Register() {
             </div>
 
             <div className="auth-group">
-              <label>
+              <label htmlFor="reg-last-name">
                 {t("auth_last_name")}
                 <RequiredMark />
               </label>
               <input
+                id="reg-last-name"
                 className="auth-input"
                 type="text"
                 name="lastName"
+                autoComplete="family-name"
                 value={formData.lastName}
                 onChange={handleChange}
                 placeholder={t("auth_last_name_placeholder")}
@@ -195,14 +200,16 @@ export default function Register() {
           </div>
 
           <div className="auth-group">
-            <label>
+            <label htmlFor="reg-email">
               {t("auth_email")}
               <RequiredMark />
             </label>
             <input
+              id="reg-email"
               className="auth-input"
               type="email"
               name="email"
+              autoComplete="email"
               value={formData.email}
               onChange={handleChange}
               placeholder={t("auth_email_placeholder")}
@@ -211,14 +218,16 @@ export default function Register() {
           </div>
 
           <div className="auth-group">
-            <label>
+            <label htmlFor="reg-password">
               {t("auth_password")}
               <RequiredMark />
             </label>
             <input
+              id="reg-password"
               className="auth-input"
               type="password"
               name="password"
+              autoComplete="new-password"
               value={formData.password}
               onChange={handleChange}
               placeholder={t("auth_password_create_placeholder")}
@@ -228,14 +237,16 @@ export default function Register() {
           </div>
 
           <div className="auth-group">
-            <label>
+            <label htmlFor="reg-confirm-password">
               {t("auth_confirm_password")}
               <RequiredMark />
             </label>
             <input
+              id="reg-confirm-password"
               className="auth-input"
               type="password"
               name="confirmPassword"
+              autoComplete="new-password"
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder={t("auth_confirm_password_placeholder")}
@@ -247,14 +258,16 @@ export default function Register() {
 
           <div className="auth-row">
             <div className="auth-group">
-              <label>
+              <label htmlFor="reg-phone">
                 {t("auth_phone")}
                 <RequiredMark />
               </label>
               <input
+                id="reg-phone"
                 className="auth-input"
                 type="tel"
                 name="phone"
+                autoComplete="tel"
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="+994 XX XXX XX XX"
@@ -263,14 +276,16 @@ export default function Register() {
             </div>
 
             <div className="auth-group">
-              <label>
+              <label htmlFor="reg-birth-date">
                 {t("auth_birth_date")}
                 <RequiredMark />
               </label>
               <input
+                id="reg-birth-date"
                 className="auth-input"
                 type="date"
                 name="birthDate"
+                autoComplete="bday"
                 value={formData.birthDate}
                 onChange={handleChange}
               />
@@ -279,11 +294,12 @@ export default function Register() {
           </div>
 
           <div className="auth-group">
-            <label>
+            <label htmlFor="reg-university">
               {t("auth_university")}
               <RequiredMark />
             </label>
             <input
+              id="reg-university"
               className="auth-input"
               type="text"
               name="university"
@@ -296,11 +312,12 @@ export default function Register() {
 
           <div className="auth-row">
             <div className="auth-group">
-              <label>
+              <label htmlFor="reg-education-level">
                 {t("auth_education_level")}
                 <RequiredMark />
               </label>
               <select
+                id="reg-education-level"
                 className="auth-input"
                 name="educationLevel"
                 value={formData.educationLevel}
@@ -313,15 +330,18 @@ export default function Register() {
                   </option>
                 ))}
               </select>
-              {errors.educationLevel && <p className="auth-error">{errors.educationLevel}</p>}
+              {errors.educationLevel && (
+                <p className="auth-error">{errors.educationLevel}</p>
+              )}
             </div>
 
             <div className="auth-group">
-              <label>
+              <label htmlFor="reg-major">
                 {t("auth_major")}
                 <RequiredMark />
               </label>
               <input
+                id="reg-major"
                 className="auth-input"
                 type="text"
                 name="major"
@@ -375,7 +395,11 @@ export default function Register() {
             </label>
           </div>
 
-          {submitError && <p className="auth-error">{submitError}</p>}
+          {submitError && (
+            <p className="auth-error" role="alert">
+              {submitError}
+            </p>
+          )}
 
           <button type="submit" className="auth-button" disabled={isSubmitting}>
             {isSubmitting ? t("auth_submitting") : t("auth_create_account")}
@@ -400,6 +424,9 @@ export default function Register() {
             className="auth-modal"
             role="dialog"
             aria-modal="true"
+            aria-label={
+              modalTab === "privacy" ? t("modal_privacy_title") : t("modal_terms_title")
+            }
             onClick={(e) => e.stopPropagation()}
           >
             <div className="auth-modal-header">
@@ -452,6 +479,6 @@ export default function Register() {
           </div>
         </div>
       )}
-    </div>
+    </AuthLayout>
   );
 }

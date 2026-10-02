@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useLanguage } from "../hooks/useLanguage";
 import GoogleLoginButton from "../components/GoogleLoginButton";
+import AuthLayout from "../components/AuthLayout";
 import { trackLoginSuccess } from "../services/analytics";
 import "../style/index.css";
 
@@ -42,16 +43,17 @@ export default function Login() {
   };
 
   return (
-    <div className="auth-page">
+    <AuthLayout>
       <div className="auth-card">
-
         <h1 className="auth-title">{t("auth_login_title")}</h1>
 
-        <p className="auth-subtitle">
-          {t("auth_login_subtitle")}
-        </p>
+        <p className="auth-subtitle">{t("auth_login_subtitle")}</p>
 
-        {error && <p className="auth-error">{error}</p>}
+        {error && (
+          <p className="auth-error" role="alert">
+            {error}
+          </p>
+        )}
 
         <GoogleLoginButton
           onSuccess={() => {
@@ -65,12 +67,13 @@ export default function Login() {
         </div>
 
         <form onSubmit={handleSubmit} noValidate>
-
           <div className="auth-group">
-            <label>{t("auth_email")}</label>
+            <label htmlFor="login-email">{t("auth_email")}</label>
             <input
+              id="login-email"
               className="auth-input"
               type="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t("auth_email_placeholder")}
@@ -78,10 +81,12 @@ export default function Login() {
           </div>
 
           <div className="auth-group">
-            <label>{t("auth_password")}</label>
+            <label htmlFor="login-password">{t("auth_password")}</label>
             <input
+              id="login-password"
               className="auth-input"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder={t("auth_password_placeholder")}
@@ -91,18 +96,15 @@ export default function Login() {
           <button className="auth-button" type="submit" disabled={isSubmitting}>
             {isSubmitting ? t("auth_submitting") : t("auth_sign_in")}
           </button>
-
         </form>
 
         <div className="auth-footer">
-          {t("auth_no_account")}
-          {" "}
+          {t("auth_no_account")}{" "}
           <Link className="auth-link" to="/register">
             {t("auth_create_one")}
           </Link>
         </div>
-
       </div>
-    </div>
+    </AuthLayout>
   );
 }
