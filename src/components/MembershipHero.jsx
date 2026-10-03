@@ -168,7 +168,7 @@ export default function MembershipHero() {
             <div className="membership-hero__person-glow" />
 
             <img
-              src="src\assets\hero-1.png"
+              src="src/assets/hero-1.png"
               alt=""
               className="membership-hero__person"
             />

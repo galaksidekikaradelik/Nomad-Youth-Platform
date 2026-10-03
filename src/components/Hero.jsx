@@ -88,7 +88,7 @@ export default function Hero() {
         <div className="hero__image-card">
 
           <img
-            src='src\assets\images\hero2-1.png'
+            src='src/assets/images/hero2-1.png'
             alt="Gənclər"
           />
 
@@ -109,7 +109,7 @@ export default function Hero() {
         <div className="hero__image-card">
 
           <img
-            src='src\assets\images\hero2-2.png'
+            src='src/assets/images/hero2-2.png'
             alt="Nomad Youth iştirakçısı"
           />
 
