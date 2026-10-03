@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import '../style/index.css'
 
-import heroImage from '../assets/hero-1.png'
+import heroImage from '../assets/hero-1.webp'
 
 const UsersIcon = () => (
   <svg
