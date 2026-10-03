@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import '../style/index.css'
 
+import heroImage from '../assets/hero-1.png'
+
 const UsersIcon = () => (
   <svg
     width="24"
@@ -99,8 +101,6 @@ export default function MembershipHero() {
 
       <div className="membership-hero__inner">
         <div className="membership-hero__content">
-          
-
           <h1 className="membership-hero__title">
             Erasmus+ yolunuzu
             <br />
@@ -116,12 +116,18 @@ export default function MembershipHero() {
           </p>
 
           <div className="membership-hero__actions">
-            <Link to="/membership" className="membership-btn membership-btn--primary">
+            <Link
+              to="/membership"
+              className="membership-btn membership-btn--primary"
+            >
               Üzv ol
               <ArrowIcon />
             </Link>
 
-            <Link to="/membership" className="membership-btn membership-btn--secondary">
+            <Link
+              to="/membership"
+              className="membership-btn membership-btn--secondary"
+            >
               Üzvlük haqqında
             </Link>
           </div>
@@ -168,8 +174,8 @@ export default function MembershipHero() {
             <div className="membership-hero__person-glow" />
 
             <img
-              src="src/assets/hero-1.png"
-              alt=""
+              src={heroImage}
+              alt="Nomad Youth Erasmus+"
               className="membership-hero__person"
             />
           </div>

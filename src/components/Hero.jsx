@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
+import heroLeft from '../assets/images/hero2-1.png'
+import heroRight from '../assets/images/hero2-2.png'
+
 const GlobeIcon = () => (
   <svg
     width="28"
@@ -84,14 +87,11 @@ export default function Hero() {
       </div>
 
       <div className="hero__side-image hero__side-image--left">
-
         <div className="hero__image-card">
-
           <img
-            src='src/assets/images/hero2-1.png'
+            src={heroLeft}
             alt="Gənclər"
           />
-
         </div>
 
         <div className="hero__floating-icon hero__floating-icon--globe">
@@ -99,20 +99,15 @@ export default function Hero() {
         </div>
 
         <div className="hero__yellow-dash hero__yellow-dash--left" />
-
         <div className="hero__yellow-line hero__yellow-line--left" />
-
       </div>
 
       <div className="hero__side-image hero__side-image--right">
-
         <div className="hero__image-card">
-
           <img
-            src='src/assets/images/hero2-2.png'
+            src={heroRight}
             alt="Nomad Youth iştirakçısı"
           />
-
         </div>
 
         <div className="hero__floating-icon hero__floating-icon--idea">
@@ -120,19 +115,13 @@ export default function Hero() {
         </div>
 
         <div className="hero__yellow-dash hero__yellow-dash--right" />
-
         <div className="hero__yellow-line hero__yellow-line--right" />
-
       </div>
 
       <div className="container hero__inner hero__inner--centered">
-
         <div className="hero__content hero__content--centered">
-
           <h1 className="hero__title">
-
             {t('hero_title_line1')}
-
             <br />
 
             <em>
@@ -140,16 +129,13 @@ export default function Hero() {
             </em>{' '}
 
             {t('hero_title_line2')}
-
           </h1>
-
 
           <p className="hero__desc">
             {t('hero_desc')}
           </p>
 
           <div className="hero__actions hero__actions--centered">
-
             <button
               className="btn-accent"
               onClick={() =>
@@ -160,7 +146,6 @@ export default function Hero() {
               <ArrowIcon />
             </button>
 
-
             <button
               className="btn-outline"
               onClick={() =>
@@ -170,7 +155,6 @@ export default function Hero() {
               {t('hero_btn_local')}
             </button>
 
-
             <button
               className="btn-dark"
               onClick={() =>
@@ -179,17 +163,14 @@ export default function Hero() {
             >
               Üzv ol
             </button>
-
           </div>
 
           <div className="hero__stats hero__stats--centered">
-
             {stats.map((stat) => (
               <div
                 key={stat.label}
                 className="hero__stat"
               >
-
                 <div className="hero__stat-num">
                   {stat.num}
                 </div>
@@ -197,16 +178,11 @@ export default function Hero() {
                 <div className="hero__stat-label">
                   {stat.label}
                 </div>
-
               </div>
             ))}
-
           </div>
-
         </div>
-
       </div>
-
     </section>
   )
 }
