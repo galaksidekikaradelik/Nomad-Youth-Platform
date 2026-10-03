@@ -381,8 +381,6 @@ export default function OpportunityDetailModal({
         <div className="detail-modal__actions">
 
           <div className="detail-modal__icons">
-
-            {/* LIKE */}
             <button
               className={`opportunity-card__icon-btn${liked ? ' is-active' : ''}`}
               onClick={onToggleLike}
@@ -391,7 +389,6 @@ export default function OpportunityDetailModal({
               <HeartIcon active={liked} />
             </button>
 
-            {/* SAVE */}
             <button
               className={`opportunity-card__icon-btn${saved ? ' is-active' : ''}`}
               onClick={onToggleSave}

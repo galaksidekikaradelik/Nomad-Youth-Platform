@@ -39,20 +39,12 @@ export default function OpportunityResults({
     )
   }
 
-  /*
-   * URL-dən konkret elan gələndə:
-   * həmin elan pagination-da olmasa belə onu tapırıq.
-   */
   const highlightedOpportunity = highlightOppKey
     ? sorted.find(
         op => String(op.id) === String(highlightOppKey)
       )
     : null
 
-  /*
-   * Əgər elan cari pagination səhifəsində yoxdursa,
-   * onu ayrıca render edəcəyik.
-   */
   const isHighlightedInCurrentPage =
     highlightedOpportunity &&
     paginated.some(
@@ -79,10 +71,6 @@ export default function OpportunityResults({
         <>
           <div className="grid-3">
 
-            {/* 
-             * URL ilə gələn elan cari səhifədə deyilsə,
-             * onu ayrıca render edirik.
-             */}
             {shouldRenderHighlightedSeparately && (
               <OpportunityCard
                 key={`highlight-${highlightedOpportunity.id}`}
@@ -111,10 +99,7 @@ export default function OpportunityResults({
           />
         </>
       ) : (
-        /*
-         * Əgər sorted boşdursa, amma URL konkret elan göstərirsə,
-         * onu yenə də göstərməyə çalışırıq.
-         */
+
         highlightedOpportunity ? (
           <div className="grid-3">
             <OpportunityCard

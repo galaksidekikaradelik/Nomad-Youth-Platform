@@ -46,11 +46,7 @@ export default function Opportunities() {
     searchParams.get('show') ||
     null
 
-  /*
-   * ==========================
-   * OPPORTUNITIES
-   * ==========================
-   */
+
 
   const {
     opportunities,
@@ -190,7 +186,6 @@ export default function Opportunities() {
 
                 if (tab.id === LOCAL_TAB_ID) {
                   // Organization pagination
-                  // öz hook-unda idarə olunur.
                 } else {
                   setPage(0)
                 }
@@ -200,8 +195,6 @@ export default function Opportunities() {
             </button>
           ))}
         </div>
-
-        {/* SEARCH */}
 
         <div className="opportunities-searchbar-wrap">
           <SearchBar

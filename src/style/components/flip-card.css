@@ -1,6 +1,3 @@
-/* Team bölməsi — uşaqlıq/indiki şəkil flip kartları
-   Bunu App.css (və ya hansı qlobal CSS faylınız varsa) içinə əlavə edin. */
-
 .flip-card {
   background: transparent;
   perspective: 1200px;
@@ -18,14 +15,12 @@
   border-radius: var(--radius-lg);
 }
 
-/* Desktop: mouse aparanda flip */
 @media (hover: hover) {
   .flip-card:hover .flip-card__inner {
     transform: rotateY(180deg);
   }
 }
 
-/* Mobil: tap ilə flip (React state-dən gələn class) */
 .flip-card.is-flipped .flip-card__inner {
   transform: rotateY(180deg);
 }

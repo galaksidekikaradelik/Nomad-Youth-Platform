@@ -62,11 +62,15 @@
 @import 'components/organization-card.css';
 @import 'components/organization-details.css';
 @import 'components/organization-responsive.css';
+@import 'components/membership-hero.css';
+
 
 
 @import 'pages/about.css';
 @import 'pages/contact.css';
 @import 'pages/services.css';
+@import 'pages/home.css';
+
 
 @import 'utilities/helpers.css';
 @import 'utilities/animations.css';

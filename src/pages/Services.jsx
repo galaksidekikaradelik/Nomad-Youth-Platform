@@ -3,7 +3,6 @@ import {
   ArrowRight,
   Check,
   X,
-  
 } from 'lucide-react'
 import Navbar from '../components/Navbar'
 import {
@@ -11,8 +10,6 @@ import {
   CATEGORIES,
 } from '../data/services'
 import { buildWhatsAppLink } from '../config/whatsapp'
-
-
 
 
 function ServiceModal({ service, onClose }) {
@@ -42,8 +39,6 @@ function ServiceModal({ service, onClose }) {
         className="ny-modal"
         onClick={(e) => e.stopPropagation()}
       >
-
-        {/* CLOSE */}
         <button
           className="ny-close"
           onClick={onClose}
@@ -52,8 +47,6 @@ function ServiceModal({ service, onClose }) {
           <X size={18} />
         </button>
 
-
-        {/* HEADER */}
         <div className="ny-modal-head">
 
           <div className="ny-modal-icon">
@@ -75,8 +68,8 @@ function ServiceModal({ service, onClose }) {
 
         </div>
 
-
         <div className="ny-tags">
+
           <span className="ny-tag ny-tag--duration">
             {service.duration}
           </span>
@@ -88,13 +81,11 @@ function ServiceModal({ service, onClose }) {
           <span className="ny-tag ny-tag--result">
             {service.result}
           </span>
+
         </div>
 
-
-        {/* COLUMNS */}
         <div className="ny-cols">
 
-          {/* AUDIENCE */}
           <div>
 
             <h3 className="ny-col-title">
@@ -117,12 +108,10 @@ function ServiceModal({ service, onClose }) {
 
           </div>
 
-
-          {/* INCLUDES */}
           <div>
 
             <h3 className="ny-col-title">
-              Nə əldə edəcəksən?
+              Nə əldə edəcəksiniz?
             </h3>
 
             <ul className="ny-list">
@@ -146,19 +135,12 @@ function ServiceModal({ service, onClose }) {
 
         </div>
 
-
-        
-
-
-        {/* NOTE */}
         {service.note && (
           <p className="ny-note">
             {service.note}
           </p>
         )}
 
-
-        {/* ACTIONS */}
         <div className="ny-actions">
 
           <button
@@ -168,11 +150,7 @@ function ServiceModal({ service, onClose }) {
             {service.primaryCta}
           </button>
 
-
-          
-
         </div>
-
 
         <p className="ny-fineprint">
           Sorğu qəbul edildikdən sonra 24 saat ərzində
@@ -187,15 +165,11 @@ function ServiceModal({ service, onClose }) {
 
 export default function NomadYouthServices() {
 
-  /*
-   * Erasmus ilk açılışda aktivdir
-   */
   const [activeCategory, setActiveCategory] =
-    useState('erasmus')
+    useState('membership')
 
   const [selectedId, setSelectedId] =
     useState(null)
-
 
   const servicesRef = useRef(null)
 
@@ -211,8 +185,36 @@ export default function NomadYouthServices() {
 
 
   /*
-   * Kateqoriyalar hissəsinə scroll
+   * URL-dən kateqoriya oxuyur.
+   *
+   * Məsələn:
+   * /services?category=membership
+   *
+   * Əgər URL-də category yoxdursa,
+   * default olaraq membership açılır.
    */
+  useEffect(() => {
+
+    const params = new URLSearchParams(
+      window.location.search
+    )
+
+    const categoryFromUrl =
+      params.get('category')
+
+    const exists = CATEGORIES.some(
+      (c) => c.id === categoryFromUrl
+    )
+
+    if (exists) {
+      setActiveCategory(categoryFromUrl)
+    } else {
+      setActiveCategory('membership')
+    }
+
+  }, [])
+
+
   const scrollToCategories = () => {
 
     document
@@ -225,33 +227,28 @@ export default function NomadYouthServices() {
   }
 
 
-  /*
-   * Kateqoriya seçilməsi
-   */
   const handleCategoryClick = (categoryId) => {
 
-    /*
-     * Eyni kateqoriyaya yenidən basılıbsa
-     * bağla
-     */
-    if (activeCategory === categoryId) {
-
-      setActiveCategory(null)
-
-      return
-    }
-
-
-    /*
-     * Yeni kateqoriyanı aç
-     */
     setActiveCategory(categoryId)
+
+    const params = new URLSearchParams(
+      window.location.search
+    )
+
+    params.set(
+      'category',
+      categoryId
+    )
+
+    window.history.replaceState(
+      {},
+      '',
+      `${window.location.pathname}?${params.toString()}`
+    )
+
   }
 
 
-  /*
-   * Kateqoriya dəyişəndə xidmətlərə scroll
-   */
   useEffect(() => {
 
     if (
@@ -261,19 +258,13 @@ export default function NomadYouthServices() {
       return
     }
 
-
-    const timer = setTimeout(() => {
-
-      servicesRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-
-    }, 100)
-
-
-    return () => clearTimeout(timer)
-
+    /*
+     * İlk açılışda səhifəni avtomatik
+     * aşağı sürüşdürmürük.
+     *
+     * Yalnız istifadəçi kateqoriyaya klik etdikdə
+     * aşağı keçid edilir.
+     */
   }, [activeCategory])
 
 
@@ -281,13 +272,9 @@ export default function NomadYouthServices() {
     <>
       <Navbar />
 
-
       <div className="ny-page">
 
-
-        {/* =====================================================
-            HERO
-        ====================================================== */}
+        {/* HERO */}
 
         <section className="ny-hero">
 
@@ -296,27 +283,21 @@ export default function NomadYouthServices() {
             <div>
 
               <span className="ny-pill">
-                Hədəfinə uyğun dəstək
+                Ehtiyacına uyğun dəstək
               </span>
 
-
               <h1 className="ny-hero-title">
-
-                Doğru fürsəti seç,
+                Ehtiyacınıza uyğun dəstəyi
                 <br />
-                güclü müraciətlə fərqlən.
-
+                bir yerdə tapın.
               </h1>
 
-
               <p className="ny-hero-desc">
-
-                Erasmus+, ESC, CV və xaricdə təhsil üçün
-                ehtiyacına uyğun xidməti seç, prosesə daha
-                hazırlıqlı başla.
-
+                Erasmus+, üzvlük, sənədlər və xaricdə
+                təhsil üzrə ehtiyacınıza uyğun dəstəyi
+                seçin və növbəti addımınızı daha rahat
+                planlaşdırın.
               </p>
-
 
               <div className="ny-hero-actions">
 
@@ -331,9 +312,6 @@ export default function NomadYouthServices() {
 
             </div>
 
-
-            {/* STATS */}
-
             <div className="ny-stats-banner">
 
               <ul className="ny-side-list">
@@ -341,50 +319,47 @@ export default function NomadYouthServices() {
                 <li>
 
                   <span className="ny-side-dot-title">
-                    100+
+                    5 istiqamət
                   </span>
 
                   <span className="ny-side-dot">
-                    gəncin inkişaf yolunda yanında
+                    Müxtəlif ehtiyaclar üçün seçim
                   </span>
 
                 </li>
 
-
                 <li>
 
                   <span className="ny-side-dot-title">
-                    4 istiqamət
+                    Üzvlük
                   </span>
 
                   <span className="ny-side-dot">
-                    Hədəfinə uyğun seçim
+                    Erasmus+ iştirakçı bazasına çıxış
                   </span>
 
                 </li>
 
-
                 <li>
 
                   <span className="ny-side-dot-title">
-                    15 xidmət
+                    Erasmus+
                   </span>
 
                   <span className="ny-side-dot">
-                    Praktik dəstək formatı
+                    Layihə və təşkilati dəstək
                   </span>
 
                 </li>
 
-
                 <li>
 
                   <span className="ny-side-dot-title">
-                    24 saat
+                    Xaricdə təhsil
                   </span>
 
                   <span className="ny-side-dot">
-                    Sorğulara geri dönüş müddəti
+                    Təhsil yolunda əlavə dəstək
                   </span>
 
                 </li>
@@ -398,10 +373,7 @@ export default function NomadYouthServices() {
         </section>
 
 
-
-        {/* =====================================================
-            CATEGORIES
-        ====================================================== */}
+        {/* CATEGORY CARDS */}
 
         <section className="ny-container">
 
@@ -413,7 +385,6 @@ export default function NomadYouthServices() {
 
               const isActive =
                 activeCategory === c.id
-
 
               return (
 
@@ -440,21 +411,18 @@ export default function NomadYouthServices() {
 
                   </div>
 
-
                   <div className="ny-card-title">
                     {c.title}
                   </div>
-
 
                   <div className="ny-card-desc">
                     {c.services.length} xidmət
                   </div>
 
-
                   <span className="ny-card-link">
 
                     {isActive
-                      ? 'Xidmətləri bağla'
+                      ? 'Xidmətləri göstərilir'
                       : 'Xidmətlərə bax'}
 
                     <ArrowRight size={14} />
@@ -471,10 +439,7 @@ export default function NomadYouthServices() {
         </section>
 
 
-
-        {/* =====================================================
-            SERVICES
-        ====================================================== */}
+        {/* SERVICES */}
 
         {activeCategory && category && (
 
@@ -487,11 +452,9 @@ export default function NomadYouthServices() {
               {category.title}
             </h2>
 
-
             <p className="ny-section-sub">
               {category.services.length} xidmət
             </p>
-
 
             <div className="ny-grid">
 
@@ -504,7 +467,6 @@ export default function NomadYouthServices() {
 
                 const Icon = service.icon
 
-
                 return (
 
                   <button
@@ -515,8 +477,6 @@ export default function NomadYouthServices() {
                     }
                   >
 
-                    {/* SERVICE ICON */}
-
                     <div className="ny-icon-badge">
 
                       <Icon
@@ -526,26 +486,13 @@ export default function NomadYouthServices() {
 
                     </div>
 
-
-                    {/* TITLE */}
-
                     <div className="ny-card-title">
-
                       {service.title}
-
                     </div>
-
-
-                    {/* DESCRIPTION */}
 
                     <div className="ny-card-desc">
-
                       {service.shortDesc}
-
                     </div>
-
-
-                    {/* LINK */}
 
                     <span className="ny-card-link">
 
@@ -558,6 +505,7 @@ export default function NomadYouthServices() {
                   </button>
 
                 )
+
               })}
 
             </div>
@@ -567,10 +515,7 @@ export default function NomadYouthServices() {
         )}
 
 
-
-        {/* =====================================================
-            MODAL
-        ====================================================== */}
+        {/* MODAL */}
 
         <ServiceModal
           service={selected}

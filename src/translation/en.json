@@ -238,29 +238,48 @@
   "status_select": "Select status",
 
   "faq_eyebrow": "Help",
- "faq_title": "Frequently Asked Questions",
+  "faq_title": "Frequently Asked Questions",
   "faq_desc": "The most frequently asked questions about Nomad Youth, Erasmus+, and international youth opportunities.",
 
   "faq_q1": "What is Nomad Youth?",
-  "faq_a1": "Nomad Youth is a digital resource created to help young people find Erasmus+, volunteering, internship, grant, training, and other development opportunities in one platform. Here you can explore opportunities that match your interests and go to the official application pages.",
 
-  "faq_q2": "What is Nomad Youth's role in the projects and selection process?",
-  "faq_a2": "Nomad Youth does not organize the projects directly. It gathers opportunities offered by various organizations on one platform and directs users to the official application pages. The organization of the projects, evaluation of applications, and selection results are the responsibility of the relevant organizations. To apply, choose a suitable opportunity, read the listing's conditions carefully, and go to the official application page via the \"Apply\" button.",
+  "faq_a1": "Nomad Youth is a youth platform operating locally and internationally, created to help young people find Erasmus+, volunteering, internships, training, study abroad and other development opportunities in one place. You can explore suitable opportunities, benefit from support services throughout the application process, and participate in programs and opportunities offered by Nomad Youth.",
 
-  "faq_q3": "What are Erasmus+, Youth Exchange, and ESC?",
-  "faq_a3": "Erasmus+ is the European Union's program supporting education, training, youth, and sport. Youth Exchange is a short-term youth exchange format organized under Erasmus+. Young people from different countries come together around a specific topic, learn through non-formal methods, and share their experiences. ESC — European Solidarity Corps — is a separate program from Erasmus+ that mainly offers volunteering opportunities in social, cultural, and environmental fields.",
+  "faq_q2": "What are Erasmus+, Youth Exchange and ESC?",
 
-  "faq_q4": "Who from Azerbaijan can apply to Erasmus+ projects?",
-  "faq_a4": "Young people living in Azerbaijan can apply to projects where Azerbaijan is among the participating countries. Age limits, language level, and other participation requirements vary from project to project. That's why it's important to check each listing's conditions separately before applying.",
+  "faq_a2": "Erasmus+ is a European Union program supporting education, training, youth and sport. Youth Exchange is a short-term youth exchange format organized within the framework of Erasmus+. Young people from different countries come together around a specific topic, learn through non-formal methods and share their experiences. ESC stands for the European Solidarity Corps. It is a program separate from Erasmus+ that mainly offers volunteering opportunities in social, cultural and environmental fields.",
 
-  "faq_q5": "What costs are covered in Erasmus+ projects?",
-  "faq_a5": "In most projects, accommodation, food, and activity costs are covered within the project's budget. Travel costs may be fully or partially reimbursed within a certain limit. In some cases, the participant pays for travel in advance and is reimbursed after the project. Since financial terms vary by project, it's recommended to carefully check the information provided in the listing.",
+  "faq_q3": "Who can apply for Erasmus+ projects from Azerbaijan?",
+
+  "faq_a3": "Young people living in Azerbaijan can apply for projects in which Azerbaijan is included among the eligible countries. Age limits, language requirements and other participation criteria vary from project to project. Therefore, it is important to check the specific requirements of each opportunity before applying.",
+
+  "faq_q4": "Which costs are covered in Erasmus+ projects?",
+
+  "faq_a4": "In most projects, accommodation, food and activity costs are covered within the project budget. Travel costs may be fully or partially reimbursed within a specified limit. In some cases, participants pay their travel expenses in advance and receive reimbursement after the project. Since financial conditions vary between projects, we recommend carefully checking the information provided in each opportunity.",
+
+  "faq_q5": "What is Nomad Youth Erasmus+ Membership?",
+
+  "faq_a5": "Nomad Youth Erasmus+ Membership is a 1-year membership system we created for young people who want to benefit from Erasmus+ opportunities in a more systematic way. Members are added to our participant database and may be considered during the selection process for future partner projects when their profile matches the project requirements. Membership also provides 1 year of Sending Organization support and special advantages in our other services.",
 
   "faq_q6": "What is a Support Organization (formerly Sending Organization)?",
-  "faq_a6": "A Support Organization is a local partner organization that prepares the participant for an international volunteering project and supports them throughout the process. This term may also appear under its former name, Sending Organization, in some listings. The organization's support can include informing the participant, the preparation process, necessary documents, contact with the hosting organization, and the stage after the project.",
 
-  "faq_q7": "How can I share my project on Nomad Youth and become a partner?",
-  "faq_a7": "If you're an organization, initiative, or company creating opportunities for young people, you can contact us to share your project on the Nomad Youth platform. We're open to discussing reaching a wider audience, joint activities, and other partnership opportunities.",
+  "faq_a6": "A Support Organization is a local partner organization that prepares participants for international volunteering projects and provides support throughout the process. In some opportunities, you may still see the previous term — Sending Organization. The organization's support may include providing information, preparation, necessary documents, communication with the host organization, and support after the project.",
+
+  "faq_q7": "What is Nomad Youth Sending Organization support?",
+
+  "faq_a7": "Nomad Youth is an organization officially registered in the Erasmus+ system and has its own Organization ID. Through Sending Organization support, you can benefit from Nomad Youth's organizational support when applying for Erasmus+ projects that require information from a sending organization.",
+
+  "faq_q8": "Does Nomad Youth implement Erasmus+ projects?",
+
+  "faq_a8": "Nomad Youth is building an international partnership network with organizations from different countries and is working on collaborations for new Erasmus+ projects. Our goal is to take a more active role as a partner and implementing organization in Erasmus+ projects in the future.",
+
+  "faq_q9": "What is Nomad Youth's role in projects and the selection process?",
+
+  "faq_a9": "Nomad Youth shares opportunities provided by other organizations on the platform and directs users to the official application pages; the selection process for these projects is carried out by the respective organization. In projects where Nomad Youth is a partner or directly involved in implementation, we may play a role in informing participants, selecting suitable candidates and implementing the project.",
+
+  "faq_q10": "How can I share my project on Nomad Youth and become a partner?",
+
+  "faq_a10": "If you are an organization, initiative or company creating opportunities for young people, you can contact us to share your project on the Nomad Youth platform. We are open to discussing opportunities for reaching a wider audience, joint activities and other forms of partnership.",
   "contact_request_general": "General question / Suggestion",
   "contact_request_partnership": "Partnership proposal",
   "contact_request_project": "Project / opportunity submission",

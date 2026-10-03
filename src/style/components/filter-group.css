@@ -1,14 +1,3 @@
-.filter-group {
-  background: var(--neutral-0);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  margin-bottom: var(--space-xl);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
 .filter-group__row {
   display: flex;
   align-items: center;
@@ -32,19 +21,37 @@
   gap: var(--space-sm);
 }
 
-.opportunities-searchbar-wrap {
-  margin-bottom: var(--space-xl);
-}
+@media (max-width: 640px) {
+  .filter-group {
+    padding: var(--space-md);
+    gap: var(--space-lg); 
+  }
 
-.filter-group__sort-select {
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-full);
-  padding: 8px 16px;
-}
+  .filter-group__row {
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: var(--space-sm); 
+    height: auto;
+    min-height: 0;
+  }
 
-.opportunities-results-count {
-  margin-bottom: var(--space-lg);
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
+  .filter-group__label {
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    flex: 0 0 auto;
+  }
 
+  .filter-group__chips {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    flex: 0 0 auto;
+  }
+
+  .filter-group__sort-select {
+    width: 100%;
+  }
+}

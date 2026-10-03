@@ -115,10 +115,6 @@
   justify-content: space-between;
 }
 
-/* =========================================================
-   OPPORTUNITIES TABS
-   ========================================================= */
-
 .opportunities-tabs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -168,7 +164,6 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Sarı xətt */
 .opportunities-tab.active::after {
   content: '';
 
@@ -183,19 +178,9 @@
   border-radius: 3px 3px 0 0;
 }
 
-
-/* =========================================================
-   SEARCH
-   ========================================================= */
-
 .opportunities-searchbar-wrap {
   margin-bottom: var(--space-lg);
 }
-
-
-/* =========================================================
-   FILTER GROUP
-   ========================================================= */
 
 .filter-group {
   background: var(--color-surface);
@@ -206,11 +191,6 @@
 
   box-shadow: var(--shadow-sm);
 }
-
-
-/* =========================================================
-   FILTER ROW
-   ========================================================= */
 
 .filter-group__row {
   display: flex;
@@ -223,11 +203,6 @@
 .filter-group__row:last-child {
   margin-bottom: 0;
 }
-
-
-/* =========================================================
-   FILTER LABEL
-   ========================================================= */
 
 .filter-group__label {
   flex: 0 0 115px;
@@ -243,11 +218,6 @@
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-
-
-/* =========================================================
-   FILTER CHIPS
-   ========================================================= */
 
 .filter-group__chips {
   display: flex;
@@ -291,11 +261,6 @@
   color: var(--neutral-0);
 }
 
-
-/* =========================================================
-   SORT
-   ========================================================= */
-
 .filter-group__sort-select {
   width: 205px;
   min-height: 34px;
@@ -327,8 +292,6 @@
   border-color: var(--color-primary-mid);
   box-shadow: 0 0 0 3px var(--color-primary-light);
 }
-
-
 
 .opportunities-results-count {
   margin: var(--space-lg) 0 var(--space-md);

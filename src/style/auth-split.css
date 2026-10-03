@@ -1,9 +1,8 @@
-/* Register / Login split dizaynı. index.css-dən SONRA import olunmalıdır. */
 .auth-page.auth-split {
-  --nav-h: 88px; /* navbarın hündürlüyü; lazım olsa dəyiş */
+  --nav-h: 88px; 
   --navy: #1c2541;
   --orange: #f28a1e;
-  --amber: #ffc21a; /* navbardakı "Create account" mətninin rəngi */
+  --amber: #ffc21a; 
   --ink: #1c2541;
   --muted: #6b7690;
   --line: #dfe4ee;
@@ -22,7 +21,6 @@
   box-sizing: border-box;
 }
 
-/* Dark mode: toggle html/body-də hansı class/attribute qoyursa, seçicini ora uyğunlaşdır */
 :root[data-theme="dark"] .auth-page.auth-split {
   --ink: #f1f4fb;
   --muted: #a3adc4;
@@ -36,7 +34,6 @@
   color: var(--amber);
 }
 
-/* Sol vizual kart */
 .auth-split .auth-visual {
   position: sticky;
   top: calc(var(--nav-h) + 8px);
@@ -85,8 +82,6 @@
   color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
 }
-
-/* Sağ panel */
 .auth-split .auth-panel {
   display: flex;
   justify-content: center;
@@ -98,7 +93,6 @@
   max-width: 520px;
 }
 
-/* Mövcud auth-card-ı sadələşdiririk */
 .auth-page.auth-split .auth-card {
   width: 100%;
   max-width: none;
@@ -122,7 +116,6 @@
   text-align: left;
 }
 
-/* Inputlar */
 .auth-split .auth-group label {
   color: var(--ink);
   font-weight: 600;
@@ -155,7 +148,6 @@
   color: var(--muted);
 }
 
-/* Əsas düymə */
 .auth-split .auth-button {
   width: 100%;
   padding: 15px 20px;
@@ -181,7 +173,6 @@
   cursor: not-allowed;
 }
 
-/* Linklər və ayırıcı */
 .auth-split .auth-link,
 .auth-split .auth-inline-link {
   color: var(--navy);
@@ -197,7 +188,6 @@
   color: var(--muted);
 }
 
-/* Mobil: vizual gizlənir */
 @media (max-width: 900px) {
   .auth-page.auth-split {
     grid-template-columns: 1fr;

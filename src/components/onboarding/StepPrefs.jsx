@@ -188,7 +188,6 @@ export default function StepPrefs({
         </div>
       </section>
 
-      {/* Müddət */}
       <section className="ny-section">
         <h2 className="ny-section-title">{t("duration_selection")}</h2>
         <div className="ny-chip-row">
