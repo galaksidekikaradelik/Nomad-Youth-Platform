@@ -1,19 +1,33 @@
 import "../style/auth-split.css";
+import dayImage from "../assets/auth-bg.webp";
+import nightImage from "../assets/auth-bg-night.webp";
 
-// Register və Login üçün ortaq split layout: solda vizual kart, sağda form.
-// image verilməsə, loqonun rənglərindən qurulmuş gradient göstərilir.
+// Register və Login üçün ortaq layout: foto bütün bölməni tutur, form üstdə mərkəzdədir.
+// Light rejimdə gündüz, dark rejimdə gecə şəkli göstərilir; keçid CSS-də smooth (crossfade) olur.
+// image={null} verilərsə, foto əvəzinə gradient qalır.
 export default function AuthLayout({
   children,
-  image,
-  headline = "Səyahətin növbəti addımı burada başlayır",
-  tagline = "Nomad Youth ilə imkanları kəşf et.",
+  image = dayImage,
+  imageDark = nightImage,
 }) {
   return (
     <div className="auth-page auth-split">
-      <aside
-        className="auth-visual"
-        style={image ? { backgroundImage: `url(${image})` } : undefined}
-      >
+      <aside className={`auth-visual${image ? " auth-visual--photo" : ""}`}>
+        {image && (
+          <>
+            <div
+              className="auth-visual-img auth-visual-img--day"
+              style={{ backgroundImage: `url(${image})` }}
+              aria-hidden="true"
+            />
+            <div
+              className="auth-visual-img auth-visual-img--night"
+              style={{ backgroundImage: `url(${imageDark || image})` }}
+              aria-hidden="true"
+            />
+          </>
+        )}
+
         <svg className="auth-visual-arrow" viewBox="0 0 400 300" aria-hidden="true">
           <path
             d="M10 280 C120 280 150 120 260 130 S340 60 380 20"
@@ -31,16 +45,10 @@ export default function AuthLayout({
             strokeLinejoin="round"
           />
         </svg>
-        <div className="auth-visual-text">
-          <h2>{headline}</h2>
-          <p>{tagline}</p>
-        </div>
       </aside>
 
       <main className="auth-panel">
-        <div className="auth-panel-inner">
-          {children}
-        </div>
+        <div className="auth-panel-inner">{children}</div>
       </main>
     </div>
   );
