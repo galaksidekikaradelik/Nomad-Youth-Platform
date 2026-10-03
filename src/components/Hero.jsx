@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
-import heroLeft from '../assets/images/hero2-1.webp'
-import heroRight from '../assets/images/hero2-2.webp'
+import heroLeft from '../assets/hero2-1.webp'
+import heroRight from '../assets/hero2-2.webp'
 
 const GlobeIcon = () => (
   <svg
