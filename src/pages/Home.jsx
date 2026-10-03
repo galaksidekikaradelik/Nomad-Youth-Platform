@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import MembershipHero from '../components/MembershipHero'
@@ -45,6 +45,7 @@ const ArrowIcon = () => (
     strokeWidth="2.5"
     strokeLinecap="round"
     strokeLinejoin="round"
+    aria-hidden="true"
   >
     <path d="M5 12h14" />
     <path d="M12 5l7 7-7 7" />
@@ -62,6 +63,7 @@ const WarningTriangleIcon = () => (
     strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
+    aria-hidden="true"
   >
     <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
     <line x1="12" y1="9" x2="12" y2="13" />
@@ -70,8 +72,46 @@ const WarningTriangleIcon = () => (
 )
 
 
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+
+const useReveal = () => {
+  useEffect(() => {
+    const elements = document.querySelectorAll('[data-reveal]')
+
+    if (!elements.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    )
+
+    elements.forEach((element) => {
+      observer.observe(element)
+    })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+}
+
+
 export default function Home() {
   const { t } = useLanguage()
+
+  useReveal()
 
   const {
     opportunities,
@@ -97,7 +137,13 @@ export default function Home() {
 
   return (
     <>
+
+      {/* =====================================================
+          MEMBERSHIP HERO
+      ====================================================== */}
+
       <MembershipHero />
+
 
       {/* =====================================================
           OPPORTUNITIES
@@ -139,7 +185,7 @@ export default function Home() {
 
             <Link
               to="/opportunities"
-              className="btn-outline"
+              className="btn-outline home-arrow-button"
             >
               {t('opportunities_see_all')}
               <ArrowIcon />
@@ -162,8 +208,7 @@ export default function Home() {
               <div
                 className="empty-state__icon"
                 style={{
-                  color:
-                    'var(--color-warning, #f59e0b)',
+                  color: 'var(--color-warning, #f59e0b)',
                 }}
               >
                 <WarningTriangleIcon />
@@ -212,7 +257,10 @@ export default function Home() {
 
           <div className="home-about">
 
-            <div className="home-about__content">
+            <div
+              className="home-about__content"
+              data-reveal="left"
+            >
 
               <div className="section-heading__eyebrow">
                 HAQQIMIZDA
@@ -222,6 +270,7 @@ export default function Home() {
               <h2 className="section-heading__title">
                 Gənclər üçün imkanları
                 <br />
+
                 <span>
                   bir yerə toplayırıq.
                 </span>
@@ -251,7 +300,7 @@ export default function Home() {
 
               <Link
                 to="/about"
-                className="btn-outline"
+                className="btn-outline home-arrow-button"
               >
                 Haqqımızda daha çox
                 <ArrowIcon />
@@ -260,7 +309,10 @@ export default function Home() {
             </div>
 
 
-            <div className="home-about__visual">
+            <div
+              className="home-about__visual"
+              data-reveal="right"
+            >
 
               <div className="home-about__image-frame">
 
@@ -269,6 +321,8 @@ export default function Home() {
                   alt="Nomad Youth komandası"
                   className="home-about__image"
                 />
+
+                <div className="home-about__image-overlay" />
 
               </div>
 
@@ -305,7 +359,10 @@ export default function Home() {
 
         <div className="container">
 
-          <div className="section-heading">
+          <div
+            className="section-heading"
+            data-reveal="up"
+          >
 
             <div className="section-heading__eyebrow">
               XİDMƏTLƏRİMİZ
@@ -343,6 +400,10 @@ export default function Home() {
                   key={item.id}
                   to={serviceLink}
                   className="home-service-card"
+                  data-reveal="up"
+                  style={{
+                    '--reveal-delay': `${index * 110}ms`,
+                  }}
                 >
 
                   <div className="home-service-card__content">
@@ -389,16 +450,13 @@ export default function Home() {
 
 
           <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: 'var(--space-xl)',
-            }}
+            className="home-services__footer"
+            data-reveal="up"
           >
 
             <Link
               to="/services"
-              className="btn-outline"
+              className="btn-outline home-arrow-button"
             >
               Bütün xidmətlərə bax
               <ArrowIcon />
@@ -419,13 +477,22 @@ export default function Home() {
 
         <div className="container">
 
-          <div className="home-partnership">
+          <div
+            className="home-partnership"
+            data-reveal="up"
+          >
 
             <div className="home-partnership__content">
+
+              <div className="section-heading__eyebrow">
+                ƏMƏKDAŞLIQ
+              </div>
+
 
               <h2 className="section-heading__title">
                 Gənclər üçün
                 <br />
+
                 <span>
                   daha çox imkan yaradaq.
                 </span>
@@ -441,7 +508,7 @@ export default function Home() {
 
               <Link
                 to="/contact"
-                className="btn-primary"
+                className="btn-primary home-arrow-button"
               >
                 Tərəfdaşlıq üçün müraciət et
                 <ArrowIcon />
@@ -451,6 +518,31 @@ export default function Home() {
 
 
             <div className="home-partnership__visual">
+
+              <div
+                className="
+                  home-partnership__orb
+                  home-partnership__orb--one
+                "
+              />
+
+              <div
+                className="
+                  home-partnership__orb
+                  home-partnership__orb--two
+                "
+              />
+
+              <div className="home-partnership__number">
+                +
+              </div>
+
+              <div className="home-partnership__label">
+                BİRLİKDƏ
+                <br />
+                DAHA ÇOX
+              </div>
+
             </div>
 
           </div>
