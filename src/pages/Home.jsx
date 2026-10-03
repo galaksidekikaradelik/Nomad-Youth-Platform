@@ -13,7 +13,7 @@ import { useLanguage } from '../hooks/useLanguage'
 
 import { SERVICE_CONTENT } from '../data/services'
 
-import aboutImg from '../assets/about.web'
+import aboutImg from '../assets/about.webp'
 
 
 const HOME_SERVICES = [
