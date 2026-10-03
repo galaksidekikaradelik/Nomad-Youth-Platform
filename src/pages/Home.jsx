@@ -1,9 +1,4 @@
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import MembershipHero from '../components/MembershipHero'
@@ -20,10 +15,6 @@ import { SERVICE_CONTENT } from '../data/services'
 
 import aboutImg from '../assets/images/about.png'
 
-
-/* =====================================================
-   HOME SERVICES
-===================================================== */
 
 const HOME_SERVICES = [
   {
@@ -44,10 +35,6 @@ const HOME_SERVICES = [
 ]
 
 
-/* =====================================================
-   ICONS
-===================================================== */
-
 const ArrowIcon = () => (
   <svg
     width="16"
@@ -58,7 +45,6 @@ const ArrowIcon = () => (
     strokeWidth="2.5"
     strokeLinecap="round"
     strokeLinejoin="round"
-    aria-hidden="true"
   >
     <path d="M5 12h14" />
     <path d="M12 5l7 7-7 7" />
@@ -76,7 +62,6 @@ const WarningTriangleIcon = () => (
     strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
-    aria-hidden="true"
   >
     <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
     <line x1="12" y1="9" x2="12" y2="13" />
@@ -84,45 +69,6 @@ const WarningTriangleIcon = () => (
   </svg>
 )
 
-
-/* =====================================================
-   SCROLL REVEAL HOOK
-===================================================== */
-
-function useScrollReveal(options = {}) {
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const element = ref.current
-
-    if (!element) return
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          observer.unobserve(element)
-        }
-      },
-      {
-        threshold: 0.15,
-        ...options,
-      }
-    )
-
-    observer.observe(element)
-
-    return () => observer.disconnect()
-  }, [])
-
-  return [ref, visible]
-}
-
-
-/* =====================================================
-   HOME
-===================================================== */
 
 export default function Home() {
   const { t } = useLanguage()
@@ -134,40 +80,12 @@ export default function Home() {
   } = useOpportunities()
 
 
-  /* ===================================================
-     SCROLL REVEALS
-  =================================================== */
-
-  const [
-    opportunitiesRef,
-    opportunitiesVisible,
-  ] = useScrollReveal()
-
-  const [
-    aboutRef,
-    aboutVisible,
-  ] = useScrollReveal()
-
-  const [
-    servicesRef,
-    servicesVisible,
-  ] = useScrollReveal()
-
-
-  /* ===================================================
-     OPPORTUNITIES
-  =================================================== */
-
   const preview = useMemo(
     () =>
       filterActiveOpportunities(opportunities).slice(0, 6),
     [opportunities]
   )
 
-
-  /* ===================================================
-     SERVICES
-  =================================================== */
 
   const homeServices = HOME_SERVICES
     .map((item) => ({
@@ -179,16 +97,11 @@ export default function Home() {
 
   return (
     <>
-      {/* =================================================
-          MEMBERSHIP HERO
-      ================================================= */}
-
       <MembershipHero />
 
-
-      {/* =================================================
+      {/* =====================================================
           OPPORTUNITIES
-      ================================================= */}
+      ====================================================== */}
 
       <section
         className="section"
@@ -235,8 +148,6 @@ export default function Home() {
           </div>
 
 
-          {/* LOADING */}
-
           {loading && (
             <OpportunitySkeletonGrid
               count={6}
@@ -244,8 +155,6 @@ export default function Home() {
             />
           )}
 
-
-          {/* ERROR */}
 
           {!loading && error && (
             <div className="empty-state">
@@ -269,30 +178,14 @@ export default function Home() {
           )}
 
 
-          {/* OPPORTUNITIES */}
-
           {!loading && !error && (
-            <div
-              ref={opportunitiesRef}
-              className={`grid-3 home-opportunities-grid ${
-                opportunitiesVisible
-                  ? 'is-visible'
-                  : ''
-              }`}
-            >
+            <div className="grid-3">
 
-              {preview.map((opportunity, index) => (
-                <div
+              {preview.map((opportunity) => (
+                <OpportunityCard
                   key={opportunity.id}
-                  className="home-opportunity-reveal"
-                  style={{
-                    '--reveal-delay': `${index * 90}ms`,
-                  }}
-                >
-                  <OpportunityCard
-                    opportunity={opportunity}
-                  />
-                </div>
+                  opportunity={opportunity}
+                />
               ))}
 
             </div>
@@ -302,31 +195,24 @@ export default function Home() {
       </section>
 
 
-      {/* =================================================
+      {/* =====================================================
           HERO
-      ================================================= */}
+      ====================================================== */}
 
       <Hero />
 
 
-      {/* =================================================
+      {/* =====================================================
           ABOUT
-      ================================================= */}
+      ====================================================== */}
 
-      <section
-        ref={aboutRef}
-        className={`section home-about-section ${
-          aboutVisible ? 'is-visible' : ''
-        }`}
-      >
+      <section className="section home-about-section">
 
         <div className="container">
 
           <div className="home-about">
 
-            {/* CONTENT */}
-
-            <div className="home-about__content home-about-reveal">
+            <div className="home-about__content">
 
               <div className="section-heading__eyebrow">
                 HAQQIMIZDA
@@ -374,9 +260,7 @@ export default function Home() {
             </div>
 
 
-            {/* IMAGE */}
-
-            <div className="home-about__visual home-about-reveal home-about-reveal--image">
+            <div className="home-about__visual">
 
               <div className="home-about__image-frame">
 
@@ -413,16 +297,11 @@ export default function Home() {
       </section>
 
 
-      {/* =================================================
+      {/* =====================================================
           SERVICES
-      ================================================= */}
+      ====================================================== */}
 
-      <section
-        ref={servicesRef}
-        className={`section home-services-section ${
-          servicesVisible ? 'is-visible' : ''
-        }`}
-      >
+      <section className="section home-services-section">
 
         <div className="container">
 
@@ -464,9 +343,6 @@ export default function Home() {
                   key={item.id}
                   to={serviceLink}
                   className="home-service-card"
-                  style={{
-                    '--service-delay': `${index * 100}ms`,
-                  }}
                 >
 
                   <div className="home-service-card__content">
@@ -512,7 +388,13 @@ export default function Home() {
           </div>
 
 
-          <div className="home-services-action">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: 'var(--space-xl)',
+            }}
+          >
 
             <Link
               to="/services"
@@ -529,9 +411,9 @@ export default function Home() {
       </section>
 
 
-      {/* =================================================
+      {/* =====================================================
           PARTNERSHIP
-      ================================================= */}
+      ====================================================== */}
 
       <section className="section home-partnership-section">
 
@@ -569,17 +451,6 @@ export default function Home() {
 
 
             <div className="home-partnership__visual">
-
-              <div className="home-partnership__number">
-                01
-              </div>
-
-              <div className="home-partnership__label">
-                TOGETHER
-                <br />
-                WE GROW
-              </div>
-
             </div>
 
           </div>
@@ -591,7 +462,3 @@ export default function Home() {
     </>
   )
 }
-
-
-
-
