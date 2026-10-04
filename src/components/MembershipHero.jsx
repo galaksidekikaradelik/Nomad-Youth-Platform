@@ -117,7 +117,7 @@ export default function MembershipHero() {
 
           <div className="membership-hero__actions">
             <Link
-              to="/membership"
+              to="/services?category=membership"
               className="membership-btn membership-btn--primary"
             >
               Üzv ol
@@ -125,7 +125,7 @@ export default function MembershipHero() {
             </Link>
 
             <Link
-              to="/membership"
+              to="/about"
               className="membership-btn membership-btn--secondary"
             >
               Üzvlük haqqında
