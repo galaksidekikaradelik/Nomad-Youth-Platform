@@ -13,11 +13,11 @@ import { useOrganizations } from '../hooks/useOrganizations'
 import { useOrganizationFilters } from '../hooks/useOrganizationFilters'
 
 import SearchBar from '../components/SearchBar'
-import OpportunityFilters from '../components/OpportunityFilters'
-import OpportunityResults from '../components/OpportunityResults'
+import OpportunityFilters from '../components/opportunities/OpportunityFilters'
+import OpportunityResults from '../components/opportunities/OpportunityResults'
 
-import OrganizationFilters from '../components/OrganizationFilters'
-import OrganizationResults from '../components/OrganizationResults'
+import OrganizationFilters from '../components/organization/OrganizationFilters'
+import OrganizationResults from '../components/organization/OrganizationResults'
 
 import {
   PROJECT_TABS,

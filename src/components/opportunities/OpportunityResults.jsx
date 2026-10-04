@@ -1,6 +1,6 @@
 import OpportunityCard from './OpportunityCard'
 import { OpportunitySkeletonGrid } from './OpportunitySkeleton'
-import Pagination from './Pagination'
+import Pagination from '../Pagination'
 import { WarningTriangleIcon, SearchIcon } from './OpportunityIcons'
 
 export default function OpportunityResults({

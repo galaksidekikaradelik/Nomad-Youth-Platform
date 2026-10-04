@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import '../style/index.css'
 
+import { useLanguage } from '../hooks/useLanguage'
 import heroImage from '../assets/hero-1.webp'
 
-const UsersIcon = () => (
+const Svg = ({ size = 24, children }) => (
   <svg
-    width="24"
-    height="24"
+    width={size}
+    height={size}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -14,24 +15,21 @@ const UsersIcon = () => (
     strokeLinecap="round"
     strokeLinejoin="round"
   >
+    {children}
+  </svg>
+)
+
+const UsersIcon = () => (
+  <Svg>
     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
     <circle cx="9" cy="7" r="4" />
     <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
+  </Svg>
 )
 
 const BuildingIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+  <Svg>
     <path d="M3 21h18" />
     <path d="M5 21V7l7-4 7 4v14" />
     <path d="M9 21v-6h6v6" />
@@ -41,41 +39,23 @@ const BuildingIcon = () => (
     <path d="M9 12h.01" />
     <path d="M12 12h.01" />
     <path d="M15 12h.01" />
-  </svg>
+  </Svg>
 )
 
 const PercentIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+  <Svg>
     <line x1="19" y1="5" x2="5" y2="19" />
     <circle cx="6.5" cy="6.5" r="2.5" />
     <circle cx="17.5" cy="17.5" r="2.5" />
-  </svg>
+  </Svg>
 )
 
 const GraduationIcon = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+  <Svg size={20}>
     <path d="M22 10 12 5 2 10l10 5 10-5Z" />
     <path d="M6 12v5c3 2 9 2 12 0v-5" />
     <path d="M22 10v6" />
-  </svg>
+  </Svg>
 )
 
 const ArrowIcon = () => (
@@ -95,6 +75,8 @@ const ArrowIcon = () => (
 )
 
 export default function MembershipHero() {
+  const { t } = useLanguage()
+
   return (
     <section className="membership-hero">
       <div className="membership-hero__grid" />
@@ -102,17 +84,17 @@ export default function MembershipHero() {
       <div className="membership-hero__inner">
         <div className="membership-hero__content">
           <h1 className="membership-hero__title">
-            Erasmus+ yolunuzu
+            {t('membership_hero_title_line1')}
             <br />
-            <span>Nomad Youth</span> ilə
+            {t('membership_hero_title_prefix')}
+            <span>{t('membership_hero_title_brand')}</span>
+            {t('membership_hero_title_suffix')}
             <br />
-            daha sistemli qurun.
+            {t('membership_hero_title_line3')}
           </h1>
 
           <p className="membership-hero__description">
-            1 illik üzvlüklə iştirakçı bazamıza qoşulun, Sending Organization
-            və OID dəstəyindən yararlanın və Nomad Youth xidmətlərində xüsusi
-            üstünlüklər əldə edin.
+            {t('membership_hero_desc')}
           </p>
 
           <div className="membership-hero__actions">
@@ -120,7 +102,7 @@ export default function MembershipHero() {
               to="/services?category=membership&open=1"
               className="membership-btn membership-btn--primary"
             >
-              Üzv ol
+              {t('membership_hero_btn_join')}
               <ArrowIcon />
             </Link>
 
@@ -128,7 +110,7 @@ export default function MembershipHero() {
               to="/about"
               className="membership-btn membership-btn--secondary"
             >
-              Üzvlük haqqında
+              {t('membership_hero_btn_about')}
             </Link>
           </div>
         </div>
@@ -175,7 +157,7 @@ export default function MembershipHero() {
 
             <img
               src={heroImage}
-              alt="Nomad Youth Erasmus+"
+              alt={t('membership_hero_image_alt')}
               className="membership-hero__person"
             />
           </div>
@@ -184,44 +166,28 @@ export default function MembershipHero() {
             <div className="membership-floating-card__icon">
               <GraduationIcon />
             </div>
-
-            <span>
-              Erasmus+
-              <br />
-              imkanları
-            </span>
+            <span>{t('membership_card_erasmus')}</span>
           </div>
 
           <div className="membership-floating-card membership-floating-card--oid">
             <div className="membership-floating-card__icon">
               <BuildingIcon />
             </div>
-
-            <span>OID dəstəyi</span>
+            <span>{t('membership_card_oid')}</span>
           </div>
 
           <div className="membership-floating-card membership-floating-card--users">
             <div className="membership-floating-card__icon">
               <UsersIcon />
             </div>
-
-            <span>
-              İştirakçı
-              <br />
-              bazası
-            </span>
+            <span>{t('membership_card_users')}</span>
           </div>
 
           <div className="membership-floating-card membership-floating-card--discount">
             <div className="membership-floating-card__icon">
               <PercentIcon />
             </div>
-
-            <span>
-              Xüsusi
-              <br />
-              endirimlər
-            </span>
+            <span>{t('membership_card_discount')}</span>
           </div>
 
           <span className="membership-stroke membership-stroke--one" />
@@ -234,10 +200,9 @@ export default function MembershipHero() {
           <div className="membership-benefit__icon">
             <UsersIcon />
           </div>
-
           <div className="membership-benefit__text">
-            <h3>İştirakçı bazası</h3>
-            <p>Uyğun layihələr olduqda birbaşa məlumat alın.</p>
+            <h3>{t('membership_benefit_base_title')}</h3>
+            <p>{t('membership_benefit_base_desc')}</p>
           </div>
         </div>
 
@@ -245,10 +210,9 @@ export default function MembershipHero() {
           <div className="membership-benefit__icon">
             <BuildingIcon />
           </div>
-
           <div className="membership-benefit__text">
-            <h3>Sending Organization dəstəyi</h3>
-            <p>1 il ərzində OID və təşkilat dəstəyi.</p>
+            <h3>{t('membership_benefit_so_title')}</h3>
+            <p>{t('membership_benefit_so_desc')}</p>
           </div>
         </div>
 
@@ -256,10 +220,9 @@ export default function MembershipHero() {
           <div className="membership-benefit__icon">
             <PercentIcon />
           </div>
-
           <div className="membership-benefit__text">
-            <h3>Xüsusi üstünlüklər</h3>
-            <p>Xidmətlərə 40%, tədbirlərə 30% endirim.</p>
+            <h3>{t('membership_benefit_perks_title')}</h3>
+            <p>{t('membership_benefit_perks_desc')}</p>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
-import { organizationLogos } from '../data/organizationLogos'
-import { getCategoryStyle } from '../utils/categoryStyle'
+import { organizationLogos } from '../../data/organizationLogos'
+import { getCategoryStyle } from '../../utils/categoryStyle'
 
 export default function OrganizationCard({
   organization,

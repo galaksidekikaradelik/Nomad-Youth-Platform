@@ -1,8 +1,8 @@
-import { translateCategory } from '../data/categoryTranslation'
+import { translateCategory } from '../../data/categoryTranslation'
 import {
   ORG_CATEGORIES,
   ORG_SORT_OPTIONS,
-} from '../utils/organizationFilters.constants'
+} from '../../utils/organizationFilters.constants'
 
 function FilterChip({
   label,

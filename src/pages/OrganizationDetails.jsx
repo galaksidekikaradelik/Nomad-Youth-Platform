@@ -5,10 +5,10 @@ import ActiveTabContent from '../components/ActiveTabContent'
 import ActivityHistory from '../components/ActivityHistory'
 import AboutSection from '../components/AboutSection'
 import Lightbox from '../components/Lightbox'
-import OrganizationHero from '../components/OrganizationHero'
+import OrganizationHero from '../components/organization/OrganizationHero'
 import OrganizationTabs, {
   TABS,
-} from '../components/OrganizationTabs'
+} from '../components/organization/OrganizationTabs'
 import PastProjects from '../components/PastProjects'
 import ProjectModal from '../components/ProjectModal'
 import { organizationLogos } from '../data/organizationLogos'
@@ -16,12 +16,9 @@ import { t } from '../data/translations'
 import { useLightbox } from '../hooks/useLightbox'
 import { useOrganization } from '../hooks/useOrganizations'
 
-// Hələlik AZ
 const lang = 'az'
 
-// EcoHub üçün frontend-də saxlanılan aktiv layihə.
-// Backend-ə keçdikdə bu, `organization.activeProjects`
-// kimi API-dən gələ bilər.
+
 function getActiveProjects(slug) {
   if (slug !== 'ecohub') return []
 

@@ -1,10 +1,8 @@
-import "../style/auth-split.css";
+import "../style/index.css";
 import dayImage from "../assets/auth-bg.webp";
 import nightImage from "../assets/auth-bg-night.webp";
 
-// Register və Login üçün ortaq layout: foto bütün bölməni tutur, form üstdə mərkəzdədir.
-// Light rejimdə gündüz, dark rejimdə gecə şəkli göstərilir; keçid CSS-də smooth (crossfade) olur.
-// image={null} verilərsə, foto əvəzinə gradient qalır.
+
 export default function AuthLayout({
   children,
   image = dayImage,

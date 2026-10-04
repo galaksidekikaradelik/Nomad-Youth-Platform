@@ -4,25 +4,25 @@ import {
   useParams
 } from 'react-router-dom'
 
-import { useLanguage } from '../hooks/useLanguage'
-import { useAuth } from '../hooks/useAuth'
-import { translateCategory } from '../data/categoryTranslation'
-import { getCategoryStyle } from '../utils/categoryStyle'
-import { useWishlist } from '../hooks/useWishlist'
-import { useLike } from '../hooks/useLike'
-import apiClient from '../services/apiClient'
+import { useLanguage } from '../../hooks/useLanguage'
+import { useAuth } from '../../hooks/useAuth'
+import { translateCategory } from '../../data/categoryTranslation'
+import { getCategoryStyle } from '../../utils/categoryStyle'
+import { useWishlist } from '../../hooks/useWishlist'
+import { useLike } from '../../hooks/useLike'
+import apiClient from '../../services/apiClient'
 
 import {
   trackOpportunityClick,
   trackOpportunitySave,
   trackOpportunityUnsave,
   trackOpportunityApply,
-} from '../services/analytics'
+} from '../../services/analytics'
 
-import StatusSelector from './StatusSelector'
-import AuthPromptModal from './AuthPromptModal'
+import StatusSelector from '../StatusSelector'
+import AuthPromptModal from '../AuthPromptModal'
 import OpportunityDetailModal from './OpportunityDetailModal'
-import ApplyConfirmModal from './ApplyConfirmModal'
+import ApplyConfirmModal from '../ApplyConfirmModal'
 
 import {
   HeartIcon,
@@ -36,12 +36,12 @@ import {
   TYPE_LABEL_KEYS,
   ESC_SALTO_LABEL_KEYS,
   VOLUNTEERING_TYPE_LABEL_KEYS
-} from '../data/opportunityCardLabels'
+} from '../../data/opportunityCardLabels'
 
 import {
   getDaysLeft,
   URGENT_THRESHOLD_DAYS
-} from '../utils/dateHelpers'
+} from '../../utils/dateHelpers'
 
 
 export default function OpportunityCard({

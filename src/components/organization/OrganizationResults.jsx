@@ -1,6 +1,6 @@
 import OrganizationCard from './OrganizationCard'
-import Pagination from './Pagination'
-import { SearchIcon } from './OpportunityIcons'
+import Pagination from '../../components/Pagination'
+import { SearchIcon } from '../opportunities/OpportunityIcons'
 
 const WarningIcon = () => (
   <svg

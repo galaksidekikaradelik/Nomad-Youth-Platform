@@ -1,10 +1,10 @@
-import { translateCategory } from '../data/categoryTranslation'
+import { translateCategory } from '../../data/categoryTranslation'
 import {
   CATEGORIES,
   TYPES,
   FORMATS,
   SORT_OPTIONS,
-} from '../utils/opportunityFilters.constants'
+} from '../../utils/opportunityFilters.constants'
 
 const FilterChip = ({ label, active, onClick }) => (
   <button

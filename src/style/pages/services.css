@@ -76,7 +76,6 @@
   font-size: clamp(0.95rem, 1.2vw, 1.1rem);
   color: var(--color-text-muted);
   line-height: 1.6;
- 
   margin: 0 0 32px;
   animation: fadeUp 0.6s 0.2s ease both;
   text-align: center;
@@ -177,18 +176,10 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@media (max-width: 600px) {
-  .ny-stats {
-    gap: 20px;
-  }
-  .ny-stat-num {
-    font-size: 1.4rem;
   }
 }
 
@@ -201,18 +192,6 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
-} 
-
-@media (max-width: 900px) {
-  .ny-cat-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 560px) {
-  .ny-cat-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .ny-card {
@@ -221,7 +200,7 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 28px 24px; /* Daxili məsafə böyüdüldü */
+  padding: 28px 24px;
   cursor: pointer;
   transition: var(--transition-base);
   font: inherit;
@@ -231,11 +210,11 @@
 .ny-card:hover {
   border-color: var(--color-accent);
   box-shadow: var(--shadow-card);
-  transform: translateY(-4px); /* Hover məsafəsi artırıldı */
+  transform: translateY(-4px);
 }
 
 .ny-icon-badge {
-  width: 48px; 
+  width: 48px;
   height: 48px;
   border-radius: var(--radius-md);
   background: var(--accent-200);
@@ -244,26 +223,26 @@
   justify-content: center;
   color: var(--brand-900);
   font-weight: 800;
-  font-size: 15px; 
+  font-size: 15px;
   margin-bottom: 18px;
 }
 
 .ny-card-title {
-  font-size: 17px; /* Başlıq şrifti böyüdüldü */
+  font-size: 17px;
   font-weight: 700;
   color: var(--color-text);
   margin: 0 0 8px;
 }
 
 .ny-card-desc {
-  font-size: 14px; /* Alt mətn böyüdüldü */
+  font-size: 14px;
   line-height: 1.5;
   color: var(--color-text-muted);
   margin: 0 0 16px;
 }
 
 .ny-card-link {
-  font-size: 14px; /* Keçid linki böyüdüldü */
+  font-size: 14px;
   font-weight: 700;
   color: var(--color-text);
   display: inline-flex;
@@ -308,18 +287,6 @@
   gap: 16px;
 }
 
-@media (max-width: 900px) {
-  .ny-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .ny-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .ny-overlay {
   position: fixed;
   inset: 0;
@@ -342,13 +309,6 @@
   padding: 32px;
   box-shadow: var(--shadow-md);
   margin: auto 0;
-}
-
-@media (max-width: 560px) {
-  .ny-modal {
-    padding: 24px 20px;
-    border-radius: var(--radius-md);
-  }
 }
 
 .ny-close {
@@ -443,13 +403,6 @@
   margin-top: 24px;
 }
 
-@media (max-width: 560px) {
-  .ny-cols {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
 .ny-col-title {
   font-size: 13.5px;
   font-weight: 700;
@@ -526,12 +479,6 @@
   margin-top: 24px;
 }
 
-@media (max-width: 560px) {
-  .ny-actions {
-    flex-direction: column;
-  }
-}
-
 .ny-modal-btn {
   flex: 1;
 }
@@ -542,6 +489,7 @@
   color: var(--text-muted);
   margin: 12px 0 0;
 }
+
 .ny-side-list {
   display: flex;
   list-style: none;
@@ -558,7 +506,7 @@
 }
 
 .ny-side-list li:not(:last-child) {
-  border-right: 1px solid rgba(255,255,255,0.15);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .ny-side-list li {
@@ -576,11 +524,10 @@
   line-height: 1.4;
 }
 
-.ny-pill{
-    color: var(--text-primary);
-    font-weight: 600;
+.ny-pill {
+  color: var(--text-primary);
+  font-weight: 600;
 }
-
 
 .ny-card {
   border: 2px solid transparent;
@@ -588,25 +535,4 @@
 
 .ny-card--active {
   border-color: #f5c542;
-}
-
-
-@media (max-width: 768px) {
-  .ny-side-list {
-    flex-direction: column;
-    gap: 20px;
-    padding: 24px;
-    border-radius: 20px;
-  }
-
-  .ny-side-list li {
-    padding: 0;
-    text-align: center;
-  }
-
-  .ny-side-list li:not(:last-child) {
-    border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    padding-bottom: 20px;
-  }
 }

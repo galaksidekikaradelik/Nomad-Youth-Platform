@@ -1,19 +1,19 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { useLanguage } from '../hooks/useLanguage'
-import { translateCategory } from '../data/categoryTranslation'
-import { getCategoryStyle } from '../utils/categoryStyle'
-import { trackOpportunityView, trackOpportunityApply } from '../services/analytics'
+import { useLanguage } from '../../hooks/useLanguage'
+import { translateCategory } from '../../data/categoryTranslation'
+import { getCategoryStyle } from '../../utils/categoryStyle'
+import { trackOpportunityView, trackOpportunityApply } from '../../services/analytics'
 import {
   translateFinancialSupport,
   translateDuration,
   translateLanguageField,
-} from '../data/opportunityValueTranslations'
+} from '../../data/opportunityValueTranslations'
 
 import {
   translateCity,
   translateCountry,
-} from '../data/locationTranslation'
+} from '../../data/locationTranslation'
 
 const HeartIcon = ({ active }) => (
   <svg
