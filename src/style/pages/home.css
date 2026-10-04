@@ -6,7 +6,7 @@
   position: relative;
   overflow: hidden;
 
-  background: var(--color-surface-2);
+  background: var(--brand-900);
 
   margin-top: var(--space-2xl);
   padding-top: var(--space-2xl);
@@ -41,7 +41,7 @@
 .home-about__content .section-heading__title {
   margin-bottom: var(--space-lg);
 
-  color: var(--color-primary);
+  color: #FFFFFF;
 }
 
 .home-about__content .section-heading__title span {
@@ -50,13 +50,22 @@
 
 .home-about__content .section-heading__desc {
   max-width: 560px;
-
+  color: #FFFFFF;
   margin-bottom: 15px;
 }
 
 .home-about__content .btn-outline {
   margin-top: 12px;
+  color: var(--accent-400);
 }
+
+.home-about__content .btn-outline:hover {
+  background-color: var(--accent-200);
+  color: var(--brand-900);
+}
+
+
+
 
 
 /* =====================================================

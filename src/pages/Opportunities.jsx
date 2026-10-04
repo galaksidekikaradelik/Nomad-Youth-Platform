@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import {
   useParams,
   useSearchParams,
@@ -46,14 +46,12 @@ export default function Opportunities() {
     searchParams.get('show') ||
     null
 
+  const {
+    opportunities,
+    loading,
+    error,
+  } = useOpportunities()
 
-  /*
-   * Filter state-ləri
-   *
-   * Artıq useOpportunityFilters bütün elanları
-   * qəbul edib pagination etməyəcək.
-   * Yalnız filter state-lərini idarə edəcək.
-   */
   const {
     search,
     categories,
@@ -63,6 +61,10 @@ export default function Opportunities() {
     visaType,
     sort,
     activeTab,
+    page,
+    sorted,
+    paginated,
+    totalPages,
 
     setSearch,
     setCategories,
@@ -76,39 +78,15 @@ export default function Opportunities() {
     toggleVisaType,
 
     clearDurationAndVisa,
+
+    handlePageChange,
+    setPage,
   } = useOpportunityFilters({
+    opportunities,
     initialQuery,
     initialCategory,
   })
 
-
-  /*
-   * Pagination artıq burada server-side idarə olunur
-   */
-  const [page, setPage] = useState(0)
-
-
-  /*
-   * Backend-dən yalnız cari səhifənin 12 elanı gəlir
-   */
-  const {
-    opportunities,
-    totalPages,
-    totalElements,
-    loading,
-    error,
-  } = useOpportunities({
-    page,
-    size: 12,
-    search,
-    category: categories[0] || '',
-    format: format || '',
-  })
-
-
-  /*
-   * LOCAL / Organization hissəsi əvvəlki kimi qalır
-   */
   const {
     organizations,
     loading: orgLoading,
@@ -121,6 +99,7 @@ export default function Opportunities() {
     sort: orgSort,
     page: orgPage,
 
+    sorted: orgSorted,
     paginated: orgPaginated,
     totalPages: orgTotalPages,
 
@@ -135,15 +114,9 @@ export default function Opportunities() {
     initialQuery,
   })
 
-
   const isLocalTab =
     activeTab === LOCAL_TAB_ID
 
-
-  /*
-   * URL-dən konkret elan açılıbsa,
-   * onun aid olduğu tab-a keç
-   */
   useEffect(() => {
     if (!highlightOppKey) return
     if (!opportunities?.length) return
@@ -165,70 +138,17 @@ export default function Opportunities() {
     setActiveTab,
   ])
 
+  const currentSearch = isLocalTab
+    ? orgSearch
+    : search
 
-  /*
-   * Search dəyişəndə server pagination
-   * ilk səhifəyə qayıdır
-   */
   const handleSearchChange = value => {
     if (isLocalTab) {
       setOrgSearch(value)
-      return
-    }
-
-    setSearch(value)
-    setPage(0)
-  }
-
-
-  /*
-   * Category dəyişəndə ilk səhifəyə qayıt
-   */
-  const handleCategoryChange = id => {
-    if (isLocalTab) return
-
-    setCategories(
-      id ? [id] : []
-    )
-
-    setPage(0)
-  }
-
-
-  /*
-   * Format dəyişəndə ilk səhifəyə qayıt
-   */
-  const handleFormatChange = value => {
-    toggleFormat(value)
-    setPage(0)
-  }
-
-
-  /*
-   * Server-side pagination
-   */
-  const handlePageChange = newPage => {
-    setPage(newPage)
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  }
-
-
-  /*
-   * Tab dəyişəndə opportunity pagination
-   * yenidən 0-dan başlayır
-   */
-  const handleTabChange = tabId => {
-    setActiveTab(tabId)
-
-    if (tabId !== LOCAL_TAB_ID) {
-      setPage(0)
+    } else {
+      setSearch(value)
     }
   }
-
 
   return (
     <div className="section">
@@ -259,26 +179,27 @@ export default function Opportunities() {
                   ? 'active'
                   : ''
               }`}
-              onClick={() =>
-                handleTabChange(tab.id)
-              }
+              onClick={() => {
+                setActiveTab(tab.id)
+
+                if (tab.id === LOCAL_TAB_ID) {
+                  // Organization pagination
+                } else {
+                  setPage(0)
+                }
+              }}
             >
               {tab.label}
             </button>
           ))}
         </div>
 
-
         <div className="opportunities-searchbar-wrap">
           <SearchBar
             placeholder={t(
               'opp_search_placeholder'
             )}
-            query={
-              isLocalTab
-                ? orgSearch
-                : search
-            }
+            query={currentSearch}
             category={
               isLocalTab
                 ? ''
@@ -287,21 +208,22 @@ export default function Opportunities() {
             onQueryChange={
               handleSearchChange
             }
-            onCategoryChange={
-              handleCategoryChange
-            }
+            onCategoryChange={id => {
+              if (isLocalTab) return
+
+              setCategories(
+                id ? [id] : []
+              )
+            }}
           />
         </div>
-
 
         {isLocalTab ? (
           <>
             <OrganizationFilters
               t={t}
               lang={lang}
-              categories={
-                orgCategories
-              }
+              categories={orgCategories}
               toggleCategory={
                 orgToggleCategory
               }
@@ -312,15 +234,11 @@ export default function Opportunities() {
             <OrganizationResults
               t={t}
               lang={lang}
-              organizations={
-                orgPaginated
-              }
+              organizations={orgPaginated}
               loading={orgLoading}
               error={orgError}
               page={orgPage}
-              totalPages={
-                orgTotalPages
-              }
+              totalPages={orgTotalPages}
               onPageChange={
                 orgHandlePageChange
               }
@@ -331,72 +249,42 @@ export default function Opportunities() {
             <OpportunityFilters
               t={t}
               lang={lang}
-
-              categories={
-                categories
+              categories={categories}
+              toggleCategory={
+                toggleCategory
               }
-              toggleCategory={id => {
-                toggleCategory(id)
-                setPage(0)
-              }}
-
               types={types}
-              toggleType={id => {
-                toggleType(id)
-                setPage(0)
-              }}
-
+              toggleType={toggleType}
               format={format}
               toggleFormat={
-                handleFormatChange
+                toggleFormat
               }
-
               durations={durations}
-              toggleDuration={id => {
-                toggleDuration(id)
-                setPage(0)
-              }}
-
+              toggleDuration={
+                toggleDuration
+              }
               visaType={visaType}
-              toggleVisaType={id => {
-                toggleVisaType(id)
-                setPage(0)
-              }}
-
-              clearDurationAndVisa={() => {
-                clearDurationAndVisa()
-                setPage(0)
-              }}
-
+              toggleVisaType={
+                toggleVisaType
+              }
+              clearDurationAndVisa={
+                clearDurationAndVisa
+              }
               sort={sort}
-              setSort={value => {
-                setSort(value)
-                setPage(0)
-              }}
+              setSort={setSort}
             />
 
             <OpportunityResults
               t={t}
               loading={loading}
               error={error}
-
-              /*
-               * Artıq frontend-də slice yoxdur.
-               * Backend-in qaytardığı cari 12 elan.
-               */
-              sorted={opportunities}
-              paginated={opportunities}
-
+              sorted={sorted}
+              paginated={paginated}
               page={page}
               totalPages={totalPages}
-              totalElements={
-                totalElements
-              }
-
               onPageChange={
                 handlePageChange
               }
-
               highlightOppKey={
                 highlightOppKey
               }

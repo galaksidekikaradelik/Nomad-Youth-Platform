@@ -262,9 +262,7 @@ export default function Home() {
               data-reveal="left"
             >
 
-              <div className="section-heading__eyebrow">
-                HAQQIMIZDA
-              </div>
+              
 
 
               <h2 className="section-heading__title">

@@ -1,16 +1,8 @@
 import { useState, useEffect } from "react";
 import { fetchOpportunityCards } from "../api/opportunities";
 
-export function useOpportunities({
-  page = 0,
-  size = 12,
-  search = "",
-  category = "",
-  format = "",
-} = {}) {
+export function useOpportunities() {
   const [opportunities, setOpportunities] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -22,27 +14,15 @@ export function useOpportunities({
       setError(null);
 
       try {
-        const data = await fetchOpportunityCards({
-          page,
-          size,
-          search,
-          category,
-          format,
-        });
+        const data = await fetchOpportunityCards();
 
-        if (!isMounted) return;
-
-        // Spring Boot Page response
-        setOpportunities(data.content ?? []);
-        setTotalPages(data.totalPages ?? 0);
-        setTotalElements(data.totalElements ?? 0);
+        if (isMounted) {
+          setOpportunities(data);
+        }
       } catch (err) {
-        if (!isMounted) return;
-
-        setOpportunities([]);
-        setTotalPages(0);
-        setTotalElements(0);
-        setError(err);
+        if (isMounted) {
+          setError(err);
+        }
       } finally {
         if (isMounted) {
           setLoading(false);
@@ -55,12 +35,10 @@ export function useOpportunities({
     return () => {
       isMounted = false;
     };
-  }, [page, size, search, category, format]);
+  }, []);
 
   return {
     opportunities,
-    totalPages,
-    totalElements,
     loading,
     error,
   };
