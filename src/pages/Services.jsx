@@ -184,17 +184,8 @@ export default function NomadYouthServices() {
   )
 
 
-  /*
-   * URL-dən kateqoriya oxuyur.
-   *
-   * Məsələn:
-   * /services?category=membership
-   *
-   * Əgər URL-də category yoxdursa,
-   * default olaraq membership açılır.
-   */
+  
   useEffect(() => {
-
     const params = new URLSearchParams(
       window.location.search
     )
@@ -202,16 +193,35 @@ export default function NomadYouthServices() {
     const categoryFromUrl =
       params.get('category')
 
+    const shouldOpenService =
+      params.get('open') === '1'
+
     const exists = CATEGORIES.some(
       (c) => c.id === categoryFromUrl
     )
 
-    if (exists) {
-      setActiveCategory(categoryFromUrl)
-    } else {
-      setActiveCategory('membership')
-    }
+    const targetCategory = exists
+      ? categoryFromUrl
+      : 'membership'
 
+    setActiveCategory(targetCategory)
+
+    
+    if (shouldOpenService) {
+      const categoryData = CATEGORIES.find(
+        (c) => c.id === targetCategory
+      )
+
+      const firstServiceId =
+        categoryData?.services?.[0]
+
+      if (
+        firstServiceId &&
+        SERVICE_CONTENT[firstServiceId]
+      ) {
+        setSelectedId(firstServiceId)
+      }
+    }
   }, [])
 
 

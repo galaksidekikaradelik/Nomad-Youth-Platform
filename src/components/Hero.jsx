@@ -158,7 +158,7 @@ export default function Hero() {
             <button
               className="btn-dark"
               onClick={() =>
-                navigate('/membership')
+                navigate('/services?category=membership&open=1')
               }
             >
               Üzv ol
