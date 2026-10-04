@@ -1,18 +1,12 @@
+/* Register / Login dizaynı. index.css-dən SONRA import olunmalıdır.
+   Foto kənardan kəsilmədən bütün ekranı tutur, form kartı şəffaf (şüşə) görünüşdədir. */
 .auth-page.auth-split {
-  --nav-h: 88px; 
+  --nav-h: 88px; /* navbarın hündürlüyü; lazım olsa dəyiş */
   --navy: #1c2541;
   --orange: #f28a1e;
-  --amber: #ffc21a; 
-<<<<<<< HEAD
-  --ink: #1c2541;
-  --muted: #6b7690;
-  --line: #dfe4ee;
-  --field: #ffffff;
-  --btn-bg: var(--navy);
-  --btn-fg: var(--amber);
-=======
->>>>>>> 04f3e37 (dark theme)
+  --amber: #ffc21a; /* navbardakı "Create account" mətninin rəngi */
 
+  /* Şüşə kart üçün rənglər (foto üstündə oxunaqlı olsun deyə açıq mətn) */
   --ink: #ffffff;
   --muted: rgba(255, 255, 255, 0.78);
   --line: rgba(255, 255, 255, 0.3);
@@ -21,7 +15,7 @@
   --btn-bg: var(--amber);
   --btn-fg: var(--navy);
 
-  position: relative;
+  position: relative; /* z-index YOXDUR: modal navbarın üstündə qalsın */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,15 +25,13 @@
   box-sizing: border-box;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 04f3e37 (dark theme)
+/* Dark mode: toggle html/body-də hansı class/attribute qoyursa, seçicini ora uyğunlaşdır */
 :root[data-theme="dark"] .auth-page.auth-split {
   --card: rgba(10, 16, 32, 0.55);
   --field: rgba(255, 255, 255, 0.1);
 }
 
+/* Vizual: kənarlara qədər, kəsilmədən, tam ekran */
 .auth-split .auth-visual {
   position: absolute;
   inset: 0;
@@ -60,13 +52,14 @@
   pointer-events: none;
 }
 
+/* Foto variantı: gündüz və gecə şəkilləri üst-üstə durur, tema dəyişəndə crossfade olur */
 .auth-split .auth-visual-img {
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; 
+  background-attachment: fixed; /* foto ekranda sabit qalır, forma scroll olunur */
   transition: opacity 0.7s ease;
 }
 .auth-split .auth-visual-img--night {
@@ -76,16 +69,17 @@
   opacity: 1;
 }
 
+/* Oxunaqlıq örtüyü: gradient sabit qalır, yalnız rəng animasiya olunur (smooth keçid) */
 .auth-split .auth-visual--photo::after {
   background-image: linear-gradient(to top, rgba(16, 26, 48, 0.55), transparent 45%);
   background-color: rgba(16, 26, 48, 0.28);
   transition: background-color 0.7s ease;
 }
 :root[data-theme="dark"] .auth-split .auth-visual--photo::after {
-  background-color: rgba(8, 12, 28, 0.18);
+  background-color: rgba(8, 12, 28, 0.18); /* gecə şəkli onsuz da tünddür */
 }
 .auth-split .auth-visual--photo .auth-visual-arrow {
-  display: none; 
+  display: none; /* oxu geri qaytarmaq üçün bu sətri sil */
 }
 
 .auth-split .auth-visual-arrow {
@@ -104,7 +98,7 @@
   bottom: 48px;
   z-index: 2;
   max-width: 320px;
-  display: none;
+  display: none; /* yalnız geniş ekranda göstərilir, aşağıya bax */
 }
 .auth-split .auth-visual-text h2 {
   margin: 0 0 10px;
@@ -117,12 +111,10 @@
   color: rgba(255, 255, 255, 0.85);
   font-size: 1rem;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 04f3e37 (dark theme)
+/* Form hissəsi vizualın üstündə */
 .auth-split .auth-panel {
-  position: relative; 
+  position: relative; /* z-index vermirik; DOM sırası ilə vizualın üstünə düşür */
   width: 100%;
   display: flex;
   justify-content: center;
@@ -135,6 +127,7 @@
   justify-content: center;
 }
 
+/* Kart: şəffaf şüşə */
 .auth-page.auth-split .auth-card {
   width: 100%;
   max-width: 440px;
@@ -147,7 +140,7 @@
   box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.5);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   backdrop-filter: blur(16px) saturate(120%);
-  color-scheme: dark;
+  color-scheme: dark; /* date input və select ikonları açıq görünsün */
   transition: background-color 0.5s ease, border-color 0.5s ease;
 }
 .auth-page.auth-split .auth-card--wide {
@@ -166,6 +159,7 @@
   text-align: left;
 }
 
+/* Inputlar */
 .auth-split .auth-group label {
   color: var(--ink);
   font-weight: 600;
@@ -219,6 +213,7 @@
   color: #ffb4b4;
 }
 
+/* Əsas düymə */
 .auth-split .auth-button {
   width: 100%;
   padding: 15px 20px;
@@ -244,6 +239,7 @@
   cursor: not-allowed;
 }
 
+/* Linklər və ayırıcı */
 .auth-split .auth-link,
 .auth-split .auth-inline-link {
   color: var(--amber);
@@ -266,14 +262,12 @@
   background: var(--line);
 }
 
-<<<<<<< HEAD
-=======
+/* Çox geniş ekran: yan boşluqda başlıq/alt yazı sığır */
 @media (min-width: 1400px) {
   .auth-split .auth-visual-text { display: block; }
 }
 
 /* Mobil */
->>>>>>> 04f3e37 (dark theme)
 @media (max-width: 900px) {
   .auth-split .auth-visual-img {
     background-attachment: scroll; /* iOS fixed-i dəstəkləmir */
