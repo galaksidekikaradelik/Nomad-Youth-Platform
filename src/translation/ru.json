@@ -921,6 +921,50 @@
   "service_list_count": "Услуг: {count}",
   "home_service_application_title": "Поддержка при подаче заявки на Erasmus+",
   "home_service_abroad_title": "Erasmus Mundus / Обучение за рубежом",
-  "home_service_membership_title": "Членство Erasmus+ и организационная поддержка"
+  "home_service_membership_title": "Членство Erasmus+ и организационная поддержка",
+  "about_intro_eyebrow": "ЧТО ТАКОЕ NOMAD YOUTH?",
+  "about_intro_title": "Мы создаём реальные возможности для молодёжи.",
+  "about_intro_desc": "Мы не только делимся возможностями, но и предоставляем услуги поддержки, которые помогают молодым людям легче получать к ним доступ, а также развиваем международное сотрудничество.",
+
+  "about_feature_opportunities_title": "Мы объединяем возможности",
+  "about_feature_opportunities_desc": "Мы собираем на одной платформе Erasmus+, ESC, волонтёрские программы, тренинги, гранты, стажировки и другие местные и международные возможности.",
+
+  "about_feature_support_title": "Мы поддерживаем процесс подачи заявок",
+  "about_feature_support_desc": "Мы делаем процесс более понятным и удобным благодаря консультациям, подбору проектов, поддержке при подаче заявок, подготовке документов и другим услугам.",
+
+  "about_feature_education_title": "Мы создаём возможности для обучения за рубежом",
+  "about_feature_education_desc": "Мы помогаем с выбором программ и подачей заявок на Erasmus Mundus и другие возможности обучения за рубежом.",
+
+  "about_feature_partnerships_title": "Мы развиваем международное сотрудничество",
+  "about_feature_partnerships_desc": "Сотрудничая с организациями из разных стран, мы укрепляем участие Nomad Youth в международных проектах.",
+
+  "about_stats_eyebrow": "NOMAD YOUTH В ЦИФРАХ",
+  "about_stats_title": "Больше возможностей для большего числа молодых людей.",
+
+  "about_stat_partners": "Партнёры",
+  "about_stat_users": "Пользователи / Участники",
+
+  "about_growth_eyebrow": "НОВЫЙ ЭТАП",
+  "about_growth_title": "От локальной платформы к международному партнёрству",
+  "about_growth_desc": "Nomad Youth уже официально зарегистрирован в системе Erasmus+ и начал развивать международную партнёрскую сеть. Наша цель — не только делиться существующими возможностями, но и в будущем играть более активную роль в проектах Erasmus+ и других международных инициативах в качестве партнёра и организации-исполнителя.",
+  "about_growth_cta": "Подробнее",
+  "about_growth_image_alt": "Визуал международного партнёрства Nomad Youth",
+
+  "about_membership_title": "Членство Nomad Youth Erasmus+",
+  "about_membership_desc": "Мы создали систему членства сроком на 1 год для молодых людей, которые хотят более системно пользоваться возможностями Erasmus+. Участники входят в нашу базу кандидатов и могут пользоваться поддержкой Sending Organization, а также специальными возможностями в рамках других наших услуг и мероприятий.",
+  "about_membership_cta": "Присоединиться",
+
+  "about_membership_benefit_pool": "База участников",
+  "about_membership_benefit_support": "Поддержка Sending Organization",
+  "about_membership_benefit_privileges": "Специальные преимущества для участников",
+
+  "about_step4_title": "Получайте опыт",
+  "about_step4_desc": "Продолжайте развиваться благодаря проектам, программам и международным возможностям.",
+  "about_membership_duration_number": "1 год",
+  "about_membership_duration_text": "срок членства",
+  "membership_countdown_label": "Осталось",
+"membership_countdown_days": "дн",
+"membership_countdown_hours": "ч",
+"membership_countdown_minutes": "мин"
 
 }

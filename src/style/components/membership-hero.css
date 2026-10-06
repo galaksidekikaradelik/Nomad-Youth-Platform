@@ -349,3 +349,252 @@
   font-weight: 500;
   line-height: 1.45;
 }
+
+/* =========================================================
+   MEMBERSHIP HERO — ACTIONS + COUNTDOWN
+========================================================= */
+
+.membership-hero__action-row {
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  flex-wrap: wrap;
+}
+
+
+.membership-hero__actions {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+.membership-countdown {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  min-height: 54px;
+
+  padding:
+    10px 14px;
+
+  border:
+    1px solid
+    rgba(36, 63, 96, 0.1);
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  box-shadow:
+    0 8px 22px
+    rgba(36, 63, 96, 0.07);
+
+  backdrop-filter:
+    blur(8px);
+
+  -webkit-backdrop-filter:
+    blur(8px);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+
+.membership-countdown:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(255, 190, 0, 0.25);
+
+  box-shadow:
+    0 12px 28px
+    rgba(36, 63, 96, 0.1);
+}
+
+
+/* LABEL */
+
+.membership-countdown__label {
+  max-width: 90px;
+
+  font-size: 0.7rem;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  color:
+    var(--color-text-muted);
+}
+
+
+/* TIME */
+
+.membership-countdown__time {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+/* UNIT */
+
+.membership-countdown__unit {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  min-width: 34px;
+}
+
+
+/* NUMBER */
+
+.membership-countdown__unit strong {
+  font-family:
+    var(--font-display);
+
+  font-size: 1rem;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  color:
+    var(--brand-900);
+}
+
+
+/* SMALL LABEL */
+
+.membership-countdown__unit span {
+  margin-top: 4px;
+
+  font-size: 0.61rem;
+
+  line-height: 1;
+
+  color:
+    var(--color-text-muted);
+}
+
+
+/* COLON */
+
+.membership-countdown__separator {
+  margin-top: -12px;
+
+  font-size: 0.95rem;
+
+  font-weight: 800;
+
+  color:
+    var(--accent-400);
+}
+
+
+/* =========================================================
+   BUTTON MICRO INTERACTION
+========================================================= */
+
+.membership-btn svg {
+  transition:
+    transform 0.25s ease;
+}
+
+
+.membership-btn--primary:hover svg {
+  transform:
+    translateX(4px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .membership-hero__action-row {
+    gap: 14px;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  .membership-hero__action-row {
+    width: 100%;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+
+  .membership-hero__actions {
+    width: 100%;
+  }
+
+
+  .membership-countdown {
+    width: 100%;
+
+    justify-content:
+      space-between;
+  }
+
+
+  .membership-countdown__label {
+    max-width: none;
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .membership-hero__actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .membership-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+
+  .membership-countdown {
+    padding:
+      12px 14px;
+  }
+
+
+  .membership-countdown__time {
+    margin-left: auto;
+  }
+
+}

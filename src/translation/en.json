@@ -944,6 +944,50 @@
   "service_list_count": "{count} services",
   "home_service_application_title": "Erasmus+ Application Support",
   "home_service_abroad_title": "Erasmus Mundus / Study Abroad",
-  "home_service_membership_title": "Erasmus+ Membership and Organizational Support"
+  "home_service_membership_title": "Erasmus+ Membership and Organizational Support",
+  "about_intro_eyebrow": "WHAT IS NOMAD YOUTH?",
+  "about_intro_title": "We create real opportunities for young people.",
+  "about_intro_desc": "We do more than share opportunities. We also provide support services that make these opportunities more accessible to young people and build international partnerships.",
+
+  "about_feature_opportunities_title": "We bring opportunities together",
+  "about_feature_opportunities_desc": "We provide Erasmus+, ESC, volunteering, training, grants, internships, and other local and international opportunities on one platform.",
+
+  "about_feature_support_title": "We support the application process",
+  "about_feature_support_desc": "We make the process clearer and easier through consultations, project selection, applications, document support, and other services.",
+
+  "about_feature_education_title": "We create opportunities to study abroad",
+  "about_feature_education_desc": "We provide program selection and application support for Erasmus Mundus and other study-abroad opportunities.",
+
+  "about_feature_partnerships_title": "We build international partnerships",
+  "about_feature_partnerships_desc": "By working with organizations from different countries, we strengthen Nomad Youth's active participation in international projects.",
+
+  "about_stats_eyebrow": "NOMAD YOUTH IN NUMBERS",
+  "about_stats_title": "More opportunities for more young people.",
+
+  "about_stat_partners": "Partners",
+  "about_stat_users": "Users / Members",
+
+  "about_growth_eyebrow": "A NEW STAGE",
+  "about_growth_title": "From a local platform to international partnerships",
+  "about_growth_desc": "Nomad Youth is now officially registered in the Erasmus+ system and has begun developing its international partnership network. Our goal is not only to share existing opportunities, but also to take a more active role as a partner and implementing organization in future Erasmus+ and other international projects.",
+  "about_growth_cta": "Learn more",
+  "about_growth_image_alt": "Nomad Youth international partnership visual",
+
+  "about_membership_title": "Nomad Youth Erasmus+ Membership",
+  "about_membership_desc": "We have created a 1-year membership system for young people who want to benefit from Erasmus+ opportunities in a more structured way. Members join our participant pool and can benefit from Sending Organization support as well as special opportunities in our other services and events.",
+  "about_membership_cta": "Join the membership",
+
+  "about_membership_benefit_pool": "Participant pool",
+  "about_membership_benefit_support": "Sending Organization support",
+  "about_membership_benefit_privileges": "Exclusive member benefits",
+
+  "about_step4_title": "Gain experience",
+  "about_step4_desc": "Continue your development journey through projects, programs, and international opportunities.",
+  "about_membership_duration_number": "1 year",
+  "about_membership_duration_text": "membership duration",
+  "membership_countdown_label": "Time left",
+"membership_countdown_days": "days",
+"membership_countdown_hours": "hrs",
+"membership_countdown_minutes": "min"
 
 }

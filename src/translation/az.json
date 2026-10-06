@@ -856,7 +856,49 @@
   "service_list_count": "{count} xidmət",
   "home_service_application_title": "Erasmus+ Müraciət Dəstəyi",
   "home_service_abroad_title": "Erasmus Mundus / Xaricdə Təhsil",
-  "home_service_membership_title": "Erasmus+ Üzvlük və Təşkilati Dəstək"
+  "home_service_membership_title": "Erasmus+ Üzvlük və Təşkilati Dəstək",
+  "about_intro_eyebrow": "NOMAD YOUTH NƏDİR?",
+  "about_intro_title": "Gənclər üçün real imkanlar yaradırıq.",
+  "about_intro_desc": "Yalnız imkanları paylaşmır, eyni zamanda gənclərin bu imkanlara daha rahat çıxışı üçün dəstək xidmətləri təqdim edir və beynəlxalq əməkdaşlıqlar qururuq.",
+
+  "about_feature_opportunities_title": "İmkanları bir araya gətiririk",
+  "about_feature_opportunities_desc": "Erasmus+, ESC, könüllülük, təlim, qrant, təcrübə və digər yerli və beynəlxalq imkanları vahid platformada təqdim edirik.",
+
+  "about_feature_support_title": "Müraciət prosesini dəstəkləyirik",
+  "about_feature_support_desc": "Konsultasiya, layihə seçimi, müraciət, sənədlər və digər xidmətlərlə prosesi daha aydın və rahat edirik.",
+
+  "about_feature_education_title": "Xaricdə təhsil imkanları yaradırıq",
+  "about_feature_education_desc": "Erasmus Mundus və digər xaricdə təhsil istiqamətlərində proqram seçimi və müraciət dəstəyi təqdim edirik.",
+
+  "about_feature_partnerships_title": "Beynəlxalq əməkdaşlıqlar qururuq",
+  "about_feature_partnerships_desc": "Müxtəlif ölkələrdən təşkilatlarla əməkdaşlıq edərək Nomad Youth-un beynəlxalq layihələrdə daha aktiv iştirakını inkişaf etdiririk.",
+
+  "about_stats_eyebrow": "RƏQƏMLƏRLƏ NOMAD YOUTH",
+  "about_stats_title": "Daha çox gəncə, daha çox imkan.",
+
+  "about_stat_partners": "Tərəfdaş",
+  "about_stat_users": "İstifadəçi / Üzv",
+  "about_growth_eyebrow": "YENİ MƏRHƏLƏ",
+  "about_growth_title": "Yerli platformadan beynəlxalq tərəfdaşlıqlara",
+  "about_growth_desc": "Nomad Youth artıq Erasmus+ sistemində rəsmi qeydiyyatdan keçib və beynəlxalq tərəfdaşlıq şəbəkəsini inkişaf etdirməyə başlayıb. Məqsədimiz yalnız mövcud imkanları paylaşmaq deyil, gələcəkdə Erasmus+ və digər beynəlxalq layihələrdə tərəfdaş və icraçı kimi daha aktiv rol almaqdır.",
+  "about_growth_cta": "Daha ətraflı",
+  "about_growth_image_alt": "Nomad Youth beynəlxalq tərəfdaşlıq vizualı",
+
+  "about_membership_title": "Nomad Youth Erasmus+ Üzvlüyü",
+  "about_membership_desc": "Erasmus+ imkanlarından daha sistemli yararlanmaq istəyən gənclər üçün 1 illik üzvlük sistemi yaratmışıq. Üzvlər iştirakçı bazamıza daxil olur, Sending Organization dəstəyindən və digər xidmət və tədbirlərimizdə xüsusi imkanlardan yararlana bilirlər.",
+  "about_membership_cta": "Üzvlüyə qoşul",
+
+  "about_membership_benefit_pool": "İştirakçı bazası",
+  "about_membership_benefit_support": "Sending Organization dəstəyi",
+  "about_membership_benefit_privileges": "Üzvlərə xüsusi üstünlüklər",
+  "about_step4_title": "Təcrübə qazan",
+  "about_step4_desc": "Layihələr, proqramlar və beynəlxalq imkanlarla inkişaf yolunuzu davam etdirin.",
+  "about_membership_duration_number": "1 il",
+  "about_membership_duration_text": "üzvlük müddəti",
+  "membership_countdown_label": "Bitməsinə qalıb",
+"membership_countdown_days": "gün",
+"membership_countdown_hours": "saat",
+"membership_countdown_minutes": "dəq"
 
 
 }
