@@ -28,7 +28,7 @@ import shabnam from '../assets/images/team/shabnam.webp'
 import amina from '../assets/images/team/amina.webp'
 import nezrin from '../assets/images/team/nezrin.webp'
 import ulker from '../assets/images/team/ulker.webp'
-import fatime from '../assets/images/team/fatime.webp'
+import fatime from '../assets/images/team/fatima.webp'
 
 
 const team = [
@@ -89,7 +89,7 @@ export default function About() {
       icon: MessageCircleMore,
       titleKey: 'about_feature_support_title',
       descKey: 'about_feature_support_desc',
-      variant: 'yellow',
+      variant: 'red',
     },
     {
       icon: GraduationCap,
@@ -120,7 +120,7 @@ export default function About() {
 
   const howItWorks = [
     { num: '01', icon: Search, titleKey: 'about_step1_title', descKey: 'about_step1_desc', variant: 'blue' },
-    { num: '02', icon: MessageCircleMore, titleKey: 'about_step2_title', descKey: 'about_step2_desc', variant: 'yellow' },
+    { num: '02', icon: MessageCircleMore, titleKey: 'about_step2_title', descKey: 'about_step2_desc', variant: 'red' },
     { num: '03', icon: UsersRound, titleKey: 'about_step3_title', descKey: 'about_step3_desc', variant: 'green' },
     { num: '04', icon: Send, titleKey: 'about_step4_title', descKey: 'about_step4_desc', variant: 'orange' },
   ]

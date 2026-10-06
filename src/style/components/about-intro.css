@@ -1,0 +1,26 @@
+.about-intro {
+  margin-bottom: var(--space-lg);
+}
+
+.about-intro__heading {
+  max-width: 760px;
+  margin-bottom: 34px;
+}
+
+.about-intro__title {
+  margin: 8px 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: var(--color-primary);
+}
+
+.about-intro__desc {
+  max-width: 720px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}

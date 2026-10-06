@@ -769,3 +769,332 @@
     padding: 5px 12px;
   }
 }
+
+@media (max-width: 1200px) {
+  .about-membership-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-growth-card {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .about-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-stats__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 30px;
+  }
+
+  .about-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+
+  .about-step-arrow {
+    display: none;
+  }
+
+  .about-step-card {
+    min-height: 225px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — 900
+========================================================= */
+
+@media (max-width: 900px) {
+  .about-growth-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .about-growth-card__content {
+    padding: 32px 28px;
+  }
+
+  .about-growth-card__media {
+    min-height: 280px;
+  }
+
+  /* HORIZONTAL → VERTICAL TRANSITION */
+  .about-growth-card__media::before {
+    background: linear-gradient(
+      180deg,
+      #1a2d4d 0%,
+      rgba(26, 45, 77, 0.92) 8%,
+      rgba(26, 45, 77, 0.7) 20%,
+      rgba(26, 45, 77, 0.42) 34%,
+      rgba(26, 45, 77, 0.18) 50%,
+      rgba(26, 45, 77, 0.04) 65%,
+      rgba(26, 45, 77, 0) 78%
+    );
+  }
+
+  .cta-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 36px 32px;
+  }
+
+  .cta-banner__actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — 768 (includes mobile flip cards)
+========================================================= */
+
+@media (max-width: 768px) {
+  .about-intro__heading {
+    margin-bottom: 26px;
+  }
+
+  /* FEATURES */
+  .about-feature-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .about-feature-card {
+    min-height: auto;
+    padding: 24px 22px;
+  }
+
+  /* STATS */
+  .about-stats {
+    padding: 28px 24px;
+    border-radius: 22px;
+  }
+
+  .about-stats__grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .about-stats::after {
+    background-size: auto 85%;
+    opacity: 0.035;
+  }
+
+  .about-stat__icon {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+  }
+
+  .about-stat__number {
+    font-size: 1.55rem;
+  }
+
+  /* HOW IT WORKS */
+  .about-steps {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: var(--space-lg);
+  }
+
+  .about-step-card {
+    min-height: auto;
+    padding: 30px 24px 24px;
+  }
+
+  .about-step-card__icon {
+    height: 72px;
+  }
+
+  .about-step-card__number {
+    width: 38px;
+    height: 38px;
+    top: 16px;
+    left: 16px;
+    font-size: 0.8rem;
+  }
+
+  /* GROWTH */
+  .about-growth-card {
+    border-radius: 22px;
+  }
+
+  .about-growth-card__content {
+    padding: 28px 24px;
+  }
+
+  .about-growth-card__media {
+    min-height: 240px;
+  }
+
+  .about-growth-card__title {
+    font-size: 1.85rem;
+  }
+
+  /* MEMBERSHIP */
+  .about-membership-card {
+    padding: 26px 22px;
+    border-radius: 22px;
+  }
+
+  .about-membership-card__title {
+    font-size: 1.45rem;
+  }
+
+  .about-membership-card__benefits {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .about-membership-card__benefit {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .about-membership-card__benefit-text {
+    font-size: 0.86rem;
+  }
+
+  .about-membership-card__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .about-membership-card__footer-note {
+    max-width: none;
+  }
+
+  /* TEAM FLIP CARDS — mobile: flip only via .is-flipped (click) */
+  .flip-card__inner {
+    aspect-ratio: 3 / 4;
+  }
+
+  .flip-card.is-flipped .flip-card__inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card__face {
+    border-radius: 18px;
+  }
+
+  .flip-card__back {
+    padding: 20px;
+  }
+
+  .flip-card__name {
+    font-size: 18px;
+  }
+
+  .flip-card__role {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — 600
+========================================================= */
+
+@media (max-width: 600px) {
+  .about-growth-card__content {
+    padding: 26px 22px;
+  }
+
+  .about-growth-card__title {
+    font-size: 1.7rem;
+  }
+
+  .about-growth-card__desc {
+    font-size: 0.9rem;
+  }
+
+  .about-growth-card__btn,
+  .about-membership-card__btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* CTA */
+  .cta-banner {
+    padding: 30px 24px;
+    border-radius: 22px;
+  }
+
+  .cta-banner__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-banner__actions .btn-primary,
+  .cta-banner__actions .btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — 480 (small mobile flip cards)
+========================================================= */
+
+@media (max-width: 480px) {
+  .flip-card__inner {
+    aspect-ratio: 4 / 5;
+  }
+
+  .flip-card__face {
+    border-radius: 16px;
+  }
+
+  .flip-card__back {
+    padding: 18px;
+  }
+
+  .flip-card__name {
+    font-size: 17px;
+  }
+
+  .flip-card__role {
+    font-size: 12px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-section,
+  .reveal-section .reveal-item,
+  .about-feature-card,
+  .about-feature-card__icon,
+  .about-step-card,
+  .about-step-card__icon,
+  .about-step-card__number,
+  .about-stat__icon,
+  .about-growth-card,
+  .about-growth-card__img,
+  .about-growth-card__btn,
+  .about-membership-card,
+  .about-membership-card__benefit,
+  .about-membership-card__benefit-icon,
+  .about-membership-card__crown,
+  .flip-card__inner,
+  .flip-card__img {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .reveal-section,
+  .reveal-section .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

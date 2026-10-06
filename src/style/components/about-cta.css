@@ -1,0 +1,81 @@
+.cta-banner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xl);
+  padding: 42px 48px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #243f60, #1c2f4d);
+  color: #fff;
+  box-shadow: 0 18px 40px rgba(19, 38, 62, 0.13);
+}
+
+.cta-banner::after {
+  content: '';
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  right: -150px;
+  top: -190px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+  pointer-events: none;
+}
+
+.cta-banner__content,
+.cta-banner__actions {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-banner__content {
+  max-width: 620px;
+}
+
+.cta-banner__title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+
+.cta-banner__desc {
+  margin: 0;
+  max-width: 600px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cta-banner__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.cta-banner .btn-primary {
+  background: #fff;
+  color: var(--color-primary);
+  border-color: #fff;
+}
+
+.cta-banner .btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.cta-banner .btn-outline {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cta-banner .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.55);
+}

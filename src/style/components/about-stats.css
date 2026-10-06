@@ -1,0 +1,102 @@
+.about-stats {
+  position: relative;
+  overflow: hidden;
+  margin-top: 22px;
+  margin-bottom: var(--space-3xl);
+  padding: 34px 36px 32px;
+  border-radius: 26px;
+  background: var(--brand-900);
+  color: #fff;
+  box-shadow: 0 18px 40px rgba(19, 38, 62, 0.13);
+}
+
+/* WORLD MAP */
+.about-stats::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--stats-map);
+  background-repeat: no-repeat;
+  background-position: center 48%;
+  background-size: 78% auto;
+  opacity: 0.045;
+  filter: brightness(2.1) saturate(0);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.about-stats__heading {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 30px;
+}
+
+.about-stats__eyebrow {
+  margin-bottom: 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.about-stats__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+
+.about-stats__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.about-stat {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.about-stat__icon {
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.about-stat:hover .about-stat__icon {
+  transform: scale(1.08);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.about-stat__icon--blue      { color: #7ec4ff; }
+.about-stat__icon--yellow    { color: #f1cf55; }
+.about-stat__icon--green     { color: #87d98d; }
+.about-stat__icon--lightblue { color: #a3d8ff; }
+
+.about-stat__number {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  line-height: 1;
+  font-weight: 800;
+  color: #fff;
+}
+
+.about-stat__label {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.68);
+}

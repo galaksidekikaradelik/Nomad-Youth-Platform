@@ -23,6 +23,16 @@
   --status-warning: #F97316;
   --status-error:   #EF4444;
 
+  --card-blue: #BFDDF5;
+  --card-red: #f9cad3;
+  --card-green: #B7D7C0;
+  --card-orange: #ffe4cd;
+
+  --card-blue-accent: #4F8FCB;
+  --card-red-accent: #D96578;
+  --card-green-accent: #4F8A63;
+  --card-orange-accent: #D9823B;
+
   --color-bg:           var(--neutral-50);
   --color-surface:      var(--neutral-0);
   --color-surface-2:    var(--neutral-100);
@@ -78,6 +88,11 @@
   --neutral-50:  #151B2C;
   --neutral-100: #232C44;
   --neutral-200: #353F5C;
+
+  --card-blue: #31506A;
+  --card-red: #693F4B;
+  --card-green: #3E5B4B;
+  --card-orange: #684B3A;
 
   --text-primary:   #F1F4F9;
   --text-secondary: #B8C0D4;
