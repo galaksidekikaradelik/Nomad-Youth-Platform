@@ -134,7 +134,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  background-color: var();
   color: var(--brand-900);
   transition:
     transform 0.25s ease,
