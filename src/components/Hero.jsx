@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
@@ -59,6 +60,33 @@ export default function Hero() {
   const navigate = useNavigate()
   const { t } = useLanguage()
 
+  const [parallax, setParallax] = useState({
+    x: 0,
+    y: 0,
+  })
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+
+    const x =
+      (e.clientX - rect.left) / rect.width - 0.5
+
+    const y =
+      (e.clientY - rect.top) / rect.height - 0.5
+
+    setParallax({
+      x,
+      y,
+    })
+  }
+
+  const handleMouseLeave = () => {
+    setParallax({
+      x: 0,
+      y: 0,
+    })
+  }
+
   const stats = [
     {
       num: '50+',
@@ -79,14 +107,24 @@ export default function Hero() {
   ]
 
   return (
-    <section className="hero hero--centered">
+    <section
+      className="hero hero--centered"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="hero__bg">
         <div className="hero__orb hero__orb--1" />
         <div className="hero__orb hero__orb--2" />
         <div className="hero__orb hero__orb--3" />
       </div>
 
-      <div className="hero__side-image hero__side-image--left">
+      <div
+        className="hero__side-image hero__side-image--left"
+        style={{
+          '--parallax-x': `${parallax.x * 14}px`,
+          '--parallax-y': `${parallax.y * 10}px`,
+        }}
+      >
         <div className="hero__image-card">
           <img
             src={heroLeft}
@@ -102,7 +140,13 @@ export default function Hero() {
         <div className="hero__yellow-line hero__yellow-line--left" />
       </div>
 
-      <div className="hero__side-image hero__side-image--right">
+      <div
+        className="hero__side-image hero__side-image--right"
+        style={{
+          '--parallax-x': `${parallax.x * -14}px`,
+          '--parallax-y': `${parallax.y * -10}px`,
+        }}
+      >
         <div className="hero__image-card">
           <img
             src={heroRight}
