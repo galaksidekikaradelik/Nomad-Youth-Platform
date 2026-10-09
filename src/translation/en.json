@@ -744,7 +744,7 @@
   "membership_hero_title_brand": "Nomad Youth",
   "membership_hero_title_suffix": "",
   "membership_hero_title_line3": "more systematically.",
-  "membership_hero_desc": "Join our participant base with a 1-year membership, benefit from Sending Organization and OID support, and get special advantages on Nomad Youth services.",
+  "membership_hero_desc": "Want to make the most of Erasmus+ opportunities? Join our 1-year membership to stay informed about our upcoming partner projects, receive Sending Organization and mentoring support, and enjoy exclusive discounts on our other services!",
   "membership_hero_btn_join": "Become a member",
   "membership_hero_btn_about": "About membership",
   "membership_hero_image_alt": "Nomad Youth Erasmus+",
@@ -986,8 +986,51 @@
   "about_membership_duration_number": "1 year",
   "about_membership_duration_text": "membership duration",
   "membership_countdown_label": "Time left",
-"membership_countdown_days": "days",
-"membership_countdown_hours": "hrs",
-"membership_countdown_minutes": "min"
+  "membership_countdown_days": "days",
+  "membership_countdown_hours": "hrs",
+  "membership_countdown_minutes": "min",
+  
+  "mundus_format": "On-site",
+  "mundus_degree": "Master's Degree",
+  "mundus_application_opening": "Applications open:",
+  "mundus_status_open": "Applications open",
+  "mundus_status_upcoming": "Opening soon",
+  "mundus_status_closed": "Closed",
+  "mundus_status_unknown": "Status unknown",
+  "mundus_like": "Like",
+  "mundus_save": "Save",
+  
+  "mundus_modal_program": "Erasmus Mundus Master",
+  "mundus_modal_description": "About the programme",
+  "mundus_modal_overview": "Programme information",
+  "mundus_modal_field": "Field of study",
+  "mundus_modal_eligible_fields": "Eligible bachelor's fields",
+  "mundus_modal_universities": "Universities",
+  "mundus_modal_countries": "Study countries",
+  "mundus_modal_degree": "Degree",
+  "mundus_modal_duration": "Duration",
+  "mundus_modal_language": "Language of instruction",
+  "mundus_modal_deadline": "Application deadline",
+  "mundus_modal_opening": "Applications open",
+  "mundus_modal_intake": "Programme intake",
+  "mundus_modal_language_requirements": "Language requirements",
+  "mundus_modal_ielts": "IELTS requirement",
+  "mundus_modal_toefl": "TOEFL requirement",
+  "mundus_modal_required": "Required",
+  "mundus_modal_not_required": "Not required",
+  "mundus_modal_unknown": "Unknown",
+  "mundus_modal_financial": "Scholarship and fees",
+  "mundus_modal_scholarship": "Scholarship",
+  "mundus_modal_scholarship_amount": "Scholarship amount",
+  "mundus_modal_application_fee": "Application fee",
+  "mundus_modal_documents": "Required documents",
+  "mundus_modal_apply": "Official application",
+  "mundus_modal_website": "Official programme website",
+  "mundus_modal_unavailable": "Not specified",
+  "mundus_modal_close": "Close"
+
+
+
+
 
 }

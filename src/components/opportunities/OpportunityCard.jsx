@@ -1,7 +1,8 @@
+
 import { useState, useEffect, useRef } from 'react'
 import {
   useNavigate,
-  useParams
+  useParams,
 } from 'react-router-dom'
 
 import { useLanguage } from '../../hooks/useLanguage'
@@ -29,29 +30,26 @@ import {
   BookmarkIcon,
   ArrowIcon,
   WarningIcon,
-  FlagIcon
+  FlagIcon,
 } from './OpportunityCardIcons'
 
 import {
   TYPE_LABEL_KEYS,
   ESC_SALTO_LABEL_KEYS,
-  VOLUNTEERING_TYPE_LABEL_KEYS
+  VOLUNTEERING_TYPE_LABEL_KEYS,
 } from '../../data/opportunityCardLabels'
 
 import {
   getDaysLeft,
-  URGENT_THRESHOLD_DAYS
+  URGENT_THRESHOLD_DAYS,
 } from '../../utils/dateHelpers'
-
 
 export default function OpportunityCard({
   opportunity,
-  autoOpenDetail = false
+  autoOpenDetail = false,
 }) {
-
   const navigate = useNavigate()
   const { opportunityId } = useParams()
-
   const { t, lang } = useLanguage()
   const { user } = useAuth()
 
@@ -69,9 +67,7 @@ export default function OpportunityCard({
     sumAz,
     sumEn,
     sumRus,
-
   } = opportunity
-
 
   const [showAuthPrompt, setShowAuthPrompt] =
     useState(false)
@@ -92,7 +88,6 @@ export default function OpportunityCard({
   const detailRequestRef = useRef(false)
 
   useEffect(() => {
-
     if (!opportunityId) return
     if (!opportunity?.id) return
 
@@ -102,29 +97,26 @@ export default function OpportunityCard({
     ) {
       return
     }
+
     if (detailRequestRef.current) return
 
     openDetailFromUrl()
-
   }, [
     opportunityId,
     opportunity?.id,
     user?.id,
-    lang
+    lang,
   ])
 
   async function openDetailFromUrl() {
-
     if (!opportunity?.id) return
     if (detailRequestRef.current) return
 
     detailRequestRef.current = true
     setShowDetail(true)
-
     setDetailLoading(true)
 
     try {
-
       const res = await apiClient.get(
         `/opportunities/${opportunity.id}/details`,
         {
@@ -138,40 +130,31 @@ export default function OpportunityCard({
       setDetailData(res.data)
 
       setTimeout(() => {
-
         cardRef.current?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
         })
-
       }, 100)
-
     } catch (err) {
-
       console.error(
         'Opportunity detail fetch failed:',
         err
       )
-
     } finally {
-
       setDetailLoading(false)
-
     }
   }
 
   const {
     likedIds,
-    toggleLike: toggleLikeRemote
+    toggleLike: toggleLikeRemote,
   } = useLike()
 
   const liked = opportunity.id
     ? likedIds.has(opportunity.id)
     : false
 
-
   function toggleLike(e) {
-
     e?.stopPropagation()
 
     if (!user) {
@@ -186,16 +169,14 @@ export default function OpportunityCard({
 
   const {
     savedIds,
-    toggleSave: toggleWishlist
+    toggleSave: toggleWishlist,
   } = useWishlist()
 
   const saved = opportunity.id
     ? savedIds.has(opportunity.id)
     : false
 
-
   function toggleSave(e) {
-
     e?.stopPropagation()
 
     if (!user) {
@@ -215,7 +196,6 @@ export default function OpportunityCard({
   }
 
   function handleApplyClick(e) {
-
     e.stopPropagation()
     e.preventDefault()
 
@@ -224,11 +204,8 @@ export default function OpportunityCard({
     setShowApplyConfirm(true)
   }
 
-
   function confirmApply() {
-
     trackOpportunityApply(opportunity)
-
     setShowApplyConfirm(false)
 
     window.open(
@@ -239,13 +216,11 @@ export default function OpportunityCard({
   }
 
   function openDetail(e) {
-
     e.stopPropagation()
 
     if (!opportunity?.id) return
 
     trackOpportunityClick(opportunity)
-
     setShowDetail(true)
 
     navigate(
@@ -254,20 +229,15 @@ export default function OpportunityCard({
   }
 
   function closeDetail() {
-
     setShowDetail(false)
     setDetailData(null)
     detailRequestRef.current = false
 
     if (opportunityId) {
-
       navigate(
         '/opportunities',
-        {
-          replace: true
-        }
+        { replace: true }
       )
-
     }
   }
 
@@ -279,8 +249,8 @@ export default function OpportunityCard({
         : sumAz
 
   const mergedDetailOpportunity = {
-
     ...opportunity,
+
     deadline:
       detailData?.deadline ??
       opportunity.deadline,
@@ -295,7 +265,6 @@ export default function OpportunityCard({
       opportunity.description,
 
     descriptionTranslations: {
-
       ...opportunity.descriptionTranslations,
 
       az:
@@ -309,6 +278,7 @@ export default function OpportunityCard({
       ru:
         opportunity.descriptionTranslations?.ru ??
         sumRus,
+
       ...(detailData?.description
         ? {
             [lang]: detailData.description,
@@ -344,28 +314,22 @@ export default function OpportunityCard({
         ? 'ru-RU'
         : 'az-AZ'
 
-
   const dateNotSpecified =
     t('date_not_specified') ||
     'Müəyyən olunmayıb'
 
+  const formattedDeadline = deadline
+    ? new Date(deadline).toLocaleDateString(
+        locale,
+        {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        }
+      )
+    : dateNotSpecified
 
-  const formattedDeadline =
-    deadline
-      ? new Date(deadline).toLocaleDateString(
-          locale,
-          {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-          }
-        )
-      : dateNotSpecified
-
-
-  const daysLeft =
-    getDaysLeft(deadline)
-
+  const daysLeft = getDaysLeft(deadline)
 
   const isUrgent =
     daysLeft !== null &&
@@ -378,7 +342,6 @@ export default function OpportunityCard({
         ? t('type_offline')
         : typeDetail
 
-
   const formatModifier =
     typeDetail === 'Online'
       ? 'online'
@@ -386,35 +349,27 @@ export default function OpportunityCard({
         ? 'offline'
         : null
 
-  const typeLabelKey =
-    type
-      ? TYPE_LABEL_KEYS[type]
-      : null
+  const typeLabelKey = type
+    ? TYPE_LABEL_KEYS[type]
+    : null
 
+  const typeLabel = typeLabelKey
+    ? t(typeLabelKey)
+    : type
 
-  const typeLabel =
-    typeLabelKey
-      ? t(typeLabelKey)
-      : type
+  const categories = Array.isArray(category)
+    ? category
+    : category
+      ? [category]
+      : []
 
-  const categories =
-    Array.isArray(category)
-      ? category
-      : category
-        ? [category]
-        : []
+  const escSaltoLabelKey = escOrSalto
+    ? ESC_SALTO_LABEL_KEYS[escOrSalto]
+    : null
 
-  const escSaltoLabelKey =
-    escOrSalto
-      ? ESC_SALTO_LABEL_KEYS[escOrSalto]
-      : null
-
-
-  const escSaltoLabel =
-    escSaltoLabelKey
-      ? t(escSaltoLabelKey)
-      : escOrSalto
-
+  const escSaltoLabel = escSaltoLabelKey
+    ? t(escSaltoLabelKey)
+    : escOrSalto
 
   const escSaltoModifier =
     escOrSalto === 'ESC'
@@ -426,7 +381,6 @@ export default function OpportunityCard({
   const normalizedVolunteeringType =
     volunteeringType?.replace('İ', 'I')
 
-
   const volunteeringLabelKey =
     normalizedVolunteeringType
       ? VOLUNTEERING_TYPE_LABEL_KEYS[
@@ -434,12 +388,9 @@ export default function OpportunityCard({
         ]
       : null
 
-
-  const volunteeringLabel =
-    volunteeringLabelKey
-      ? t(volunteeringLabelKey)
-      : normalizedVolunteeringType
-
+  const volunteeringLabel = volunteeringLabelKey
+    ? t(volunteeringLabelKey)
+    : normalizedVolunteeringType
 
   const volunteeringModifier =
     normalizedVolunteeringType === 'Individual'
@@ -453,18 +404,13 @@ export default function OpportunityCard({
       className="opportunity-card"
       ref={cardRef}
     >
-
       <div className="opportunity-card__top">
-
         <div className="opportunity-card__top-row">
-
           <span className="opportunity-card__tag opportunity-card__tag--flag opportunity-card__tag--flag-top">
             <FlagIcon location={location} />
           </span>
 
-
           <div className="opportunity-card__icons">
-
             <button
               className={`opportunity-card__icon-btn opportunity-card__icon-btn--heart${
                 liked ? ' is-active' : ''
@@ -474,6 +420,7 @@ export default function OpportunityCard({
             >
               <HeartIcon active={liked} />
             </button>
+
             <button
               className={`opportunity-card__icon-btn opportunity-card__icon-btn--bookmark${
                 saved ? ' is-active' : ''
@@ -483,11 +430,8 @@ export default function OpportunityCard({
             >
               <BookmarkIcon active={saved} />
             </button>
-
           </div>
-
         </div>
-
 
         <h3
           className="opportunity-card__title"
@@ -495,15 +439,11 @@ export default function OpportunityCard({
         >
           {title}
         </h3>
-
       </div>
 
       <div className="opportunity-card__topic">
-
         <div className="opportunity-card__tags">
-
           {formatLabel && (
-
             <span
               className={`opportunity-card__tag opportunity-card__tag--type${
                 formatModifier
@@ -513,24 +453,18 @@ export default function OpportunityCard({
             >
               {formatLabel}
             </span>
-
           )}
 
-
           {typeLabel && (
-
             <span
               className="opportunity-card__tag opportunity-card__category-badge"
               style={getCategoryStyle(type)}
             >
               {typeLabel}
             </span>
-
           )}
 
-
           {categories.map(cat => (
-
             <span
               key={cat}
               className="opportunity-card__tag opportunity-card__category-badge"
@@ -538,53 +472,36 @@ export default function OpportunityCard({
             >
               {translateCategory(cat, lang)}
             </span>
-
           ))}
 
-
           {escSaltoModifier && (
-
             <span
               className={`opportunity-card__tag opportunity-card__tag--${escSaltoModifier}`}
             >
               {escSaltoLabel}
             </span>
-
           )}
 
-
           {volunteeringModifier && (
-
             <span
               className={`opportunity-card__tag opportunity-card__tag--${volunteeringModifier}`}
             >
               {volunteeringLabel}
             </span>
-
           )}
-
         </div>
-
       </div>
-
 
       <div className="opportunity-card__divider" />
 
       <div className="opportunity-card__footer">
-
         <div className="opportunity-card__footer-top">
-
           <div className="opportunity-card__dates">
-
             <div className="opportunity-card__date-row">
-
               {t('card_deadline')}{' '}
-
               {formattedDeadline}{' '}
 
-
               {daysLeft !== null && (
-
                 <span
                   className={`opportunity-card__days-left${
                     isUrgent
@@ -592,55 +509,36 @@ export default function OpportunityCard({
                       : ''
                   }`}
                 >
-
-                  {isUrgent && (
-                    <WarningIcon />
-                  )}
+                  {isUrgent && <WarningIcon />}
 
                   {daysLeft}{' '}
-
                   {t('card_days_left')}
-
                 </span>
-
               )}
-
             </div>
-
 
             <div className="opportunity-card__date-row opportunity-card__date-row--muted">
-
               {t('card_event_date')}{' '}
-
-              {eventDateRange ||
-                dateNotSpecified}
-
+              {eventDateRange || dateNotSpecified}
             </div>
-
           </div>
-
 
           <StatusSelector
             opportunity={opportunity}
             t={t}
           />
-
         </div>
 
         <div className="opportunity-card__footer-actions">
-
           <button
             type="button"
             className="opportunity-card__detail-btn"
             onClick={openDetail}
           >
-            {t('card_view_details') ||
-              'Ətraflı bax'}
+            {t('card_view_details') || 'Ətraflı bax'}
           </button>
 
-
           {applyLink ? (
-
             <a
               href={applyLink}
               target="_blank"
@@ -649,60 +547,42 @@ export default function OpportunityCard({
               onClick={handleApplyClick}
             >
               {t('card_apply')}
-
               <ArrowIcon />
-
             </a>
-
           ) : (
-
             <span className="opportunity-card__apply-btn opportunity-card__apply-btn--disabled">
-
               {t('card_apply')}
-
               <ArrowIcon />
-
             </span>
-
           )}
-
         </div>
-
       </div>
 
       <OpportunityDetailModal
         opportunity={mergedDetailOpportunity}
         loading={detailLoading}
         open={showDetail}
-
         onClose={closeDetail}
-
         onRequireAuth={() => {
           closeDetail()
           setShowAuthPrompt(true)
         }}
-
         onToggleLike={toggleLike}
         onToggleSave={toggleSave}
-
         liked={liked}
         saved={saved}
       />
 
       <AuthPromptModal
         open={showAuthPrompt}
-        onClose={() =>
-          setShowAuthPrompt(false)
-        }
-      />
-      <ApplyConfirmModal
-        open={showApplyConfirm}
-        onCancel={() =>
-          setShowApplyConfirm(false)
-        }
-        onConfirm={confirmApply}
+        onClose={() => setShowAuthPrompt(false)}
       />
 
+      <ApplyConfirmModal
+        open={showApplyConfirm}
+        onCancel={() => setShowApplyConfirm(false)}
+        onConfirm={confirmApply}
+      />
     </div>
   )
 }

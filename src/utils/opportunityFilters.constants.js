@@ -6,6 +6,10 @@ export const PROJECT_TABS = [
     label: 'Erasmus layihələri',
   },
   {
+    id: 'mundus',
+    label: 'Erasmus Mundus',
+  },
+  {
     id: 'international',
     label: 'Beynəlxalq imkanlar',
   },

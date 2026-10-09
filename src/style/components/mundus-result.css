@@ -1,0 +1,224 @@
+
+/* =========================================
+   MUNDUS RESULTS
+========================================= */
+
+.mundus-results {
+  width: 100%;
+}
+
+/* COUNT */
+
+.mundus-results__count {
+  margin: var(--space-lg) 0 var(--space-md);
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.mundus-results__count strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+/* GRID */
+
+.mundus-results__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-lg);
+  align-items: stretch;
+}
+
+/* =========================================
+   LOADING / ERROR / EMPTY STATE
+========================================= */
+
+.mundus-results__state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 348px;
+  padding: 40px 24px;
+
+  border: 1px dashed var(--color-border);
+  border-radius: 30px;
+
+  background: var(--color-surface);
+
+  text-align: center;
+}
+
+/* ICON */
+
+.mundus-results__state-icon {
+  flex-shrink: 0;
+  margin-bottom: 38px;
+
+  color: var(--color-text-muted);
+}
+
+.mundus-results__state-icon--error {
+  color: #f59e0b;
+}
+
+/* TITLE */
+
+.mundus-results__state-title {
+  margin: 0 0 8px;
+
+  color: var(--text-secondary);
+
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* DESCRIPTION */
+
+.mundus-results__state-description {
+  margin: 0;
+
+  color: var(--text-secondary);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* LOADING SPINNER */
+
+.mundus-results__spinner {
+  margin-bottom: 30px;
+
+  color: var(--color-primary);
+
+  animation: mundus-results-spin 1s linear infinite;
+}
+
+@keyframes mundus-results-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   PAGINATION
+========================================= */
+
+.mundus-results__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  margin-top: 32px;
+}
+
+.mundus-results__pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-height: 40px;
+  padding: 9px 18px;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.mundus-results__pagination button:hover:not(:disabled) {
+  background: var(--color-surface-2);
+  border-color: var(--color-border-hover);
+}
+
+.mundus-results__pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.mundus-results__page-info {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1100px) {
+  .mundus-results__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .mundus-results__state {
+    min-height: 300px;
+    padding: 32px 20px;
+    border-radius: 24px;
+  }
+
+  .mundus-results__state-title {
+    font-size: 18px;
+  }
+
+  .mundus-results__state-description {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 650px) {
+  .mundus-results__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mundus-results__state {
+    min-height: 270px;
+    padding: 28px 18px;
+    border-radius: 20px;
+  }
+
+  .mundus-results__state-icon {
+    margin-bottom: 25px;
+  }
+
+  .mundus-results__state-title {
+    font-size: 16px;
+  }
+
+  .mundus-results__pagination {
+    gap: 10px;
+  }
+
+  .mundus-results__pagination button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mundus-results__spinner {
+    animation: none;
+  }
+}

@@ -1098,3 +1098,13 @@
     transform: none !important;
   }
 }
+
+@media (max-width: 900px) {
+  .hero__side-image--left {
+    transform: rotate(-6deg);
+  }
+
+  .hero__side-image--right {
+    transform: rotate(6deg);
+  }
+}

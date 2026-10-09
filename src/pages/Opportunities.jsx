@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+
 import {
   useParams,
   useSearchParams,
@@ -19,6 +20,10 @@ import OpportunityResults from '../components/opportunities/OpportunityResults'
 import OrganizationFilters from '../components/organization/OrganizationFilters'
 import OrganizationResults from '../components/organization/OrganizationResults'
 
+import MundusProgramResults from '../components/mundus/MundusProgramResults'
+
+import { MUNDUS_PROGRAMS } from '../data/mundusPrograms'
+
 import {
   PROJECT_TABS,
 } from '../utils/opportunityFilters.constants'
@@ -26,6 +31,7 @@ import {
 import { getOpportunityGroup } from '../utils/getOpportunityGroup'
 
 const LOCAL_TAB_ID = 'local'
+const MUNDUS_TAB_ID = 'mundus'
 
 export default function Opportunities() {
   const { t, lang } = useLanguage()
@@ -34,6 +40,12 @@ export default function Opportunities() {
   const {
     opportunityId: routeOpportunityId,
   } = useParams()
+
+  const [mundusSearch, setMundusSearch] =
+    useState('')
+
+  const [mundusPage, setMundusPage] =
+    useState(0)
 
   const initialQuery =
     searchParams.get('query') || ''
@@ -99,7 +111,6 @@ export default function Opportunities() {
     sort: orgSort,
     page: orgPage,
 
-    sorted: orgSorted,
     paginated: orgPaginated,
     totalPages: orgTotalPages,
 
@@ -116,6 +127,10 @@ export default function Opportunities() {
 
   const isLocalTab =
     activeTab === LOCAL_TAB_ID
+
+  const isMundusTab =
+    activeTab === MUNDUS_TAB_ID
+
 
   useEffect(() => {
     if (!highlightOppKey) return
@@ -138,23 +153,38 @@ export default function Opportunities() {
     setActiveTab,
   ])
 
-  const currentSearch = isLocalTab
-    ? orgSearch
-    : search
+
+  const currentSearch =
+    isLocalTab
+      ? orgSearch
+      : isMundusTab
+        ? mundusSearch
+        : search
+
 
   const handleSearchChange = value => {
     if (isLocalTab) {
       setOrgSearch(value)
-    } else {
-      setSearch(value)
+      return
     }
+
+    if (isMundusTab) {
+      setMundusSearch(value)
+      setMundusPage(0)
+      return
+    }
+
+    setSearch(value)
   }
+
 
   return (
     <div className="section">
+
       <div className="container">
 
         <div className="page-header">
+
           <div className="page-header__eyebrow">
             {t('opp_eyebrow')}
           </div>
@@ -166,11 +196,16 @@ export default function Opportunities() {
           <p className="page-header__desc">
             {t('opp_desc')}
           </p>
+
         </div>
 
 
+        {/* TABS */}
+
         <div className="opportunities-tabs">
+
           {PROJECT_TABS.map(tab => (
+
             <button
               key={tab.id}
               type="button"
@@ -180,28 +215,50 @@ export default function Opportunities() {
                   : ''
               }`}
               onClick={() => {
+
                 setActiveTab(tab.id)
 
-                if (tab.id === LOCAL_TAB_ID) {
-                  // Organization pagination
-                } else {
-                  setPage(0)
+                if (
+                  tab.id === LOCAL_TAB_ID
+                ) {
+                  return
                 }
+
+                if (
+                  tab.id === MUNDUS_TAB_ID
+                ) {
+                  setMundusPage(0)
+                  return
+                }
+
+                setPage(0)
+
               }}
             >
               {tab.label}
             </button>
+
           ))}
+
         </div>
 
+
+        {/* SEARCH */}
+
         <div className="opportunities-searchbar-wrap">
+
           <SearchBar
-            placeholder={t(
-              'opp_search_placeholder'
-            )}
+            placeholder={
+              isMundusTab
+                ? 'Erasmus Mundus proqramı axtar...'
+                : t(
+                    'opp_search_placeholder'
+                  )
+            }
             query={currentSearch}
             category={
-              isLocalTab
+              isLocalTab ||
+              isMundusTab
                 ? ''
                 : categories[0] || ''
             }
@@ -209,17 +266,30 @@ export default function Opportunities() {
               handleSearchChange
             }
             onCategoryChange={id => {
-              if (isLocalTab) return
+
+              if (
+                isLocalTab ||
+                isMundusTab
+              ) {
+                return
+              }
 
               setCategories(
                 id ? [id] : []
               )
+
             }}
           />
+
         </div>
 
+
+        {/* LOCAL */}
+
         {isLocalTab ? (
+
           <>
+
             <OrganizationFilters
               t={t}
               lang={lang}
@@ -234,18 +304,41 @@ export default function Opportunities() {
             <OrganizationResults
               t={t}
               lang={lang}
-              organizations={orgPaginated}
+              organizations={
+                orgPaginated
+              }
               loading={orgLoading}
               error={orgError}
               page={orgPage}
-              totalPages={orgTotalPages}
+              totalPages={
+                orgTotalPages
+              }
               onPageChange={
                 orgHandlePageChange
               }
             />
+
           </>
+
+        ) : isMundusTab ? (
+
+          /* ERASMUS MUNDUS */
+
+          <MundusProgramResults
+            programs={MUNDUS_PROGRAMS}
+            search={mundusSearch}
+            page={mundusPage}
+            onPageChange={
+              setMundusPage
+            }
+          />
+
         ) : (
+
+          /* ERASMUS + INTERNATIONAL */
+
           <>
+
             <OpportunityFilters
               t={t}
               lang={lang}
@@ -289,10 +382,13 @@ export default function Opportunities() {
                 highlightOppKey
               }
             />
+
           </>
+
         )}
 
       </div>
+
     </div>
   )
 }

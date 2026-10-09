@@ -656,7 +656,7 @@
   "membership_hero_title_brand": "Nomad Youth",
   "membership_hero_title_suffix": " ilə",
   "membership_hero_title_line3": "daha sistemli qurun.",
-  "membership_hero_desc": "1 illik üzvlüklə iştirakçı bazamıza qoşulun, Sending Organization və OID dəstəyindən yararlanın və Nomad Youth xidmətlərində xüsusi üstünlüklər əldə edin.",
+  "membership_hero_desc": "Erasmus+ imkanlarından daha çox yararlanmaq istəyirsiniz? 1 illik üzvlüyümüzə qoşulun, gələcək tərəfdaş layihələrimizdən xəbərdar olun, Sending Organization və mentor dəstəyi alın, digər xidmətlərimizdə isə xüsusi endirimlər qazanın!",
   "membership_hero_btn_join": "Üzv ol",
   "membership_hero_btn_about": "Üzvlük haqqında",
   "membership_hero_image_alt": "Nomad Youth Erasmus+",
@@ -896,9 +896,53 @@
   "about_membership_duration_number": "1 il",
   "about_membership_duration_text": "üzvlük müddəti",
   "membership_countdown_label": "Bitməsinə qalıb",
-"membership_countdown_days": "gün",
-"membership_countdown_hours": "saat",
-"membership_countdown_minutes": "dəq"
+  "membership_countdown_days": "gün",
+  "membership_countdown_hours": "saat",
+  "membership_countdown_minutes": "dəq",
+
+
+  "mundus_format": "Əyani",
+  "mundus_degree": "Magistratura",
+  "mundus_application_opening": "Müraciətlər açılır:",
+  "mundus_status_open": "Müraciət açıqdır",
+  "mundus_status_upcoming": "Tezliklə açılır",
+  "mundus_status_closed": "Bağlanıb",
+  "mundus_status_unknown": "Status məlum deyil",
+  "mundus_like": "Bəyən",
+  "mundus_save": "Yadda saxla",
+  
+  "mundus_modal_program": "Erasmus Mundus Magistratura",
+  "mundus_modal_description": "Proqram haqqında",
+  "mundus_modal_overview": "Proqram məlumatları",
+  "mundus_modal_field": "İxtisas / Təhsil sahəsi",
+  "mundus_modal_eligible_fields": "Uyğun bakalavr ixtisasları",
+  "mundus_modal_universities": "Universitetlər",
+  "mundus_modal_countries": "Təhsil ölkələri",
+  "mundus_modal_degree": "Dərəcə",
+  "mundus_modal_duration": "Təhsil müddəti",
+  "mundus_modal_language": "Tədris dili",
+  "mundus_modal_deadline": "Son müraciət tarixi",
+  "mundus_modal_opening": "Müraciətlərin açılma tarixi",
+  "mundus_modal_intake": "Təhsilə başlama",
+  "mundus_modal_language_requirements": "Dil tələbləri",
+  "mundus_modal_ielts": "IELTS tələbi",
+  "mundus_modal_toefl": "TOEFL tələbi",
+  "mundus_modal_required": "Tələb olunur",
+  "mundus_modal_not_required": "Tələb olunmur",
+  "mundus_modal_unknown": "Məlum deyil",
+  "mundus_modal_financial": "Təqaüd və ödənişlər",
+  "mundus_modal_scholarship": "Təqaüd",
+  "mundus_modal_scholarship_amount": "Təqaüd məbləği",
+  "mundus_modal_application_fee": "Müraciət ödənişi",
+  "mundus_modal_documents": "Tələb olunan sənədlər",
+  "mundus_modal_apply": "Rəsmi müraciət",
+  "mundus_modal_website": "Proqramın rəsmi saytı",
+  "mundus_modal_unavailable": "Məlumat qeyd olunmayıb",
+  "mundus_modal_close": "Bağla"
+
+
+
+
 
 
 }
