@@ -1004,7 +1004,16 @@
   "mundus_modal_apply": "Подать заявку",
   "mundus_modal_website": "Официальный сайт программы",
   "mundus_modal_unavailable": "Не указано",
-  "mundus_modal_close": "Закрыть"
+  "mundus_modal_close": "Закрыть",
+
+  "mundus_results_error_title": "Не удалось загрузить программы.",
+  "mundus_results_error_desc": "Пожалуйста, повторите попытку позже.",
+  "mundus_results_empty_title": "Подходящие программы не найдены.",
+  "mundus_results_empty_desc": "Попробуйте изменить поиск или фильтры.",
+  "mundus_results_count": "Найдено программ",
+  "mundus_results_previous": "Назад",
+  "mundus_results_next": "Далее"
+
 
 
 

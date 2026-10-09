@@ -1,9 +1,9 @@
 
 import { useEffect, useMemo, useState } from 'react'
+
 import {
   AlertTriangle,
   SearchX,
-  LoaderCircle,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
@@ -12,8 +12,13 @@ import { useLanguage } from '../../hooks/useLanguage'
 import { mundusService } from '../../services/mundusService'
 
 import MundusProgramCard from './MundusProgramCard'
+import { MundusSkeletonGrid } from './MundusSkeleton'
+
+import './MundusProgramResults.css'
+import './MundusSkeleton.css'
 
 const PAGE_SIZE = 9
+const SKELETON_COUNT = 6
 
 function normalizeResponse(data) {
   if (Array.isArray(data)) return data
@@ -27,47 +32,16 @@ function normalizeResponse(data) {
 export default function MundusProgramResults({
   search = '',
 }) {
-  const { lang } = useLanguage()
+  const { t } = useLanguage()
 
   const [programs, setPrograms] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const [page, setPage] = useState(1)
 
-  const labels = {
-    az: {
-      loading: 'Proqramlar yüklənir...',
-      errorTitle: 'Proqramları yükləmək mümkün olmadı.',
-      errorDesc: 'Zəhmət olmasa bir az sonra yenidən cəhd edin.',
-      emptyTitle: 'Uyğun proqram tapılmadı.',
-      emptyDesc: 'Axtarış sözünü və ya filtrləri dəyişərək yenidən cəhd edin.',
-      count: 'Tapılan proqramlar',
-      previous: 'Əvvəlki',
-      next: 'Növbəti',
-    },
-    en: {
-      loading: 'Loading programmes...',
-      errorTitle: 'Unable to load programmes.',
-      errorDesc: 'Please try again a little later.',
-      emptyTitle: 'No matching programmes found.',
-      emptyDesc: 'Try changing your search or filters.',
-      count: 'Programmes found',
-      previous: 'Previous',
-      next: 'Next',
-    },
-    ru: {
-      loading: 'Загрузка программ...',
-      errorTitle: 'Не удалось загрузить программы.',
-      errorDesc: 'Пожалуйста, повторите попытку позже.',
-      emptyTitle: 'Подходящие программы не найдены.',
-      emptyDesc: 'Попробуйте изменить поиск или фильтры.',
-      count: 'Найдено программ',
-      previous: 'Назад',
-      next: 'Далее',
-    },
-  }
-
-  const l = labels[lang] || labels.az
+  /* =========================================
+     FETCH PROGRAMS
+  ========================================= */
 
   useEffect(() => {
     let active = true
@@ -81,16 +55,23 @@ export default function MundusProgramResults({
 
         if (!active) return
 
-        setPrograms(normalizeResponse(response.data))
+        setPrograms(
+          normalizeResponse(response.data)
+        )
       } catch (err) {
         if (!active) return
 
-        console.error('Mundus fetch failed:', err)
+        console.error(
+          'Mundus programs fetch failed:',
+          err
+        )
 
         setError(true)
         setPrograms([])
       } finally {
-        if (active) setLoading(false)
+        if (active) {
+          setLoading(false)
+        }
       }
     }
 
@@ -101,6 +82,10 @@ export default function MundusProgramResults({
     }
   }, [])
 
+  /* =========================================
+     SEARCH FILTER
+  ========================================= */
+
   const filteredPrograms = useMemo(() => {
     const query = String(search || '')
       .trim()
@@ -109,20 +94,22 @@ export default function MundusProgramResults({
     if (!query) return programs
 
     return programs.filter(program => {
-      const values = [
+      const searchableValues = [
         program.programName,
         program.title,
         program.degree,
         program.language,
+
         ...(Array.isArray(program.countries)
           ? program.countries
           : []),
+
         ...(Array.isArray(program.bachelorFields)
           ? program.bachelorFields
           : []),
       ]
 
-      return values
+      return searchableValues
         .filter(Boolean)
         .map(value => String(value))
         .join(' ')
@@ -131,9 +118,17 @@ export default function MundusProgramResults({
     })
   }, [programs, search])
 
+  /* =========================================
+     RESET PAGE
+  ========================================= */
+
   useEffect(() => {
     setPage(1)
   }, [search])
+
+  /* =========================================
+     PAGINATION
+  ========================================= */
 
   const totalPages = Math.ceil(
     filteredPrograms.length / PAGE_SIZE
@@ -149,24 +144,31 @@ export default function MundusProgramResults({
     currentPage * PAGE_SIZE
   )
 
+  /* =========================================
+     SKELETON LOADING
+  ========================================= */
+
   if (loading) {
     return (
-      <div className="mundus-results__state" role="status">
-        <LoaderCircle
-          className="mundus-results__spinner"
-          size={38}
+      <div className="mundus-results">
+        <MundusSkeletonGrid
+          count={SKELETON_COUNT}
+          gridClassName="mundus-results__grid"
         />
-
-        <h3 className="mundus-results__state-title">
-          {l.loading}
-        </h3>
       </div>
     )
   }
 
+  /* =========================================
+     ERROR STATE
+  ========================================= */
+
   if (error) {
     return (
-      <div className="mundus-results__state" role="alert">
+      <div
+        className="mundus-results__state"
+        role="alert"
+      >
         <AlertTriangle
           className="mundus-results__state-icon mundus-results__state-icon--error"
           size={38}
@@ -174,15 +176,19 @@ export default function MundusProgramResults({
         />
 
         <h3 className="mundus-results__state-title">
-          {l.errorTitle}
+          {t('mundus_results_error_title')}
         </h3>
 
         <p className="mundus-results__state-description">
-          {l.errorDesc}
+          {t('mundus_results_error_desc')}
         </p>
       </div>
     )
   }
+
+  /* =========================================
+     EMPTY STATE
+  ========================================= */
 
   if (filteredPrograms.length === 0) {
     return (
@@ -194,21 +200,25 @@ export default function MundusProgramResults({
         />
 
         <h3 className="mundus-results__state-title">
-          {l.emptyTitle}
+          {t('mundus_results_empty_title')}
         </h3>
 
         <p className="mundus-results__state-description">
-          {l.emptyDesc}
+          {t('mundus_results_empty_desc')}
         </p>
       </div>
     )
   }
 
+  /* =========================================
+     RESULTS
+  ========================================= */
+
   return (
     <div className="mundus-results">
 
       <div className="mundus-results__count">
-        {l.count}:{' '}
+        {t('mundus_results_count')}: {' '}
         <strong>{filteredPrograms.length}</strong>
       </div>
 
@@ -232,7 +242,7 @@ export default function MundusProgramResults({
             }
           >
             <ChevronLeft size={16} />
-            {l.previous}
+            {t('mundus_results_previous')}
           </button>
 
           <span className="mundus-results__page-info">
@@ -248,12 +258,13 @@ export default function MundusProgramResults({
               )
             }
           >
-            {l.next}
+            {t('mundus_results_next')}
             <ChevronRight size={16} />
           </button>
 
         </div>
       )}
+
     </div>
   )
 }

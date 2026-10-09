@@ -1,0 +1,224 @@
+
+/* =========================================
+   MUNDUS SKELETON
+========================================= */
+
+.mundus-skeleton {
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+}
+
+.mundus-skeleton:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* BASE BLOCK */
+
+.mundus-skeleton__block {
+  display: block;
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    90deg,
+    #f3f5f7 0%,
+    #e9eef2 45%,
+    #f3f5f7 90%
+  );
+
+  background-size: 200% 100%;
+
+  animation: mundus-skeleton-shimmer 1.6s ease-in-out infinite;
+
+  border-radius: 7px;
+}
+
+@keyframes mundus-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* FLAGS */
+
+.mundus-skeleton__flags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mundus-skeleton__flag {
+  width: 36px;
+  height: 26px;
+  border-radius: 999px;
+}
+
+/* ICON BUTTONS */
+
+.mundus-skeleton__icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+}
+
+/* TITLE */
+
+.mundus-skeleton__title {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  justify-content: flex-start;
+
+  min-height: calc(3 * 1.3em);
+
+  padding-top: 6px;
+}
+
+.mundus-skeleton__line {
+  width: 100%;
+  height: 15px;
+  border-radius: 6px;
+}
+
+.mundus-skeleton__line--title-1 {
+  width: 90%;
+  height: 22px;
+}
+
+.mundus-skeleton__line--title-2 {
+  width: 60%;
+  height: 22px;
+}
+
+/* TAGS */
+
+.mundus-skeleton__tag {
+  width: 80px;
+  height: 30px;
+  border-radius: 999px;
+}
+
+.mundus-skeleton__tag--wide {
+  width: 102px;
+}
+
+.mundus-skeleton__tag--narrow {
+  width: 65px;
+}
+
+/* DESCRIPTION */
+
+.mundus-skeleton__description {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 3px;
+}
+
+.mundus-skeleton__description .mundus-skeleton__line {
+  height: 15px;
+}
+
+.mundus-skeleton__line--short {
+  width: 70%;
+}
+
+/* FOOTER */
+
+.mundus-skeleton .mundus-card__footer {
+  gap: 20px;
+}
+
+.mundus-skeleton .mundus-card__dates {
+  gap: 10px;
+}
+
+.mundus-skeleton__line--date {
+  width: 160px;
+  height: 16px;
+}
+
+.mundus-skeleton__line--date-muted {
+  width: 125px;
+  height: 14px;
+}
+
+.mundus-skeleton__status-badge {
+  width: 110px;
+  height: 30px;
+  border-radius: 999px;
+}
+
+/* BUTTONS */
+
+.mundus-skeleton__btn {
+  height: 45px;
+  border-radius: 999px;
+}
+
+.mundus-skeleton__btn--detail {
+  width: 125px;
+}
+
+.mundus-skeleton__btn--apply {
+  width: 110px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .mundus-skeleton__flag {
+    width: 30px;
+    height: 24px;
+  }
+
+  .mundus-skeleton__line--title-1,
+  .mundus-skeleton__line--title-2 {
+    height: 19px;
+  }
+
+  .mundus-skeleton__tag {
+    height: 27px;
+  }
+}
+
+@media (max-width: 420px) {
+  .mundus-skeleton__title {
+    min-height: 62px;
+  }
+
+  .mundus-skeleton__line--date {
+    width: 125px;
+  }
+
+  .mundus-skeleton__line--date-muted {
+    width: 100px;
+  }
+
+  .mundus-skeleton__status-badge {
+    width: 85px;
+    height: 26px;
+  }
+
+  .mundus-skeleton__btn--detail {
+    width: 110px;
+  }
+
+  .mundus-skeleton__btn--apply {
+    width: 100px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .mundus-skeleton__block {
+    animation: none;
+    background: #eef1f4;
+  }
+}

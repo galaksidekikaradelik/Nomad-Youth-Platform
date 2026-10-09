@@ -938,7 +938,17 @@
   "mundus_modal_apply": "Rəsmi müraciət",
   "mundus_modal_website": "Proqramın rəsmi saytı",
   "mundus_modal_unavailable": "Məlumat qeyd olunmayıb",
-  "mundus_modal_close": "Bağla"
+  "mundus_modal_close": "Bağla",
+  
+  "mundus_results_error_title": "Proqramları yükləmək mümkün olmadı.",
+  "mundus_results_error_desc": "Zəhmət olmasa bir az sonra yenidən cəhd edin.",
+  "mundus_results_empty_title": "Uyğun proqram tapılmadı.",
+  "mundus_results_empty_desc": "Axtarış sözünü və ya filtrləri dəyişərək yenidən cəhd edin.",
+  "mundus_results_count": "Tapılan proqramlar",
+  "mundus_results_previous": "Əvvəlki",
+  "mundus_results_next": "Növbəti"
+
+
 
 
 

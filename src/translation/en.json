@@ -1027,7 +1027,16 @@
   "mundus_modal_apply": "Official application",
   "mundus_modal_website": "Official programme website",
   "mundus_modal_unavailable": "Not specified",
-  "mundus_modal_close": "Close"
+  "mundus_modal_close": "Close",
+
+  "mundus_results_error_title": "Unable to load programmes.",
+  "mundus_results_error_desc": "Please try again a little later.",
+  "mundus_results_empty_title": "No matching programmes found.",
+  "mundus_results_empty_desc": "Try changing your search or filters.",
+  "mundus_results_count": "Programmes found",
+  "mundus_results_previous": "Previous",
+  "mundus_results_next": "Next"
+
 
 
 
