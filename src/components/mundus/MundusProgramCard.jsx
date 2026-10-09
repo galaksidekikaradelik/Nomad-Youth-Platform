@@ -23,9 +23,6 @@ import {
   URGENT_THRESHOLD_DAYS,
 } from '../../utils/dateHelpers'
 
-
-/* DATE HELPERS */
-
 function parseDate(value) {
   if (!value) return null
 
@@ -111,9 +108,6 @@ function safeUrl(value) {
   }
 }
 
-
-/* COUNTRY FLAGS */
-
 function CountryFlags({ countries = [] }) {
   const list = Array.isArray(countries)
     ? countries
@@ -162,9 +156,6 @@ function CountryFlags({ countries = [] }) {
     </div>
   )
 }
-
-
-/* MAIN COMPONENT */
 
 export default function MundusProgramCard({ program }) {
   const { t, lang } = useLanguage()
@@ -253,9 +244,6 @@ export default function MundusProgramCard({ program }) {
     detailData?.applyLink || program.applyLink
   )
 
-
-  /* FAVORITE */
-
   function toggleLike(e) {
     e?.stopPropagation()
 
@@ -267,9 +255,6 @@ export default function MundusProgramCard({ program }) {
     toggleLikeRemote()
   }
 
-
-  /* SAVE */
-
   function toggleSave(e) {
     e?.stopPropagation()
 
@@ -280,9 +265,6 @@ export default function MundusProgramCard({ program }) {
 
     toggleSaveRemote()
   }
-
-
-  /* OPEN DETAIL */
 
   async function openDetail(e) {
     e?.stopPropagation()
@@ -324,8 +306,6 @@ export default function MundusProgramCard({ program }) {
       }
     }
 
-    // View statistikasını detail sorğusundan
-    // ayrıca göndəririk.
     if (
       detailMountedRef.current &&
       session === detailSessionRef.current
@@ -339,9 +319,6 @@ export default function MundusProgramCard({ program }) {
     }
   }
 
-
-  /* CLOSE DETAIL */
-
   function closeDetail() {
     detailSessionRef.current += 1
     detailRequestRef.current = false
@@ -351,14 +328,9 @@ export default function MundusProgramCard({ program }) {
     setDetailLoading(false)
   }
 
-
-  /* APPLY TRACKING */
-
   async function handleApplyClick(e) {
     e?.stopPropagation()
 
-    // Link adi anchor olaraq açılır.
-    // Tracking sorğusu ayrıca göndərilir.
     if (!id) return
 
     try {
@@ -370,9 +342,6 @@ export default function MundusProgramCard({ program }) {
       )
     }
   }
-
-
-  /* MODAL DATA */
 
   const modalOpportunity = {
     ...program,
@@ -394,13 +363,8 @@ export default function MundusProgramCard({ program }) {
       [],
   }
 
-
-  /* RENDER */
-
   return (
     <div className="mundus-card">
-
-      {/* TOP */}
 
       <div className="mundus-card__top">
 
@@ -456,9 +420,6 @@ export default function MundusProgramCard({ program }) {
 
       </div>
 
-
-      {/* TAGS */}
-
       <div className="mundus-card__topic">
 
         <div className="mundus-card__tags">
@@ -479,13 +440,7 @@ export default function MundusProgramCard({ program }) {
 
       </div>
 
-
-      {/* DIVIDER */}
-
       <div className="mundus-card__divider" />
-
-
-      {/* FOOTER */}
 
       <div className="mundus-card__footer">
 
@@ -527,9 +482,6 @@ export default function MundusProgramCard({ program }) {
 
           </div>
 
-
-          {/* STATUS */}
-
           <div className="mundus-card__status-wrap">
 
             <span
@@ -542,9 +494,6 @@ export default function MundusProgramCard({ program }) {
           </div>
 
         </div>
-
-
-        {/* ACTIONS */}
 
         <div className="mundus-card__footer-actions">
 
@@ -582,9 +531,6 @@ export default function MundusProgramCard({ program }) {
 
       </div>
 
-
-      {/* DETAIL MODAL */}
-
       <MundusDetailModal
         opportunity={modalOpportunity}
         loading={detailLoading}
@@ -596,9 +542,6 @@ export default function MundusProgramCard({ program }) {
         onToggleSave={toggleSave}
         onApplyClick={handleApplyClick}
       />
-
-
-      {/* AUTH MODAL */}
 
       <AuthPromptModal
         open={showAuthPrompt}

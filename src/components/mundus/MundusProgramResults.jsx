@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import {
   AlertTriangle,
-  SearchX,
+  CalendarClock,
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
@@ -191,7 +191,7 @@ export default function MundusProgramResults({
   if (filteredPrograms.length === 0) {
     return (
       <div className="mundus-results__state">
-        <SearchX
+        <CalendarClock
           className="mundus-results__state-icon"
           size={38}
           strokeWidth={1.8}

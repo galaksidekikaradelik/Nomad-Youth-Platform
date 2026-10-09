@@ -1,9 +1,7 @@
 
 import apiClient from './apiClient'
 
-// apiClient baseURL: https://domain.com/api olduqda
-// aşağıdakı BASE düzgündür.
-// baseURL yalnız domain olduqda '/api/mundus-programs' yaz.
+
 const BASE = '/mundus-programs'
 
 export const mundusService = {
