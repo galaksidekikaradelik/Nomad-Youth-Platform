@@ -14,8 +14,6 @@ import { mundusService } from '../../services/mundusService'
 import MundusProgramCard from './MundusProgramCard'
 import { MundusSkeletonGrid } from './MundusSkeleton'
 
-import './MundusProgramResults.css'
-import './MundusSkeleton.css'
 
 const PAGE_SIZE = 9
 const SKELETON_COUNT = 6
