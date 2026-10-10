@@ -12,7 +12,6 @@ import OrganizationTabs, {
 import PastProjects from '../components/PastProjects'
 import ProjectModal from '../components/ProjectModal'
 import { organizationLogos } from '../data/organizationLogos'
-import { t } from '../data/translations'
 import { useLightbox } from '../hooks/useLightbox'
 import { useOrganization } from '../hooks/useOrganizations'
 
