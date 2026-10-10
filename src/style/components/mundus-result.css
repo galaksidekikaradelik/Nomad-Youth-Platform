@@ -1,13 +1,6 @@
-
-/* =========================================
-   MUNDUS RESULTS
-========================================= */
-
 .mundus-results {
   width: 100%;
 }
-
-/* COUNT */
 
 .mundus-results__count {
   margin: var(--space-lg) 0 var(--space-md);
@@ -21,8 +14,6 @@
   font-weight: 700;
 }
 
-/* GRID */
-
 .mundus-results__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -30,9 +21,6 @@
   align-items: stretch;
 }
 
-/* =========================================
-   LOADING / ERROR / EMPTY STATE
-========================================= */
 
 .mundus-results__state {
   display: flex;

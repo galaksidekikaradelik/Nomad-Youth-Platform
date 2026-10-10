@@ -20,6 +20,8 @@ const WarningIcon = () => (
   </svg>
 )
 
+import { useLanguage } from '../../hooks/useLanguage'
+
 export default function OrganizationResults({
   organizations,
   loading,
@@ -27,10 +29,8 @@ export default function OrganizationResults({
   page,
   totalPages,
   onPageChange,
-  t,
-  lang,
 }) {
-  // t() tərcümə yoxdursa açarın özünü qaytarır, ona görə || fallback işləmir
+  const { t, lang } = useLanguage()
   const tr = (key, fallback) => {
     const value = t(key)
     return value && value !== key ? value : fallback
