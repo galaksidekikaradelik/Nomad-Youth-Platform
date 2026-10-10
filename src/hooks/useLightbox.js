@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 
-// Şəkil lightbox-unun bütün state və davranışını
-// tək yerdə saxlayan hook. İstənilən komponentdən
-// istifadə edilə bilər.
 export function useLightbox() {
   const [lightbox, setLightbox] = useState(null)
 

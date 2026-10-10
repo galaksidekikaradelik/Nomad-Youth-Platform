@@ -17,34 +17,23 @@ export const CANONICAL_CATEGORIES = [
 const CATEGORY_MAP = {
   'Təhsil': 'Təhsil',
   'E-təhsil': 'Təhsil',
-
   'Rifah': 'Rifah',
   'Psixologiya': 'Rifah',
   'Autizm': 'Rifah',
   'Sağlamlıq': 'Rifah',
-
   'Gənclər': 'Gənclər',
-
   'Təşkilatçılıq': 'Liderlik',
   'İdarəetmə': 'Liderlik',
   'Mentorluq': 'Liderlik',
-
   'Sahibkarlıq': 'Sahibkarlıq',
-
   'Media': 'Media',
-
   'Yaradıcılıq': 'Mədəniyyət',
   'Mədəniyyət': 'Mədəniyyət',
-
   'Texnologiya': 'Texnologiya',
   'Rəqəmsallaşma': 'Texnologiya',
-
   'Ekologiya': 'Ekologiya',
-
   'Hüquq': 'Hüquq',
-
   'Sülh': 'Sülh',
-
   'Tərəfdaşlıq': 'Tərəfdaşlıq',
   'İnteqrasiya': 'Tərəfdaşlıq',
 }

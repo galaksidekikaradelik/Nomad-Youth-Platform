@@ -23,6 +23,9 @@ import {
   URGENT_THRESHOLD_DAYS,
 } from '../../utils/dateHelpers'
 
+import { getCanonicalCategory } from '../../utils/categoryMapping'
+import { getCategoryStyle } from '../../utils/categoryStyle'
+
 function parseDate(value) {
   if (!value) return null
 
@@ -158,27 +161,36 @@ function CountryFlags({ countries = [] }) {
 }
 
 function getCategory(program) {
-  const category =
+  const rawCategory =
     program?.category ??
     program?.fieldOfStudy
 
   if (
-    typeof category !== 'string' ||
-    !category.trim()
+    typeof rawCategory !== 'string' ||
+    !rawCategory.trim()
   ) {
     return null
   }
 
-  const normalized = category.trim()
+  const normalized = rawCategory.trim()
 
-  // Do not display the technical category identifier.
   if (
     normalized.toUpperCase() === 'ERASMUS_MUNDUS'
   ) {
     return null
   }
 
-  return normalized
+  const canonical = getCanonicalCategory(normalized)
+
+  if (
+    typeof canonical !== 'string' ||
+    !canonical.trim() ||
+    canonical.trim().toUpperCase() === 'ERASMUS_MUNDUS'
+  ) {
+    return null
+  }
+
+  return canonical.trim()
 }
 
 export default function MundusProgramCard({ program }) {
@@ -265,6 +277,10 @@ export default function MundusProgramCard({ program }) {
   }[status]
 
   const category = getCategory(program)
+
+  const categoryStyle = category
+    ? getCategoryStyle(category)
+    : undefined
 
   const applyLink = safeUrl(
     detailData?.applyLink || program.applyLink
@@ -379,6 +395,7 @@ export default function MundusProgramCard({ program }) {
       title,
 
     type: 'MUNDUS',
+
     category:
       detailData?.category ||
       program.category,
@@ -442,8 +459,6 @@ export default function MundusProgramCard({ program }) {
         </h3>
       </div>
 
-      {/* PROGRAM TAGS */}
-
       <div className="mundus-card__topic">
         <div className="mundus-card__tags">
           <span className="mundus-card__tag mundus-card__tag--format">
@@ -457,6 +472,7 @@ export default function MundusProgramCard({ program }) {
           {category && (
             <span
               className="mundus-card__tag mundus-card__tag--category"
+              style={categoryStyle}
               title={category}
             >
               {category}

@@ -1,4 +1,3 @@
-// Başlıqlar artıq burada deyil, az/en/ru.json-dadır (titleKey ilə).
 export const HOME_SERVICES = [
   {
     id: 'application',

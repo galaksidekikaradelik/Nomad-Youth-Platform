@@ -79,10 +79,6 @@ export const CATEGORY_META = [
   },
 ]
 
-/**
- * Köhnə SERVICE_CONTENT obyektinin tərcümə olunmuş versiyası.
- * İstifadə: const content = useMemo(() => buildServiceContent(t), [t])
- */
 export function buildServiceContent(t) {
   return Object.fromEntries(
     Object.entries(SERVICE_META).map(([id, meta]) => {
