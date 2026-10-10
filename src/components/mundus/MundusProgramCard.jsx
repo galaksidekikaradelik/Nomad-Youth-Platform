@@ -432,9 +432,6 @@ export default function MundusProgramCard({ program }) {
             {t('mundus_degree')}
           </span>
 
-          <span className="mundus-card__tag mundus-card__tag--mundus">
-            Erasmus Mundus
-          </span>
 
         </div>
 

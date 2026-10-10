@@ -18,18 +18,12 @@ import {
   Wallet,
   BadgeCheck,
   CircleDollarSign,
-  ExternalLink,
   MapPin,
   Award,
   ClipboardList,
 } from 'lucide-react'
 
 import { useLanguage } from '../../hooks/useLanguage'
-
-
-/* =========================================
-   HELPERS
-========================================= */
 
 function hasValue(value) {
   if (value === null || value === undefined) {
@@ -136,7 +130,6 @@ function safeUrl(value) {
   }
 }
 
-
 /* =========================================
    INFO ITEM
 ========================================= */
@@ -151,13 +144,11 @@ function InfoItem({
 
   return (
     <div className="mundus-modal__info">
-
       <div className="mundus-modal__info-icon">
         <Icon size={19} />
       </div>
 
       <div className="mundus-modal__info-content">
-
         <span className="mundus-modal__info-label">
           {label}
         </span>
@@ -165,35 +156,26 @@ function InfoItem({
         <span className="mundus-modal__info-value">
           {displayValue(value, fallback)}
         </span>
-
       </div>
-
     </div>
   )
 }
-
 
 /* =========================================
    SECTION
 ========================================= */
 
-function ModalSection({
-  title,
-  children,
-}) {
+function ModalSection({ title, children }) {
   return (
     <section className="mundus-modal__section">
-
       <h3 className="mundus-modal__section-title">
         {title}
       </h3>
 
       {children}
-
     </section>
   )
 }
-
 
 /* =========================================
    MAIN MODAL
@@ -244,6 +226,7 @@ export default function MundusDetailModal({
       deadline: 'Son müraciət tarixi',
       opening: 'Müraciətlərin başlanması',
       ielts: 'IELTS tələbi',
+      ieltsScore: 'IELTS balı',
       toefl: 'TOEFL tələbi',
       scholarshipAvailable: 'Təqaüd',
       scholarshipAmount: 'Təqaüd məbləği',
@@ -254,6 +237,7 @@ export default function MundusDetailModal({
       close: 'Bağla',
       unknown: 'Müəyyən edilməyib',
     },
+
     en: {
       program: 'Erasmus Mundus Joint Master',
       description: 'About the programme',
@@ -274,6 +258,7 @@ export default function MundusDetailModal({
       deadline: 'Application deadline',
       opening: 'Applications open',
       ielts: 'IELTS requirement',
+      ieltsScore: 'IELTS score',
       toefl: 'TOEFL requirement',
       scholarshipAvailable: 'Scholarship',
       scholarshipAmount: 'Scholarship amount',
@@ -284,6 +269,7 @@ export default function MundusDetailModal({
       close: 'Close',
       unknown: 'Not specified',
     },
+
     ru: {
       program: 'Магистратура Erasmus Mundus',
       description: 'О программе',
@@ -304,6 +290,7 @@ export default function MundusDetailModal({
       deadline: 'Срок подачи заявки',
       opening: 'Начало приёма заявок',
       ielts: 'Требование IELTS',
+      ieltsScore: 'Балл IELTS',
       toefl: 'Требование TOEFL',
       scholarshipAvailable: 'Стипендия',
       scholarshipAmount: 'Размер стипендии',
@@ -318,7 +305,6 @@ export default function MundusDetailModal({
 
   const l = labels[lang] || labels.az
 
-
   /* =========================================
      KEYBOARD / BODY SCROLL
   ========================================= */
@@ -326,14 +312,10 @@ export default function MundusDetailModal({
   useEffect(() => {
     if (!open) return
 
-    const previousOverflow =
-      document.body.style.overflow
-
-    const previouslyFocused =
-      document.activeElement
+    const previousOverflow = document.body.style.overflow
+    const previouslyFocused = document.activeElement
 
     document.body.style.overflow = 'hidden'
-
     closeRef.current?.focus()
 
     function handleKeyDown(e) {
@@ -352,9 +334,7 @@ export default function MundusDetailModal({
         modal.querySelectorAll(
           'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
         )
-      ).filter(element =>
-        element.getClientRects().length > 0
-      )
+      ).filter(element => element.getClientRects().length > 0)
 
       if (!elements.length) {
         e.preventDefault()
@@ -381,19 +361,11 @@ export default function MundusDetailModal({
       }
     }
 
-    document.addEventListener(
-      'keydown',
-      handleKeyDown
-    )
+    document.addEventListener('keydown', handleKeyDown)
 
     return () => {
-      document.body.style.overflow =
-        previousOverflow
-
-      document.removeEventListener(
-        'keydown',
-        handleKeyDown
-      )
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', handleKeyDown)
 
       if (
         previouslyFocused instanceof HTMLElement &&
@@ -404,9 +376,7 @@ export default function MundusDetailModal({
     }
   }, [open, onClose])
 
-
   if (!open || !opportunity) return null
-
 
   /* =========================================
      PROGRAM DATA
@@ -424,17 +394,9 @@ export default function MundusDetailModal({
     opportunity.sumAz ||
     opportunity.sumRus
 
-  const countries = toList(
-    opportunity.countries
-  )
-
-  const universities = toList(
-    opportunity.universities
-  )
-
-  const bachelorFields = toList(
-    opportunity.bachelorFields
-  )
+  const countries = toList(opportunity.countries)
+  const universities = toList(opportunity.universities)
+  const bachelorFields = toList(opportunity.bachelorFields)
 
   const requiredDocuments = toList(
     opportunity.requiredDocuments ??
@@ -445,53 +407,45 @@ export default function MundusDetailModal({
   const duration = opportunity.duration
   const language = opportunity.language
 
-  const deadline = formatDate(
-    opportunity.deadline,
-    locale
-  )
-
-  const opening = formatDate(
-    opportunity.applicationOpens,
-    locale
-  )
+  const deadline = formatDate(opportunity.deadline, locale)
+  const opening = formatDate(opportunity.applicationOpens, locale)
 
   const ielts =
     opportunity.ielts ??
     opportunity.ieltsRequirement ??
     opportunity.IELTS
 
+  // IELTS score is a separate field in the backend JSON.
+  const ieltsScore =
+    opportunity.ieltsScore ??
+    opportunity.IELTSScore
+
   const toefl =
     opportunity.toefl ??
     opportunity.toeflRequirement ??
     opportunity.TOEFL
 
-  const scholarship =
-    opportunity.scholarship
+  const toeflScore =
+    opportunity.toeflScore ??
+    opportunity.TOEFLScore
 
-  const scholarshipAmount =
-    opportunity.scholarshipAmount
+  const scholarship = opportunity.scholarship
+  const scholarshipAmount = opportunity.scholarshipAmount
+  const applicationFee = opportunity.applicationFee
 
-  const applicationFee =
-    opportunity.applicationFee
-
-  const officialWebsite = safeUrl(
-    opportunity.officialWebsite
-  )
-
-  const applyLink = safeUrl(
-    opportunity.applyLink
-  )
+  const applyLink = safeUrl(opportunity.applyLink)
 
   const scholarshipText =
     typeof scholarship === 'boolean'
-      ? scholarship ? l.yes : l.no
+      ? scholarship
+        ? l.yes
+        : l.no
       : scholarship
 
   const locationText = countries
     .map(country => displayValue(country, ''))
     .filter(Boolean)
     .join(', ')
-
 
   /* =========================================
      CONDITIONAL SECTIONS
@@ -508,7 +462,9 @@ export default function MundusDetailModal({
 
   const hasRequirements = [
     ielts,
+    ieltsScore,
     toefl,
+    toeflScore,
   ].some(hasValue)
 
   const hasScholarship = [
@@ -516,7 +472,6 @@ export default function MundusDetailModal({
     scholarshipAmount,
     applicationFee,
   ].some(hasValue)
-
 
   /* =========================================
      OVERLAY CLICK
@@ -528,7 +483,6 @@ export default function MundusDetailModal({
     }
   }
 
-
   /* =========================================
      RENDER
   ========================================= */
@@ -538,7 +492,6 @@ export default function MundusDetailModal({
       className="mundus-modal-overlay"
       onMouseDown={handleOverlayClick}
     >
-
       <div
         className="mundus-modal"
         ref={modalRef}
@@ -548,7 +501,6 @@ export default function MundusDetailModal({
         aria-busy={loading}
         tabIndex={-1}
       >
-
         {/* CLOSE */}
 
         <button
@@ -561,11 +513,9 @@ export default function MundusDetailModal({
           <X size={21} />
         </button>
 
-
         {/* HEADER */}
 
         <div className="mundus-modal__header">
-
           <div className="mundus-modal__eyebrow">
             <GraduationCap size={17} />
             {l.program}
@@ -589,16 +539,12 @@ export default function MundusDetailModal({
             <Award size={15} />
             Erasmus Mundus
           </span>
-
         </div>
-
 
         {/* SCROLLABLE BODY */}
 
         <div className="mundus-modal__body">
-
           {loading ? (
-
             <div
               className="mundus-modal__section"
               role="status"
@@ -608,34 +554,23 @@ export default function MundusDetailModal({
                 {l.loading}
               </p>
             </div>
-
           ) : (
-
             <>
-
               {/* DESCRIPTION */}
 
               {hasValue(description) && (
-
                 <ModalSection title={l.description}>
-
                   <p className="mundus-modal__description">
                     {displayValue(description)}
                   </p>
-
                 </ModalSection>
-
               )}
-
 
               {/* GENERAL INFORMATION */}
 
               {hasGeneralInfo && (
-
                 <ModalSection title={l.general}>
-
                   <div className="mundus-modal__grid">
-
                     <InfoItem
                       icon={Globe2}
                       label={l.countries}
@@ -671,81 +606,60 @@ export default function MundusDetailModal({
                       label={l.deadline}
                       value={deadline}
                     />
-
                   </div>
-
                 </ModalSection>
-
               )}
-
 
               {/* UNIVERSITIES */}
 
               {universities.length > 0 && (
-
                 <ModalSection title={l.universities}>
-
                   <div className="mundus-modal__grid">
-
                     {universities.map((university, index) => (
-
                       <InfoItem
                         key={index}
                         icon={Building2}
                         label={`${index + 1}.`}
                         value={university}
                       />
-
                     ))}
-
                   </div>
-
                 </ModalSection>
-
               )}
-
 
               {/* BACHELOR FIELDS */}
 
               {bachelorFields.length > 0 && (
-
                 <ModalSection title={l.fields}>
-
                   <div className="mundus-modal__documents">
-
                     {bachelorFields.map((field, index) => (
-
                       <div
                         key={index}
                         className="mundus-modal__document"
                       >
                         <BookOpen size={19} />
-                        <span>
-                          {displayValue(field)}
-                        </span>
+                        <span>{displayValue(field)}</span>
                       </div>
-
                     ))}
-
                   </div>
-
                 </ModalSection>
-
               )}
-
 
               {/* ADMISSION REQUIREMENTS */}
 
               {hasRequirements && (
-
                 <ModalSection title={l.requirements}>
-
                   <div className="mundus-modal__grid">
-
                     <InfoItem
                       icon={Languages}
                       label={l.ielts}
                       value={ielts}
+                    />
+
+                    <InfoItem
+                      icon={Award}
+                      label={l.ieltsScore}
+                      value={ieltsScore}
                     />
 
                     <InfoItem
@@ -754,21 +668,20 @@ export default function MundusDetailModal({
                       value={toefl}
                     />
 
+                    <InfoItem
+                      icon={Award}
+                      label="TOEFL score"
+                      value={toeflScore}
+                    />
                   </div>
-
                 </ModalSection>
-
               )}
-
 
               {/* SCHOLARSHIP */}
 
               {hasScholarship && (
-
                 <ModalSection title={l.scholarship}>
-
                   <div className="mundus-modal__grid">
-
                     <InfoItem
                       icon={BadgeCheck}
                       label={l.scholarshipAvailable}
@@ -786,81 +699,37 @@ export default function MundusDetailModal({
                       label={l.applicationFee}
                       value={applicationFee}
                     />
-
                   </div>
-
                 </ModalSection>
-
               )}
-
 
               {/* REQUIRED DOCUMENTS */}
 
               {requiredDocuments.length > 0 && (
-
                 <ModalSection title={l.documents}>
-
                   <div className="mundus-modal__documents">
-
                     {requiredDocuments.map((document, index) => (
-
                       <div
                         key={index}
                         className="mundus-modal__document"
                       >
                         <FileText size={19} />
-
-                        <span>
-                          {displayValue(document)}
-                        </span>
-
+                        <span>{displayValue(document)}</span>
                       </div>
-
                     ))}
-
                   </div>
-
                 </ModalSection>
-
               )}
-
-
-              {/* OFFICIAL WEBSITE */}
-
-              {officialWebsite && (
-
-                <div className="mundus-modal__website">
-
-                  <Globe2 size={19} />
-
-                  <a
-                    href={officialWebsite}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {l.viewWebsite}
-                    <ExternalLink size={15} />
-                  </a>
-
-                </div>
-
-              )}
-
             </>
-
           )}
-
         </div>
-
 
         {/* FOOTER */}
 
         <div className="mundus-modal__footer">
-
           {/* SOCIAL ACTIONS */}
 
           <div className="mundus-modal__social">
-
             <button
               type="button"
               className={`mundus-modal__social-btn${
@@ -872,11 +741,7 @@ export default function MundusDetailModal({
             >
               <Heart
                 size={22}
-                fill={
-                  liked
-                    ? 'currentColor'
-                    : 'none'
-                }
+                fill={liked ? 'currentColor' : 'none'}
               />
             </button>
 
@@ -891,21 +756,14 @@ export default function MundusDetailModal({
             >
               <Bookmark
                 size={22}
-                fill={
-                  saved
-                    ? 'currentColor'
-                    : 'none'
-                }
+                fill={saved ? 'currentColor' : 'none'}
               />
             </button>
-
           </div>
-
 
           {/* APPLY */}
 
           {applyLink ? (
-
             <a
               className="mundus-modal__apply"
               href={applyLink}
@@ -916,22 +774,16 @@ export default function MundusDetailModal({
               {l.apply}
               <ArrowUpRight size={19} />
             </a>
-
           ) : (
-
             <span
               className="mundus-modal__apply is-disabled"
               aria-disabled="true"
             >
               {l.unavailable}
             </span>
-
           )}
-
         </div>
-
       </div>
-
     </div>,
     document.body
   )
