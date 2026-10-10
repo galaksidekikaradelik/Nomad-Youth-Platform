@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -11,12 +12,12 @@ import OrganizationTabs, {
 } from '../components/organization/OrganizationTabs'
 import PastProjects from '../components/PastProjects'
 import ProjectModal from '../components/ProjectModal'
+
 import { organizationLogos } from '../data/organizationLogos'
+
+import { useLanguage } from '../hooks/useLanguage'
 import { useLightbox } from '../hooks/useLightbox'
 import { useOrganization } from '../hooks/useOrganizations'
-
-const lang = 'az'
-
 
 function getActiveProjects(slug) {
   if (slug !== 'ecohub') return []
@@ -29,24 +30,38 @@ function getActiveProjects(slug) {
         'Bu il də Xəzər dənizinin və sahil ərazilərinin qorunmasına töhfə vermək üçün “Xəzəri Qoruyaq” aksiyasında birlikdə oluruq.',
       date: '19 sentyabr',
       time: '09:00–13:00',
-      additionalInfo: 'Nəqliyyat və qidalanma təşkilat tərəfindən qarşılanacaq.',
+      additionalInfo:
+        'Nəqliyyat və qidalanma təşkilat tərəfindən qarşılanacaq.',
       applicationUrl: 'https://forms.gle/2Gf6pTq3gzxhbE4V9',
     },
   ]
 }
 
 export default function OrganizationDetails() {
+  const { t, lang } = useLanguage()
+
   const { slug } = useParams()
-  const { organization, loading, error } = useOrganization(slug)
+
+  const {
+    organization,
+    loading,
+    error,
+  } = useOrganization(slug)
 
   const [activeTab, setActiveTab] = useState(TABS.ACTIVE)
   const [selectedProject, setSelectedProject] = useState(null)
 
-  const { lightbox, openLightbox, closeLightbox, showPrevImage, showNextImage } =
-    useLightbox()
+  const {
+    lightbox,
+    openLightbox,
+    closeLightbox,
+    showPrevImage,
+    showNextImage,
+  } = useLightbox()
+
+  // LOADING STATE
 
   if (loading) {
-
     return (
       <main className="organization-details">
         <div className="organization-details__container organization-details__skeleton">
@@ -84,19 +99,26 @@ export default function OrganizationDetails() {
     )
   }
 
+  // ERROR STATE
+
   if (error) {
     return (
       <main className="organization-details">
         <div className="organization-details__container">
           <h1>Təşkilatı yükləmək mümkün olmadı</h1>
 
-          <Link to="/opportunities" className="organization-details__back">
+          <Link
+            to="/opportunities"
+            className="organization-details__back"
+          >
             ← {t('back_to_opportunities')}
           </Link>
         </div>
       </main>
     )
   }
+
+  // ORGANIZATION NOT FOUND
 
   if (!organization) {
     return (
@@ -104,13 +126,18 @@ export default function OrganizationDetails() {
         <div className="organization-details__container">
           <h1>{t('org_not_found')}</h1>
 
-          <Link to="/opportunities" className="organization-details__back">
+          <Link
+            to="/opportunities"
+            className="organization-details__back"
+          >
             ← {t('back_to_opportunities')}
           </Link>
         </div>
       </main>
     )
   }
+
+  // ORGANIZATION DATA
 
   const {
     name,
@@ -134,13 +161,22 @@ export default function OrganizationDetails() {
   const activeProjects = getActiveProjects(slug)
 
   // Backend logo sahəsini bəzən tam URL,
-  // bəzən sadəcə fayl adı kimi qaytara bilər.
-  const resolvedLogo = logo ? organizationLogos[logo] || logo : null
+  // bəzən isə sadəcə fayl adı kimi qaytara bilər.
+
+  const resolvedLogo = logo
+    ? organizationLogos[logo] || logo
+    : null
+
+  // MAIN CONTENT
 
   return (
     <main className="organization-details">
       <div className="organization-details__container">
-        <Link to="/opportunities" className="organization-details__back">
+
+        <Link
+          to="/opportunities"
+          className="organization-details__back"
+        >
           ← {t('back_to_opportunities')}
         </Link>
 
@@ -159,7 +195,10 @@ export default function OrganizationDetails() {
           lang={lang}
         />
 
-        <OrganizationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <OrganizationTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
 
         {activeTab === TABS.ACTIVE && (
           <ActiveTabContent
@@ -189,7 +228,10 @@ export default function OrganizationDetails() {
           />
         )}
 
-        <ActivityHistory activityHistory={activityHistory} />
+        <ActivityHistory
+          activityHistory={activityHistory}
+        />
+
       </div>
 
       <ProjectModal
