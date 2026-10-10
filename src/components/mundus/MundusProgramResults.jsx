@@ -4,8 +4,6 @@ import { useEffect, useMemo, useState } from 'react'
 import {
   AlertTriangle,
   CalendarClock,
-  ChevronLeft,
-  ChevronRight,
 } from 'lucide-react'
 
 import { useLanguage } from '../../hooks/useLanguage'
@@ -13,6 +11,7 @@ import { mundusService } from '../../services/mundusService'
 
 import MundusProgramCard from './MundusProgramCard'
 import { MundusSkeletonGrid } from './MundusSkeleton'
+import Pagination from '../Pagination'
 
 const PAGE_SIZE = 9
 const SKELETON_COUNT = 6
@@ -24,50 +23,6 @@ function normalizeResponse(data) {
   if (Array.isArray(data?.data)) return data.data
 
   return []
-}
-
-/* =========================================
-   PAGINATION ITEMS
-========================================= */
-
-function getPaginationItems(currentPage, totalPages) {
-  if (totalPages <= 5) {
-    return Array.from(
-      { length: totalPages },
-      (_, index) => index + 1
-    )
-  }
-
-  const pages = new Set([
-    1,
-    totalPages,
-    currentPage,
-    currentPage - 1,
-    currentPage + 1,
-  ])
-
-  const sortedPages = [...pages]
-    .filter(page => page >= 1 && page <= totalPages)
-    .sort((a, b) => a - b)
-
-  const result = []
-
-  sortedPages.forEach((page, index) => {
-    if (index > 0) {
-      const previousPage = sortedPages[index - 1]
-      const gap = page - previousPage
-
-      if (gap === 2) {
-        result.push(previousPage + 1)
-      } else if (gap > 2) {
-        result.push('...')
-      }
-    }
-
-    result.push(page)
-  })
-
-  return result
 }
 
 export default function MundusProgramResults({
@@ -180,26 +135,10 @@ export default function MundusProgramResults({
     Math.max(1, totalPages)
   )
 
-  const paginationItems = getPaginationItems(
-    currentPage,
-    totalPages
-  )
-
   const visiblePrograms = filteredPrograms.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   )
-
-  const handlePageChange = newPage => {
-    const nextPage = Math.max(
-      1,
-      Math.min(totalPages, newPage)
-    )
-
-    if (nextPage === currentPage) return
-
-    setPage(nextPage)
-  }
 
   /* =========================================
      SKELETON LOADING
@@ -274,10 +213,14 @@ export default function MundusProgramResults({
   return (
     <div className="mundus-results">
 
+      {/* RESULTS COUNT */}
+
       <div className="mundus-results__count">
         {t('mundus_results_count')}: {' '}
         <strong>{filteredPrograms.length}</strong>
       </div>
+
+      {/* PROGRAM GRID */}
 
       <div className="mundus-results__grid">
         {visiblePrograms.map(program => (
@@ -288,85 +231,13 @@ export default function MundusProgramResults({
         ))}
       </div>
 
-      {/* =====================================
-          PAGINATION
-      ===================================== */}
+      {/* SHARED PAGINATION */}
 
-      {totalPages > 1 && (
-        <nav
-          className="mundus-results__pagination"
-          aria-label="Pagination"
-        >
-
-          {/* PREVIOUS */}
-
-          <button
-            type="button"
-            className="mundus-results__pagination-btn mundus-results__pagination-arrow"
-            disabled={currentPage === 1}
-            onClick={() =>
-              handlePageChange(currentPage - 1)
-            }
-            aria-label={t('mundus_results_previous')}
-          >
-            <ChevronLeft
-              size={18}
-              strokeWidth={2.2}
-            />
-          </button>
-
-          {/* PAGE NUMBERS */}
-
-          {paginationItems.map((item, index) =>
-            item === '...' ? (
-              <span
-                key={`dots-${index}`}
-                className="mundus-results__pagination-dots"
-                aria-hidden="true"
-              >
-                ...
-              </span>
-            ) : (
-              <button
-                key={item}
-                type="button"
-                className={`mundus-results__pagination-btn ${
-                  currentPage === item ? 'is-active' : ''
-                }`}
-                onClick={() =>
-                  handlePageChange(item)
-                }
-                aria-label={`Page ${item}`}
-                aria-current={
-                  currentPage === item
-                    ? 'page'
-                    : undefined
-                }
-              >
-                {item}
-              </button>
-            )
-          )}
-
-          {/* NEXT */}
-
-          <button
-            type="button"
-            className="mundus-results__pagination-btn mundus-results__pagination-arrow"
-            disabled={currentPage === totalPages}
-            onClick={() =>
-              handlePageChange(currentPage + 1)
-            }
-            aria-label={t('mundus_results_next')}
-          >
-            <ChevronRight
-              size={18}
-              strokeWidth={2.2}
-            />
-          </button>
-
-        </nav>
-      )}
+      <Pagination
+        currentPage={currentPage - 1}
+        totalPages={totalPages}
+        onPageChange={newPage => setPage(newPage + 1)}
+      />
 
     </div>
   )

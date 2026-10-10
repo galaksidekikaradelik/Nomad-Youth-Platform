@@ -107,108 +107,6 @@
 }
 
 /* =========================================
-   PAGINATION
-========================================= */
-
-.mundus-results__pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 6px;
-
-  margin-top: 36px;
-}
-
-/* PAGE BUTTONS */
-
-.mundus-results__pagination .mundus-results__pagination-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  gap: 0;
-
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0;
-
-  border: 1px solid #d9e1eb;
-  border-radius: 50%;
-
-  background: #ffffff;
-  color: #202940;
-
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-
-/* HOVER */
-
-.mundus-results__pagination .mundus-results__pagination-btn:hover:not(:disabled):not(.is-active) {
-  background: #f2f5f9;
-  border-color: #aab8ca;
-}
-
-/* ACTIVE PAGE */
-
-.mundus-results__pagination .mundus-results__pagination-btn.is-active {
-  background: #202940;
-  border-color: #202940;
-  color: #ffffff;
-  cursor: default;
-}
-
-/* PREVIOUS / NEXT */
-
-.mundus-results__pagination .mundus-results__pagination-arrow {
-  color: #202940;
-}
-
-.mundus-results__pagination .mundus-results__pagination-arrow:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-/* DOTS */
-
-.mundus-results__pagination-dots {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 28px;
-  height: 44px;
-
-  color: #202940;
-
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-
-  user-select: none;
-}
-
-/* ACCESSIBILITY */
-
-.mundus-results__pagination-btn:focus-visible {
-  outline: 2px solid #202940;
-  outline-offset: 3px;
-}
-
-/* =========================================
    RESPONSIVE
 ========================================= */
 
@@ -252,33 +150,10 @@
   .mundus-results__state-title {
     font-size: 16px;
   }
-
-  .mundus-results__pagination {
-    gap: 5px;
-    margin-top: 28px;
-  }
-
-  .mundus-results__pagination .mundus-results__pagination-btn {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    font-size: 12px;
-  }
-
-  .mundus-results__pagination-dots {
-    width: 20px;
-    height: 36px;
-    font-size: 12px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .mundus-results__spinner {
     animation: none;
-  }
-
-  .mundus-results__pagination-btn {
-    transition: none;
   }
 }
