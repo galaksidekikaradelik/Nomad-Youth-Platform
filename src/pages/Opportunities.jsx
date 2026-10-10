@@ -22,6 +22,7 @@ import OrganizationResults from '../components/organization/OrganizationResults'
 
 import MundusProgramResults from '../components/mundus/MundusProgramResults'
 
+import { MUNDUS_PROGRAMS } from '../data/mundusPrograms'
 
 import {
   PROJECT_TABS,
