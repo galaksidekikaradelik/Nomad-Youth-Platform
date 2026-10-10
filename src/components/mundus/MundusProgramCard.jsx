@@ -157,6 +157,30 @@ function CountryFlags({ countries = [] }) {
   )
 }
 
+function getCategory(program) {
+  const category =
+    program?.category ??
+    program?.fieldOfStudy
+
+  if (
+    typeof category !== 'string' ||
+    !category.trim()
+  ) {
+    return null
+  }
+
+  const normalized = category.trim()
+
+  // Do not display the technical category identifier.
+  if (
+    normalized.toUpperCase() === 'ERASMUS_MUNDUS'
+  ) {
+    return null
+  }
+
+  return normalized
+}
+
 export default function MundusProgramCard({ program }) {
   const { t, lang } = useLanguage()
   const { user } = useAuth()
@@ -239,6 +263,8 @@ export default function MundusProgramCard({ program }) {
     closed: 'mundus_status_closed',
     unknown: 'mundus_status_unknown',
   }[status]
+
+  const category = getCategory(program)
 
   const applyLink = safeUrl(
     detailData?.applyLink || program.applyLink
@@ -353,7 +379,9 @@ export default function MundusProgramCard({ program }) {
       title,
 
     type: 'MUNDUS',
-    category: 'ERASMUS_MUNDUS',
+    category:
+      detailData?.category ||
+      program.category,
 
     requiredDocuments:
       detailData?.requiredDocuments ??
@@ -365,17 +393,13 @@ export default function MundusProgramCard({ program }) {
 
   return (
     <div className="mundus-card">
-
       <div className="mundus-card__top">
-
         <div className="mundus-card__top-row">
-
           <CountryFlags
             countries={program.countries}
           />
 
           <div className="mundus-card__icons">
-
             <button
               type="button"
               className={`mundus-card__icon-btn mundus-card__icon-btn--heart${
@@ -407,7 +431,6 @@ export default function MundusProgramCard({ program }) {
                 fill={saved ? 'currentColor' : 'none'}
               />
             </button>
-
           </div>
         </div>
 
@@ -417,13 +440,12 @@ export default function MundusProgramCard({ program }) {
         >
           {title}
         </h3>
-
       </div>
 
+      {/* PROGRAM TAGS */}
+
       <div className="mundus-card__topic">
-
         <div className="mundus-card__tags">
-
           <span className="mundus-card__tag mundus-card__tag--format">
             {t('mundus_format')}
           </span>
@@ -432,68 +454,62 @@ export default function MundusProgramCard({ program }) {
             {t('mundus_degree')}
           </span>
 
-
+          {category && (
+            <span
+              className="mundus-card__tag mundus-card__tag--category"
+              title={category}
+            >
+              {category}
+            </span>
+          )}
         </div>
-
       </div>
 
       <div className="mundus-card__divider" />
 
       <div className="mundus-card__footer">
-
         <div className="mundus-card__footer-top">
-
           <div className="mundus-card__dates">
-
             <div className="mundus-card__date-row">
-
               {t('card_deadline')}{' '}
               {formattedDeadline}{' '}
 
               {daysLeft !== null &&
                 daysLeft >= 0 && (
+                  <span
+                    className={`mundus-card__days-left${
+                      isUrgent
+                        ? ' mundus-card__days-left--urgent'
+                        : ''
+                    }`}
+                  >
+                    {isUrgent && (
+                      <AlertTriangle size={13} />
+                    )}
 
-                <span
-                  className={`mundus-card__days-left${
-                    isUrgent
-                      ? ' mundus-card__days-left--urgent'
-                      : ''
-                  }`}
-                >
-                  {isUrgent && (
-                    <AlertTriangle size={13} />
-                  )}
-
-                  {daysLeft}{' '}
-                  {t('card_days_left')}
-                </span>
-
-              )}
-
+                    {daysLeft}{' '}
+                    {t('card_days_left')}
+                  </span>
+                )}
             </div>
 
             <div className="mundus-card__date-row mundus-card__date-row--muted">
               {t('mundus_application_opening')}{' '}
               {formattedOpening}
             </div>
-
           </div>
 
           <div className="mundus-card__status-wrap">
-
             <span
               className={`mundus-card__program-status mundus-card__program-status--${status}`}
             >
               <span className="mundus-card__program-status-dot" />
               {t(statusKey)}
             </span>
-
           </div>
-
         </div>
 
         <div className="mundus-card__footer-actions">
-
           <button
             type="button"
             className="mundus-card__detail-btn"
@@ -503,7 +519,6 @@ export default function MundusProgramCard({ program }) {
           </button>
 
           {applyLink ? (
-
             <a
               href={applyLink}
               target="_blank"
@@ -514,18 +529,13 @@ export default function MundusProgramCard({ program }) {
               {t('card_apply')}
               <ArrowRight size={18} />
             </a>
-
           ) : (
-
             <span className="mundus-card__apply-btn mundus-card__apply-btn--disabled">
               {t('card_apply')}
               <ArrowRight size={18} />
             </span>
-
           )}
-
         </div>
-
       </div>
 
       <MundusDetailModal
@@ -544,7 +554,6 @@ export default function MundusProgramCard({ program }) {
         open={showAuthPrompt}
         onClose={() => setShowAuthPrompt(false)}
       />
-
     </div>
   )
 }
