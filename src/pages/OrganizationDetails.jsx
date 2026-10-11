@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
@@ -14,39 +13,34 @@ import PastProjects from '../components/PastProjects'
 import ProjectModal from '../components/ProjectModal'
 
 import { organizationLogos } from '../data/organizationLogos'
-
 import { useLanguage } from '../hooks/useLanguage'
 import { useLightbox } from '../hooks/useLightbox'
 import { useOrganization } from '../hooks/useOrganizations'
 
-function getActiveProjects(slug) {
-  if (slug !== 'ecohub') return []
-
-  return [
-    {
-      id: 'xezeri-qoruyaq-2026',
-      title: 'Xəzəri Qoruyaq 2026',
+function getActiveProjects(opportunities = []) {
+  return opportunities
+    .filter((item) => item.active !== false)
+    .map((item) => ({
+      id: item.id ?? item.uniqueKey ?? item.title,
+      title: item.title ?? '',
       description:
-        'Bu il də Xəzər dənizinin və sahil ərazilərinin qorunmasına töhfə vermək üçün “Xəzəri Qoruyaq” aksiyasında birlikdə oluruq.',
-      date: '19 sentyabr',
-      time: '09:00–13:00',
-      additionalInfo:
-        'Nəqliyyat və qidalanma təşkilat tərəfindən qarşılanacaq.',
-      applicationUrl: 'https://forms.gle/2Gf6pTq3gzxhbE4V9',
-    },
-  ]
+        item.sumAz ??
+        item.description ??
+        item.sumEn ??
+        item.sumRus ??
+        '',
+      date: item.eventDateRange ?? item.deadline ?? '',
+      time: item.duration ?? '',
+      additionalInfo: item.financialSupport ?? '',
+      applicationUrl: item.applyLink ?? '',
+    }))
 }
 
 export default function OrganizationDetails() {
   const { t, lang } = useLanguage()
-
   const { slug } = useParams()
 
-  const {
-    organization,
-    loading,
-    error,
-  } = useOrganization(slug)
+  const { organization, loading, error } = useOrganization(slug)
 
   const [activeTab, setActiveTab] = useState(TABS.ACTIVE)
   const [selectedProject, setSelectedProject] = useState(null)
@@ -59,13 +53,10 @@ export default function OrganizationDetails() {
     showNextImage,
   } = useLightbox()
 
-  // LOADING STATE
-
   if (loading) {
     return (
       <main className="organization-details">
         <div className="organization-details__container organization-details__skeleton">
-
           <div className="organization-details__skeleton-back" />
 
           <div className="organization-details__skeleton-header">
@@ -93,13 +84,10 @@ export default function OrganizationDetails() {
               <div className="organization-details__skeleton-card" />
             </div>
           </div>
-
         </div>
       </main>
     )
   }
-
-  // ERROR STATE
 
   if (error) {
     return (
@@ -107,18 +95,13 @@ export default function OrganizationDetails() {
         <div className="organization-details__container">
           <h1>Təşkilatı yükləmək mümkün olmadı</h1>
 
-          <Link
-            to="/opportunities"
-            className="organization-details__back"
-          >
+          <Link to="/opportunities" className="organization-details__back">
             ← {t('back_to_opportunities')}
           </Link>
         </div>
       </main>
     )
   }
-
-  // ORGANIZATION NOT FOUND
 
   if (!organization) {
     return (
@@ -126,18 +109,13 @@ export default function OrganizationDetails() {
         <div className="organization-details__container">
           <h1>{t('org_not_found')}</h1>
 
-          <Link
-            to="/opportunities"
-            className="organization-details__back"
-          >
+          <Link to="/opportunities" className="organization-details__back">
             ← {t('back_to_opportunities')}
           </Link>
         </div>
       </main>
     )
   }
-
-  // ORGANIZATION DATA
 
   const {
     name,
@@ -157,26 +135,20 @@ export default function OrganizationDetails() {
     activityHistory = [],
   } = organization
 
-  const activeOpportunities = opportunities.length
-  const activeProjects = getActiveProjects(slug)
+  const activeOpportunities = opportunities.filter(
+    (item) => item.active !== false,
+  ).length
 
-  // Backend logo sahəsini bəzən tam URL,
-  // bəzən isə sadəcə fayl adı kimi qaytara bilər.
+  const activeProjects = getActiveProjects(opportunities)
 
   const resolvedLogo = logo
     ? organizationLogos[logo] || logo
     : null
 
-  // MAIN CONTENT
-
   return (
     <main className="organization-details">
       <div className="organization-details__container">
-
-        <Link
-          to="/opportunities"
-          className="organization-details__back"
-        >
+        <Link to="/opportunities" className="organization-details__back">
           ← {t('back_to_opportunities')}
         </Link>
 
@@ -228,10 +200,7 @@ export default function OrganizationDetails() {
           />
         )}
 
-        <ActivityHistory
-          activityHistory={activityHistory}
-        />
-
+        <ActivityHistory activityHistory={activityHistory} />
       </div>
 
       <ProjectModal

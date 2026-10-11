@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api'
 
-// Bütün təşkilatların siyahısını gətirir.
 export function useOrganizations() {
   const [organizations, setOrganizations] = useState([])
   const [loading, setLoading] = useState(true)
