@@ -62,6 +62,7 @@
 @import 'components/organization-card.css';
 @import 'components/organization-details.css';
 @import 'components/organization-responsive.css';
+@import 'components/organization-skeleton.css';
 @import 'components/membership-hero.css';
 @import 'components/auth-split.css';
 @import 'components/about-page.css';

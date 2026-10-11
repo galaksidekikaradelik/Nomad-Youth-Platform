@@ -1,6 +1,7 @@
 import OrganizationCard from './OrganizationCard'
 import Pagination from '../../components/Pagination'
 import { SearchIcon } from '../opportunities/OpportunityIcons'
+import OrganizationSkeleton from './OrganizationSkeleton'
 
 const WarningIcon = () => (
   <svg
@@ -37,11 +38,7 @@ export default function OrganizationResults({
   }
 
   if (loading) {
-    return (
-      <div className="organization-results__message">
-        <p>{t('org_loading')}</p>
-      </div>
-    )
+      return <OrganizationSkeleton />
   }
 
   if (error) {
