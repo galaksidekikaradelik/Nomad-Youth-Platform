@@ -1,3 +1,4 @@
+
 import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
@@ -135,7 +136,9 @@ function InfoItem({ icon: Icon, label, value, fallback = '—' }) {
       </div>
 
       <div className="mundus-modal__info-content">
-        <span className="mundus-modal__info-label">{label}</span>
+        <span className="mundus-modal__info-label">
+          {label}
+        </span>
 
         <span className="mundus-modal__info-value">
           {displayValue(value, fallback)}
@@ -148,7 +151,10 @@ function InfoItem({ icon: Icon, label, value, fallback = '—' }) {
 function ModalSection({ title, children }) {
   return (
     <section className="mundus-modal__section">
-      <h3 className="mundus-modal__section-title">{title}</h3>
+      <h3 className="mundus-modal__section-title">
+        {title}
+      </h3>
+
       {children}
     </section>
   )
@@ -216,8 +222,10 @@ export default function MundusDetailModal({
 
       if (
         e.shiftKey &&
-        (document.activeElement === first ||
-          document.activeElement === modal)
+        (
+          document.activeElement === first ||
+          document.activeElement === modal
+        )
       ) {
         e.preventDefault()
         last.focus()
@@ -301,8 +309,8 @@ export default function MundusDetailModal({
   const scholarshipText =
     typeof scholarship === 'boolean'
       ? scholarship
-        ? t('mundus_detail_yes')
-        : t('mundus_detail_no')
+        ? t('mundus_modal_available')
+        : t('mundus_modal_not_available')
       : scholarship
 
   const locationText = countries
@@ -317,6 +325,8 @@ export default function MundusDetailModal({
     language,
     deadline,
     opening,
+    opportunity.intake,
+    opportunity.fieldOfStudy,
   ].some(hasValue)
 
   const hasRequirements = [
@@ -357,7 +367,7 @@ export default function MundusDetailModal({
           ref={closeRef}
           className="mundus-modal__close"
           onClick={onClose}
-          aria-label={t('mundus_detail_close')}
+          aria-label={t('mundus_modal_close')}
         >
           <X size={21} />
         </button>
@@ -365,7 +375,7 @@ export default function MundusDetailModal({
         <div className="mundus-modal__header">
           <div className="mundus-modal__eyebrow">
             <GraduationCap size={17} />
-            {t('mundus_detail_program')}
+            {t('mundus_modal_program')}
           </div>
 
           <h2
@@ -391,13 +401,13 @@ export default function MundusDetailModal({
               aria-live="polite"
             >
               <p className="mundus-modal__description">
-                {t('mundus_detail_loading')}
+                {t('mundus_modal_loading')}
               </p>
             </div>
           ) : (
             <>
               {hasValue(description) && (
-                <ModalSection title={t('mundus_detail_description')}>
+                <ModalSection title={t('mundus_modal_description')}>
                   <p className="mundus-modal__description">
                     {displayValue(description)}
                   </p>
@@ -405,49 +415,61 @@ export default function MundusDetailModal({
               )}
 
               {hasGeneralInfo && (
-                <ModalSection title={t('mundus_detail_general')}>
+                <ModalSection title={t('mundus_modal_overview')}>
                   <div className="mundus-modal__grid">
                     <InfoItem
+                      icon={BookOpen}
+                      label={t('mundus_modal_field')}
+                      value={opportunity.fieldOfStudy}
+                    />
+
+                    <InfoItem
                       icon={Globe2}
-                      label={t('mundus_detail_countries')}
+                      label={t('mundus_modal_countries')}
                       value={locationText}
                     />
 
                     <InfoItem
                       icon={GraduationCap}
-                      label={t('mundus_detail_degree')}
+                      label={t('mundus_modal_degree')}
                       value={degree}
                     />
 
                     <InfoItem
                       icon={Clock3}
-                      label={t('mundus_detail_duration')}
+                      label={t('mundus_modal_duration')}
                       value={duration}
                     />
 
                     <InfoItem
                       icon={Languages}
-                      label={t('mundus_detail_language')}
+                      label={t('mundus_modal_language')}
                       value={language}
                     />
 
                     <InfoItem
                       icon={CalendarDays}
-                      label={t('mundus_detail_opening')}
+                      label={t('mundus_modal_opening')}
                       value={opening}
                     />
 
                     <InfoItem
                       icon={CalendarDays}
-                      label={t('mundus_detail_deadline')}
+                      label={t('mundus_modal_deadline')}
                       value={deadline}
+                    />
+
+                    <InfoItem
+                      icon={CalendarDays}
+                      label={t('mundus_modal_intake')}
+                      value={opportunity.intake}
                     />
                   </div>
                 </ModalSection>
               )}
 
               {universities.length > 0 && (
-                <ModalSection title={t('mundus_detail_universities')}>
+                <ModalSection title={t('mundus_modal_universities')}>
                   <div className="mundus-modal__grid">
                     {universities.map((university, index) => (
                       <InfoItem
@@ -462,7 +484,7 @@ export default function MundusDetailModal({
               )}
 
               {bachelorFields.length > 0 && (
-                <ModalSection title={t('mundus_detail_fields')}>
+                <ModalSection title={t('mundus_modal_eligible_fields')}>
                   <div className="mundus-modal__documents">
                     {bachelorFields.map((field, index) => (
                       <div
@@ -478,29 +500,29 @@ export default function MundusDetailModal({
               )}
 
               {hasRequirements && (
-                <ModalSection title={t('mundus_detail_requirements')}>
+                <ModalSection title={t('mundus_modal_language_requirements')}>
                   <div className="mundus-modal__grid">
                     <InfoItem
                       icon={Languages}
-                      label={t('mundus_detail_ielts')}
+                      label={t('mundus_modal_ielts')}
                       value={ielts}
                     />
 
                     <InfoItem
                       icon={Award}
-                      label={t('mundus_detail_ieltsScore')}
+                      label={t('mundus_modal_ielts_score')}
                       value={ieltsScore}
                     />
 
                     <InfoItem
                       icon={ClipboardList}
-                      label={t('mundus_detail_toefl')}
+                      label={t('mundus_modal_toefl')}
                       value={toefl}
                     />
 
                     <InfoItem
                       icon={Award}
-                      label={t('mundus_detail_toeflScore')}
+                      label={t('mundus_modal_toefl_score')}
                       value={toeflScore}
                     />
                   </div>
@@ -508,23 +530,23 @@ export default function MundusDetailModal({
               )}
 
               {hasScholarship && (
-                <ModalSection title={t('mundus_detail_scholarship')}>
+                <ModalSection title={t('mundus_modal_financial')}>
                   <div className="mundus-modal__grid">
                     <InfoItem
                       icon={BadgeCheck}
-                      label={t('mundus_detail_scholarshipAvailable')}
+                      label={t('mundus_modal_scholarship')}
                       value={scholarshipText}
                     />
 
                     <InfoItem
                       icon={Wallet}
-                      label={t('mundus_detail_scholarshipAmount')}
+                      label={t('mundus_modal_scholarship_amount')}
                       value={scholarshipAmount}
                     />
 
                     <InfoItem
                       icon={CircleDollarSign}
-                      label={t('mundus_detail_applicationFee')}
+                      label={t('mundus_modal_application_fee')}
                       value={applicationFee}
                     />
                   </div>
@@ -532,7 +554,7 @@ export default function MundusDetailModal({
               )}
 
               {requiredDocuments.length > 0 && (
-                <ModalSection title={t('mundus_detail_documents')}>
+                <ModalSection title={t('mundus_modal_documents')}>
                   <div className="mundus-modal__documents">
                     {requiredDocuments.map((document, index) => (
                       <div
@@ -554,9 +576,7 @@ export default function MundusDetailModal({
           <div className="mundus-modal__social">
             <button
               type="button"
-              className={`mundus-modal__social-btn${
-                liked ? ' is-active' : ''
-              }`}
+              className={`mundus-modal__social-btn${liked ? ' is-active' : ''}`}
               onClick={onToggleLike}
               aria-label={t('mundus_like')}
               aria-pressed={liked}
@@ -569,9 +589,7 @@ export default function MundusDetailModal({
 
             <button
               type="button"
-              className={`mundus-modal__social-btn${
-                saved ? ' is-active' : ''
-              }`}
+              className={`mundus-modal__social-btn${saved ? ' is-active' : ''}`}
               onClick={onToggleSave}
               aria-label={t('mundus_save')}
               aria-pressed={saved}
@@ -591,7 +609,7 @@ export default function MundusDetailModal({
               rel="noopener noreferrer"
               onClick={onApplyClick}
             >
-              {t('mundus_detail_apply')}
+              {t('mundus_modal_apply')}
               <ArrowUpRight size={19} />
             </a>
           ) : (
@@ -599,7 +617,7 @@ export default function MundusDetailModal({
               className="mundus-modal__apply is-disabled"
               aria-disabled="true"
             >
-              {t('mundus_detail_unavailable')}
+              {t('mundus_modal_unavailable')}
             </span>
           )}
         </div>

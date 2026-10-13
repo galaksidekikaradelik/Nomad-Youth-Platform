@@ -191,8 +191,8 @@
 }
 
 .organization-details__tab--active {
-  background: var(--color-text);
-  color: var(--color-surface);
+  background: var(--accent-400);
+  color: var(--brand-900);
 }
 
 
