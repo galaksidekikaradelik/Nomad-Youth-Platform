@@ -18,13 +18,6 @@ export default function AboutSection({
       <div className="organization-details__contact">
         <h3>{t('org_contact_title')}</h3>
 
-        {location && (
-          <div className="organization-details__contact-item">
-            <span>📍</span>
-            <span>{location}</span>
-          </div>
-        )}
-
         {email && (
           <a
             href={`mailto:${email}`}

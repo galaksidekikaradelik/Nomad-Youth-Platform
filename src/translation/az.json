@@ -948,7 +948,39 @@
   "mundus_results_empty_desc": "Xaricdə magistr təhsili və beynəlxalq təqaüd imkanları tezliklə burada olacaq. Yeni proqramlardan xəbərdar olmaq üçün bizi izləməyə davam edin!",
   "mundus_results_count": "Tapılan proqramlar",
   "mundus_results_previous": "Əvvəlki",
-  "mundus_results_next": "Növbəti"
+  "mundus_results_next": "Növbəti",
+  
+  "program": "Erasmus Mundus Magistr Proqramı",
+  "description": "Proqram haqqında",
+  "general": "Ümumi məlumat",
+  "universities": "Tərəfdaş universitetlər",
+  "fields": "Uyğun bakalavr ixtisasları",
+  "requirements": "Qəbul tələbləri",
+  "scholarship": "Təqaüd və maliyyələşmə",
+  "documents": "Tələb olunan sənədlər",
+  "website": "Rəsmi veb-sayt",
+  "viewWebsite": "Rəsmi sayta keç",
+  "apply": "Müraciət et",
+  "unavailable": "Müraciət linki mövcud deyil",
+  "countries": "Ölkələr",
+  "degree": "Təhsil dərəcəsi",
+  "duration": "Müddət",
+  "language": "Tədris dili",
+  "deadline": "Son müraciət tarixi",
+  "opening": "Müraciətlərin başlanması",
+  "ielts": "IELTS tələbi",
+  "ieltsScore": "IELTS balı",
+  "toefl": "TOEFL tələbi",
+  "toeflScore": "TOEFL balı",
+  "scholarshipAvailable": "Təqaüd",
+  "scholarshipAmount": "Təqaüd məbləği",
+  "applicationFee": "Müraciət haqqı",
+  "yes": "Mövcuddur",
+  "no": "Mövcud deyil",
+  "loading": "Proqram məlumatları yüklənir...",
+  "close": "Bağla",
+  "unknown": "Müəyyən edilməyib"
+
 
 
 

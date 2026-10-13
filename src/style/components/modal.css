@@ -245,6 +245,37 @@
   transform: translateY(-2px);
 }
 
+.detail-modal,
+.detail-modal__meta,
+.detail-modal__meta-row {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.detail-modal__meta-row {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.detail-modal__description {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .detail-modal {
+    padding: 20px;
+  }
+
+  .detail-modal__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-modal__icons {
+    justify-content: flex-start;
+  }
+}
+
 @keyframes apply-confirm-fade-in {
   from { opacity: 0; }
   to { opacity: 1; }

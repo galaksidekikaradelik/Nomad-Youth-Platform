@@ -1037,7 +1037,39 @@
   "mundus_results_empty_desc": "Master’s study opportunities abroad and international scholarship opportunities will be available here soon. Follow us to stay updated on new programmes!",
   "mundus_results_count": "Programmes found",
   "mundus_results_previous": "Previous",
-  "mundus_results_next": "Next"
+  "mundus_results_next": "Next",
+
+  "program": "Erasmus Mundus Joint Master",
+  "description": "About the programme",
+  "general": "General information",
+  "universities": "Partner universities",
+  "fields": "Eligible bachelor fields",
+  "requirements": "Admission requirements",
+  "scholarship": "Scholarship and funding",
+  "documents": "Required documents",
+  "website": "Official website",
+  "viewWebsite": "Visit official website",
+  "apply": "Apply now",
+  "unavailable": "Application link unavailable",
+  "countries": "Countries",
+  "degree": "Degree",
+  "duration": "Duration",
+  "language": "Language of instruction",
+  "deadline": "Application deadline",
+  "opening": "Applications open",
+  "ielts": "IELTS requirement",
+  "ieltsScore": "IELTS score",
+  "toefl": "TOEFL requirement",
+  "toeflScore": "TOEFL score",
+  "scholarshipAvailable": "Scholarship",
+  "scholarshipAmount": "Scholarship amount",
+  "applicationFee": "Application fee",
+  "yes": "Available",
+  "no": "Not available",
+  "loading": "Loading programme details...",
+  "close": "Close",
+  "unknown": "Not specified"
+
 
 
 

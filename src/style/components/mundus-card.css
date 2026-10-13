@@ -128,7 +128,7 @@
   margin: 0;
   min-height: calc(3 * 1.3em);
 
-  color: var(--brand-900);
+  color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 500;
