@@ -203,9 +203,22 @@ export const COUNTRY_CODES = {
   'Yaponiya': 'jp',
   'Japan': 'jp',
 
-  'Cənubi Afrika': 'za',
-  'South Africa': 'za',
-
   'Keniya': 'ke',
   'Kenya': 'ke',
+
+  'Honq Konq': 'hk',
+  'Hong Kong': 'hk',
+  'Hongkong': 'hk',
+
+  'Braziliya': 'br',
+  'Brazil': 'br',
+
+  'Cənubi Afrika Respublikası': 'za',
+  'Republic of South Africa': 'za',
+
+  'Birləşmiş Ərəb Əmirlikləri': 'ae',
+  'United Arab Emirates': 'ae',
+  'UAE': 'ae',
+  'Ərəb Əmirlikləri': 'ae',
+
 }
