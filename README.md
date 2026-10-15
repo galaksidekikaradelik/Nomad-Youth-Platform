@@ -123,7 +123,7 @@ Connecting young people with opportunities across the world 🌍
 </p>
 
 <p align="center">
-  <a href="https://nomadyouth.az">🌐 Website</a> •
+  <a href="https://nomadyouth.com.az">🌐 Website</a> 
 </p>
 
 <p align="center">
