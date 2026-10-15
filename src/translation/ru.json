@@ -1015,6 +1015,9 @@
   "mundus_results_count": "Найдено программ",
   "mundus_results_previous": "Назад",
   "mundus_results_next": "Далее",
+  "mundus_modal_ielts_score": "Балл IELTS",
+  "mundus_modal_toefl_score": "Балл TOEFL",
+
   "program": "Магистратура Erasmus Mundus",
   "description": "О программе",
   "general": "Общая информация",

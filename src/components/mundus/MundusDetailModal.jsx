@@ -400,9 +400,6 @@ export default function MundusDetailModal({
               role="status"
               aria-live="polite"
             >
-              <p className="mundus-modal__description">
-                {t('mundus_modal_loading')}
-              </p>
             </div>
           ) : (
             <>
