@@ -6,24 +6,17 @@ import {
 } from 'react-router-dom'
 
 import { useLanguage } from '../hooks/useLanguage'
-
 import { useOpportunities } from '../hooks/useOpportunities'
 import { useOpportunityFilters } from '../hooks/useOpportunityFilters'
-
 import { useOrganizations } from '../hooks/useOrganizations'
 import { useOrganizationFilters } from '../hooks/useOrganizationFilters'
-
 import SearchBar from '../components/SearchBar'
 import OpportunityFilters from '../components/opportunities/OpportunityFilters'
 import OpportunityResults from '../components/opportunities/OpportunityResults'
-
 import OrganizationFilters from '../components/organization/OrganizationFilters'
 import OrganizationResults from '../components/organization/OrganizationResults'
-
 import MundusProgramResults from '../components/mundus/MundusProgramResults'
-
 import { MUNDUS_PROGRAMS } from '../data/mundusPrograms'
-
 import {
   PROJECT_TABS,
 } from '../utils/opportunityFilters.constants'
@@ -69,6 +62,7 @@ export default function Opportunities() {
     categories,
     types,
     format,
+    escOrSalto,
     durations,
     visaType,
     sort,
@@ -86,6 +80,10 @@ export default function Opportunities() {
     toggleCategory,
     toggleType,
     toggleFormat,
+
+    toggleEscOrSalto,
+    clearFormatFilters,
+
     toggleDuration,
     toggleVisaType,
 
@@ -131,7 +129,6 @@ export default function Opportunities() {
   const isMundusTab =
     activeTab === MUNDUS_TAB_ID
 
-
   useEffect(() => {
     if (!highlightOppKey) return
     if (!opportunities?.length) return
@@ -153,14 +150,12 @@ export default function Opportunities() {
     setActiveTab,
   ])
 
-
   const currentSearch =
     isLocalTab
       ? orgSearch
       : isMundusTab
         ? mundusSearch
         : search
-
 
   const handleSearchChange = value => {
     if (isLocalTab) {
@@ -177,10 +172,8 @@ export default function Opportunities() {
     setSearch(value)
   }
 
-
   return (
     <div className="section">
-
       <div className="container">
 
         <div className="page-header">
@@ -198,9 +191,6 @@ export default function Opportunities() {
           </p>
 
         </div>
-
-
-        {/* TABS */}
 
         <div className="opportunities-tabs">
 
@@ -242,9 +232,6 @@ export default function Opportunities() {
 
         </div>
 
-
-        {/* SEARCH */}
-
         <div className="opportunities-searchbar-wrap">
 
           <SearchBar
@@ -283,9 +270,6 @@ export default function Opportunities() {
 
         </div>
 
-
-        {/* LOCAL */}
-
         {isLocalTab ? (
 
           <>
@@ -322,8 +306,6 @@ export default function Opportunities() {
 
         ) : isMundusTab ? (
 
-          /* ERASMUS MUNDUS */
-
           <MundusProgramResults
             programs={MUNDUS_PROGRAMS}
             search={mundusSearch}
@@ -335,34 +317,47 @@ export default function Opportunities() {
 
         ) : (
 
-          /* ERASMUS + INTERNATIONAL */
-
           <>
 
             <OpportunityFilters
               t={t}
               lang={lang}
+
               categories={categories}
               toggleCategory={
                 toggleCategory
               }
+
               types={types}
               toggleType={toggleType}
+
               format={format}
               toggleFormat={
                 toggleFormat
               }
+
+              escOrSalto={escOrSalto}
+              toggleEscOrSalto={
+                toggleEscOrSalto
+              }
+              clearFormatFilters={
+                clearFormatFilters
+              }
+
               durations={durations}
               toggleDuration={
                 toggleDuration
               }
+
               visaType={visaType}
               toggleVisaType={
                 toggleVisaType
               }
+
               clearDurationAndVisa={
                 clearDurationAndVisa
               }
+
               sort={sort}
               setSort={setSort}
             />
@@ -388,7 +383,6 @@ export default function Opportunities() {
         )}
 
       </div>
-
     </div>
   )
 }
