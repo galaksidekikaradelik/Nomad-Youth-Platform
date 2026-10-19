@@ -5,8 +5,8 @@ import { User, LayoutDashboard, Settings, LogOut } from 'lucide-react'
 import { useLanguage } from '../hooks/useLanguage'
 import { useAuth } from '../hooks/useAuth'
 
-import logoLight from '../assets/images/logo-dark-hellowen.png'
-import logoDark from '../assets/images/logo-light-hello.png'
+import logoLight from '../assets/images/logo-dark-hellowen.webp'
+import logoDark from '../assets/images/logo-light-hello.webp'
 
 import NotificationsDropdown from './NotificationsDropdown'
 import Avatar from './Avatar'
