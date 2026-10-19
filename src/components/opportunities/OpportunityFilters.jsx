@@ -1,3 +1,4 @@
+
 import { translateCategory } from '../../data/categoryTranslation'
 import {
   CATEGORIES,
@@ -11,6 +12,7 @@ const FilterChip = ({ label, active, onClick }) => (
     className={`filter-btn${active ? ' active' : ''}`}
     onClick={onClick}
     type="button"
+    aria-pressed={active}
   >
     {label}
   </button>
@@ -25,6 +27,9 @@ export default function OpportunityFilters({
   toggleType,
   format,
   toggleFormat,
+  escOrSalto = '',
+  toggleEscOrSalto,
+  clearFormatFilters,
   durations,
   toggleDuration,
   visaType,
@@ -35,6 +40,7 @@ export default function OpportunityFilters({
 }) {
   return (
     <div className="filter-group">
+
       <div className="filter-group__row">
         <span className="filter-group__label">
           {t('filter_category_label')}
@@ -45,7 +51,9 @@ export default function OpportunityFilters({
             <FilterChip
               key={c.id}
               label={
-                c.labelKey ? t(c.labelKey) : translateCategory(c.id, lang)
+                c.labelKey
+                  ? t(c.labelKey)
+                  : translateCategory(c.id, lang)
               }
               active={
                 c.id === ''
@@ -69,7 +77,9 @@ export default function OpportunityFilters({
               key={ty.id}
               label={t(ty.labelKey)}
               active={
-                ty.id === '' ? types.length === 0 : types.includes(ty.id)
+                ty.id === ''
+                  ? types.length === 0
+                  : types.includes(ty.id)
               }
               onClick={() => toggleType(ty.id)}
             />
@@ -83,14 +93,39 @@ export default function OpportunityFilters({
         </span>
 
         <div className="filter-group__chips">
+
           {FORMATS.map(f => (
             <FilterChip
               key={f.id}
               label={t(f.labelKey)}
-              active={format === f.id}
-              onClick={() => toggleFormat(f.id)}
+              active={
+                f.id === 'Hamısı'
+                  ? format === 'Hamısı' && !escOrSalto
+                  : format === f.id
+              }
+              onClick={() => {
+                if (f.id === 'Hamısı') {
+                  clearFormatFilters()
+                } else {
+                  toggleFormat(f.id)
+                }
+              }}
             />
           ))}
+
+
+          <FilterChip
+            label="ESC"
+            active={escOrSalto === 'ESC'}
+            onClick={() => toggleEscOrSalto('ESC')}
+          />
+
+          <FilterChip
+            label="SALTO"
+            active={escOrSalto === 'SALTO'}
+            onClick={() => toggleEscOrSalto('SALTO')}
+          />
+
         </div>
       </div>
 
@@ -133,7 +168,10 @@ export default function OpportunityFilters({
       </div>
 
       <div className="filter-group__row">
-        <label htmlFor="opp-sort-select" className="filter-group__label">
+        <label
+          htmlFor="opp-sort-select"
+          className="filter-group__label"
+        >
           {t('filter_sort_label')}
         </label>
 
@@ -151,6 +189,7 @@ export default function OpportunityFilters({
           ))}
         </select>
       </div>
+
     </div>
   )
 }

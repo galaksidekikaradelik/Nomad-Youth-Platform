@@ -1,3 +1,4 @@
+
 import { useState, useMemo, useEffect } from 'react'
 import { filterActiveOpportunities } from '../utils/opportunityStatus'
 import { getOpportunityGroup } from '../utils/getOpportunityGroup'
@@ -16,6 +17,9 @@ export function useOpportunityFilters({
 
   const [types, setTypes] = useState([])
   const [format, setFormat] = useState('Hamısı')
+
+  const [escOrSalto, setEscOrSalto] = useState('')
+
   const [durations, setDurations] = useState([])
   const [visaType, setVisaType] = useState('')
   const [sort, setSort] = useState('deadline')
@@ -52,6 +56,17 @@ export function useOpportunityFilters({
     setFormat(id)
   }
 
+  const toggleEscOrSalto = (value) => {
+    setEscOrSalto(prev =>
+      prev === value ? '' : value
+    )
+  }
+
+  const clearFormatFilters = () => {
+    setFormat('Hamısı')
+    setEscOrSalto('')
+  }
+
   const toggleDuration = (id) => {
     setDurations(prev =>
       prev.includes(id) ? [] : [id]
@@ -82,6 +97,7 @@ export function useOpportunityFilters({
 
   const filtered = useMemo(() => {
     return enriched.filter(op => {
+
       const matchTab =
         op.opportunityGroup === activeTab
 
@@ -101,6 +117,12 @@ export function useOpportunityFilters({
       const matchFormat =
         format === 'Hamısı' ||
         op.typeDetail === format
+
+      const matchEscOrSalto =
+        !escOrSalto ||
+        String(op.escOrSalto || '')
+          .trim()
+          .toUpperCase() === escOrSalto
 
       const matchDuration =
         durations.length === 0 ||
@@ -138,6 +160,7 @@ export function useOpportunityFilters({
         matchCat &&
         matchType &&
         matchFormat &&
+        matchEscOrSalto &&
         matchDuration &&
         matchVisa &&
         matchSearch
@@ -150,6 +173,7 @@ export function useOpportunityFilters({
     categories,
     types,
     format,
+    escOrSalto,
     durations,
     visaType,
   ])
@@ -192,6 +216,7 @@ export function useOpportunityFilters({
     categories,
     types,
     format,
+    escOrSalto,
     durations,
     visaType,
     sort,
@@ -224,29 +249,27 @@ export function useOpportunityFilters({
     categories,
     types,
     format,
+    escOrSalto,
     durations,
     visaType,
     sort,
     activeTab,
     page,
-
     sorted,
     paginated,
     totalPages,
-
     setSearch,
     setCategories,
     setSort,
     setActiveTab,
-
     toggleCategory,
     toggleType,
     toggleFormat,
+    toggleEscOrSalto,
+    clearFormatFilters,
     toggleDuration,
     toggleVisaType,
-
     clearDurationAndVisa,
-
     handlePageChange,
     setPage,
   }
