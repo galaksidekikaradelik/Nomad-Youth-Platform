@@ -1071,7 +1071,23 @@
   "no": "Not available",
   "loading": "Loading programme details...",
   "close": "Close",
-  "unknown": "Not specified"
+  "unknown": "Not specified",
+
+  "so_hero_title": "What is a Sending Organization?",
+  "so_hero_intro": "Learn about the role of a Sending Organization in Erasmus+ (SALTO) projects, when it may be needed, and how Nomad Youth can support you.",
+  "so_hero_visual_label": "From Baku to international opportunities",
+
+  "so_hero_card1_title": "What is a Sending Organization?",
+  "so_hero_card1_desc": "Explore its role in Erasmus+ projects, why it may be required, and how it supports participants.",
+
+  "so_hero_card2_title": "Does Nomad Youth provide this support?",
+  "so_hero_card2_desc": "Yes. We offer organizational support for eligible Erasmus+ (SALTO) applications. Review our terms and key details.",
+
+  "so_hero_card3_title": "Apply for Sending Organization support",
+  "so_hero_card3_desc": "Complete a short request form. Our team will review the project requirements and confirm whether support is possible.",
+
+  "so_hero_read_more": "Read more",
+  "so_hero_apply": "Go to application"
 
 
 

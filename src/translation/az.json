@@ -981,15 +981,24 @@
   "no": "Mövcud deyil",
   "loading": "Proqram məlumatları yüklənir...",
   "close": "Bağla",
-  "unknown": "Müəyyən edilməyib"
+  "unknown": "Müəyyən edilməyib",
 
+  "so_hero_title": "Sending Organization nədir?",
+  "so_hero_intro": "Bəzi Erasmus+ layihələrinə müraciət zamanı göndərən təşkilatın (Sending Organization) məlumatları tələb olunur. Bu bölmədə onun rolu və Nomad Youth-un təqdim etdiyi dəstəklə tanış ola bilərsiniz.",
+  "so_hero_visual_label": "Bakıdan beynəlxalq imkanlara",
 
+  "so_hero_card1_title": "Sending Organization nədir?",
+  "so_hero_card1_desc": "Sending Organization Erasmus+ layihələrində iştirakçılara təşkilati dəstək göstərən qurumdur. Bəzi layihələrdə göndərən təşkilatın adı, Organization ID (OID) nömrəsi və digər məlumatları tələb olunur. Bu tələb layihədən asılı olaraq dəyişir.",
 
+  
+  "so_hero_card2_title": "Nomad Youth bu dəstəyi təmin edirmi?",
+  "so_hero_card2_desc": "Bəli. Nomad Youth Avropa Komissiyasının Erasmus+ sistemində rəsmi qeydiyyatdan keçərək OID əldə edib. Bu dəstək çərçivəsində təşkilati məlumatlarımızdan istifadə, 6 ay ərzində limitsiz fərdi Erasmus+ müraciətləri, aktiv istifadəçi statusunun təsdiqi və qısa istiqamətləndirmə imkanı təqdim edirik.",
 
+  "so_hero_card3_title": "Sending Organization dəstəyi üçün necə müraciət edə bilərəm?",
+  "so_hero_card3_desc": "WhatsApp vasitəsilə komandamızla əlaqə saxlayın və müraciət etmək istədiyiniz layihənin linkini bizimlə paylaşın.",
 
-
-
-
+  "so_hero_read_more": "Ətraflı oxu",
+  "so_hero_apply": "Müraciət formasına keç"
 
 
 }

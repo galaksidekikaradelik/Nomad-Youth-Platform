@@ -1,4 +1,5 @@
-import MembershipHero from '../components/MembershipHero'
+
+import HomeHeroSlider from '../components/HomeHeroSlider'
 import Hero from '../components/Hero'
 
 import OpportunitiesSection from '../components/home/OpportunitiesSection'
@@ -13,7 +14,7 @@ export default function Home() {
 
   return (
     <>
-      <MembershipHero />
+      <HomeHeroSlider />
       <OpportunitiesSection />
       <Hero />
       <AboutSection />

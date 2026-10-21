@@ -85,12 +85,6 @@ const ArrowIcon = () => (
 export default function MembershipHero() {
   const { t } = useLanguage()
 
-  /*
-  =========================================================
-  COUNTDOWN
-  =========================================================
-  */
-
   const MEMBERSHIP_DEADLINE =
   new Date('2026-10-31T23:59:59+04:00').getTime()
 
@@ -142,11 +136,6 @@ export default function MembershipHero() {
 
       <div className="membership-hero__inner">
 
-
-        {/* =====================================================
-            LEFT CONTENT
-        ====================================================== */}
-
         <div className="membership-hero__content">
 
           <h1 className="membership-hero__title">
@@ -175,14 +164,7 @@ export default function MembershipHero() {
           </p>
 
 
-          {/* ===================================================
-              BUTTONS + COUNTDOWN
-          ==================================================== */}
-
           <div className="membership-hero__action-row">
-
-
-            {/* BUTTONS */}
 
             <div className="membership-hero__actions">
 
@@ -205,9 +187,6 @@ export default function MembershipHero() {
 
             </div>
 
-
-            {/* COUNTDOWN */}
-
             {timeLeft && (
               <div className="membership-countdown">
 
@@ -217,9 +196,6 @@ export default function MembershipHero() {
 
 
                 <div className="membership-countdown__time">
-
-
-                  {/* DAYS */}
 
                   <div className="membership-countdown__unit">
 
@@ -241,9 +217,6 @@ export default function MembershipHero() {
                     :
                   </span>
 
-
-                  {/* HOURS */}
-
                   <div className="membership-countdown__unit">
 
                     <strong>
@@ -263,9 +236,6 @@ export default function MembershipHero() {
                   <span className="membership-countdown__separator">
                     :
                   </span>
-
-
-                  {/* MINUTES */}
 
                   <div className="membership-countdown__unit">
 
