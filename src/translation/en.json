@@ -1073,26 +1073,21 @@
   "close": "Close",
   "unknown": "Not specified",
 
+
   "so_hero_title": "What is a Sending Organization?",
-  "so_hero_intro": "Learn about the role of a Sending Organization in Erasmus+ (SALTO) projects, when it may be needed, and how Nomad Youth can support you.",
+  "so_hero_intro": "Some Erasmus+ projects require information about a Sending Organization during the application process. Here, you can learn about its role and the support provided by Nomad Youth.",
   "so_hero_visual_label": "From Baku to international opportunities",
 
   "so_hero_card1_title": "What is a Sending Organization?",
-  "so_hero_card1_desc": "Explore its role in Erasmus+ projects, why it may be required, and how it supports participants.",
+  "so_hero_card1_desc": "A Sending Organization provides organizational support to participants in Erasmus+ projects. Some projects require the name, Organization ID (OID), and other details of the Sending Organization. These requirements vary depending on the project.",
 
   "so_hero_card2_title": "Does Nomad Youth provide this support?",
-  "so_hero_card2_desc": "Yes. We offer organizational support for eligible Erasmus+ (SALTO) applications. Review our terms and key details.",
+  "so_hero_card2_desc": "Yes. Nomad Youth is officially registered in the European Commission's Erasmus+ organization registration system and has obtained an OID. Our support includes the use of our organizational information, unlimited individual Erasmus+ applications over 6 months, confirmation of active user status, and brief guidance.",
 
-  "so_hero_card3_title": "Apply for Sending Organization support",
-  "so_hero_card3_desc": "Complete a short request form. Our team will review the project requirements and confirm whether support is possible.",
+  "so_hero_card3_title": "How can I apply for Sending Organization support?",
+  "so_hero_card3_desc": "Contact our team via WhatsApp and share the link to the project you would like to apply for.",
 
   "so_hero_read_more": "Read more",
-  "so_hero_apply": "Go to application"
-
-
-
-
-
-
+  "so_hero_apply": "Apply via WhatsApp"
 
 }
