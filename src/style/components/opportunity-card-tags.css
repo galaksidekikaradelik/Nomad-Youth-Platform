@@ -102,3 +102,56 @@
   font-size: 0.7rem;
   font-weight: 600;
 }
+
+
+/* Sending Organization Requirement */
+
+.opportunity-card__sending-org {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 7px;
+
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px 12px;
+
+  background-color: #fff7e6;
+  color: #ad6800;
+  border: 1px solid #ffd591;
+  border-radius: var(--radius-full, 999px);
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.opportunity-card__sending-org-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+
+  background-color: #d48806;
+  border-radius: 50%;
+}
+
+/* Dark Mode */
+
+[data-theme="dark"] .opportunity-card__sending-org {
+  background-color: rgba(250, 173, 20, 0.14);
+  color: #ffd666;
+  border-color: rgba(250, 173, 20, 0.35);
+}
+
+[data-theme="dark"] .opportunity-card__sending-org-dot {
+  background-color: #ffd666;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .opportunity-card__sending-org {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+  }
+}

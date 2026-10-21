@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import {
   useNavigate,
   useParams,
@@ -64,6 +64,7 @@ export default function OpportunityCard({
     eventDateRange,
     escOrSalto,
     volunteeringType,
+    isSendingOrganization,
     sumAz,
     sumEn,
     sumRus,
@@ -87,29 +88,11 @@ export default function OpportunityCard({
   const cardRef = useRef(null)
   const detailRequestRef = useRef(false)
 
-  useEffect(() => {
-    if (!opportunityId) return
-    if (!opportunity?.id) return
+  const detailId = opportunity?.id
+  const userId = user?.id
 
-    if (
-      String(opportunity.id) !==
-      String(opportunityId)
-    ) {
-      return
-    }
-
-    if (detailRequestRef.current) return
-
-    openDetailFromUrl()
-  }, [
-    opportunityId,
-    opportunity?.id,
-    user?.id,
-    lang,
-  ])
-
-  async function openDetailFromUrl() {
-    if (!opportunity?.id) return
+  const openDetailFromUrl = useCallback(async () => {
+    if (!detailId) return
     if (detailRequestRef.current) return
 
     detailRequestRef.current = true
@@ -118,10 +101,10 @@ export default function OpportunityCard({
 
     try {
       const res = await apiClient.get(
-        `/opportunities/${opportunity.id}/details`,
+        `/opportunities/${detailId}/details`,
         {
           params: {
-            userId: user?.id,
+            userId,
             lang,
           },
         }
@@ -143,7 +126,20 @@ export default function OpportunityCard({
     } finally {
       setDetailLoading(false)
     }
-  }
+  }, [detailId, userId, lang])
+
+  useEffect(() => {
+    if (!opportunityId) return
+    if (!detailId) return
+
+    if (String(detailId) !== String(opportunityId)) {
+      return
+    }
+
+    if (detailRequestRef.current) return
+
+    openDetailFromUrl()
+  }, [opportunityId, detailId, openDetailFromUrl])
 
   const {
     likedIds,
@@ -487,6 +483,25 @@ export default function OpportunityCard({
               className={`opportunity-card__tag opportunity-card__tag--${volunteeringModifier}`}
             >
               {volunteeringLabel}
+            </span>
+          )}
+
+          {isSendingOrganization === true && (
+            <span
+              className="opportunity-card__tag opportunity-card__sending-org"
+              role="note"
+            >
+              <span
+                className="opportunity-card__sending-org-dot"
+                aria-hidden="true"
+              />
+              <span>
+                {lang === 'en'
+                  ? 'Sending Organization required'
+                  : lang === 'ru'
+                    ? 'Требуется отправляющая организация'
+                    : 'Sending Organization tələb edir'}
+              </span>
             </span>
           )}
         </div>
