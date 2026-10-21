@@ -35,7 +35,6 @@ const STEPS = [
 export default function SendingOrganizationHero() {
   const { t } = useLanguage()
 
-  // ServiceModal ilə eyni WhatsApp sistemi
   const handleWhatsApp = () => {
     const message = t('service_modal_whatsapp_message').replace(
       '{service}',
@@ -54,8 +53,6 @@ export default function SendingOrganizationHero() {
       className="so-hero"
       aria-labelledby="so-hero-title"
     >
-      {/* BACKGROUND */}
-
       <div
         className="so-hero__wash"
         aria-hidden="true"
@@ -63,11 +60,7 @@ export default function SendingOrganizationHero() {
 
       <div className="so-hero__inner">
 
-        {/* TOP SECTION */}
-
         <div className="so-hero__top">
-
-          {/* LEFT CONTENT */}
 
           <div className="so-hero__intro">
             <span
@@ -87,8 +80,6 @@ export default function SendingOrganizationHero() {
             </p>
           </div>
 
-          {/* RIGHT IMAGE */}
-
           <div className="so-hero__image-wrapper">
             <img
               src={sendingOrganizationImage}
@@ -100,8 +91,6 @@ export default function SendingOrganizationHero() {
           </div>
         </div>
 
-        {/* INFORMATION CARDS */}
-
         <div className="so-hero__cards">
           {STEPS.map((step, index) => {
             const Icon = step.icon
@@ -111,8 +100,6 @@ export default function SendingOrganizationHero() {
                 className="so-hero__card"
                 key={step.titleKey}
               >
-                {/* CARD HEADER */}
-
                 <div className="so-hero__card-head">
                   <span className="so-hero__card-icon">
                     <Icon
@@ -126,13 +113,10 @@ export default function SendingOrganizationHero() {
                   </h3>
                 </div>
 
-                {/* CARD DESCRIPTION */}
 
                 <p>
                   {t(step.descriptionKey)}
                 </p>
-
-                {/* WHATSAPP BUTTON — THIRD CARD ONLY */}
 
                 {index === 2 && (
                   <button

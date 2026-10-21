@@ -6,7 +6,7 @@ import SendingOrganizationHero from './SendingOrganizationHero'
 
 import '../style/index.css'
 
-const INTERVAL_MS = 20000
+const INTERVAL_MS = 5000
 
 export default function HomeHeroSlider() {
   const [active, setActive] = useState(0)
