@@ -10,62 +10,55 @@ const INTERVAL_MS = 5000
 
 export default function HomeHeroSlider() {
   const [active, setActive] = useState(0)
-  const [cycle, setCycle] = useState(0)
-  const [paused, setPaused] = useState(false)
 
   useEffect(() => {
-    if (paused) return undefined
-
     const timer = window.setInterval(() => {
       setActive(current => (current + 1) % 2)
     }, INTERVAL_MS)
 
-    return () => window.clearInterval(timer)
-  }, [paused, cycle])
+    return () => {
+      window.clearInterval(timer)
+    }
+  }, [])
 
-  function goTo(index) {
+  const goTo = index => {
     setActive(index)
-    setCycle(value => value + 1)
   }
 
   return (
     <div
       className="home-hero-slider"
       aria-label="Nomad Youth hero slider"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={event => {
-        if (
-          !event.currentTarget.contains(
-            event.relatedTarget
-          )
-        ) {
-          setPaused(false)
-        }
-      }}
+      aria-roledescription="carousel"
     >
       <div className="home-hero-slider__slides">
+
+        {/* FIRST HERO */}
+
         <div
           className={`home-hero-slider__slide${
             active === 0 ? ' is-active' : ''
           }`}
           aria-hidden={active !== 0}
-          inert={active !== 0 ? true : undefined}
+          inert={active !== 0}
         >
           <MembershipHero />
         </div>
+
+        {/* SECOND HERO */}
 
         <div
           className={`home-hero-slider__slide${
             active === 1 ? ' is-active' : ''
           }`}
           aria-hidden={active !== 1}
-          inert={active !== 1 ? true : undefined}
+          inert={active !== 1}
         >
           <SendingOrganizationHero />
         </div>
       </div>
+
+      {/* SLIDER INDICATORS */}
 
       <div
         className="home-hero-slider__pagination"
