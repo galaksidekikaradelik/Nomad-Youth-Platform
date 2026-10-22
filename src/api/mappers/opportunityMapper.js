@@ -1,3 +1,4 @@
+
 export function mapOpportunity(raw) {
   if (!raw) return null;
 
@@ -46,6 +47,8 @@ export function mapOpportunity(raw) {
     ageRequirement: raw.ageRequirement ?? null,
     escOrSalto: raw.escOrSalto ?? null,
     volunteeringType: raw.volunteeringType ?? null,
+
+    isSendingOrganization: raw.isSendingOrganization ?? false,
   };
 }
 
