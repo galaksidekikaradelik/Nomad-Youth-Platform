@@ -5,6 +5,8 @@ import { useApplicationStatus } from '../hooks/useApplicationStatus'
 import { useLanguage } from '../hooks/useLanguage'
 import { isExpired } from '../utils/opportunityStatus'
 import { STATUS_CONFIG } from '../utils/applicationStatus'
+
+import '../style/pages/profile-bundle.css'
 import { 
   Inbox,
   LockKeyhole

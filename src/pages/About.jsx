@@ -17,6 +17,8 @@ import {
 } from 'lucide-react'
 
 import { useLanguage } from '../hooks/useLanguage'
+import '../style/pages/about-bundle.css'
+
 
 import worldMap from '../assets/images/world-map.webp'
 import partnershipImage from '../assets/images/erasmus.webp'

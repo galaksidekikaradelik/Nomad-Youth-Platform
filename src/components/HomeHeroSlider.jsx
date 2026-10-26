@@ -1,61 +1,108 @@
 
-import { useEffect, useState } from 'react'
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 import MembershipHero from './MembershipHero'
-import SendingOrganizationHero from './SendingOrganizationHero'
 
 import '../style/index.css'
 
-const INTERVAL_MS = 5000
+const SendingOrganizationHero = lazy(() =>
+  import('./SendingOrganizationHero')
+)
+
+const INTERVAL_MS = 20000
 
 export default function HomeHeroSlider() {
   const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const [secondReady, setSecondReady] = useState(false)
+
+  const timerRef = useRef(null)
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
+    if (paused) return undefined
+
+    timerRef.current = window.setInterval(() => {
       setActive(current => (current + 1) % 2)
     }, INTERVAL_MS)
 
     return () => {
-      window.clearInterval(timer)
+      window.clearInterval(timerRef.current)
     }
-  }, [])
+  }, [paused])
 
   const goTo = index => {
     setActive(index)
+
+    window.clearInterval(timerRef.current)
+
+    if (!paused) {
+      timerRef.current = window.setInterval(() => {
+        setActive(current => (current + 1) % 2)
+      }, INTERVAL_MS)
+    }
   }
+
+  useEffect(() => {
+    if (active === 1 && !secondReady) {
+      setSecondReady(true)
+    }
+  }, [active, secondReady])
+
+  const showSecond = active === 1 && secondReady
 
   return (
     <div
       className="home-hero-slider"
       aria-label="Nomad Youth hero slider"
       aria-roledescription="carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={event => {
+        if (
+          !event.currentTarget.contains(
+            event.relatedTarget
+          )
+        ) {
+          setPaused(false)
+        }
+      }}
     >
       <div className="home-hero-slider__slides">
 
-        {/* FIRST HERO */}
+        {/* MEMBERSHIP HERO */}
 
         <div
           className={`home-hero-slider__slide${
-            active === 0 ? ' is-active' : ''
+            !showSecond ? ' is-active' : ''
           }`}
-          aria-hidden={active !== 0}
-          inert={active !== 0}
+          aria-hidden={showSecond}
+          inert={showSecond}
         >
           <MembershipHero />
         </div>
 
-        {/* SECOND HERO */}
+        {/* SENDING ORGANIZATION HERO */}
 
-        <div
-          className={`home-hero-slider__slide${
-            active === 1 ? ' is-active' : ''
-          }`}
-          aria-hidden={active !== 1}
-          inert={active !== 1}
-        >
-          <SendingOrganizationHero />
-        </div>
+        {secondReady && (
+          <div
+            className={`home-hero-slider__slide${
+              showSecond ? ' is-active' : ''
+            }`}
+            aria-hidden={!showSecond}
+            inert={!showSecond}
+          >
+            <Suspense fallback={null}>
+              <SendingOrganizationHero />
+            </Suspense>
+          </div>
+        )}
       </div>
 
       {/* SLIDER INDICATORS */}

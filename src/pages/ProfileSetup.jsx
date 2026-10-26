@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../hooks/useLanguage";
 import { useAuth } from "../hooks/useAuth";
 import { updateNotificationSettings } from "../services/notificationService";
-import "../style/index.css";
+import '../style/pages/profile-bundle.css'
 
 import { EDU_LEVEL_ENUM_MAP } from "../constants/onboardingOptions";
 import StepProfile from "../components/onboarding/StepProfile";

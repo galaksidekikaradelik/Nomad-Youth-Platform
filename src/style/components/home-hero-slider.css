@@ -1,21 +1,24 @@
-
 .home-hero-slider {
   position: relative;
   width: 100%;
+  isolation: isolate;
 }
 
 .home-hero-slider__slides {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  overflow: hidden;
 }
 
 .home-hero-slider__slide {
   grid-area: 1 / 1;
   min-width: 0;
+  width: 100%;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
+  z-index: 0;
   transition:
     opacity 0.65s ease,
     visibility 0.65s ease;
@@ -38,6 +41,7 @@
 
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 9px;
 
   padding: 9px 12px;
@@ -72,6 +76,22 @@
 .home-hero-slider__dot:focus-visible {
   outline: 3px solid #3479db;
   outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .home-hero-slider__pagination {
+    bottom: 12px;
+    padding: 8px 11px;
+  }
+
+  .home-hero-slider__dot {
+    width: 9px;
+    height: 9px;
+  }
+
+  .home-hero-slider__dot.is-active {
+    width: 25px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

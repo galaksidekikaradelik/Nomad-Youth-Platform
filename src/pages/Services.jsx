@@ -9,6 +9,10 @@ import ServiceModal from '../components/services/ServiceModal'
 import useServicesUrlState from '../hooks/useServicesUrlState'
 import { useLanguage } from '../hooks/useLanguage'
 
+
+import '../style/pages/services.css'
+
+
 import {
   buildServiceContent,
   buildCategories,

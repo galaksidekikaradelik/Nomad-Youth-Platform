@@ -345,11 +345,18 @@ export default function MembershipHero() {
 
             <div className="membership-hero__person-glow" />
 
+            
             <img
               src={heroImage}
               alt={t('membership_hero_image_alt')}
               className="membership-hero__person"
+              width={1122}
+              height={1402}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
+
 
           </div>
 

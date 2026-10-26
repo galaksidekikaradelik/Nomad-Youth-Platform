@@ -1,4 +1,3 @@
-
 import {
   ArrowRight,
   BookOpen,
@@ -9,7 +8,7 @@ import {
 import { useLanguage } from '../hooks/useLanguage'
 import { buildWhatsAppLink } from '../config/whatsapp'
 
-import sendingOrganizationImage from '../assets/images/sending-organization.png'
+import sendingOrganizationImage from '../assets/images/sending-organization.webp'
 
 import '../style/index.css'
 
@@ -59,9 +58,7 @@ export default function SendingOrganizationHero() {
       />
 
       <div className="so-hero__inner">
-
         <div className="so-hero__top">
-
           <div className="so-hero__intro">
             <span
               className="so-hero__accent-line"
@@ -85,7 +82,10 @@ export default function SendingOrganizationHero() {
               src={sendingOrganizationImage}
               alt={t('so_hero_visual_label')}
               className="so-hero__image"
-              loading="eager"
+              width={2172}
+              height={724}
+              loading="lazy"
+              fetchPriority="low"
               decoding="async"
             />
           </div>
@@ -105,6 +105,7 @@ export default function SendingOrganizationHero() {
                     <Icon
                       size={29}
                       strokeWidth={1.9}
+                      aria-hidden="true"
                     />
                   </span>
 
@@ -112,7 +113,6 @@ export default function SendingOrganizationHero() {
                     {index + 1}. {t(step.titleKey)}
                   </h3>
                 </div>
-
 
                 <p>
                   {t(step.descriptionKey)}

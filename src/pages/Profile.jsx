@@ -13,6 +13,7 @@ import ProfileHeader from '../components/profile/ProfileHeader';
 import FullListView, { OpportunityMiniRow } from '../components/profile/FullListView';
 import NotificationsView from '../components/profile/NotificationsView';
 import SettingsView from '../components/profile/SettingsView';
+import '../style/pages/profile-bundle.css'
 
 import { ChevronRight } from 'lucide-react';
 

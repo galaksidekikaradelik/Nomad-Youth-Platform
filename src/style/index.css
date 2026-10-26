@@ -15,35 +15,42 @@
 @import 'components/info-card.css';
 @import 'components/search-bar.css';
 @import 'components/category-card.css';
+
 @import 'components/opportunity-card-base.css';
 @import 'components/opportunity-card-tags.css';
 @import 'components/opportunity-card-status.css';
 @import 'components/opportunity-card-footer.css';
+
 @import 'components/event-card.css';
 @import 'components/page-header.css';
 @import 'components/section-heading.css';
+
 @import 'components/filters.css';
 @import 'components/filter-group.css';
 @import 'components/tab-switcher.css';
 @import 'components/empty-state.css';
 @import 'components/spinner.css';
+
 @import 'components/cta-banner.css';
 @import 'components/disclaimer-banner.css';
 @import 'components/modal.css';
 @import 'components/faq.css';
 @import 'components/notifications.css';
 @import 'components/pagination.css';
+
 @import 'components/opportunity-skeleton.css';
 @import 'components/avatar.css';
 @import 'components/avatar-adjust-modal.css';
 @import 'components/verify-email.css';
 @import 'components/flip-card.css';
+
 @import 'components/ny-layout.css';
 @import 'components/ny-progress.css';
 @import 'components/ny-typography.css';
 @import 'components/ny-form-fields.css';
 @import 'components/ny-chips-checks.css';
 @import 'components/ny-actions-success.css';
+
 @import 'components/detail-modal.css';
 @import 'components/auth-page.css';
 @import 'components/auth-form.css';
@@ -52,54 +59,26 @@
 @import 'components/auth-banner-checks.css';
 @import 'components/auth-modal.css';
 @import 'components/verification-banner.css';
-@import 'components/profile-header.css';
-@import 'components/profile-stats-bar.css';
-@import 'components/profile-sidebar.css';
-@import 'components/profile-content-panels.css';
-@import 'components/delete-modal.css';
-@import 'components/settings-form.css';
-@import 'components/chips-and-filters.css';
+
 @import 'components/organization-card.css';
 @import 'components/organization-details.css';
 @import 'components/organization-responsive.css';
 @import 'components/organization-skeleton.css';
+
 @import 'components/membership-hero.css';
 @import 'components/auth-split.css';
-@import 'components/about-page.css';
-@import 'components/about-intro.css';
-@import 'components/about-features.css';
-@import 'components/about-stats.css';
-@import 'components/about-how.css';
-@import 'components/about-membership-section.css';
-@import 'components/about-growth-card.css';
-@import 'components/about-membership-card.css';
-@import 'components/about-team.css';
-@import 'components/about-cta.css';
-@import 'components/about-reveal.css';
+@import 'components/sending-organization-hero.css';
+@import 'components/home-hero-slider.css';
+
 @import 'components/mundus-card.css';
 @import 'components/mundus-detail-modal.css';
 @import 'components/mundus-result.css';
 @import 'components/mundus-skeleton.css';
-@import 'components/sending-organization-hero.css';
-@import 'components/home-hero-slider.css';
 
-
-
-
-
-
-
-
-@import 'pages/contact.css';
-@import 'pages/services.css';
 @import 'pages/home.css';
-
 
 @import 'utilities/helpers.css';
 @import 'utilities/animations.css';
 
-
 @import 'base/dark-theme.css';
-
-
 @import 'utilities/responsive.css';
