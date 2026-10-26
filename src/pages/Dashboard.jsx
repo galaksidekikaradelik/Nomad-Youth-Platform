@@ -95,7 +95,6 @@ export default function Dashboard() {
       <div className="container" style={{ maxWidth: 760 }}>
 
         <div className="page-header">
-          <div className="page-header__eyebrow">{t('dashboard_eyebrow')}</div>
           <h1 className="page-header__title">{t('dashboard_title')}</h1>
           <p className="page-header__desc">{t('dashboard_desc')}</p>
         </div>

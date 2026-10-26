@@ -133,7 +133,6 @@ export default function Contact() {
       <div className="container">
 
         <div className="page-header">
-          <div className="page-header__eyebrow">{t('contact_eyebrow')}</div>
           <h1 className="page-header__title">{t('contact_title')}</h1>
           <p className="page-header__desc">{t('contact_desc')}</p>
         </div>

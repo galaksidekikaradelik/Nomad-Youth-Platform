@@ -1063,6 +1063,28 @@
   "so_hero_card3_desc": "Свяжитесь с нашей командой через WhatsApp и отправьте ссылку на проект, в котором хотите принять участие.",
 
   "so_hero_read_more": "Подробнее",
-  "so_hero_apply": "Подать заявку через WhatsApp"
+  "so_hero_apply": "Подать заявку через WhatsApp",
+
+    "nav_partnerships": "Партнёрство",
+  "partners_title": "Наши партнёры",
+  "partners_lead": "Мы работаем с местными и международными организациями, чтобы расширять возможности молодёжи.",
+  "partners_cta_apply": "Стать партнёром",
+  "partners_cta_intl": "Международные",
+  "partners_cta_local": "Местные",  
+  "partners_tile_intl_title": "Международные партнёры",
+  "partners_tile_intl_text": "Сотрудничество с молодёжными организациями за рубежом.",
+  "partners_tile_local_title": "Местные партнёры",
+  "partners_tile_local_text": "Молодёжные организации и объединения Азербайджана.",
+  "partners_tile_apply_title": "Сотрудничайте с нами",
+  "partners_tile_apply_text": "Отправьте заявку, чтобы добавить вашу организацию на платформу.",
+  "partners_intl_title": "Международные партнёры",
+  "partners_intl_text": "Организации из Европы и региона, с которыми мы реализуем совместные проекты.",
+  "partners_local_title": "Местные партнёры",
+  "partners_local_text": "Организации, работающие с молодёжью в Азербайджане и вместе с нами.",
+  "partners_org_count": "организаций",
+  "partners_visit": "Посетить сайт",
+  "partners_cta_title": "Станьте нашим партнёром",
+  "partners_cta_text": "Свяжитесь с нами, чтобы реализовывать совместные проекты.",
+  "partners_cta_button": "Подать заявку"
 
 }

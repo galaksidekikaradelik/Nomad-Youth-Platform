@@ -983,6 +983,7 @@
   "close": "Bağla",
   "unknown": "Müəyyən edilməyib",
 
+
   "so_hero_title": "Sending Organization nədir?",
   "so_hero_intro": "Bəzi Erasmus+ layihələrinə müraciət zamanı göndərən təşkilatın (Sending Organization) məlumatları tələb olunur. Bu bölmədə onun rolu və Nomad Youth-un təqdim etdiyi dəstəklə tanış ola bilərsiniz.",
   "so_hero_visual_label": "Bakıdan beynəlxalq imkanlara",
@@ -998,7 +999,27 @@
   "so_hero_card3_desc": "WhatsApp vasitəsilə komandamızla əlaqə saxlayın və müraciət etmək istədiyiniz layihənin linkini bizimlə paylaşın.",
 
   "so_hero_read_more": "Ətraflı oxu",
-  "so_hero_apply": "WhatsApp vasitəsilə müraciət et"
+  "so_hero_apply": "WhatsApp vasitəsilə müraciət et",
 
+  "nav_partnerships": "Tərəfdaşlıq",
+  "partners_title": "Tərəfdaşlarımız",
+  "partners_lead": "Gənclərin imkanlarını genişləndirmək üçün yerli və beynəlxalq təşkilatlarla birgə çalışırıq.",
+  "partners_cta_apply": "Tərəfdaş ol",
+  "partners_cta_intl": "Beynəlxalq",
+  "partners_cta_local": "Yerli",  "partners_tile_intl_title": "Beynəlxalq tərəfdaşlar",
+  "partners_tile_intl_text": "Xaricdəki gənclik təşkilatları ilə əməkdaşlıq.",
+  "partners_tile_local_title": "Yerli tərəfdaşlar",
+  "partners_tile_local_text": "Azərbaycandakı gənclik və ictimai birliklər.",
+  "partners_tile_apply_title": "Bizimlə əməkdaşlıq et",
+  "partners_tile_apply_text": "Təşkilatını platformaya əlavə etmək üçün müraciət göndər.",
+  "partners_intl_title": "Beynəlxalq tərəfdaşlar",
+  "partners_intl_text": "Avropa və region ölkələrindən birgə layihələr həyata keçirdiyimiz təşkilatlar.",
+  "partners_local_title": "Yerli tərəfdaşlar",
+  "partners_local_text": "Azərbaycanda gənclərlə işləyən və bizimlə birgə çalışan təşkilatlar.",
+  "partners_org_count": "təşkilat",
+  "partners_visit": "Saytı ziyarət et",
+  "partners_cta_title": "Siz də tərəfdaşımız olun",
+  "partners_cta_text": "Təşkilatınızla birgə layihələr həyata keçirmək üçün bizimlə əlaqə saxlayın.",
+  "partners_cta_button": "Müraciət et"
 
 }

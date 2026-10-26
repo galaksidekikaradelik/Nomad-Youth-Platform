@@ -1088,6 +1088,28 @@
   "so_hero_card3_desc": "Contact our team via WhatsApp and share the link to the project you would like to apply for.",
 
   "so_hero_read_more": "Read more",
-  "so_hero_apply": "Apply via WhatsApp"
+  "so_hero_apply": "Apply via WhatsApp",
+
+    "nav_partnerships": "Partnerships",
+  "partners_title": "Our Partners",
+  "partners_lead": "We work with local and international organizations to expand opportunities for young people.",
+  "partners_cta_apply": "Become a partner",
+  "partners_cta_intl": "International",
+  "partners_cta_local": "Local",  
+  "partners_tile_intl_title": "International partners",
+  "partners_tile_intl_text": "Cooperation with youth organizations abroad.",
+  "partners_tile_local_title": "Local partners",
+  "partners_tile_local_text": "Youth organizations and associations in Azerbaijan.",
+  "partners_tile_apply_title": "Work with us",
+  "partners_tile_apply_text": "Send an application to add your organization to the platform.",
+  "partners_intl_title": "International partners",
+  "partners_intl_text": "Organizations from Europe and the region with which we run joint projects.",
+  "partners_local_title": "Local partners",
+  "partners_local_text": "Organizations working with young people in Azerbaijan and alongside us.",
+  "partners_org_count": "organizations",
+  "partners_visit": "Visit website",
+  "partners_cta_title": "Become our partner",
+  "partners_cta_text": "Get in touch to run joint projects with your organization.",
+  "partners_cta_button": "Apply"
 
 }

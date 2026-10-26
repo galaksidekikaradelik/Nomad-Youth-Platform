@@ -1,0 +1,448 @@
+/* Tərəfdaşlıq səhifəsi. Layihənin mövcud tokenlərindən istifadə edir (light + [data-theme="dark"]). */
+
+html {
+  scroll-behavior: smooth;
+}
+
+.partners-page {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.partners-container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-inline: var(--container-pad);
+}
+
+/* ---------- Düymələr ---------- */
+
+.partners-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: var(--radius-full);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.partners-btn:hover {
+  transform: translateY(-2px);
+}
+
+.partners-btn--accent {
+  background: var(--accent-400);
+  color: var(--brand-900);
+}
+
+.partners-btn--outline {
+  border: 2px solid var(--color-border-hover);
+  color: var(--color-primary);
+}
+
+.partners-btn--outline:hover {
+  border-color: var(--color-primary);
+}
+
+/* ---------- Hero ---------- */
+
+.partners-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 48px;
+  padding-block: clamp(40px, 7vw, 96px) clamp(40px, 6vw, 80px);
+}
+
+.partners-hero__text {
+  flex: 1 1 440px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.partners-hero__eyebrow {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--accent-100);
+  color: var(--brand-900);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.partners-hero h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+  text-wrap: balance;
+}
+
+.partners-hero__text p {
+  margin: 0;
+  max-width: 560px;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+.partners-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: var(--space-sm);
+}
+
+.partners-hero__visual {
+  flex: 1 1 400px;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.partners-hero__visual img {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+}
+
+.partners-tile:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.partners-tile strong {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.partners-tile span {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+.partners-tile--blue { background: var(--card-blue); }
+.partners-tile--blue svg { color: var(--card-blue-accent); }
+.partners-tile--green { background: var(--card-green); }
+.partners-tile--green svg { color: var(--card-green-accent); }
+.partners-tile--orange { background: var(--card-orange); }
+
+.partners-tile--wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px var(--space-lg);
+}
+
+.partners-tile__wide-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.partners-tile__wide-text strong {
+  font-size: 18px;
+}
+
+.partners-tile .partners-tile__arrow {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--card-orange-accent);
+}
+
+/* ---------- Bölmələr ---------- */
+
+.partners-section__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-block: clamp(40px, 6vw, 80px);
+}
+
+.partners-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.partners-section__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 640px;
+}
+
+.partners-section__bar {
+  width: 48px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background: var(--accent-400);
+}
+
+.partners-section__titles h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--color-primary);
+}
+
+.partners-section__titles p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.partners-section__count {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-faint);
+}
+
+/* Yerli: açıq boz zolaq */
+.partners-section--local {
+  background: var(--color-surface-2);
+}
+
+/* Beynəlxalq: həmişə tünd göy zolaq. Daxildəki tokenlər bu bölmə üçün yenidən təyin olunur. */
+.partners-section--intl {
+  --color-surface: var(--brand-800);
+  --color-border: var(--brand-700);
+  --color-primary: #ffffff;
+  --color-text: #ffffff;
+  --color-text-muted: #b8c0d4;
+  --color-text-faint: #b8c0d4;
+  --color-primary-light: var(--brand-700);
+  --shadow-card: none;
+  background: var(--brand-900);
+}
+
+/* ---------- Kartlar ---------- */
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: var(--space-lg);
+}
+
+.partner-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-base), border-color var(--transition-base);
+}
+
+.partner-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-border-hover);
+}
+
+.partner-card__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 140px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #ffffff;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.partner-card__logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Faylların öz kənar boşluğu var, ona görə böyüdülür. Kartda --logo-scale verilməyibsə 1.5 işləyir. */
+  transform: scale(var(--logo-scale, 1.5));
+}
+
+/* Şəkli özü qutunu dolduran logolar böyüdülmür, yoxsa üstdən kəsilir. */
+.partner-card__logo img[src*="/ysp" i],
+.partner-card__logo img[src*="/bhos" i] {
+  --logo-scale: 1;
+}
+
+/* Logo olmayan kartda ilk hərf bu rənglə görünür; fon artıq ağdır. */
+.partner-card__logo--blue { color: var(--card-blue-accent); }
+.partner-card__logo--green { color: var(--card-green-accent); }
+
+.partner-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.partner-card__place {
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.partner-card__name {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.partner-card__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+.partner-card__link {
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.partner-card__link:hover {
+  color: var(--accent-400);
+}
+
+/* ---------- Çağırış bloku ---------- */
+
+.partners-cta-wrap {
+  padding-block: clamp(40px, 6vw, 80px);
+}
+
+.partners-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 48px;
+  padding: clamp(28px, 4vw, 56px);
+  border-radius: var(--radius-xl);
+  background: var(--brand-900);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.partners-cta__text {
+  flex: 1 1 380px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.partners-cta h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 800;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.partners-cta p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #b8c0d4;
+}
+
+/* ---------- Dar ekran ---------- */
+
+@media (max-width: 520px) {
+  .partners-hero__tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .partners-btn,
+  .partner-card { transition: none; }
+  .partners-btn:hover,
+  .partner-card:hover { transform: none; }
+}
+
+.partner-card__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.partner-card__flag {
+  flex-shrink: 0;
+  font-size: 14px;
+  border-radius: 2px;
+}
+
+/* ---------- Kartların fade-in animasiyası ---------- */
+
+.partner-card {
+  opacity: 0;
+}
+
+.partner-card--visible {
+  opacity: 1;
+  animation: partner-fade-in 0.6s ease-out backwards;
+  animation-delay: calc(var(--i, 0) * 100ms);
+}
+
+@keyframes partner-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-card {
+    opacity: 1;
+  }
+  .partner-card--visible {
+    animation: none;
+  }
+}

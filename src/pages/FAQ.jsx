@@ -132,10 +132,6 @@ export default function FAQ() {
 
         <div className="page-header">
 
-          <div className="page-header__eyebrow">
-            {t('faq_eyebrow')}
-          </div>
-
 
           <h1 className="page-header__title">
             {t('faq_title')}
