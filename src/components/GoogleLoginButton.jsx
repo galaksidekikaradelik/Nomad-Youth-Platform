@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import {
@@ -18,13 +17,16 @@ function GoogleLoginContent({
   const { googleLogin } = useAuth();
 
   const [errorMsg, setErrorMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSuccess = async (
-    credentialResponse
-  ) => {
+  const handleSuccess = async (credentialResponse) => {
+    if (isSubmitting) return;
+
     setErrorMsg("");
 
-    if (!credentialResponse?.credential) {
+    const credential = credentialResponse?.credential;
+
+    if (!credential) {
       const error = new Error(
         "Google credential is missing"
       );
@@ -37,10 +39,10 @@ function GoogleLoginContent({
       return;
     }
 
+    setIsSubmitting(true);
+
     try {
-      const user = await googleLogin(
-        credentialResponse.credential
-      );
+      const user = await googleLogin(credential);
 
       onSuccess?.(user);
     } catch (err) {
@@ -54,13 +56,13 @@ function GoogleLoginContent({
       );
 
       onError?.(err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleError = () => {
-    const error = new Error(
-      "Google OAuth failed"
-    );
+    const error = new Error("Google OAuth failed");
 
     setErrorMsg(
       "Google ilə daxil olmaq mümkün olmadı."
@@ -70,17 +72,27 @@ function GoogleLoginContent({
   };
 
   return (
-    <div>
+    <div className="google-login-wrapper">
       <GoogleLogin
         onSuccess={handleSuccess}
         onError={handleError}
+
+        use_fedcm_for_button={true}
+
         useOneTap={false}
+
         theme="outline"
         size="large"
         text="continue_with"
         shape="rectangular"
         width="100%"
       />
+
+      {isSubmitting && (
+        <p role="status" className="auth-hint">
+          Google hesabı yoxlanılır...
+        </p>
+      )}
 
       {errorMsg && (
         <p className="auth-error" role="alert">
@@ -96,9 +108,7 @@ export default function GoogleLoginButton({
   onError,
 }) {
   return (
-    <GoogleOAuthProvider
-      clientId={GOOGLE_CLIENT_ID}
-    >
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <GoogleLoginContent
         onSuccess={onSuccess}
         onError={onError}
