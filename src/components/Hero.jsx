@@ -2,43 +2,43 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLanguage } from '../hooks/useLanguage'
 
-import heroLeft from '../assets/hero2-1.webp'
-import heroRight from '../assets/hero2-2.webp'
+// import heroLeft from '../assets/hero2-1.webp'
+// import heroRight from '../assets/hero2-2.webp'
 
-const GlobeIcon = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="9" />
-    <path d="M3 12h18" />
-    <path d="M12 3a14 14 0 0 1 0 18" />
-    <path d="M12 3a14 14 0 0 0 0 18" />
-  </svg>
-)
+// const GlobeIcon = () => (
+//   <svg
+//     width="28"
+//     height="28"
+//     viewBox="0 0 24 24"
+//     fill="none"
+//     stroke="currentColor"
+//     strokeWidth="1.8"
+//     strokeLinecap="round"
+//     strokeLinejoin="round"
+//   >
+//     <circle cx="12" cy="12" r="9" />
+//     <path d="M3 12h18" />
+//     <path d="M12 3a14 14 0 0 1 0 18" />
+//     <path d="M12 3a14 14 0 0 0 0 18" />
+//   </svg>
+// )
 
-const LightbulbIcon = () => (
-  <svg
-    width="28"
-    height="28"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M9 18h6" />
-    <path d="M10 22h4" />
-    <path d="M8.5 14.5C7.55 13.66 7 12.43 7 11a5 5 0 0 1 10 0c0 1.43-.55 2.66-1.5 3.5-.73.64-1.5 1.35-1.5 2.5h-4c0-1.15-.77-1.86-1.5-2.5Z" />
-  </svg>
-)
+// const LightbulbIcon = () => (
+//   <svg
+//     width="28"
+//     height="28"
+//     viewBox="0 0 24 24"
+//     fill="none"
+//     stroke="currentColor"
+//     strokeWidth="1.8"
+//     strokeLinecap="round"
+//     strokeLinejoin="round"
+//   >
+//     <path d="M9 18h6" />
+//     <path d="M10 22h4" />
+//     <path d="M8.5 14.5C7.55 13.66 7 12.43 7 11a5 5 0 0 1 10 0c0 1.43-.55 2.66-1.5 3.5-.73.64-1.5 1.35-1.5 2.5h-4c0-1.15-.77-1.86-1.5-2.5Z" />
+//   </svg>
+// )
 
 const ArrowIcon = () => (
   <svg
@@ -125,16 +125,16 @@ export default function Hero() {
           '--parallax-y': `${parallax.y * 10}px`,
         }}
       >
-        <div className="hero__image-card">
+        {/* <div className="hero__image-card">
           <img
             src={heroLeft}
             alt="Gənclər"
           />
-        </div>
+        </div> */}
 
-        <div className="hero__floating-icon hero__floating-icon--globe">
+        {/* <div className="hero__floating-icon hero__floating-icon--globe">
           <GlobeIcon />
-        </div>
+        </div> */}
 
         <div className="hero__yellow-dash hero__yellow-dash--left" />
         <div className="hero__yellow-line hero__yellow-line--left" />
@@ -147,7 +147,7 @@ export default function Hero() {
           '--parallax-y': `${parallax.y * -10}px`,
         }}
       >
-        <div className="hero__image-card">
+        {/* <div className="hero__image-card">
           <img
             src={heroRight}
             alt="Nomad Youth iştirakçısı"
@@ -156,7 +156,7 @@ export default function Hero() {
 
         <div className="hero__floating-icon hero__floating-icon--idea">
           <LightbulbIcon />
-        </div>
+        </div> */}
 
         <div className="hero__yellow-dash hero__yellow-dash--right" />
         <div className="hero__yellow-line hero__yellow-line--right" />
@@ -199,14 +199,14 @@ export default function Hero() {
               {t('hero_btn_local')}
             </button>
 
-            <button
+            {/* <button
               className="btn-dark"
               onClick={() =>
                 navigate('/services?category=membership&open=1')
               }
             >
               Üzv ol
-            </button>
+            </button> */}
           </div>
 
           <div className="hero__stats hero__stats--centered">
