@@ -4,10 +4,8 @@ import { Routes, Route } from "react-router-dom";
 
 import ProfileCompletionGate from "../layouts/ProfileCompletionGate";
 
-// Ana səhifə prioritet yüklənir
 import Home from "../pages/Home";
 
-// Digər səhifələr lazy loading ilə yüklənir
 const Opportunities = lazy(() =>
   import("../pages/Opportunities")
 );

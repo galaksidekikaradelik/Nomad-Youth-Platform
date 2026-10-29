@@ -376,7 +376,7 @@ export default function About() {
 
             {/* MEMBERSHIP */}
 
-            <div
+            {/* <div
               className="about-membership-card reveal-item"
               style={{ '--reveal-delay': '130ms' }}
             >
@@ -455,7 +455,7 @@ export default function About() {
 
               </div>
 
-            </div>
+            </div> */}
 
           </div>
 

@@ -17,13 +17,13 @@ import {
   Globe,
   FileText,
   MessageCircle,
-  Users,
-  Building2,
+  // Users,
+  // Building2,
 } from 'lucide-react'
 
 export const SERVICE_META = {
-  'erasmus-membership': { icon: Users, category: 'membership', key: 'erasmus_membership', hasNote: true },
-  'sending-organization': { icon: Building2, category: 'membership', key: 'sending_organization', hasNote: true },
+  // 'erasmus-membership': { icon: Users, category: 'membership', key: 'erasmus_membership', hasNote: true },
+  // 'sending-organization': { icon: Building2, category: 'membership', key: 'sending_organization', hasNote: true },
 
   'erasmus-consulting': { icon: Globe2, category: 'erasmus', key: 'erasmus_consulting' },
   'project-consulting': { icon: SearchCheck, category: 'erasmus', key: 'project_consulting' },
@@ -46,11 +46,11 @@ export const SERVICE_META = {
 }
 
 export const CATEGORY_META = [
-  {
-    id: 'membership',
-    icon: Users,
-    services: ['erasmus-membership', 'sending-organization'],
-  },
+  // {
+  //   id: 'membership',
+  //   icon: Users,
+  //   services: ['erasmus-membership', 'sending-organization'],
+  // },
   {
     id: 'erasmus',
     icon: Globe,

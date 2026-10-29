@@ -1,0 +1,292 @@
+/* =========================================================
+   MEMBERSHIP HERO — RESPONSIVE
+   Bu faylı membership.css-dən SONRA import et.
+   Köhnə faylın sonundakı @media bloklarını (countdown/action-row)
+   oradan silə bilərsən, hamısı burada var.
+========================================================= */
+
+/* ---------- ≤ 1200px ---------- */
+@media (max-width: 1200px) {
+  .membership-hero__inner {
+    padding-inline: max(40px, var(--hero-side));
+  }
+
+  .membership-hero__title {
+    font-size: clamp(38px, 4.6vw, 56px);
+  }
+}
+
+/* ---------- ≤ 1000px (tablet) — tək sütun ---------- */
+@media (max-width: 1000px) {
+  .membership-hero {
+    min-height: auto;
+  }
+
+  .membership-hero__inner {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 36px;
+    padding: 48px max(28px, var(--hero-side)) 36px;
+  }
+
+  .membership-hero__content {
+    max-width: none;
+  }
+
+  .membership-hero__description {
+    max-width: 620px;
+  }
+
+  .membership-hero__action-row {
+    gap: 14px;
+  }
+
+  /* Vizual */
+  .membership-hero__visual {
+    width: 100%;
+    max-width: 520px;
+    height: 460px;
+    margin: 0 auto;
+  }
+
+  .membership-hero__circle--one {
+    top: 40px;
+    right: auto;
+    left: 50%;
+    width: 340px;
+    height: 340px;
+    transform: translateX(-50%);
+  }
+
+  .membership-hero__circle--two {
+    top: 90px;
+    right: auto;
+    left: 50%;
+    width: 240px;
+    height: 240px;
+    transform: translateX(-50%);
+  }
+
+  .membership-hero__person-wrapper {
+    height: 470px;
+  }
+
+  .membership-hero__person-glow {
+    width: 320px;
+    height: 320px;
+  }
+
+  .membership-floating-card--erasmus {
+    top: 30px;
+    left: 0;
+  }
+
+  .membership-floating-card--oid {
+    top: 70px;
+    right: 0;
+  }
+
+  .membership-floating-card--users {
+    left: 0;
+    bottom: 110px;
+  }
+
+  .membership-floating-card--discount {
+    right: 0;
+    bottom: 95px;
+  }
+
+  .membership-hero__yellow-line--left {
+    top: 100px;
+    left: 0;
+    width: 120px;
+  }
+
+  .membership-hero__yellow-line--right {
+    top: 100px;
+    width: 100px;
+  }
+
+  /* Benefit paneli: absolute-dan axına keçir */
+  .membership-benefits {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    min-height: 0;
+    margin: 0 max(var(--space-lg), var(--hero-side)) 28px;
+  }
+
+  .membership-benefit {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .membership-benefit__icon {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ---------- ≤ 768px ---------- */
+@media (max-width: 768px) {
+  .membership-hero__action-row {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .membership-hero__actions {
+    width: 100%;
+  }
+
+  .membership-countdown {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .membership-countdown__label {
+    max-width: none;
+  }
+}
+
+/* ---------- ≤ 760px — benefit-lər alt-alta ---------- */
+@media (max-width: 760px) {
+  .membership-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .membership-benefit + .membership-benefit {
+    border-left: 0;
+    border-top: 1px solid var(--hero-border);
+  }
+}
+
+/* ---------- ≤ 600px (mobil) ---------- */
+@media (max-width: 600px) {
+  .membership-hero__inner {
+    padding: 36px 20px 28px;
+    gap: 28px;
+  }
+
+  .membership-hero__title {
+    font-size: clamp(34px, 9.5vw, 46px);
+    line-height: 1.02;
+  }
+
+  .membership-hero__description {
+    font-size: 15px;
+    margin: var(--space-md) 0 22px;
+  }
+
+  /* Vizual */
+  .membership-hero__visual {
+    height: 390px;
+  }
+
+  .membership-hero__circle--one {
+    top: 30px;
+    width: 280px;
+    height: 280px;
+  }
+
+  .membership-hero__circle--two {
+    top: 70px;
+    width: 200px;
+    height: 200px;
+  }
+
+  .membership-hero__person-wrapper {
+    width: 100%;
+    height: 400px;
+  }
+
+  .membership-hero__person-glow {
+    bottom: 20px;
+    width: 250px;
+    height: 250px;
+  }
+
+  .membership-floating-card {
+    gap: 7px;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .membership-floating-card__icon {
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .membership-floating-card--erasmus {
+    top: 14px;
+  }
+
+  .membership-floating-card--oid {
+    top: 56px;
+  }
+
+  .membership-floating-card--users {
+    bottom: 90px;
+  }
+
+  .membership-floating-card--discount {
+    bottom: 70px;
+  }
+
+  .membership-hero__yellow-line,
+  .membership-stroke {
+    display: none;
+  }
+
+  /* Düymələr */
+  .membership-hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .membership-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .membership-countdown {
+    padding: 12px 14px;
+  }
+
+  .membership-countdown__time {
+    margin-left: auto;
+  }
+
+  /* Benefit paneli */
+  .membership-benefits {
+    margin: 0 20px 24px;
+  }
+}
+
+/* ---------- ≤ 480px — çox dar ekran ---------- */
+@media (max-width: 480px) {
+  .membership-hero__visual {
+    height: 350px;
+  }
+
+  .membership-hero__person-wrapper {
+    height: 360px;
+  }
+
+  /* Şəkli bağlamamaq üçün aşağıdakı 2 kartı gizlət */
+  .membership-floating-card--users,
+  .membership-floating-card--discount {
+    display: none;
+  }
+}
+
+/* ---------- Toxunma cihazlarında hover effektləri söndür ---------- */
+@media (hover: none) {
+  .membership-btn:hover,
+  .membership-countdown:hover {
+    transform: none;
+  }
+}

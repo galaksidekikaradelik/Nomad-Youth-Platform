@@ -1,20 +1,7 @@
-/* =========================================================
-   responsive.css
-   Bütün responsive qaydalar, breakpoint-lər böyükdən kiçiyə.
-   Hər breakpoint yalnız BİR dəfə var, üst-üstə düşən qaydalar silinib.
-   Yükləmə sırası: modal.css → detail-modal.css → responsive.css
-   (modal-responsive.css artıq lazım deyil, bura daxil edilib)
-   ========================================================= */
-
-/* ---------- Global (media query xaricində) ---------- */
-h1, h2, h3 {
+/* /* h1, h2, h3 {
   overflow-wrap: break-word;
 }
 
-
-/* =========================================================
-   1200
-========================================================= */
 @media (max-width: 1200px) {
   .about-membership-grid {
     grid-template-columns: 1fr;
@@ -1139,9 +1126,6 @@ h1, h2, h3 {
 }
 
 
-/* =========================================================
-   REDUCED MOTION (həmişə faylın sonunda)
-========================================================= */
 @media (prefers-reduced-motion: reduce) {
   .reveal-section,
   .reveal-section .reveal-item,
@@ -1168,5 +1152,5 @@ h1, h2, h3 {
   .reveal-section .reveal-item {
     opacity: 1 !important;
     transform: none !important;
-  }
-}
+  } 
+} 

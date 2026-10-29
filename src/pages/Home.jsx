@@ -1,5 +1,4 @@
 
-import HomeHeroSlider from '../components/HomeHeroSlider'
 import Hero from '../components/Hero'
 
 import OpportunitiesSection from '../components/home/OpportunitiesSection'
@@ -14,7 +13,6 @@ export default function Home() {
 
   return (
     <>
-      <HomeHeroSlider />
       <OpportunitiesSection />
       <Hero />
       <AboutSection />

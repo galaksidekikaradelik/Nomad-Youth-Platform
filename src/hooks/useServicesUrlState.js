@@ -3,7 +3,7 @@ import { SERVICE_META, CATEGORY_META } from '../data/services'
 
 // Bu hook yalnız id-lərlə işləyir, mətn (tərcümə) lazım deyil.
 export default function useServicesUrlState() {
-  const [activeCategory, setActiveCategory] = useState('membership')
+  const [activeCategory, setActiveCategory] = useState('erasmus')
   const [selectedId, setSelectedId] = useState(null)
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function useServicesUrlState() {
     const shouldOpenService = params.get('open') === '1'
 
     const exists = CATEGORY_META.some((c) => c.id === categoryFromUrl)
-    const targetCategory = exists ? categoryFromUrl : 'membership'
+    const targetCategory = exists ? categoryFromUrl : 'erasmus'
 
     setActiveCategory(targetCategory)
 

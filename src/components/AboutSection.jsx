@@ -2,7 +2,6 @@ import { t } from '../data/translations'
 
 export default function AboutSection({
   description,
-  location,
   email,
   phone,
   website,

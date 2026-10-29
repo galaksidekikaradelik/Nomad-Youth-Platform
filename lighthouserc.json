@@ -1,0 +1,25 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "https://www.nomadyouth.com.az/",
+        "https://www.nomadyouth.com.az/opportunities",
+        "https://www.nomadyouth.com.az/partnerships",
+        "https://www.nomadyouth.com.az/about",
+        "https://www.nomadyouth.com.az/contact",
+        "https://www.nomadyouth.com.az/faq",
+        "https://www.nomadyouth.com.az/services",
+        "https://www.nomadyouth.com.az/login",
+        "https://www.nomadyouth.com.az/register"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "chromeFlags": "--headless --no-sandbox"
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": "./lighthouse-reports"
+    }
+  }
+}

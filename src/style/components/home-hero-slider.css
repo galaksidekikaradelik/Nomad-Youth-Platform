@@ -78,25 +78,4 @@
   outline-offset: 3px;
 }
 
-@media (max-width: 768px) {
-  .home-hero-slider__pagination {
-    bottom: 12px;
-    padding: 8px 11px;
-  }
 
-  .home-hero-slider__dot {
-    width: 9px;
-    height: 9px;
-  }
-
-  .home-hero-slider__dot.is-active {
-    width: 25px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-hero-slider__slide,
-  .home-hero-slider__dot {
-    transition: none;
-  }
-}

@@ -1,0 +1,136 @@
+/* =========================================================
+   NAVBAR — RESPONSIVE
+   Bu faylı navbar-*.css fayllarından SONRA import et.
+   navbar-mobile.css-in sonundakı @media (max-width: 768px)
+   blokunu silə bilərsən, burada 900px-də əvəz olunub.
+========================================================= */
+
+/* ---------- Desktopda mobil menyu heç vaxt görünməsin ---------- */
+@media (min-width: 901px) {
+  .navbar__mobile,
+  .navbar__mobile.open {
+    display: none !important;
+  }
+}
+
+/* ---------- 901px – 1100px: desktop, amma sıxılmış ---------- */
+@media (max-width: 1100px) {
+  .navbar__links {
+    gap: var(--space-lg);
+  }
+
+  .navbar__link {
+    font-size: 1rem;
+  }
+
+  .navbar__cta {
+    padding: 9px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ---------- ≤ 900px: mobil menyu rejimi ---------- */
+@media (max-width: 900px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .navbar__actions .navbar__cta,
+  .navbar__actions .navbar__icon-btn,
+  .navbar__actions .navbar__profile-wrap {
+    display: none;
+  }
+
+  /* Hamburger: 44px toxunma sahəsi */
+  .navbar__hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -8px;
+  }
+
+  /* Dil dropdown-u sağ kənardan çıxmasın */
+  .navbar__lang-dropdown {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+
+  /* Mobil menyu: dinamik hündürlük + təhlükəsiz sahə */
+  .navbar__mobile {
+    height: calc(100dvh - var(--navbar-h));
+    padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
+    overscroll-behavior: contain;
+  }
+
+  .navbar__mobile-actions {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  /* Menyunun içində dropdown kəsilməsin, axında açılsın */
+  .navbar__mobile .navbar__lang-dropdown {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 8px;
+    box-shadow: none;
+  }
+
+  .navbar__mobile .navbar__profile-dropdown {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+  }
+}
+
+/* ---------- ≤ 480px ---------- */
+@media (max-width: 480px) {
+  .navbar__logo {
+    font-size: 1.05rem;
+    gap: 6px;
+  }
+
+  .navbar__logo-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .navbar__actions {
+    gap: 6px;
+  }
+
+  .navbar__lang-btn,
+  .navbar__theme-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .navbar__profile-dropdown {
+    min-width: 200px;
+    max-width: calc(100vw - 24px);
+  }
+}
+
+/* ---------- ≤ 360px ---------- */
+@media (max-width: 360px) {
+  .navbar__logo {
+    font-size: 0.95rem;
+  }
+}
+
+/* ---------- Toxunma cihazlarında hover effektləri söndür ---------- */
+@media (hover: none) {
+  .navbar__cta:hover,
+  .navbar__avatar-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ---------- Safari üçün blur ---------- */
+.navbar {
+  -webkit-backdrop-filter: blur(16px);
+}
