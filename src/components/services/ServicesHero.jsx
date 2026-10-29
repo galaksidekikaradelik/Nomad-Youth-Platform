@@ -15,10 +15,10 @@ export default function ServicesHero() {
       title: t('services_hero_side1_title'),
       desc: t('services_hero_side1_desc'),
     },
-    {
-      title: t('services_hero_side2_title'),
-      desc: t('services_hero_side2_desc'),
-    },
+    // {
+    //   title: t('services_hero_side2_title'),
+    //   desc: t('services_hero_side2_desc'),
+    // },
     {
       title: t('services_hero_side3_title'),
       desc: t('services_hero_side3_desc'),
