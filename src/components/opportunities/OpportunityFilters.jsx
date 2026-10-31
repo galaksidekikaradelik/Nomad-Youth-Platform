@@ -1,4 +1,3 @@
-
 import { translateCategory } from '../../data/categoryTranslation'
 import {
   CATEGORIES,
@@ -27,8 +26,6 @@ export default function OpportunityFilters({
   toggleType,
   format,
   toggleFormat,
-  escOrSalto = '',
-  toggleEscOrSalto,
   clearFormatFilters,
   durations,
   toggleDuration,
@@ -93,14 +90,13 @@ export default function OpportunityFilters({
         </span>
 
         <div className="filter-group__chips">
-
           {FORMATS.map(f => (
             <FilterChip
               key={f.id}
               label={t(f.labelKey)}
               active={
                 f.id === 'Hamısı'
-                  ? format === 'Hamısı' && !escOrSalto
+                  ? format === 'Hamısı'
                   : format === f.id
               }
               onClick={() => {
@@ -112,20 +108,6 @@ export default function OpportunityFilters({
               }}
             />
           ))}
-
-
-          <FilterChip
-            label="ESC"
-            active={escOrSalto === 'ESC'}
-            onClick={() => toggleEscOrSalto('ESC')}
-          />
-
-          <FilterChip
-            label="SALTO"
-            active={escOrSalto === 'SALTO'}
-            onClick={() => toggleEscOrSalto('SALTO')}
-          />
-
         </div>
       </div>
 
