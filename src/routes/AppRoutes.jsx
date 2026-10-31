@@ -22,9 +22,9 @@ const FAQ = lazy(() =>
   import("../pages/FAQ")
 );
 
-const Services = lazy(() =>
-  import("../pages/Services")
-);
+// const Services = lazy(() =>
+//   import("../pages/Services")
+// );
 
 const Dashboard = lazy(() =>
   import("../pages/Dashboard")
@@ -138,10 +138,10 @@ export default function AppRoutes() {
             element={<FAQ />}
           />
 
-          <Route
+          {/* <Route
             path="/services"
             element={<Services />}
-          />
+          /> */}
 
           <Route
             path="/dashboard"

@@ -88,7 +88,7 @@ export default function Navbar() {
   const links = [
     { to: '/', label: t('nav_home') },
     { to: '/opportunities', label: t('nav_opportunities') },
-    { to: '/services', label: t('nav_services') },
+    // { to: '/services', label: t('nav_services') },
     { to: '/partnerships', label: t('nav_partnerships') },
     { to: '/faq', label: t('nav_faq') },
     { to: '/about', label: t('nav_about') },
