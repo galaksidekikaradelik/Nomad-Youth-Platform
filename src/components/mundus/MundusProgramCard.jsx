@@ -1,5 +1,6 @@
-
 import { useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
 import {
   Heart,
   Bookmark,
@@ -197,23 +198,27 @@ export default function MundusProgramCard({ program }) {
   const { t, lang } = useLanguage()
   const { user } = useAuth()
 
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const [showAuthPrompt, setShowAuthPrompt] =
     useState(false)
 
-  const [showDetail, setShowDetail] =
-    useState(false)
+  const [detailState, setDetailState] = useState({
+    id: null,
+    data: null,
+  })
 
-  const [detailData, setDetailData] =
-    useState(null)
-
-  const [detailLoading, setDetailLoading] =
-    useState(false)
-
-  const detailRequestRef = useRef(false)
   const detailSessionRef = useRef(0)
   const detailMountedRef = useRef(true)
 
   const id = program?.id
+
+  const selectedMundusId =
+    searchParams.get('mundusId')
+
+  const showDetail =
+    id != null &&
+    String(id) === selectedMundusId
 
   const {
     liked,
@@ -232,6 +237,64 @@ export default function MundusProgramCard({ program }) {
       detailSessionRef.current += 1
     }
   }, [])
+
+  useEffect(() => {
+    if (!showDetail || id == null) return
+
+    const session = ++detailSessionRef.current
+    let cancelled = false
+
+    async function loadDetail() {
+      try {
+        const { data } = await mundusService.getById(id)
+
+        if (
+          cancelled ||
+          !detailMountedRef.current ||
+          session !== detailSessionRef.current
+        ) {
+          return
+        }
+
+        setDetailState({
+          id: String(id),
+          data: data || {},
+        })
+      } catch (error) {
+        if (
+          cancelled ||
+          !detailMountedRef.current ||
+          session !== detailSessionRef.current
+        ) {
+          return
+        }
+
+        console.error(
+          'Mundus detail fetch failed:',
+          error
+        )
+
+        setDetailState({
+          id: String(id),
+          data: {},
+        })
+      }
+    }
+
+    loadDetail()
+
+    mundusService.trackView(id).catch(error => {
+      console.error(
+        'Mundus view tracking failed:',
+        error
+      )
+    })
+
+    return () => {
+      cancelled = true
+      detailSessionRef.current += 1
+    }
+  }, [showDetail, id])
 
   if (!program) return null
 
@@ -282,6 +345,14 @@ export default function MundusProgramCard({ program }) {
     ? getCategoryStyle(category)
     : undefined
 
+  const detailData =
+    detailState.id === String(id)
+      ? detailState.data
+      : null
+
+  const detailLoading =
+    showDetail && detailData === null
+
   const applyLink = safeUrl(
     detailData?.applyLink || program.applyLink
   )
@@ -308,72 +379,39 @@ export default function MundusProgramCard({ program }) {
     toggleSaveRemote()
   }
 
-  async function openDetail(e) {
+  function openDetail(e) {
     e?.stopPropagation()
 
-    if (!id || detailRequestRef.current) return
+    if (id == null) return
 
-    detailRequestRef.current = true
+    setDetailState({
+      id: null,
+      data: null,
+    })
 
-    const session = ++detailSessionRef.current
+    const next = new URLSearchParams(searchParams)
 
-    setShowDetail(true)
-    setDetailLoading(true)
-    setDetailData(null)
+    next.set('tab', 'mundus')
+    next.set('mundusId', String(id))
 
-    try {
-      const { data } =
-        await mundusService.getById(id)
-
-      if (
-        !detailMountedRef.current ||
-        session !== detailSessionRef.current
-      ) {
-        return
-      }
-
-      setDetailData(data)
-    } catch (error) {
-      console.error(
-        'Mundus detail fetch failed:',
-        error
-      )
-    } finally {
-      if (
-        detailMountedRef.current &&
-        session === detailSessionRef.current
-      ) {
-        setDetailLoading(false)
-        detailRequestRef.current = false
-      }
-    }
-
-    if (
-      detailMountedRef.current &&
-      session === detailSessionRef.current
-    ) {
-      mundusService.trackView(id).catch(error => {
-        console.error(
-          'Mundus view tracking failed:',
-          error
-        )
-      })
-    }
+    setSearchParams(next)
   }
 
   function closeDetail() {
-    detailSessionRef.current += 1
-    detailRequestRef.current = false
+    const next = new URLSearchParams(searchParams)
 
-    setShowDetail(false)
-    setDetailData(null)
-    setDetailLoading(false)
+    next.delete('mundusId')
+    next.set('tab', 'mundus')
+
+    setSearchParams(next, {
+      replace: true,
+    })
   }
 
   async function handleApplyClick(e) {
     e?.stopPropagation()
 
-    if (!id) return
+    if (id == null) return
 
     try {
       await mundusService.trackApply(id)
@@ -412,11 +450,13 @@ export default function MundusProgramCard({ program }) {
     <div className="mundus-card">
       <div className="mundus-card__top">
         <div className="mundus-card__top-row">
+
           <CountryFlags
             countries={program.countries}
           />
 
           <div className="mundus-card__icons">
+
             <button
               type="button"
               className={`mundus-card__icon-btn mundus-card__icon-btn--heart${
@@ -448,6 +488,7 @@ export default function MundusProgramCard({ program }) {
                 fill={saved ? 'currentColor' : 'none'}
               />
             </button>
+
           </div>
         </div>
 
@@ -461,6 +502,7 @@ export default function MundusProgramCard({ program }) {
 
       <div className="mundus-card__topic">
         <div className="mundus-card__tags">
+
           <span className="mundus-card__tag mundus-card__tag--format">
             {t('mundus_format')}
           </span>
@@ -478,14 +520,18 @@ export default function MundusProgramCard({ program }) {
               {category}
             </span>
           )}
+
         </div>
       </div>
 
       <div className="mundus-card__divider" />
 
       <div className="mundus-card__footer">
+
         <div className="mundus-card__footer-top">
+
           <div className="mundus-card__dates">
+
             <div className="mundus-card__date-row">
               {t('card_deadline')}{' '}
               {formattedDeadline}{' '}
@@ -513,6 +559,7 @@ export default function MundusProgramCard({ program }) {
               {t('mundus_application_opening')}{' '}
               {formattedOpening}
             </div>
+
           </div>
 
           <div className="mundus-card__status-wrap">
@@ -523,9 +570,11 @@ export default function MundusProgramCard({ program }) {
               {t(statusKey)}
             </span>
           </div>
+
         </div>
 
         <div className="mundus-card__footer-actions">
+
           <button
             type="button"
             className="mundus-card__detail-btn"
@@ -551,6 +600,7 @@ export default function MundusProgramCard({ program }) {
               <ArrowRight size={18} />
             </span>
           )}
+
         </div>
       </div>
 
@@ -570,6 +620,7 @@ export default function MundusProgramCard({ program }) {
         open={showAuthPrompt}
         onClose={() => setShowAuthPrompt(false)}
       />
+
     </div>
   )
 }

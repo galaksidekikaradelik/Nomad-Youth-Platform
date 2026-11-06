@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, useRef } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import {
   AlertTriangle,
@@ -17,9 +18,18 @@ const SKELETON_COUNT = 6
 
 function normalizeResponse(data) {
   if (Array.isArray(data)) return data
-  if (Array.isArray(data?.content)) return data.content
-  if (Array.isArray(data?.programs)) return data.programs
-  if (Array.isArray(data?.data)) return data.data
+
+  if (Array.isArray(data?.content)) {
+    return data.content
+  }
+
+  if (Array.isArray(data?.programs)) {
+    return data.programs
+  }
+
+  if (Array.isArray(data?.data)) {
+    return data.data
+  }
 
   return []
 }
@@ -28,15 +38,16 @@ export default function MundusProgramResults({
   search = '',
 }) {
   const { t } = useLanguage()
-
+  const [searchParams] = useSearchParams()
+  const selectedId = searchParams.get('mundusId')
   const [programs, setPrograms] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [page, setPage] = useState(1)
 
-  /* =========================================
-     FETCH PROGRAMS
-  ========================================= */
+  const [pagination, setPagination] = useState({
+    search,
+    page: 1,
+  })
 
   useEffect(() => {
     let active = true
@@ -77,16 +88,14 @@ export default function MundusProgramResults({
     }
   }, [])
 
-  /* =========================================
-     SEARCH FILTER
-  ========================================= */
-
   const filteredPrograms = useMemo(() => {
     const query = String(search || '')
       .trim()
       .toLocaleLowerCase()
 
-    if (!query) return programs
+    if (!query) {
+      return programs
+    }
 
     return programs.filter(program => {
       const searchableValues = [
@@ -113,35 +122,76 @@ export default function MundusProgramResults({
     })
   }, [programs, search])
 
-  /* =========================================
-     RESET PAGE
-  ========================================= */
+  const visibleSource = useMemo(() => {
+    if (!selectedId) {
+      return filteredPrograms
+    }
 
-  useEffect(() => {
-    setPage(1)
-  }, [search])
+    const existsInFiltered = filteredPrograms.some(
+      program =>
+        String(program.id) === String(selectedId)
+    )
 
-  /* =========================================
-     PAGINATION
-  ========================================= */
+    if (existsInFiltered) {
+      return filteredPrograms
+    }
+
+    const selectedProgram = programs.find(
+      program =>
+        String(program.id) === String(selectedId)
+    )
+
+    if (!selectedProgram) {
+      return filteredPrograms
+    }
+
+    return [
+      selectedProgram,
+      ...filteredPrograms,
+    ]
+  }, [
+    programs,
+    filteredPrograms,
+    selectedId,
+  ])
 
   const totalPages = Math.ceil(
-    filteredPrograms.length / PAGE_SIZE
+    visibleSource.length / PAGE_SIZE
   )
 
-  const currentPage = Math.min(
-    page,
+  const storedPage =
+    pagination.search === search
+      ? pagination.page
+      : 1
+
+  const selectedIndex = selectedId
+    ? visibleSource.findIndex(
+        program =>
+          String(program.id) === String(selectedId)
+      )
+    : -1
+
+  const linkedPage =
+    selectedIndex >= 0
+      ? Math.floor(selectedIndex / PAGE_SIZE) + 1
+      : null
+
+  const currentPage = linkedPage ?? Math.min(
+    Math.max(1, storedPage),
     Math.max(1, totalPages)
   )
 
-  const visiblePrograms = filteredPrograms.slice(
+  const visiblePrograms = visibleSource.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   )
 
-  /* =========================================
-     SKELETON LOADING
-  ========================================= */
+  function handlePageChange(newPage) {
+    setPagination({
+      search,
+      page: newPage + 1,
+    })
+  }
 
   if (loading) {
     return (
@@ -153,10 +203,6 @@ export default function MundusProgramResults({
       </div>
     )
   }
-
-  /* =========================================
-     ERROR STATE
-  ========================================= */
 
   if (error) {
     return (
@@ -181,11 +227,7 @@ export default function MundusProgramResults({
     )
   }
 
-  /* =========================================
-     EMPTY STATE
-  ========================================= */
-
-  if (filteredPrograms.length === 0) {
+  if (visibleSource.length === 0) {
     return (
       <div className="mundus-results__state">
         <CalendarClock
@@ -205,21 +247,15 @@ export default function MundusProgramResults({
     )
   }
 
-  /* =========================================
-     RESULTS
-  ========================================= */
-
   return (
     <div className="mundus-results">
 
-      {/* RESULTS COUNT */}
-
       <div className="mundus-results__count">
         {t('mundus_results_count')}: {' '}
-        <strong>{filteredPrograms.length}</strong>
+        <strong>
+          {filteredPrograms.length}
+        </strong>
       </div>
-
-      {/* PROGRAM GRID */}
 
       <div className="mundus-results__grid">
         {visiblePrograms.map(program => (
@@ -230,13 +266,13 @@ export default function MundusProgramResults({
         ))}
       </div>
 
-      {/* SHARED PAGINATION */}
-
-      <Pagination
-        currentPage={currentPage - 1}
-        totalPages={totalPages}
-        onPageChange={newPage => setPage(newPage + 1)}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage - 1}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
 
     </div>
   )
