@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { BrowserRouter, useLocation } from "react-router-dom";
 
@@ -10,6 +9,7 @@ import { ApplicationStatusProvider } from "./context/ApplicationStatusProvider";
 
 import AppRoutes from "./routes/AppRoutes";
 import ScrollToTop from "./components/ScrollToTop";
+import SEOManager from "./components/SEOManager";
 
 import {
   initAnalytics,
@@ -42,6 +42,7 @@ function App() {
           <LikeProvider>
             <ApplicationStatusProvider>
               <BrowserRouter>
+                <SEOManager />
                 <AnalyticsTracker />
                 <ScrollToTop />
                 <AppRoutes />
