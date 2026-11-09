@@ -12,34 +12,33 @@ const pageSEO = {
   },
 
   "/opportunities": {
-    title: "İmkanlar | Nomad Youth",
+    title: "Nomad Youth | İmkanlar",
     description:
       "Azərbaycanda və xaricdə könüllülük, Erasmus+, təcrübə, təlim, mübadilə və digər gənclər üçün imkanları kəşf edin.",
   },
 
   "/about": {
-    title: "Haqqımızda | Nomad Youth",
+    title: "Nomad Youth | Haqqımızda",
     description:
       "Nomad Youth platforması, missiyamız, fəaliyyətimiz və gənclərin inkişafı üçün yaratdığımız imkanlar haqqında məlumat əldə edin.",
   },
 
   "/contact": {
-    title: "Əlaqə | Nomad Youth",
+    title: "Nomad Youth | Əlaqə",
     description:
       "Nomad Youth komandası ilə əlaqə saxlayın. Suallarınız, təklifləriniz və əməkdaşlıq müraciətləriniz üçün bizə yazın.",
   },
 
   "/faq": {
-    title: "Tez-tez verilən suallar | Nomad Youth",
+    title: "Nomad Youth | Tez-tez verilən suallar",
     description:
       "Nomad Youth platformasının istifadəsi, imkanlara müraciət, qeydiyyat və üzvlük haqqında tez-tez verilən sualların cavabları.",
   },
 
-  "/services": {
-    title: "Xidmətlərimiz | Nomad Youth",
+  "/partnerships": {
+    title: "Nomad Youth | Tərəfdaşlarımız",
     description:
-      "Nomad Youth tərəfindən təqdim olunan xidmətlər, gənclər və təşkilatlar üçün dəstək və əməkdaşlıq imkanları ilə tanış olun.",
-  },
+        "Nomad Youth-un tərəfdaşları, əməkdaşlıq etdiyi təşkilatlar və gənclərin inkişafına töhfə verən qurumlarla tanış olun.",  },
 };
 
 function updateMeta(attribute, key, content) {
