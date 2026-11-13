@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -16,30 +17,37 @@ import '../style/pages/partnerships.css'
 import heroImg from '../assets/teskilatlar/partners-hero.webp'
 
 
+// Ölkənin bayraq kodunu tapır
 function getCountryCode(place) {
   const country = (place || '').split(',').pop().trim()
   return COUNTRY_CODES[country]
 }
 
+
+// PARTNER CARD
 function PartnerCard({ partner, tone, index }) {
   const { t } = useLanguage()
 
-  const ref = useRef(null)
-  const [visible, setVisible] = useState(false)
+  const partnerName = t(partner.nameKey)
+  const partnerPlace = t(partner.placeKey)
 
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(
+  () => typeof IntersectionObserver === 'undefined'
+  )
   const countryCode = useMemo(
     () => getCountryCode(partner.place),
     [partner.place]
   )
 
+  
   useEffect(() => {
     const el = ref.current
+
     if (!el) return
 
-    if (
-      typeof IntersectionObserver === 'undefined'
-    ) {
-      return undefined
+    if (typeof IntersectionObserver === 'undefined') {
+      return
     }
 
     const observer = new IntersectionObserver(
@@ -60,6 +68,7 @@ function PartnerCard({ partner, tone, index }) {
     return () => observer.disconnect()
   }, [])
 
+
   return (
     <article
       ref={ref}
@@ -74,12 +83,11 @@ function PartnerCard({ partner, tone, index }) {
         {partner.logo ? (
           <img
             src={partner.logo}
-            alt={partner.name}
+            alt={partnerName || ''}
             width={320}
             height={320}
             loading="lazy"
             decoding="async"
-            fetchPriority="low"
             style={{
               maxWidth: '100%',
               maxHeight: '100%',
@@ -87,7 +95,7 @@ function PartnerCard({ partner, tone, index }) {
             }}
           />
         ) : (
-          <span>{partner.name.charAt(0)}</span>
+          <span>{partnerName?.charAt(0) || ''}</span>
         )}
       </div>
 
@@ -99,11 +107,12 @@ function PartnerCard({ partner, tone, index }) {
               aria-hidden="true"
             />
           )}
-          {partner.place}
+
+          {partnerPlace}
         </span>
 
         <h3 className="partner-card__name">
-          {partner.name}
+          {partnerName}
         </h3>
 
         {partner.descKey && (
@@ -127,6 +136,8 @@ function PartnerCard({ partner, tone, index }) {
   )
 }
 
+
+// PARTNER SECTION
 function PartnerSection({
   id,
   variant,
@@ -136,8 +147,7 @@ function PartnerSection({
 }) {
   const { t } = useLanguage()
 
-  const tone =
-    variant === 'intl' ? 'blue' : 'green'
+  const tone = variant === 'intl' ? 'blue' : 'green'
 
   return (
     <section
@@ -177,12 +187,15 @@ function PartnerSection({
   )
 }
 
+
+// MAIN PAGE
 export default function Partnerships() {
   const { t } = useLanguage()
 
   return (
     <main className="partners-page">
 
+      {/* HERO SECTION */}
       <section className="partners-container partners-hero">
         <div className="partners-hero__text">
           <h1>{t('partners_title')}</h1>
@@ -220,12 +233,13 @@ export default function Partnerships() {
             width={1672}
             height={941}
             loading="eager"
-            fetchPriority="high"
             decoding="async"
           />
         </div>
       </section>
 
+
+      {/* INTERNATIONAL PARTNERS */}
       <PartnerSection
         id="international"
         variant="intl"
@@ -234,6 +248,8 @@ export default function Partnerships() {
         partners={INTERNATIONAL_PARTNERS}
       />
 
+
+      {/* LOCAL PARTNERS */}
       <PartnerSection
         id="local"
         variant="local"
@@ -242,6 +258,8 @@ export default function Partnerships() {
         partners={LOCAL_PARTNERS}
       />
 
+
+      {/* APPLY SECTION */}
       <section
         id="apply"
         className="partners-container partners-cta-wrap"
@@ -261,6 +279,7 @@ export default function Partnerships() {
           </Link>
         </div>
       </section>
+
     </main>
   )
 }

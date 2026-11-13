@@ -1,5 +1,3 @@
-/* Tərəfdaşlıq səhifəsi. Layihənin mövcud tokenlərindən istifadə edir (light + [data-theme="dark"]). */
-
 html {
   scroll-behavior: smooth;
 }
@@ -445,4 +443,8 @@ html {
   .partner-card--visible {
     animation: none;
   }
+}
+
+.partner-card__logo img[src*="/actc" i] {
+  --logo-scale: 1;
 }
